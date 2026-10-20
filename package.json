@@ -1,0 +1,16 @@
+{
+  "name": "spear-line",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Spear Line — vehicle sales and timber transport website",
+  "engines": {
+    "node": ">=22.21.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.mjs",
+    "dev": "node --watch --env-file-if-exists=.env server.mjs",
+    "test": "node --test",
+    "check": "node --check server.mjs && node --check public/app.js && node --check public/validation.js"
+  }
+}
