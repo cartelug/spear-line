@@ -6,13 +6,13 @@ The design uses the original Spear Line logo, an ink / warm-white / muted-gold p
 
 ## GitHub Pages from `main`
 
-This repository contains the static website at the repository root so GitHub Pages can publish **`main` → `/(root)`**. After this source is committed, select **Settings → Pages → Source: Deploy from a branch → Branch: main → Folder: /(root)** and save. The expected project URL is `https://cartelug.github.io/spear-line/`.
+This repository contains the static website at the repository root so GitHub Pages can publish **`main` → `/(root)`**. GitHub Pages has deployed the static site from **Settings → Pages → Source: Deploy from a branch → Branch: main → Folder: /(root)**. Visit [the live Pages site](https://cartelug.github.io/spear-line/). GitHub records the deployment as a Pages build run in Actions even when Pages is configured to publish from a branch.
 
 The canonical site files are under `public/` for the Node server. Identical copies in the repository root serve GitHub Pages. After editing files in `public/`, run `npm run sync:pages` before committing. `npm run check` detects out-of-sync copies. The root `.nojekyll` file asks Pages to serve these files directly.
 
 GitHub Pages serves static HTML, CSS, JavaScript and the logo. It does not run `server.mjs`; the enquiry form prepares a downloadable draft there and does not send a message. To receive online enquiries, deploy the Node server to a suitable host and configure the required contact, legal name, origin and retention details below.
 
-The GitHub Actions workflow in this repository runs syntax and server tests on pushes. It does not deploy the website. Publishing from `main` is controlled by the Pages source setting above.
+The repository's **Check website** workflow runs syntax and server tests on pushes. It does not deploy the website. Publishing from `main` is controlled by the Pages source setting above.
 
 ## Run
 

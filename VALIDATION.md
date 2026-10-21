@@ -19,10 +19,10 @@ Authoring date: 2026-10-20.
 ## Still to verify before launch
 
 - Browser rendering, navigation, keyboard/screen-reader behavior, responsive crops and widths, network image/font loading.
-- Production deployment, real contact delivery, performance and accessibility tooling.
+- Node server deployment and real contact delivery, performance and accessibility tooling.
 - Actual business identity and contact details, HTTPS, monitoring and scheduled retention purge.
 
-The repository is public at the owner's direction. The site has not been deployed, and online form submission remains disabled by default.
+The repository is public at the owner's direction. The static [GitHub Pages site](https://cartelug.github.io/spear-line/) deployed successfully from `main` → `/(root)` (Pages run 39557581265). Online form submission remains disabled by default; GitHub Pages does not run the Node server.
 
 ## Result
 
