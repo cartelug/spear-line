@@ -5,19 +5,39 @@ const canSubmit = config.enquiriesEnabled === true && !preview;
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 $$("[data-year]").forEach(el => { el.textContent = new Date().getFullYear(); });
-const menu = $(".menu-button"), nav = $("#site-nav");
-function closeMenu() { nav?.classList.remove("open"); menu?.setAttribute("aria-expanded","false"); }
-menu?.addEventListener("click", () => {
-  const open = menu.getAttribute("aria-expanded") !== "true";
+const root = document.documentElement;
+const menu = $(".menu-toggle"), nav = $("#site-menu");
+function setMenu(open) {
+  if (!menu) return;
   menu.setAttribute("aria-expanded", String(open));
-  nav.classList.toggle("open",open);
+  root.classList.toggle("menu-open", open);
+  $$("main, .site-footer").forEach(el => { el.inert = open; });
+}
+menu?.addEventListener("click", () => setMenu(menu.getAttribute("aria-expanded") !== "true"));
+nav?.addEventListener("click", event => { if (event.target.closest("a")) setMenu(false); });
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && menu?.getAttribute("aria-expanded") === "true") { setMenu(false); menu.focus(); }
 });
-nav?.addEventListener("click",event => { if (event.target.closest("a")) closeMenu(); });
-document.addEventListener("keydown",event => {
-  if (event.key === "Escape" && menu?.getAttribute("aria-expanded") === "true") { closeMenu(); menu.focus(); }
-});
-document.addEventListener("click",event => { if (!event.target.closest(".header")) closeMenu(); });
-window.matchMedia("(min-width:761px)").addEventListener("change", closeMenu);
+window.matchMedia("(min-width:900px)").addEventListener("change", event => { if (event.matches) setMenu(false); });
+window.addEventListener("pageshow", event => { if (event.persisted) setMenu(false); });
+
+const sentinel = $(".top-sentinel");
+if (sentinel && "IntersectionObserver" in window) new IntersectionObserver(([entry]) => root.classList.toggle("is-scrolled", !entry.isIntersecting)).observe(sentinel);
+
+// One-shot reveals. Nothing is hidden until this script has run, and only when motion is welcome.
+const revealable = $$("[data-reveal],[data-draw]");
+if (revealable.length && "IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const pending = new Set(), seen = el => { el.classList.add("is-in"); pending.delete(el); observer.unobserve(el); };
+  for (const el of revealable) { if (el.getBoundingClientRect().top < window.innerHeight * 0.88) el.classList.add("is-in"); else pending.add(el); }
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) if (entry.isIntersecting || entry.boundingClientRect.top < 0) seen(entry.target);
+    if (!pending.size) window.removeEventListener("scroll", onScroll);
+  }, { rootMargin: "0px 0px -12% 0px" });
+  let settle;
+  // A fling can carry an element past the viewport between observer samples; reveal anything left behind once scrolling settles.
+  function onScroll() { clearTimeout(settle); settle = setTimeout(() => { for (const el of [...pending]) if (el.getBoundingClientRect().bottom < 0) seen(el); if (!pending.size) window.removeEventListener("scroll", onScroll); }, 140); }
+  if (pending.size) { root.classList.add("reveal-ready"); pending.forEach(el => observer.observe(el)); window.addEventListener("scroll", onScroll, { passive: true }); }
+}
 
 function addContact(selector, href, label) {
   $$(selector).forEach(el => {
@@ -28,7 +48,7 @@ function addContact(selector, href, label) {
 const emailOK = typeof config.email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(config.email);
 if (emailOK) addContact("[data-contact-email]", "mailto:" + config.email, config.email);
 if (typeof config.phone === "string" && /^\+?[\d\s()-]{7,30}$/.test(config.phone)) addContact("[data-contact-phone]", "tel:" + config.phone.replace(/[^\d+]/g,""), config.phone);
-if (typeof config.whatsapp === "string" && /^\+?\d{7,15}$/.test(config.whatsapp)) addContact("[data-contact-whatsapp]", "https://wa.me/" + config.whatsapp.replace(/\D/g,""), "WhatsApp ↗");
+if (typeof config.whatsapp === "string" && /^\+?\d{7,15}$/.test(config.whatsapp)) addContact("[data-contact-whatsapp]", "https://wa.me/" + config.whatsapp.replace(/\D/g,""), "WhatsApp");
 $$("[data-contact-container]").forEach(el => { el.hidden = !el.querySelector("a"); });
 if (config.legalName) $$("[data-legal-identity]").forEach(el => { el.textContent = "The operator is " + config.legalName + "."; });
 if (config.address) $$("[data-address]").forEach(el => { el.hidden = false; el.textContent = config.address; });
@@ -40,6 +60,7 @@ if (emailOK) {
     el.append(link, ". Include your enquiry reference if available.");
   });
 }
+$$("[data-enquiry-step]").forEach(el => { if (canSubmit) el.textContent = el.dataset.live; });
 if (canSubmit) $$("[data-privacy-status]").forEach(el => { el.textContent = "Online enquiries are enabled. Details you submit are stored for Spear Line to review."; });
 if (canSubmit && Number.isInteger(config.retentionDays)) $$("[data-retention]").forEach(el => { el.textContent = "Unconverted website enquiry records are retained for up to " + config.retentionDays + " days, unless an applicable record-keeping requirement requires a different period. Contact the operator about records associated with an agreed transaction."; });
 
@@ -95,7 +116,7 @@ if (form) {
       downloadURL = URL.createObjectURL(new Blob([text],{type:"text/plain;charset=utf-8"}));
       show("Your enquiry is ready to download. Nothing has been sent to Spear Line.");
       const link = document.createElement("a"); link.className = "download-link"; link.href = downloadURL;
-      link.download = "spear-line-" + result.value.service + "-enquiry.txt"; link.textContent = "Download your enquiry ↓";
+      link.download = "spear-line-" + result.value.service + "-enquiry.txt"; link.textContent = "Download your enquiry";
       message.append(document.createElement("br"),link);
       return;
     }

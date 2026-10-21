@@ -31,8 +31,8 @@ await mkdir(dataRoot,{recursive:true,mode:0o700});
 const actualDataRoot = await realpath(dataRoot);
 if (actualDataRoot === publicRoot || actualDataRoot.startsWith(publicRoot + sep)) throw new Error("DATA_DIR must be outside public/.");
 const pages = ["index.html","vehicles.html","timber-logistics.html","about.html","enquire.html","privacy.html","404.html"];
-const allowedFiles = new Set([...pages,"styles.css","app.js","validation.js","robots.txt","assets/spear-line-logo.png"]);
-const mime = {".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".png":"image/png",".txt":"text/plain; charset=utf-8"};
+const allowedFiles = new Set([...pages,"styles.css","boot.js","app.js","validation.js","robots.txt","assets/spear-line-logo.png","assets/fonts/archivo-latin-500-800.woff2","assets/fonts/lexend-latin-400-600.woff2","assets/fonts/OFL.txt"]);
+const mime = {".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".png":"image/png",".woff2":"font/woff2",".txt":"text/plain; charset=utf-8"};
 const rate = new Map();
 const cleanup = setInterval(() => { for (const [key,value] of rate) if (Date.now() > value.expires) rate.delete(key); },60000);
 cleanup.unref();
@@ -41,7 +41,7 @@ function headers(res) {
   res.setHeader("Referrer-Policy","strict-origin-when-cross-origin");
   res.setHeader("X-Frame-Options","SAMEORIGIN");
   res.setHeader("Permissions-Policy","camera=(), microphone=(), geolocation=()");
-  res.setHeader("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'");
+  res.setHeader("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' https://images.unsplash.com; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'");
 }
 function json(res,status,body) {
   res.writeHead(status,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});

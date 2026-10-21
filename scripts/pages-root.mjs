@@ -6,8 +6,9 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const paths = [
   "index.html", "vehicles.html", "timber-logistics.html", "about.html",
   "enquire.html", "privacy.html", "404.html", "robots.txt",
-  "site-config.js", "app.js", "validation.js", "styles.css",
-  "assets/spear-line-logo.png"
+  "site-config.js", "boot.js", "app.js", "validation.js", "styles.css",
+  "assets/spear-line-logo.png", "assets/fonts/archivo-latin-500-800.woff2",
+  "assets/fonts/lexend-latin-400-600.woff2", "assets/fonts/OFL.txt"
 ];
 const checking = process.argv.includes("--check");
 const writing = process.argv.includes("--write");

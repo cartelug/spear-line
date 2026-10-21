@@ -11,9 +11,13 @@ Ink #141719; white #FFFFFF; warm white #F4F2ED; muted gold #C8A66B; deep green #
 The supplementary colors are design choices for this website, not a claim about an existing formal brand manual.
 
 ## Typography
-Archivo for headings and Source Sans 3 for text, loaded through Google Fonts. Original logo lettering is not replaced.
+Archivo (500–800) for headings, menus, buttons, labels and numbers; Lexend (400–600) for paragraphs, forms and small text. Both are SIL Open Font License 1.1 and served from `public/assets/fonts/` (licence text in `OFL.txt`). Original logo lettering is not replaced.
 https://fonts.google.com/specimen/Archivo
-https://fonts.google.com/specimen/Source+Sans+3
+https://fonts.google.com/specimen/Lexend
+The two files are the Latin variable subsets from Fontsource (`@fontsource-variable/archivo` and `@fontsource-variable/lexend` 5.3.0), narrowed to the used weight ranges with fontTools:
+`fonttools varLib.instancer archivo-latin-wght-normal.woff2 wght=500:800 -o archivo-latin-500-800.woff2`
+`fonttools varLib.instancer lexend-latin-wght-normal.woff2 wght=400:600 -o lexend-latin-400-600.woff2`
+Neither family contains arrow glyphs, so arrows are inline SVG. Fallback faces in `styles.css` use size and metric overrides measured against Arial.
 
 ## Representative photographs
 - vehicle: Fluid Imagery — https://unsplash.com/photos/_xf77jLFyfw
@@ -25,7 +29,7 @@ https://fonts.google.com/specimen/Source+Sans+3
 - drive: Prashant Gupta — https://unsplash.com/photos/H98HtV4lkik
   CDN: https://images.unsplash.com/photo-1572629166063-011a332eafed?auto=format&fit=crop&w=1800&q=85
 License source: https://unsplash.com/license
-Source pages described these photographs as free under the Unsplash License when researched. Images load from Unsplash; their actual rendering and crops still require browser verification. Images do not depict confirmed Spear Line stock, fleet ownership or completed work.
+Source pages described these photographs as free under the Unsplash License when researched. Images load from Unsplash. Their crops use focal-point classes in `styles.css` (`--fx`, `--fy`) that have not been checked against the actual photographs. Images do not depict confirmed Spear Line stock, fleet ownership or completed work.
 
 ## Business sources
 Spear Line HQ: https://app.notion.com/p/3ffca91cddad8184a734d2ef08d56a00

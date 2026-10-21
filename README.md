@@ -2,7 +2,7 @@
 
 A complete six-page website for vehicle sales and timber transportation to Kampala and the Democratic Republic of Congo.
 
-The design uses the original Spear Line logo, an ink / warm-white / muted-gold palette, Archivo and Source Sans 3 typography, representative photography, and dedicated enquiry journeys for both services.
+The design uses the original Spear Line logo, an ink / forest / warm-paper / brass palette, self-hosted Archivo and Lexend typography, representative photography, a recurring brass line device, a brief first-visit opening, and dedicated enquiry journeys for both services. See DESIGN.md for the V3 design system, seam map and motion rules.
 
 ## GitHub Pages from `main`
 
@@ -10,7 +10,7 @@ This repository contains the static website at the repository root so GitHub Pag
 
 The canonical site files are under `public/` for the Node server. Identical copies in the repository root serve GitHub Pages. After editing files in `public/`, run `npm run sync:pages` before committing. `npm run check` detects out-of-sync copies. The root `.nojekyll` file asks Pages to serve these files directly.
 
-GitHub Pages serves static HTML, CSS, JavaScript and the logo. It does not run `server.mjs`; the enquiry form prepares a downloadable draft there and does not send a message. To receive online enquiries, deploy the Node server to a suitable host and configure the required contact, legal name, origin and retention details below.
+GitHub Pages serves static HTML, CSS, JavaScript, the self-hosted fonts and the logo. It does not run `server.mjs`; the enquiry form prepares a downloadable draft there and does not send a message. To receive online enquiries, deploy the Node server to a suitable host and configure the required contact, legal name, origin and retention details below.
 
 The repository's **Check website** workflow runs syntax and server tests on pushes. It does not deploy the website. Publishing from `main` is controlled by the Pages source setting above.
 
@@ -29,7 +29,7 @@ npm run check
 npm test
 ```
 
-The Node test suite covers validation, HTTP routes, private storage, rejected submissions, and the disabled form state. It passed in [GitHub Actions](https://github.com/cartelug/spear-line/actions/runs/39488892512). In-memory source checks are documented in VALIDATION.md. Browser, accessibility and responsive rendering checks remain outstanding.
+The Node test suite covers validation, HTTP routes, private storage, rejected submissions, the disabled form state, the strict Content Security Policy, font serving, and static page structure (headings, links, typography, no content hidden without a script). Browser, accessibility and performance checks for the V3 design are recorded in VALIDATION.md.
 
 ## Pages
 
@@ -83,8 +83,9 @@ Static-only hosting can serve `public/` with enquiries in preparation mode. **Gi
 - Verify business name, public contact details and privacy/retention information.
 - Verify the service copy, timber destinations and future-business wording with the owner.
 - Run the Node suite and test both forms against the deployed server.
-- Check desktop and mobile layouts, keyboard navigation, screen-reader error feedback and reduced-motion behavior.
-- Verify that external images and fonts load, or self-host approved versions.
+- Check desktop and mobile layouts on real devices, keyboard navigation, screen-reader error feedback and reduced-motion behavior.
+- Tune the photo focal-point classes (`.fp-road`, `.fp-desert`, `.fp-lorry`, `.fp-yard` in `public/styles.css`) against the real photographs; they have not been verified.
+- Verify that the external Unsplash images load, or self-host approved versions (fonts are already self-hosted).
 - Confirm the enquiry-monitoring process and daily purge job.
 - Keep stock photos labelled as representative. Replace them with approved owned imagery when available.
 - Choose the domain; add canonical URLs, social share images, sitemap and appropriate structured data.

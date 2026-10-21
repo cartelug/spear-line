@@ -52,3 +52,11 @@ test("preparation mode cannot accept enquiries",{timeout:20000},async t => {
   assert.equal(response.status,503); assert.equal((await readdir(dir)).length,0);
   assert.match(await (await fetch(origin+"/site-config.js")).text(),/"enquiriesEnabled":false/);
 });
+test("fonts, boot script and a strict self-hosted CSP are served",{timeout:20000},async t => {
+  const {origin} = await boot(t,false);
+  for (const [path,type] of [["/assets/fonts/archivo-latin-500-800.woff2","font/woff2"],["/assets/fonts/lexend-latin-400-600.woff2","font/woff2"],["/assets/fonts/OFL.txt","text/plain"],["/boot.js","text/javascript"]]) {
+    const response = await fetch(origin + path); assert.equal(response.status,200,path); assert.match(response.headers.get("content-type"),new RegExp(type),path);
+  }
+  const csp = (await fetch(origin + "/")).headers.get("content-security-policy");
+  assert.doesNotMatch(csp,/unsafe-inline|googleapis|gstatic|data:/); assert.match(csp,/font-src 'self'(;|$)/); assert.match(csp,/img-src 'self' https:\/\/images\.unsplash\.com;/);
+});
