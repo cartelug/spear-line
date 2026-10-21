@@ -19,7 +19,7 @@ npm run check
 npm test
 ```
 
-The Node test suite covers validation, HTTP routes, private storage, rejected submissions, and the disabled form state. **It is included but was not executed during authoring because no shell/runtime was available.** In-memory JavaScript checks are documented in VALIDATION.md. Browser, accessibility and responsive rendering checks remain outstanding.
+The Node test suite covers validation, HTTP routes, private storage, rejected submissions, and the disabled form state. It passed in [GitHub Actions](https://github.com/cartelug/spear-line/actions/runs/39488892512). In-memory source checks are documented in VALIDATION.md. Browser, accessibility and responsive rendering checks remain outstanding.
 
 ## Pages
 

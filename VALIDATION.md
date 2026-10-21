@@ -11,15 +11,19 @@ Authoring date: 2026-10-20.
 - package.json parsed and private package flag verified.
 - Original logo supplied as base64 without artwork changes.
 
-## Not executed
+## GitHub verification
 
-- Node server startup, fs writes, request handling and npm test integration suite.
-- Real browser rendering, navigation, interaction, keyboard/screen-reader behavior, responsive crops and widths, network image/font loading.
-- Production deployment, external contact delivery, performance or accessibility tooling.
-- GitHub Actions workflow execution and source verification on GitHub.
+- Commit `d46b78d387db65bc2e5a73e377aecea1b3ec9bdb` contained all 25 expected source files, including the original PNG logo. GitHub's tree was complete and the uploaded blobs matched the source package.
+- The [GitHub Actions check](https://github.com/cartelug/spear-line/actions/runs/39488892512) completed successfully. It ran the Node syntax check and automated tests, including server startup, HTTP handling, validation and private file storage.
 
-The code includes automated Node tests and a GitHub Actions workflow to run when an execution environment is available. Browser QA and configured contact details are required before launch. The repository exists; a live site has not been deployed.
+## Still to verify before launch
+
+- Browser rendering, navigation, keyboard/screen-reader behavior, responsive crops and widths, network image/font loading.
+- Production deployment, real contact delivery, performance and accessibility tooling.
+- Actual business identity and contact details, HTTPS, monitoring and scheduled retention purge.
+
+The repository is public at the owner's direction. The site has not been deployed, and online form submission remains disabled by default.
 
 ## Result
 
-No failures in the in-memory checks above.
+The in-memory checks and GitHub Actions suite passed.
