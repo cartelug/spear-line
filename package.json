@@ -11,6 +11,7 @@
     "start": "node --env-file-if-exists=.env server.mjs",
     "dev": "node --watch --env-file-if-exists=.env server.mjs",
     "test": "node --test",
-    "check": "node --check server.mjs && node --check public/app.js && node --check public/validation.js"
+    "check": "node --check server.mjs && node --check public/app.js && node --check public/validation.js && node scripts/pages-root.mjs --check",
+    "sync:pages": "node scripts/pages-root.mjs --write"
   }
 }

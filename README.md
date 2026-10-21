@@ -4,6 +4,16 @@ A complete six-page website for vehicle sales and timber transportation to Kampa
 
 The design uses the original Spear Line logo, an ink / warm-white / muted-gold palette, Archivo and Source Sans 3 typography, representative photography, and dedicated enquiry journeys for both services.
 
+## GitHub Pages from `main`
+
+This repository contains the static website at the repository root so GitHub Pages can publish **`main` → `/(root)`**. After this source is committed, select **Settings → Pages → Source: Deploy from a branch → Branch: main → Folder: /(root)** and save. The expected project URL is `https://cartelug.github.io/spear-line/`.
+
+The canonical site files are under `public/` for the Node server. Identical copies in the repository root serve GitHub Pages. After editing files in `public/`, run `npm run sync:pages` before committing. `npm run check` detects out-of-sync copies. The root `.nojekyll` file asks Pages to serve these files directly.
+
+GitHub Pages serves static HTML, CSS, JavaScript and the logo. It does not run `server.mjs`; the enquiry form prepares a downloadable draft there and does not send a message. To receive online enquiries, deploy the Node server to a suitable host and configure the required contact, legal name, origin and retention details below.
+
+The GitHub Actions workflow in this repository runs syntax and server tests on pushes. It does not deploy the website. Publishing from `main` is controlled by the Pages source setting above.
+
 ## Run
 
 Use Node.js 22.21 or later. There are no npm dependencies to install.
