@@ -1,4 +1,4 @@
-import { validateEnquiry } from "./validation.js";
+import { validateEnquiry } from "./validation.js?v=4";
 const config = window.SPEAR_CONFIG || {};
 const preview = window.SPEAR_PREVIEW === true;
 const canSubmit = config.enquiriesEnabled === true && !preview;
@@ -12,17 +12,98 @@ function setMenu(open) {
   menu.setAttribute("aria-expanded", String(open));
   root.classList.toggle("menu-open", open);
   $$("main, .site-footer").forEach(el => { el.inert = open; });
+  if (open) nav?.querySelector("a")?.focus();
 }
 menu?.addEventListener("click", () => setMenu(menu.getAttribute("aria-expanded") !== "true"));
 nav?.addEventListener("click", event => { if (event.target.closest("a")) setMenu(false); });
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && menu?.getAttribute("aria-expanded") === "true") { setMenu(false); menu.focus(); }
+  if (event.key === "Tab" && menu?.getAttribute("aria-expanded") === "true") {
+    const items = [menu, ...$$("a,button", nav)];
+    if (event.shiftKey && document.activeElement === items[0]) { event.preventDefault(); items.at(-1).focus(); }
+    else if (!event.shiftKey && document.activeElement === items.at(-1)) { event.preventDefault(); items[0].focus(); }
+  }
 });
 window.matchMedia("(min-width:900px)").addEventListener("change", event => { if (event.matches) setMenu(false); });
 window.addEventListener("pageshow", event => { if (event.persisted) setMenu(false); });
 
-const sentinel = $(".top-sentinel");
-if (sentinel && "IntersectionObserver" in window) new IntersectionObserver(([entry]) => root.classList.toggle("is-scrolled", !entry.isIntersecting)).observe(sentinel);
+const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+const progress = $(".reading-progress span"), header = $(".site-header");
+const movingImages = $$("[data-parallax]");
+let scrollFrame = 0;
+function renderScroll() {
+  scrollFrame = 0;
+  const y = window.scrollY, range = root.scrollHeight - window.innerHeight;
+  header?.classList.toggle("is-scrolled", y > 28);
+  if (progress) progress.style.transform = `scaleX(${range > 0 ? Math.min(1, Math.max(0, y / range)) : 0})`;
+  for (const el of movingImages) {
+    if (motionPreference.matches || window.innerWidth < 900) { el.style.removeProperty("transform"); continue; }
+    const box = el.parentElement.getBoundingClientRect();
+    if (box.bottom > -100 && box.top < window.innerHeight + 100) {
+      const offset = Math.max(-24, Math.min(24, box.top * -.055));
+      el.style.transform = `translateY(${offset}px)`;
+    }
+  }
+}
+function requestScroll() { if (!scrollFrame) scrollFrame = requestAnimationFrame(renderScroll); }
+window.addEventListener("scroll", requestScroll, {passive:true});
+window.addEventListener("resize", requestScroll, {passive:true});
+motionPreference.addEventListener("change", () => {
+  if (motionPreference.matches) { root.classList.remove("reveal-ready"); $$("[data-reveal]").forEach(el => el.classList.add("is-in")); }
+  requestScroll();
+});
+renderScroll();
+
+// A fully readable set of service sections becomes a keyboard-accessible tab view.
+const serviceTabs = $("[data-service-tabs]");
+if (serviceTabs) {
+  const tabs = $$("[data-tab]", serviceTabs), panels = $$("[data-panel]", serviceTabs);
+  $(".tab-list",serviceTabs).setAttribute("role","tablist");
+  $(".service-panels",serviceTabs).classList.add("is-enhanced");
+  function activateTab(index, focus=false) {
+    tabs.forEach((tab,i) => { tab.setAttribute("aria-selected",String(i===index)); tab.tabIndex = i===index ? 0 : -1; });
+    panels.forEach((panel,i) => {
+      panel.hidden = i !== index;
+      panel.classList.toggle("is-entering",i===index);
+    });
+    if (focus) tabs[index].focus();
+    requestScroll();
+  }
+  tabs.forEach((tab,index) => {
+    tab.setAttribute("role","tab"); tab.setAttribute("aria-controls",panels[index].id);
+    panels[index].setAttribute("role","tabpanel"); panels[index].tabIndex = 0;
+    tab.addEventListener("click",() => activateTab(index));
+    tab.addEventListener("keydown",event => {
+      let target;
+      if(event.key==="ArrowRight") target=(index+1)%tabs.length;
+      if(event.key==="ArrowLeft") target=(index-1+tabs.length)%tabs.length;
+      if(event.key==="Home") target=0;
+      if(event.key==="End") target=tabs.length-1;
+      if(target!==undefined){event.preventDefault();activateTab(target,true);}
+    });
+  });
+  activateTab(0);
+}
+
+const rail = $("#image-rail"), previous = $("[data-rail-prev]"), next = $("[data-rail-next]");
+if (rail && previous && next) {
+  previous.setAttribute("aria-controls",rail.id); next.setAttribute("aria-controls",rail.id);
+  function railState() { previous.disabled = rail.scrollLeft < 5; next.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 5; }
+  function moveRail(direction) {
+    const first = $(".gallery-item",rail);
+    const step = first.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).gap);
+    rail.scrollBy({left:direction*step,behavior:motionPreference.matches?"instant":"smooth"});
+  }
+  previous.addEventListener("click",() => moveRail(-1)); next.addEventListener("click",() => moveRail(1));
+  rail.addEventListener("scroll",railState,{passive:true});
+  window.addEventListener("resize",railState,{passive:true});
+  rail.addEventListener("keydown",event => { if(event.target===rail && ["ArrowLeft","ArrowRight"].includes(event.key)){event.preventDefault();moveRail(event.key==="ArrowLeft"?-1:1);} });
+  railState();
+}
+for (const group of $$("[data-accordion]")) {
+  const steps = $$("details",group);
+  steps.forEach(step => step.addEventListener("toggle", () => { if(step.open) steps.filter(other=>other!==step).forEach(other=>{other.open=false;}); }));
+}
 
 // One-shot reveals. Nothing is hidden until this script has run, and only when motion is welcome.
 const revealable = $$("[data-reveal],[data-draw]");
@@ -68,8 +149,10 @@ const form = $("#enquiry-form");
 if (form) {
   const mode = $("#form-mode"), message = $("#form-message"), submit = $("#submit-enquiry"), label = $("[data-submit-label]");
   const query = new URLSearchParams(preview ? (window.SPEAR_PREVIEW_QUERY || "") : location.search).get("service");
-  const selected = query === "timber" ? "timber" : "vehicle";
+  const selected = query === "timber" ? "logistics" : ["vehicle","supplies","logistics"].includes(query) ? query : "vehicle";
   form.elements.service.value = selected;
+  const type = new URLSearchParams(location.search).get("type");
+  if (selected === "vehicle" && type) form.elements.model.value = type.slice(0,160);
   let downloadURL = null, busy = false;
   function clearErrors() {
     $$(".field-error",form).forEach(el => { el.textContent = ""; });
@@ -110,14 +193,14 @@ if (form) {
     const result = validateEnquiry(raw);
     if (!result.ok) { renderErrors(result.errors); return; }
     if (!canSubmit) {
-      const names = {service:"Service",name:"Name",contact:"Contact",model:"Vehicle",budget:"Budget",location:"Vehicle destination",pickup:"Pickup",destination:"Timber destination",load:"Estimated load",timing:"Preferred timing",notes:"Additional details"};
+      const names = {service:"Service",name:"Name",contact:"Contact",model:"Vehicle",budget:"Budget",location:"Vehicle destination",products:"Products & specifications",quantity:"Quantities & packaging",supplyDestination:"Delivery destination",supplyTiming:"Preferred timing",pickup:"Pickup",destination:"Delivery destination",load:"Cargo & estimated load",timing:"Preferred timing",notes:"Additional details"};
       const text = "SPEAR LINE — ENQUIRY DRAFT\nNot submitted. Prepared on " + new Date().toISOString().slice(0,10) + "\n\n" + Object.entries(result.value).filter(([key,value]) => names[key] && value).map(([key,value]) => names[key] + ": " + value).join("\n");
       if (downloadURL) URL.revokeObjectURL(downloadURL);
       downloadURL = URL.createObjectURL(new Blob([text],{type:"text/plain;charset=utf-8"}));
       show("Your enquiry is ready to download. Nothing has been sent to Spear Line.");
       const link = document.createElement("a"); link.className = "download-link"; link.href = downloadURL;
       link.download = "spear-line-" + result.value.service + "-enquiry.txt"; link.textContent = "Download your enquiry";
-      message.append(document.createElement("br"),link);
+      const downloadRow=document.createElement("p"); downloadRow.append(link); message.append(downloadRow);
       return;
     }
     busy = true; submit.disabled = true; label.textContent = "Sending…";

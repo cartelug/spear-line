@@ -4,7 +4,7 @@ import { readFile, access } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 const pub = resolve(dirname(fileURLToPath(import.meta.url)),"..","public");
-const pages = ["index.html","vehicles.html","timber-logistics.html","about.html","enquire.html","privacy.html","404.html"];
+const pages = ["index.html","vehicles.html","supplies.html","logistics.html","timber-logistics.html","about.html","enquire.html","privacy.html","404.html"];
 const read = name => readFile(resolve(pub,name),"utf8");
 const exists = async name => access(resolve(pub,name)).then(() => true,() => false);
 test("every page has one h1, unique ids, described images and no inline styles",async () => {
@@ -46,14 +46,18 @@ test("content is never hidden unless a script has registered its own exit",async
     const [selector,body = ""] = rule.split("{");
     if (!/opacity:0[;}]|visibility:hidden/.test(body) && !/transform:scale[XY]\(0\)/.test(body)) continue;
     if (/^\s*(from|to|\d+%)\s*$/.test(selector)) continue;
-    assert.ok(/html\.(reveal-ready|intro)|\.intro-overlay|\.honey|\.choice-options input|^\s*\[hidden\]|\.menu-|\.site-nav|\.skip|\.thread|@media/.test(selector) || /\.intro-line|\.intro-stack/.test(selector),"unguarded hidden state: " + selector.slice(0,80));
+    assert.ok(/html\.(reveal-ready|intro)|\.intro-overlay|\.honey|\.choice-options input|^\s*\[hidden\]|\.menu-|\.site-nav|\.skip|\.thread|\.reading-progress|\.tab-list button::after|@media/.test(selector) || /\.intro-line|\.intro-stack/.test(selector),"unguarded hidden state: " + selector.slice(0,80));
   }
   assert.match(await read("boot.js"),/setTimeout\(exit,\s*2000\)/);
 });
-test("future plans are labelled and enquiry copy does not claim a static send",async () => {
-  for (const page of ["index.html","about.html"]) assert.match(await read(page),/Future (direction|plan)[^<]*(Not yet available|plan)/,page);
-  for (const page of ["index.html","vehicles.html"]) assert.match(await read(page),/nothing is submitted to Spear Line until it is/,page);
-  const about = await read("about.html");
-  for (const text of ["Kampala","Dubai","South Sudan","warehousing","Agriculture"]) assert.ok(about.includes(text),text);
+test("current services and illustrative imagery are clear without invented claims",async () => {
+  for (const page of pages) {
+    const html=await read(page);
+    for (const destination of ["vehicles.html","supplies.html","logistics.html"]) assert.ok(html.includes('href="'+destination+'"'),page+" → "+destination);
+    assert.match(html,/AI-generated imagery illustrates our service areas/);
+  }
+  assert.match(await read("enquire.html"),/Online submission is not currently open/);
+  assert.match(await read("app.js"),/Nothing has been sent to Spear Line/);
+  assert.equal(await read("timber-logistics.html"),await read("logistics.html"));
   for (const page of pages) assert.doesNotMatch(await read(page),/in stock|available now|fleet of|guaranteed delivery|testimonial|\bUSD \d{2,3},\d{3}\b(?!–)/i,page);
 });

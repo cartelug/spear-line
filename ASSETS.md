@@ -1,36 +1,26 @@
-# Brand and imagery
+# Asset provenance
 
-## Spear Line logo
-Original: SPEAR_LINE_logo_white_transparent.png, 950 × 604 RGBA.
-Stored unchanged at public/assets/spear-line-logo.png.
-Supplied business asset: https://drive.google.com/file/d/1tUAku-0m2T8QFBV6zTJ6lljm2hEhYvD5/view
-Use the white logo on dark backgrounds with clear space. Its detailed symbol may be hard to read as a favicon; an owner-approved small-size mark is a future refinement.
+The existing Spear Line white transparent logo is unchanged: public/assets/spear-line-logo.png.
 
-## Proposed web palette
-Ink #141719; white #FFFFFF; warm white #F4F2ED; muted gold #C8A66B; deep green #202D28.
-The supplementary colors are design choices for this website, not a claim about an existing formal brand manual.
+Archivo and Lexend are self-hosted in public/assets/fonts/. The existing OFL.txt licence is retained.
 
-## Typography
-Archivo (500–800) for headings, menus, buttons, labels and numbers; Lexend (400–600) for paragraphs, forms and small text. Both are SIL Open Font License 1.1 and served from `public/assets/fonts/` (licence text in `OFL.txt`). Original logo lettering is not replaced.
-https://fonts.google.com/specimen/Archivo
-https://fonts.google.com/specimen/Lexend
-The two files are the Latin variable subsets from Fontsource (`@fontsource-variable/archivo` and `@fontsource-variable/lexend` 5.3.0), narrowed to the used weight ranges with fontTools:
-`fonttools varLib.instancer archivo-latin-wght-normal.woff2 wght=500:800 -o archivo-latin-500-800.woff2`
-`fonttools varLib.instancer lexend-latin-wght-normal.woff2 wght=400:600 -o lexend-latin-400-600.woff2`
-Neither family contains arrow glyphs, so arrows are inline SVG. Fallback faces in `styles.css` use size and metric overrides measured against Arial.
+## New imagery
 
-## Representative photographs
-- vehicle: Fluid Imagery — https://unsplash.com/photos/_xf77jLFyfw
-  CDN: https://images.unsplash.com/photo-1612934562611-8da36d7c7c29?auto=format&fit=crop&w=1600&q=85
-- timber: Krzysztof Kowalik — https://unsplash.com/photos/pz_z3Tg6fSI
-  CDN: https://images.unsplash.com/photo-1549624523-8b6241ac724b?auto=format&fit=crop&w=1800&q=85
-- yard: Ingemar Johnsson — https://unsplash.com/photos/tEfYWckz0TI
-  CDN: https://images.unsplash.com/photo-1677081726722-f42ac6b0263c?auto=format&fit=crop&w=1400&q=85
-- drive: Prashant Gupta — https://unsplash.com/photos/H98HtV4lkik
-  CDN: https://images.unsplash.com/photo-1572629166063-011a332eafed?auto=format&fit=crop&w=1800&q=85
-License source: https://unsplash.com/license
-Source pages described these photographs as free under the Unsplash License when researched. Images load from Unsplash. Their crops use focal-point classes in `styles.css` (`--fx`, `--fy`) that have not been checked against the actual photographs. Images do not depict confirmed Spear Line stock, fleet ownership or completed work.
+Twelve original visual concepts were generated with the built-in image-generation tool on 24 October 2026. The complete prompts are in visual-prompts.json. These are illustrative scenes; they are not documentary photographs of Spear Line staff, inventory, facilities or vehicles.
 
-## Business sources
-Spear Line HQ: https://app.notion.com/p/3ffca91cddad8184a734d2ef08d56a00
-Website strategy: https://app.notion.com/p/3ffca91cddad81b4a3f7cf9b551a8965
+| Asset stem | Use |
+| --- | --- |
+| 01-hero-road | Homepage road hero |
+| 02-vehicles-suv | Vehicle service hero and showcase |
+| 03-vehicles-pickup | Vehicle types and gallery |
+| 04-logistics-truck | Logistics hero and showcase |
+| 05-foodstuffs | Supplies hero and showcase |
+| 06-beverages | Beverages and gallery |
+| 07-warehouse | Supply coordination and company story |
+| 08-dispatch-team | About page and story inset |
+| 09-highland-road | Journey and closing banner |
+| 10-last-mile-van | Delivery and business vehicles |
+| 11-container-port | Trade coordination and gallery |
+| 12-sourcing-detail | Enquiry, process and planning |
+
+Each image is available as a full-width .webp and a -768.webp variant under public/assets/visuals/. The complete 1536 px set is approximately 2.28 MB; individual full-width files are below 280 KB. Responsive srcset and lazy loading limit unnecessary transfers. The matching root assets/ directory is maintained by sync:pages for GitHub Pages.

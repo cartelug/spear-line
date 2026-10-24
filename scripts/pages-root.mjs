@@ -1,15 +1,18 @@
-import { readFile, copyFile, mkdir, writeFile } from "node:fs/promises";
+import { readFile, copyFile, mkdir, writeFile, readdir } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const paths = [
-  "index.html", "vehicles.html", "timber-logistics.html", "about.html",
+  "index.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html",
   "enquire.html", "privacy.html", "404.html", "robots.txt",
   "site-config.js", "boot.js", "app.js", "validation.js", "styles.css",
   "assets/spear-line-logo.png", "assets/fonts/archivo-latin-500-800.woff2",
   "assets/fonts/lexend-latin-400-600.woff2", "assets/fonts/OFL.txt"
 ];
+for (const name of await readdir(resolve(root,"public/assets/visuals"))) {
+  if (/^[a-z0-9-]+\.webp$/.test(name)) paths.push("assets/visuals/"+name);
+}
 const checking = process.argv.includes("--check");
 const writing = process.argv.includes("--write");
 if (checking === writing) throw new Error("Use exactly one of --check or --write.");

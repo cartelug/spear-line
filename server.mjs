@@ -1,5 +1,5 @@
 import http from "node:http";
-import { readFile, mkdir, appendFile, realpath, stat } from "node:fs/promises";
+import { readFile, mkdir, appendFile, realpath, stat, readdir } from "node:fs/promises";
 import { resolve, dirname, extname, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { randomUUID } from "node:crypto";
@@ -9,8 +9,9 @@ const root = dirname(fileURLToPath(import.meta.url));
 const publicRoot = await realpath(resolve(root,"public"));
 const enabled = process.env.ENQUIRIES_ENABLED === "true";
 const origin = process.env.PUBLIC_ORIGIN || "http://localhost:3000";
-const port = Number(process.env.PORT || 3000);
-const host = process.env.HOST || "127.0.0.1";
+function cliOption(name,fallback) { const index=process.argv.indexOf(name); return index>=0 && process.argv[index+1] ? process.argv[index+1] : fallback; }
+const port = Number(cliOption("--port",process.env.PORT || 3000));
+const host = cliOption("--host",process.env.HOST || "127.0.0.1");
 const retentionDays = Number(process.env.RETENTION_DAYS || 0);
 const config = {
   enquiriesEnabled: enabled,
@@ -30,9 +31,12 @@ const dataRoot = resolve(root,process.env.DATA_DIR || "data");
 await mkdir(dataRoot,{recursive:true,mode:0o700});
 const actualDataRoot = await realpath(dataRoot);
 if (actualDataRoot === publicRoot || actualDataRoot.startsWith(publicRoot + sep)) throw new Error("DATA_DIR must be outside public/.");
-const pages = ["index.html","vehicles.html","timber-logistics.html","about.html","enquire.html","privacy.html","404.html"];
+const pages = ["index.html","vehicles.html","supplies.html","logistics.html","timber-logistics.html","about.html","enquire.html","privacy.html","404.html"];
 const allowedFiles = new Set([...pages,"styles.css","boot.js","app.js","validation.js","robots.txt","assets/spear-line-logo.png","assets/fonts/archivo-latin-500-800.woff2","assets/fonts/lexend-latin-400-600.woff2","assets/fonts/OFL.txt"]);
-const mime = {".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".png":"image/png",".woff2":"font/woff2",".txt":"text/plain; charset=utf-8"};
+for (const name of await readdir(resolve(publicRoot,"assets/visuals"))) {
+  if (/^[a-z0-9-]+\.webp$/.test(name)) allowedFiles.add("assets/visuals/"+name);
+}
+const mime = {".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".png":"image/png",".webp":"image/webp",".woff2":"font/woff2",".txt":"text/plain; charset=utf-8"};
 const rate = new Map();
 const cleanup = setInterval(() => { for (const [key,value] of rate) if (Date.now() > value.expires) rate.delete(key); },60000);
 cleanup.unref();

@@ -1,109 +1,38 @@
-# Spear Line
+# Spear Line — V4
 
-A complete six-page website for vehicle sales and timber transportation to Kampala and the Democratic Republic of Congo.
+Vehicles, foodstuffs and beverages, and logistics. A responsive, presentation-led website using self-hosted Archivo and Lexend, the existing Spear Line logo and twelve coordinated generated photographs.
 
-The design uses the original Spear Line logo, an ink / forest / warm-paper / brass palette, self-hosted Archivo and Lexend typography, representative photography, a recurring brass line device, a brief first-visit opening, and dedicated enquiry journeys for both services. See DESIGN.md for the V3 design system, seam map and motion rules.
+## Experience
 
-## GitHub Pages from `main`
+- Cinematic road hero and a brief first-visit logo entrance.
+- Keyboard-accessible service tabs, horizontal image gallery, scroll reveals and restrained desktop parallax.
+- Dedicated vehicles, supplies, logistics, about and enquiry pages.
+- Responsive phone/tablet navigation with Escape dismissal and focus management.
+- Reduced-motion support and readable content if animation scripts fail.
+- Local WebP imagery in 1536 px and 768 px versions; no external image or font requests.
+- The former timber-logistics.html address remains an alias for logistics.html.
 
-This repository contains the static website at the repository root so GitHub Pages can publish **`main` → `/(root)`**. GitHub Pages has deployed the static site from **Settings → Pages → Source: Deploy from a branch → Branch: main → Folder: /(root)**. Visit [the live Pages site](https://cartelug.github.io/spear-line/). GitHub records the deployment as a Pages build run in Actions even when Pages is configured to publish from a branch.
+## Local development
 
-The canonical site files are under `public/` for the Node server. Identical copies in the repository root serve GitHub Pages. After editing files in `public/`, run `npm run sync:pages` before committing. `npm run check` detects out-of-sync copies. The root `.nojekyll` file asks Pages to serve these files directly.
-
-GitHub Pages serves static HTML, CSS, JavaScript, the self-hosted fonts and the logo. It does not run `server.mjs`; the enquiry form prepares a downloadable draft there and does not send a message. To receive online enquiries, deploy the Node server to a suitable host and configure the required contact, legal name, origin and retention details below.
-
-The repository's **Check website** workflow runs syntax and server tests on pushes. It does not deploy the website. Publishing from `main` is controlled by the Pages source setting above.
-
-## Run
-
-Use Node.js 22.21 or later. There are no npm dependencies to install.
+Node 22.21 or newer. No package installation is required.
 
 ```sh
-npm start
-```
-
-Open http://localhost:3000. The default mode prepares downloadable enquiries on the visitor's device; it does not submit them.
-
-```sh
+npm run dev
+npm run render:pages
 npm run check
 npm test
 ```
 
-The Node test suite covers validation, HTTP routes, private storage, rejected submissions, the disabled form state, the strict Content Security Policy, font serving, and static page structure (headings, links, typography, no content hidden without a script). Browser, accessibility and performance checks for the V3 design are recorded in VALIDATION.md.
+Edit public/ for direct source changes. Shared HTML structure and content are authored in scripts/render-pages.mjs. Run render:pages after changing the generator; it generates the pages and mirrors public/ into the repository root for GitHub Pages. After direct CSS or JavaScript edits, run npm run sync:pages. The check command catches mismatches between the two locations.
 
-## Pages
+The server accepts HOST/PORT environment variables and --host / --port arguments. Reload the browser after edits; restart the server when adding new asset filenames.
 
-- Home — `public/index.html`
-- Vehicle sales — `public/vehicles.html`
-- Timber logistics — `public/timber-logistics.html`
-- About — `public/about.html`
-- Enquire — `public/enquire.html`
-- Privacy — `public/privacy.html`
-- Supporting 404 page
+## Enquiries
 
-## Configure real enquiries
+GitHub Pages serves the static configuration in site-config.js. Online submission is currently disabled and no company contact information is configured. The form validates requirements and creates a downloadable text draft in the browser. It does not claim to send a draft.
 
-Copy `.env.example` to `.env`. Confirm the actual business details before filling them in.
+The existing Node server can accept enquiries when the operator configures ENQUIRIES_ENABLED, BUSINESS_LEGAL_NAME, PUBLIC_CONTACT_EMAIL, RETENTION_DAYS and PUBLIC_ORIGIN. See .env.example for the remaining optional contact settings. Enquiries are stored outside public/; preserve that separation. The browser and server share public/validation.js. Supplies, vehicles and logistics have different required fields. Old service=timber requests are normalised to logistics.
 
-Required to enable server submission:
+## Assets and maintenance
 
-- `ENQUIRIES_ENABLED=true`
-- `BUSINESS_LEGAL_NAME`
-- `PUBLIC_CONTACT_EMAIL` — the published contact/rights-request address
-- `RETENTION_DAYS` — the operator's chosen retention period
-- `PUBLIC_ORIGIN` — the exact public origin, with no trailing slash
-
-Optional: `PUBLIC_CONTACT_PHONE`, `PUBLIC_WHATSAPP` (international digits), `PUBLIC_ADDRESS`. Missing public contact links stay hidden. The server refuses to enable enquiries without the required identity/contact/retention values. In production, it also requires an HTTPS origin.
-
-Every successful request creates a private JSON file in `DATA_DIR` and returns a reference only after the file write has completed and flushed. This implementation does **not** send email or WhatsApp notifications. The operator must establish a monitored workflow for reading enquiries from the protected server volume, or add an authenticated CRM/email integration before relying on it for business. Never publish the data directory or commit real enquiries.
-
-Set `DATA_DIR` to a persistent private volume outside `public/`. This initial backend is designed for one Node instance. If deploying multiple instances or to ephemeral/serverless infrastructure, replace the file store with a suitable database before accepting enquiries.
-
-The request limiter uses the socket IP and deliberately does not trust arbitrary forwarded headers. Behind a reverse proxy, configure rate limiting at the trusted edge or implement trusted-proxy handling; otherwise visitors may share one application limit.
-
-## Retention
-
-Schedule the purge script once a day using the same environment and private volume as the server. Preview first:
-
-```sh
-node --env-file=.env scripts/purge-enquiries.mjs
-node --env-file=.env scripts/purge-enquiries.mjs --apply
-```
-
-The second command permanently removes expired enquiry JSON files. Establish appropriate backup expiry and handling of records associated with transactions separately. No retention job runs automatically until the operator schedules it.
-
-## Deploy
-
-Run `npm start` on a Node host behind HTTPS. Bind `HOST=0.0.0.0` if the host requires it, set the correct `PORT`, and configure the exact `PUBLIC_ORIGIN`. Keep `NODE_ENV=production` and a persistent private data volume.
-
-Static-only hosting can serve `public/` with enquiries in preparation mode. **GitHub Pages cannot run this Node backend.** Do not enable the front-end submission setting without deploying the server.
-
-## Launch checklist
-
-- Verify business name, public contact details and privacy/retention information.
-- Verify the service copy, timber destinations and future-business wording with the owner.
-- Run the Node suite and test both forms against the deployed server.
-- Check desktop and mobile layouts on real devices, keyboard navigation, screen-reader error feedback and reduced-motion behavior.
-- Tune the photo focal-point classes (`.fp-road`, `.fp-desert`, `.fp-lorry`, `.fp-yard` in `public/styles.css`) against the real photographs; they have not been verified.
-- Verify that the external Unsplash images load, or self-host approved versions (fonts are already self-hosted).
-- Confirm the enquiry-monitoring process and daily purge job.
-- Keep stock photos labelled as representative. Replace them with approved owned imagery when available.
-- Choose the domain; add canonical URLs, social share images, sitemap and appropriate structured data.
-- Remove the deliberate `noindex,nofollow` meta tags and replace the blocking `robots.txt` only after launch readiness is confirmed.
-- Test HTTPS, headers, form errors, duplicate/timeout handling, backups and a real receipt before promotion.
-
-No stock catalogue, prices, guarantees, testimonials, fleet ownership, office address or company registration claims have been invented.
-
-## GitHub
-
-Repository: https://github.com/cartelug/spear-line
-
-The source was uploaded after the repository was created. Its visibility is public at the owner's direction. The website remains blocked from search indexing until launch checks and business details are complete.
-
-## Source package
-
-The accompanying preview HTML includes a “Download source ZIP” button. The JSON bundle is a lossless fallback containing each path, encoding and file content, including the original PNG in base64. The preview sets `SPEAR_PREVIEW=true` and never submits enquiries.
-
-## Credits
-
-See ASSETS.md. The Spear Line identity remains its original artwork; no substitute logo was generated.
+See ASSETS.md for provenance, visual-prompts.json for the complete generation prompts, DESIGN.md for design and motion notes, and VALIDATION.md for checks completed for this upgrade. Keep source logo and font licence files intact.

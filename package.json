@@ -3,15 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Spear Line — vehicle sales and timber transport website",
+  "description": "Spear Line — vehicles, foodstuffs and beverages, and logistics",
   "engines": {
     "node": ">=22.21.0"
   },
   "scripts": {
     "start": "node --env-file-if-exists=.env server.mjs",
-    "dev": "node --watch --env-file-if-exists=.env server.mjs",
+    "dev": "node --env-file-if-exists=.env server.mjs",
     "test": "node --test",
     "check": "node --check server.mjs && node --check public/boot.js && node --check public/app.js && node --check public/validation.js && node scripts/pages-root.mjs --check",
-    "sync:pages": "node scripts/pages-root.mjs --write"
+    "sync:pages": "node scripts/pages-root.mjs --write",
+    "render:pages": "node scripts/render-pages.mjs && node scripts/pages-root.mjs --write"
   }
 }
