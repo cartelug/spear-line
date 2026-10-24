@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-24",
+  "definition": "Unique DOM elements registered for actual entrance or interaction animations; not a count of distinct animation styles.",
+  "home": [
+    {"viewport_width":320,"registered_targets":308,"word_targets":226,"horizontal_overflow":false},
+    {"viewport_width":390,"registered_targets":308,"word_targets":226,"horizontal_overflow":false},
+    {"viewport_width":768,"registered_targets":307,"horizontal_overflow":false},
+    {"viewport_width":1363,"registered_targets":307,"horizontal_overflow":false}
+  ],
+  "played_checkpoints": [
+    {"viewport_width":390,"scenario":"Services, gallery and process journey","distinct_animated_targets":145},
+    {"viewport_width":1363,"scenario":"Services and gallery journey","distinct_animated_targets":131}
+  ],
+  "reduced_motion": {"toggle_tested":true,"persists_on_navigation":true,"new_club_page_started_animations":0},
+  "other_checks": ["Menu open/close and Escape","Tab click and arrow-key selection","Gallery count advancement","Accordion sibling collapse","Immediate logistics radio selection","16 px mobile input text","Keyboard-aware bottom navigation","Completed draft-only logistics enquiry"]
+}

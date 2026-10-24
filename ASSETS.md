@@ -24,3 +24,7 @@ Twelve original visual concepts were generated with the built-in image-generatio
 | 12-sourcing-detail | Enquiry, process and planning |
 
 Each image is available as a full-width .webp and a -768.webp variant under public/assets/visuals/. The complete 1536 px set is approximately 2.28 MB; individual full-width files are below 280 KB. Responsive srcset and lazy loading limit unnecessary transfers. The matching root assets/ directory is maintained by sync:pages for GitHub Pages.
+
+## V6 phone hero
+
+A portrait companion was generated with the built-in image tool from the original road hero reference. The full prompt is included as 13-mobile-hero in visual-prompts.json. The vehicle identities, landscape and warm colour direction follow the desktop image. Optimised files are 13-mobile-hero-1024.webp (1024 × 1536), 13-mobile-hero.webp (768 × 1152) and 13-mobile-hero-480.webp (480 × 720). The mobile picture source selects these variants; desktop keeps the original hero.

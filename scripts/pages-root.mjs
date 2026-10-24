@@ -4,9 +4,9 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const paths = [
-  "index.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html",
+  "index.html", "club.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html",
   "enquire.html", "privacy.html", "404.html", "robots.txt",
-  "site-config.js", "boot.js", "app.js", "validation.js", "styles.css",
+  "site-config.js", "boot.js", "app.js", "validation.js", "styles.css", "experience.css", "motion.css", "motion.js",
   "assets/spear-line-logo.png", "assets/fonts/archivo-latin-500-800.woff2",
   "assets/fonts/lexend-latin-400-600.woff2", "assets/fonts/OFL.txt"
 ];

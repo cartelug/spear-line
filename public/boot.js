@@ -1,9 +1,15 @@
 (function () {
   var root = document.documentElement;
   root.classList.add("js");
+  document.addEventListener("change",function(event){
+    if(event.target.matches('input[name="service"]')&&event.target.form)event.target.form.dataset.serviceTouched="true";
+  },true);
+  try { if (localStorage.getItem("spear-line-motion") === "reduce" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) root.classList.add("motion-reduced"); } catch (e) { /* Motion preferences are optional. */ }
   if (!root.hasAttribute("data-intro")) return;
   var KEY = "spear-line-intro", done = false, sequence = false, ready = document.readyState !== "loading";
   function eligible() {
+    if (root.classList.contains("motion-reduced")) return false;
+    if (window.matchMedia("(max-width:599px)").matches) return false;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
     var nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
     if (nav && nav.type !== "navigate") return false;

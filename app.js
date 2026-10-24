@@ -1,4 +1,4 @@
-import { validateEnquiry } from "./validation.js?v=4";
+import { validateEnquiry } from "./validation.js?v=5.2";
 const config = window.SPEAR_CONFIG || {};
 const preview = window.SPEAR_PREVIEW === true;
 const canSubmit = config.enquiriesEnabled === true && !preview;
@@ -6,12 +6,15 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 $$("[data-year]").forEach(el => { el.textContent = new Date().getFullYear(); });
 const root = document.documentElement;
+let motion=null;
 const menu = $(".menu-toggle"), nav = $("#site-menu");
 function setMenu(open) {
   if (!menu) return;
+  const wasOpen=menu.getAttribute("aria-expanded")==="true";
   menu.setAttribute("aria-expanded", String(open));
+  if(open||wasOpen)motion?.menu(open,nav);
   root.classList.toggle("menu-open", open);
-  $$("main, .site-footer").forEach(el => { el.inert = open; });
+  $$("main, .site-footer, .mobile-dock").forEach(el => { el.inert = open; });
   if (open) nav?.querySelector("a")?.focus();
 }
 menu?.addEventListener("click", () => setMenu(menu.getAttribute("aria-expanded") !== "true"));
@@ -28,6 +31,9 @@ window.matchMedia("(min-width:900px)").addEventListener("change", event => { if 
 window.addEventListener("pageshow", event => { if (event.persisted) setMenu(false); });
 
 const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+const editingField = el => el?.matches?.('textarea,select,input:not([type="radio"]):not([type="checkbox"]):not([type="submit"])');
+document.addEventListener("focusin",event => root.classList.toggle("is-editing",Boolean(editingField(event.target))));
+document.addEventListener("focusout",() => requestAnimationFrame(() => root.classList.toggle("is-editing",Boolean(editingField(document.activeElement)))));
 const progress = $(".reading-progress span"), header = $(".site-header");
 const movingImages = $$("[data-parallax]");
 let scrollFrame = 0;
@@ -37,7 +43,7 @@ function renderScroll() {
   header?.classList.toggle("is-scrolled", y > 28);
   if (progress) progress.style.transform = `scaleX(${range > 0 ? Math.min(1, Math.max(0, y / range)) : 0})`;
   for (const el of movingImages) {
-    if (motionPreference.matches || window.innerWidth < 900) { el.style.removeProperty("transform"); continue; }
+    if (motionPreference.matches || root.classList.contains("motion-reduced") || window.innerWidth < 900) { el.style.removeProperty("transform"); continue; }
     const box = el.parentElement.getBoundingClientRect();
     if (box.bottom > -100 && box.top < window.innerHeight + 100) {
       const offset = Math.max(-24, Math.min(24, box.top * -.055));
@@ -48,6 +54,7 @@ function renderScroll() {
 function requestScroll() { if (!scrollFrame) scrollFrame = requestAnimationFrame(renderScroll); }
 window.addEventListener("scroll", requestScroll, {passive:true});
 window.addEventListener("resize", requestScroll, {passive:true});
+document.addEventListener("spear:motion-preference",requestScroll);
 motionPreference.addEventListener("change", () => {
   if (motionPreference.matches) { root.classList.remove("reveal-ready"); $$("[data-reveal]").forEach(el => el.classList.add("is-in")); }
   requestScroll();
@@ -67,6 +74,7 @@ if (serviceTabs) {
       panel.classList.toggle("is-entering",i===index);
     });
     if (focus) tabs[index].focus();
+    motion?.panel(panels[index]);
     requestScroll();
   }
   tabs.forEach((tab,index) => {
@@ -88,11 +96,24 @@ if (serviceTabs) {
 const rail = $("#image-rail"), previous = $("[data-rail-prev]"), next = $("[data-rail-next]");
 if (rail && previous && next) {
   previous.setAttribute("aria-controls",rail.id); next.setAttribute("aria-controls",rail.id);
-  function railState() { previous.disabled = rail.scrollLeft < 5; next.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 5; }
+  const status=$("[data-rail-status]"), meter=$("[data-rail-progress]");
+  let lastIndex=-1;
+  function railState() {
+    previous.disabled = rail.scrollLeft < 5; next.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 5;
+    const items=$$(".gallery-item",rail);
+    const step=items[0].getBoundingClientRect().width+parseFloat(getComputedStyle(rail).gap);
+    const index=Math.min(items.length-1,Math.max(0,Math.round(rail.scrollLeft/step)));
+    if(index!==lastIndex){
+      if(status) status.textContent=String(index+1).padStart(2,"0")+" / "+String(items.length).padStart(2,"0");
+      if(meter) meter.style.transform=`scaleX(${(index+1)/items.length})`;
+      motion?.gallery(status);
+      lastIndex=index;
+    }
+  }
   function moveRail(direction) {
     const first = $(".gallery-item",rail);
     const step = first.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).gap);
-    rail.scrollBy({left:direction*step,behavior:motionPreference.matches?"instant":"smooth"});
+    rail.scrollBy({left:direction*step,behavior:motionPreference.matches||root.classList.contains("motion-reduced")?"instant":"smooth"});
   }
   previous.addEventListener("click",() => moveRail(-1)); next.addEventListener("click",() => moveRail(1));
   rail.addEventListener("scroll",railState,{passive:true});
@@ -102,23 +123,22 @@ if (rail && previous && next) {
 }
 for (const group of $$("[data-accordion]")) {
   const steps = $$("details",group);
-  steps.forEach(step => step.addEventListener("toggle", () => { if(step.open) steps.filter(other=>other!==step).forEach(other=>{other.open=false;}); }));
+  steps.forEach(step => {
+    step.addEventListener("toggle",()=>{if(step.open&&(!motion||motion.disabled))steps.filter(other=>other!==step).forEach(other=>{other.open=false;});});
+    step.querySelector("summary").addEventListener("click",event=>{
+      if(!motion||motion.disabled)return;
+      event.preventDefault();const open=!motion.accordionOpen(step);
+      if(open)steps.filter(other=>other!==step&&motion.accordionOpen(other)).forEach(other=>motion.accordion(other,false));
+      motion.accordion(step,open);
+    });
+  });
 }
 
-// One-shot reveals. Nothing is hidden until this script has run, and only when motion is welcome.
-const revealable = $$("[data-reveal],[data-draw]");
-if (revealable.length && "IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  const pending = new Set(), seen = el => { el.classList.add("is-in"); pending.delete(el); observer.unobserve(el); };
-  for (const el of revealable) { if (el.getBoundingClientRect().top < window.innerHeight * 0.88) el.classList.add("is-in"); else pending.add(el); }
-  const observer = new IntersectionObserver(entries => {
-    for (const entry of entries) if (entry.isIntersecting || entry.boundingClientRect.top < 0) seen(entry.target);
-    if (!pending.size) window.removeEventListener("scroll", onScroll);
-  }, { rootMargin: "0px 0px -12% 0px" });
-  let settle;
-  // A fling can carry an element past the viewport between observer samples; reveal anything left behind once scrolling settles.
-  function onScroll() { clearTimeout(settle); settle = setTimeout(() => { for (const el of [...pending]) if (el.getBoundingClientRect().bottom < 0) seen(el); if (!pending.size) window.removeEventListener("scroll", onScroll); }, 140); }
-  if (pending.size) { root.classList.add("reveal-ready"); pending.forEach(el => observer.observe(el)); window.addEventListener("scroll", onScroll, { passive: true }); }
-}
+// The shared motion layer owns scroll, text and component entrance timelines.
+import("./motion.js?v=6.3").then(({createMotion})=>{motion=createMotion({root,preference:motionPreference});}).catch(()=>{
+  root.classList.remove("motion-ready");root.dataset.motionState="unavailable";
+  $$("[data-motion-toggle]").forEach(button=>{button.hidden=true;});
+});
 
 function addContact(selector, href, label) {
   $$(selector).forEach(el => {
@@ -149,7 +169,8 @@ const form = $("#enquiry-form");
 if (form) {
   const mode = $("#form-mode"), message = $("#form-message"), submit = $("#submit-enquiry"), label = $("[data-submit-label]");
   const query = new URLSearchParams(preview ? (window.SPEAR_PREVIEW_QUERY || "") : location.search).get("service");
-  const selected = query === "timber" ? "logistics" : ["vehicle","supplies","logistics"].includes(query) ? query : "vehicle";
+  const currentChoice=form.elements.service.value||"vehicle";
+  const selected = form.dataset.serviceTouched==="true" ? currentChoice : query === "timber" ? "logistics" : ["vehicle","supplies","logistics"].includes(query) ? query : currentChoice;
   form.elements.service.value = selected;
   const type = new URLSearchParams(location.search).get("type");
   if (selected === "vehicle" && type) form.elements.model.value = type.slice(0,160);
@@ -172,7 +193,7 @@ if (form) {
   label.textContent = canSubmit ? "Send enquiry" : "Prepare enquiry";
   submit.disabled = false;
   function show(text,kind="") {
-    message.className = "form-message " + kind; message.textContent = text; message.focus();
+    message.className = "form-message " + kind; message.textContent = text; message.focus(); motion?.message(message);
   }
   function renderErrors(errors) {
     clearErrors();

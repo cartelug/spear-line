@@ -1,8 +1,12 @@
-# Spear Line — V4
+# Spear Line — V6
 
-Vehicles, foodstuffs and beverages, and logistics. A responsive, presentation-led website using self-hosted Archivo and Lexend, the existing Spear Line logo and twelve coordinated generated photographs.
+Vehicles, foodstuffs and beverages, and logistics. A responsive, presentation-led website using self-hosted Archivo and Lexend, the existing Spear Line logo and thirteen coordinated generated photographs.
 
 ## Experience
+
+- A dedicated Spear Line Club coming-soon page and homepage feature.
+- A phone-specific portrait hero, thumb navigation, larger controls and keyboard-aware enquiry layout.
+- More than 300 registered animation targets, coordinated text/scroll/component timelines and a saved Reduce motion control. See docs/MOTION.md.
 
 - Cinematic road hero and a brief first-visit logo entrance.
 - Keyboard-accessible service tabs, horizontal image gallery, scroll reveals and restrained desktop parallax.

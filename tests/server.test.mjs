@@ -31,7 +31,7 @@ const timber = {service:"timber",name:"Test Customer",contact:"+256700000000",pi
 test("server serves the site and stores valid requests privately",{timeout:20000},async t => {
   const {origin,dir} = await boot(t,true);
   const post = (body,options={}) => fetch(origin + "/api/enquiries",{method:"POST",headers:{"Content-Type":"application/json",Origin:origin,...options.headers},body:typeof body === "string" ? body : JSON.stringify(body)});
-  for (const page of ["/","/vehicles.html","/supplies.html","/logistics.html","/timber-logistics.html","/about.html","/enquire.html","/privacy.html","/assets/spear-line-logo.png"]) assert.equal((await fetch(origin+page)).status,200,page);
+  for (const page of ["/","/club.html","/vehicles.html","/supplies.html","/logistics.html","/timber-logistics.html","/about.html","/enquire.html","/privacy.html","/assets/spear-line-logo.png"]) assert.equal((await fetch(origin+page)).status,200,page);
   const response = await post(vehicle); assert.equal(response.status,201);
   const {reference} = await response.json(); assert.match(reference,/^[a-f0-9-]{36}$/);
   const record = JSON.parse(await readFile(resolve(dir,reference+".json"),"utf8")); assert.equal(record.model,"Pickup"); assert.equal(record.reference,reference);
@@ -55,7 +55,7 @@ test("preparation mode cannot accept enquiries",{timeout:20000},async t => {
 });
 test("fonts, boot script and a strict self-hosted CSP are served",{timeout:20000},async t => {
   const {origin} = await boot(t,false);
-  for (const [path,type] of [["/assets/fonts/archivo-latin-500-800.woff2","font/woff2"],["/assets/fonts/lexend-latin-400-600.woff2","font/woff2"],["/assets/fonts/OFL.txt","text/plain"],["/boot.js","text/javascript"]]) {
+  for (const [path,type] of [["/assets/fonts/archivo-latin-500-800.woff2","font/woff2"],["/assets/fonts/lexend-latin-400-600.woff2","font/woff2"],["/assets/fonts/OFL.txt","text/plain"],["/boot.js","text/javascript"],["/motion.js","text/javascript"],["/motion.css","text/css"],["/experience.css","text/css"]]) {
     const response = await fetch(origin + path); assert.equal(response.status,200,path); assert.match(response.headers.get("content-type"),new RegExp(type),path);
   }
   const csp = (await fetch(origin + "/")).headers.get("content-security-policy");
@@ -63,7 +63,7 @@ test("fonts, boot script and a strict self-hosted CSP are served",{timeout:20000
 });
 test("generated responsive images are served with the correct type and private files stay inaccessible",{timeout:20000},async t=>{
   const {origin}=await boot(t,false);
-  for(const path of ["/assets/visuals/01-hero-road.webp","/assets/visuals/01-hero-road-768.webp","/assets/visuals/05-foodstuffs.webp"]){
+  for(const path of ["/assets/visuals/01-hero-road.webp","/assets/visuals/01-hero-road-768.webp","/assets/visuals/05-foodstuffs.webp","/assets/visuals/13-mobile-hero.webp"]){
     const response=await fetch(origin+path);assert.equal(response.status,200);assert.equal(response.headers.get("content-type"),"image/webp");
   }
   for(const path of ["/assets/visuals/missing.webp","/visual-prompts.json","/scripts/render-pages.mjs"]) assert.equal((await fetch(origin+path)).status,404);

@@ -1,0 +1,28 @@
+/* Content is visible by default. JavaScript starts finite entrance timelines. */
+/* Page openings use element timelines, so controls stay immediately interactive. */
+.motion-word,.motion-char{display:inline-block;transform-origin:0 100%;vertical-align:baseline}
+.motion-word{white-space:nowrap}
+html.motion-ready .hero-enter,html.motion-ready .service-panel.is-entering{animation:none!important}
+.section-head{position:relative}
+.motion-rule{position:absolute;left:0;right:0;bottom:-24px;height:1px;background:var(--line);transform-origin:left;pointer-events:none}
+.motion-toggle{background:transparent;color:inherit;font-family:inherit;font-size:10px;min-height:44px;padding:8px 0;text-decoration:underline;text-underline-offset:4px;white-space:nowrap}
+.motion-toggle[aria-pressed=true]{color:var(--gold)}
+html.menu-closing .site-nav{display:flex;pointer-events:none}
+html.menu-closing .site-header{background:var(--ink)}
+.site-nav li>a{position:relative}
+@media(min-width:900px){.site-nav li>a::after{content:"";position:absolute;height:1px;bottom:-7px;left:0;right:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.22,.68,0,1)}.site-nav li>a:hover::after,.site-nav li>a:focus-visible::after{transform:scaleX(1)}}
+.gallery-item{transition:transform .5s cubic-bezier(.22,.68,0,1)}
+.service-tags li{transition:border-color .3s,background .3s}
+.service-tags li:hover{border-color:var(--gold);background:rgba(207,177,125,.07)}
+.field>label{transition:color .22s}
+.field:focus-within>label{color:var(--gold-dark)}
+input:not([type=checkbox]):not([type=radio]),textarea{transition:border-color .22s,box-shadow .22s}
+.choice-options label>span{transition:background .28s,color .28s,border-color .28s,box-shadow .28s}
+.choice-options input:checked+span{box-shadow:inset 0 0 0 1px var(--gold)}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.gallery-item:hover{transform:translateY(-4px)}.text-link:hover{color:var(--gold-dark)}.ink .text-link:hover,.forest .text-link:hover,.club-hero .text-link:hover{color:var(--gold)}}
+@media(max-width:599px){.motion-rule{bottom:-18px}.motion-toggle{font-size:11px;order:3}.imagery-note{order:4}.footer-bottom{column-gap:17px}.mobile-dock>a{transition:background .25s,color .25s}}
+html.motion-reduced{scroll-behavior:auto!important}
+html.motion-reduced *,html.motion-reduced *::before,html.motion-reduced *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+html.motion-reduced .photo-bg{transform:none!important;will-change:auto}
+html.motion-reduced .intro-overlay{display:none!important}
+@media(prefers-reduced-motion:reduce){.motion-word,.motion-char{transform:none!important}.motion-rule,.gallery-item{transition:none}}

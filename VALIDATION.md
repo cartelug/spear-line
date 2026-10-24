@@ -1,19 +1,19 @@
-# V4 validation — 24 October 2026
+# V6 validation — 24 October 2026
 
 ## Automated checks
 
-npm run check and npm test pass. Fifteen tests cover page structure and local links; self-hosted typography; script-guarded reveal states; current service navigation and imagery disclosure; field validation, contact validation and consent; supplies requirements; legacy timber compatibility; static image MIME types; server submission and private record storage; and disabled online submission.
-
-The GitHub Pages root mirrors public/ for all 43 publishable files, including the new service pages and 24 responsive image files.
+npm run check and npm test pass. Sixteen tests cover page structure, local and cross-page fragment links, responsive image sources, typography, readable fallback states, current services, the Club coming-soon state, enquiry validation and private storage, disabled submission, and serving the new motion/image assets with the correct MIME types. The publishable root mirrors public/ for 50 files.
 
 ## Browser checks
 
-The development preview was inspected at a 1363 px desktop viewport and in same-origin frames with 390 px and 768 px viewports. The tested views have no horizontal page overflow.
+Reviewed same-origin phone frames at 320, 390 and 430 px, tablet at 768 px, and a 1363 px desktop viewport. The settled views reviewed have no horizontal page overflow. Native iOS/Android hardware was not used in this pass.
 
-Verified the homepage imagery, service tab click and keyboard switching, gallery advancement, process accordion expansion and sibling collapse, the phone menu opening/Escape/navigation behaviour, the supply form's field errors, and preparation of a completed supply enquiry. The resulting draft link reports that no enquiry has been sent.
+The homepage registered 308 motion targets on phones and 307 on larger views, including 226 word targets. The tested journeys triggered 145 distinct animated targets on phone and 131 on desktop. These are animated elements, not hundreds of distinct effects. See docs/motion-audit.json.
 
-The motion fallback is implemented through prefers-reduced-motion CSS and a preference-change listener. Native mobile devices and an emulated reduced-motion browser were not available for this pass.
+Verified mobile menu opening/closing and Escape, inert background handling, service tabs and arrow-key navigation, gallery movement and its position counter, accordion expansion and sibling collapse, the Club layouts, full-size radio touch targets, immediate service selection while loading, 16 px form inputs, and hiding/restoring bottom navigation during editing. A completed logistics form produced a downloadable enquiry draft without sending it.
+
+The Reduce motion control cancels active effects and keeps words visible. Its preference survived navigation to the Club page, where no new animations started. System preferences are also honoured by the implementation.
 
 ## Existing operational limits
 
-The static site has no configured business contact details and online sending remains disabled. This upgrade preserves that state; it does not invent a phone number or claim an enquiry was delivered.
+Business contact details are not configured and online enquiry submission remains disabled. Draft preparation continues to work. The Club is announced as coming soon, without membership registration, launch dates, prices or promised benefits.

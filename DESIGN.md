@@ -1,4 +1,4 @@
-# Spear Line V4 design
+# Spear Line V6 design
 
 The visual direction combines warm ivory, charcoal, forest green and brass. Photography and generous typography carry the story: the next move, three connected services, the details behind a requirement, then a practical enquiry.
 
@@ -12,9 +12,11 @@ The grid adapts at 899 px and 599 px. Horizontal image scrolling is contained in
 
 ## Motion
 
+The shared V6 motion layer is documented in docs/MOTION.md. It replaces the earlier scroll-reveal controller with finite word, image, rule and component timelines. Phones open directly into their portrait hero, and visitors can use the saved Reduce motion control.
+
 - The opening logo plays once per tab on an eligible first home-page visit, with a two-second fail-safe and a reduced-motion exemption.
-- Scroll reveals are enabled only after their observer is registered. Default HTML/CSS does not hide narrative content.
-- Desktop parallax is limited to 24 px. It is disabled below 900 px and when reduced motion is requested.
+- Scroll reveals are triggered by registered observers. Default HTML/CSS does not hide narrative content.
+- Desktop parallax is limited to 24 px. It is disabled below 900 px and when reduced motion is requested through the system or website control.
 - Service tabs support Left/Right, Home and End. Without the module, all three service panels stay readable.
 - Gallery controls scroll one image at a time and reflect the start/end state. Native horizontal scrolling remains available.
 - Native details elements provide the process interaction.
