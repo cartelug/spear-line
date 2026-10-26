@@ -9,7 +9,7 @@
 
 ## Photography
 
-Twelve illustrative scenes plus a portrait phone hero, generated with the built-in image tool on 24 October 2026 (prompts in visual-prompts.json). They are not documentary photographs of Spear Line staff, stock, facilities or vehicles, and the footer says so. Each master is a 1536 px WebP in `assets/visuals/`. `scripts/images.py` derives AVIF at 480, 768, 1080 and 1536 px and WebP at 480, 768 and 1080 px; pages serve AVIF first with WebP as the fallback, choosing the width from the layout. The phone hero master is `13-mobile-hero-1024.webp`, with 480 and 768 px variants. All AVIF files together are 2.3 MB on disk; a phone typically downloads 20–60 KB per photograph.
+Twelve illustrative scenes plus a portrait phone hero were generated with the built-in image tool on 24 October 2026. Ten more (stems 14 to 23) were generated on 26 October 2026 with GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action "Generate An Image", at 1536 × 1024 and high quality, using the owner's OpenAI account. Every prompt is recorded in visual-prompts.json; they share one style brief (cinematic golden-hour East African light, amber, umber and olive palette, shallow depth of field, clear space for headlines, and a strict ban on text, logos, brand marks and licence plates). They are not documentary photographs of Spear Line staff, stock, facilities or vehicles, and the footer says so. Each master is a 1536 px WebP in `assets/visuals/`. `scripts/images.py` derives AVIF at 480, 768, 1080 and 1536 px and WebP at 480, 768 and 1080 px; pages serve AVIF first with WebP as the fallback, choosing the width from the layout. The phone hero master is `13-mobile-hero-1024.webp`, with 480 and 768 px variants. All AVIF files together are 2.3 MB on disk; a phone typically downloads 20–60 KB per photograph.
 
 | Stem | Use |
 | --- | --- |
@@ -26,6 +26,18 @@ Twelve illustrative scenes plus a portrait phone hero, generated with the built-
 | 11-container-port | Logistics, gallery |
 | 12-sourcing-detail | Enquiry, process |
 | 13-mobile-hero | Phone hero |
+| 14-keys-handover | Vehicles page, process step 4, gallery |
+| 15-bar-lounge | Bar page hero, home Bar teaser |
+| 16-aerial-road | Home closing banner |
+| 17-loading-bay | Home approach section, logistics page |
+| 18-market-produce | Supplies page, process step 2, gallery |
+| 19-topo-route | Home route section texture, 404 page (an illustration, not a photograph) |
+| 20-desk-contact | Contact hero, process step 1, enquiry backdrop |
+| 21-team-yard | About hero |
+| 22-wheel-detail | Vehicles closing banner, gallery |
+| 23-bar-glass | Bar page backdrop |
+
+The two Bar images show amber drinks over ice. The Bar's menu, and whether it serves alcohol, are still undecided (see docs/ROADMAP.md), so replace 15-bar-lounge and 23-bar-glass if the Bar will not serve drinks like these.
 
 ## Backdrops and texture
 

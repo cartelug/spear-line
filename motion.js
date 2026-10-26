@@ -81,7 +81,7 @@ export function createMotion({ root = document.documentElement, preference = mat
   }
 
   /* Pause panning, marquees and glows when they are offscreen or the tab is hidden. */
-  const pausable = $$(".pan,.marquee,.glow,.backdrop");
+  const pausable = $$(".pan,.marquee,.glow,.backdrop,.topo,.bar-lamp,.hero-veil,.mega");
   if ("IntersectionObserver" in window) {
     const pauseObserver = new IntersectionObserver(entries => { for (const entry of entries) entry.target.classList.toggle("is-paused", !entry.isIntersecting); }, { rootMargin: "120px" });
     pausable.forEach(el => pauseObserver.observe(el));
@@ -231,6 +231,24 @@ export function createMotion({ root = document.documentElement, preference = mat
     from.classList.remove("is-tilting");
     ["--rx", "--ry", "--tx", "--ty"].forEach(name => from.style.removeProperty(name));
   }, { passive: true });
+
+  /* Hero depth: on fine pointers the photograph and the waybill drift a few pixels against the pointer. */
+  const heroEl = $(".hero");
+  let hx = 0, hy = 0, tx = 0, ty = 0, depthFrame = 0;
+  function depthLoop() {
+    hx += (tx - hx) * 0.08; hy += (ty - hy) * 0.08;
+    heroEl.style.setProperty("--hx", hx.toFixed(3)); heroEl.style.setProperty("--hy", hy.toFixed(3));
+    depthFrame = Math.abs(tx - hx) + Math.abs(ty - hy) > 0.002 ? requestAnimationFrame(depthLoop) : 0;
+  }
+  if (heroEl) {
+    heroEl.addEventListener("pointermove", event => {
+      if (event.pointerType !== "mouse" || reduced() || !fine.matches) return;
+      const box = heroEl.getBoundingClientRect();
+      tx = ((event.clientX - box.left) / box.width - 0.5) * 2; ty = ((event.clientY - box.top) / box.height - 0.5) * 2;
+      if (!depthFrame) depthFrame = requestAnimationFrame(depthLoop);
+    }, { passive: true });
+    heroEl.addEventListener("pointerleave", () => { tx = 0; ty = 0; if (!depthFrame) depthFrame = requestAnimationFrame(depthLoop); });
+  }
 
   /* One scroll loop for everything scroll-linked: every task measures first, then all of them write,
      so a frame never alternates layout reads and style writes. */

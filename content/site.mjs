@@ -34,13 +34,23 @@ export const images = {
   'highland-road': { file: '09-highland-road', alt: 'A winding highland road with a delivery truck at sunrise', ratio: [1536, 864] },
   'last-mile-van': { file: '10-last-mile-van', alt: 'A white delivery van beside a pallet of cartons', ratio: [1536, 1024] },
   'container-port': { file: '11-container-port', alt: 'A container terminal with a cargo ship at sunset', ratio: [1536, 1024] },
-  'sourcing-detail': { file: '12-sourcing-detail', alt: 'A notebook, a sample bag and vehicle keys on a desk', ratio: [1536, 1024] }
+  'sourcing-detail': { file: '12-sourcing-detail', alt: 'A notebook, a sample bag and vehicle keys on a desk', ratio: [1536, 1024] },
+  'keys-handover': { file: '14-keys-handover', alt: 'A car key being passed from one hand to another in front of a white SUV at golden hour', ratio: [1536, 1024] },
+  'bar-lounge': { file: '15-bar-lounge', alt: 'An empty bar counter at dusk with two amber drinks over ice under warm pendant lamps', ratio: [1536, 1024] },
+  'aerial-road': { file: '16-aerial-road', alt: 'An aerial view of a red-earth road winding through green terraced highlands at sunrise, with a truck and an SUV on it', ratio: [1536, 1024] },
+  'loading-bay': { file: '17-loading-bay', alt: 'Two workers seen from behind guiding a pallet toward a truck at a warehouse loading bay at dawn', ratio: [1536, 1024] },
+  'market-produce': { file: '18-market-produce', alt: 'Wooden crates of green bananas, tomatoes, onions and maize beside sacks of grain in warm evening light', ratio: [1536, 1024] },
+  'topo-route': { file: '19-topo-route', alt: 'Fine golden contour lines on a dark ground with a glowing teal route line and three nodes', ratio: [1536, 1024] },
+  'desk-contact': { file: '20-desk-contact', alt: 'A desk lamp, an open notebook and pen, a phone and a cup of coffee by a window at dusk', ratio: [1536, 1024] },
+  'team-yard': { file: '21-team-yard', alt: 'Three people seen from behind walking past a row of trucks and SUVs in a yard at golden hour', ratio: [1536, 1024] },
+  'wheel-detail': { file: '22-wheel-detail', alt: 'A dusty SUV wheel on a red-earth road with green hills behind it', ratio: [1536, 1024] },
+  'bar-glass': { file: '23-bar-glass', alt: 'A crystal tumbler with an amber drink, a large ice cube and an orange peel', ratio: [1536, 1024] }
 };
 
 export const services = [
   {
     id: 'vehicle', slug: 'vehicles', name: 'Vehicles', label: 'Vehicle sales & trading', icon: 'i-vehicle',
-    image: 'vehicles-suv', backdrop: 'vehicles-suv',
+    image: 'vehicles-suv', backdrop: 'vehicles-suv', moment: 'keys-handover', closing: 'wheel-detail',
     card: 'From everyday journeys to the demands of business. Tell us the vehicle you have in mind, your budget and where you need it.',
     tags: ['SUVs & 4×4s', 'Pickups', 'Business vehicles'],
     hero: { title: 'A vehicle for your next chapter.', lede: 'Your daily route, your business and your budget all shape the right choice. Bring us your requirements and start a focused vehicle conversation.' },
@@ -56,7 +66,7 @@ export const services = [
   },
   {
     id: 'supplies', slug: 'supplies', name: 'Supplies', label: 'Foodstuffs & beverages', icon: 'i-supplies',
-    image: 'foodstuffs', backdrop: 'foodstuffs',
+    image: 'foodstuffs', backdrop: 'foodstuffs', moment: 'market-produce', closing: 'beverages',
     card: 'Foodstuffs and beverages, shaped around your requirements. Start with your product list, quantities and delivery destination.',
     tags: ['Foodstuffs', 'Beverages', 'Business supply'],
     hero: { title: 'The essentials, handled with purpose.', lede: 'From foodstuffs to beverages, a useful supply conversation begins with the products, quantities and destination. Tell us what your business needs.' },
@@ -72,7 +82,7 @@ export const services = [
   },
   {
     id: 'logistics', slug: 'logistics', name: 'Logistics', label: 'Transport & coordination', icon: 'i-logistics',
-    image: 'logistics-truck', backdrop: 'highland-road',
+    image: 'logistics-truck', backdrop: 'highland-road', moment: 'loading-bay', closing: 'container-port',
     card: 'A clear brief makes a better journey. Share the cargo, pickup point, destination and timing to discuss the right transport arrangements.',
     tags: ['Cargo movement', 'Delivery planning', 'Route coordination'],
     hero: { title: 'Every load, a clear way forward.', lede: 'Cargo, location, access and timing all shape a transport requirement. Start with the full picture so the route and arrangements can be discussed.' },
@@ -120,8 +130,12 @@ export const home = {
   ],
   gallery: [
     { image: 'vehicles-pickup', label: 'Vehicles', title: 'Built for your kind of work.', href: 'vehicles.html' },
+    { image: 'keys-handover', label: 'Vehicles', title: 'Ready for the handover.', href: 'vehicles.html' },
+    { image: 'market-produce', label: 'Supplies', title: 'Staples, shaped to your list.', href: 'supplies.html' },
     { image: 'beverages', label: 'Supplies', title: 'Keep the essentials flowing.', href: 'supplies.html' },
+    { image: 'loading-bay', label: 'Logistics', title: 'From the bay to the road.', href: 'logistics.html' },
     { image: 'last-mile-van', label: 'Logistics', title: 'Every destination matters.', href: 'logistics.html' },
+    { image: 'wheel-detail', label: 'Vehicles', title: 'Made for the road ahead.', href: 'vehicles.html' },
     { image: 'container-port', label: 'Logistics', title: 'Think beyond the pickup.', href: 'logistics.html' },
     { image: 'sourcing-detail', label: 'Your enquiry', title: 'Your brief brings it together.', href: 'enquire.html' }
   ],
@@ -129,10 +143,10 @@ export const home = {
 };
 
 export const process = [
-  { icon: 'i-brief', title: 'Tell us what you need', text: 'Choose vehicles, supplies or logistics. Share the essentials: the requirement, destination, timing and the best way to reach you.', image: 'sourcing-detail' },
-  { icon: 'i-route', title: 'Work through the details', text: 'Product specifications, quantities, vehicle preferences or cargo details help define the scope.', image: 'warehouse' },
+  { icon: 'i-brief', title: 'Tell us what you need', text: 'Choose vehicles, supplies or logistics. Share the essentials: the requirement, destination, timing and the best way to reach you.', image: 'desk-contact' },
+  { icon: 'i-route', title: 'Work through the details', text: 'Product specifications, quantities, vehicle preferences or cargo details help define the scope.', image: 'market-produce' },
   { icon: 'i-clock', title: 'Discuss availability and arrangements', text: 'Availability and arrangements are discussed for your enquiry, using the contact details you provided.', image: 'dispatch-team' },
-  { icon: 'i-check', title: 'Agree the next move', text: 'Confirm the scope, pricing and arrangements in writing before making a commitment.', image: 'highland-road' }
+  { icon: 'i-check', title: 'Agree the next move', text: 'Confirm the scope, pricing and arrangements in writing before making a commitment.', image: 'keys-handover' }
 ];
 
 export const about = {

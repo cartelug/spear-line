@@ -1,4 +1,4 @@
-# Spear Line motion system (V10)
+# Spear Line motion system (V11)
 
 Motion lives in three places: `src/boot.js` (preference and preloader, inlined into every page so it runs before paint), `public/motion.js` (scroll and pointer effects) and `src/styles/70-motion.css` (states and keyframes).
 
@@ -30,7 +30,17 @@ Motion lives in three places: `src/boot.js` (preference and preloader, inlined i
 | Menu | Phone | Circular clip reveal from the button, links rise in |
 | Header | All | Hides on scroll down, returns on scroll up, glass when scrolled; the reading progress bar is a CSS scroll timeline where supported |
 | Page transitions | Supported browsers | Cross-document view transitions: fade out, lift in; a service card's photograph grows into that service page's hero and shrinks back on the way home |
-| 404 | Lost page | Spear travels a broken route |
+| Light beam and dust | Every hero photograph | A diagonal beam of low sun crosses every 15 s; 8 motes drift upward on a 34 s loop (a tiled layer moved by transform). Both fade out while the page is scrolled and settle back |
+| Hero depth | Home hero, fine pointers | Photograph moves up to 16 px and the enquiry note up to 9 px against the pointer, eased by a script (`--hx`, `--hy`) |
+| Topographic drift | Home route section | Contour image scales and drifts over 46 s, paused offscreen and while scrolling |
+| Bar lamp | Bar hero | Warm radial light pulses and flickers on a 6 s loop |
+| Outlined tagline | Closing banner | Stroke-only text slides 50 % of its width as the banner crosses the screen (CSS scroll timeline) |
+| Footer wordmark | Footer | Rises from below and fades in as the footer enters (CSS scroll timeline) |
+| Gallery focus | Home gallery rail | The photograph nearest the middle of the rail is largest; others scale to 88 % and dim (CSS view timeline on the rail) |
+| Heading rules | Section headings | A short gold rule draws in |
+| Spear nudge | Every kicker | The spear icon tilts every 4 s |
+| Route node pulse | Home route | Lit nodes pulse |
+| 404 | Lost page | Spear travels a broken route over a topographic map |
 | Cursor | Fine pointers | Soft ring that grows over interactive elements |
 
 ## Performance

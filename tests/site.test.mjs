@@ -70,7 +70,7 @@ test("typography is MTN Brighter Sans Bold for display and bold runs and Sky Tex
 
 test("content is never hidden unless a script owns the exit", async () => {
   const styles = (await css()).replace(/\/\*[\s\S]*?\*\//g, "");
-  const guard = /html\.(motion-ok|is-preloading|pl-run|pl-exit|menu-open)|\.pl-|\.preloader|^\s*\[hidden\]|\.skip|\.honey|input|\.site-nav|\.nl::after|\.w::after|\.marquee ul\+ul|\.cursor|\[data-tilt\]::after|\.process-frame|\.bar-card::after|\.is-editing|\.form-message:empty|\.faq-list details\.is-filtered/;
+  const guard = /html\.(motion-ok|is-preloading|pl-run|pl-exit|menu-open|is-scrolling)|\.pl-|\.preloader|^\s*\[hidden\]|\.skip|\.honey|input|\.site-nav|\.nl::after|\.w::after|\.marquee ul\+ul|\.cursor|\[data-tilt\]::after|\.process-frame|\.bar-card::after|\.is-editing|\.form-message:empty|\.faq-list details\.is-filtered/;
   for (const rule of styles.split(/(?<=\})/).map(r => r.trim()).filter(Boolean)) {
     const [selector, body = ""] = rule.split("{");
     if (!/opacity:0[;}]|visibility:hidden|display:none/.test(body)) continue;

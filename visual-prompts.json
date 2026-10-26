@@ -1,72 +1,172 @@
 {
-  "generator": "Built-in image generation",
-  "date": "2026-10-24",
-  "note": "Illustrative imagery, not documentary evidence of company assets, staff, stock or facilities.",
-  "assets": [
-    {
-      "name": "01-hero-road",
-      "use": "Home hero",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: full width website hero, landscape 16:9. Scene: a beautifully paved East African highway curves through green rolling hills at early morning. A refined pearl-white SUV travels in the near right foreground, a single ivory container truck further ahead on the same correct lane, both natural proportions and realistic road geometry. Camera: low elevated commercial automotive tracking photograph, SUV on right third, warm backlighting and subtle atmospheric haze. Left 45% mostly darker landscape with quiet open composition for white website heading overlay. Clear road, powerful sense of forward motion, believable real-world scene. Avoid legible brand badges or number plates."
-    },
-    {
-      "name": "02-vehicles-suv",
-      "use": "Vehicles service hero",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: automotive service editorial, wide 3:2. A premium pearl-white modern four-wheel-drive SUV parked at a tasteful contemporary East African building, front three-quarter angle, right-hand drive implied, warm concrete and olive trees, late afternoon light. Vehicle fills lower right two-thirds, beautiful real metallic paint, correct wheels and reflections, quiet darker space at left for cropping. Natural professional automotive photograph, no visible brand badges, no readable registration."
-    },
-    {
-      "name": "03-vehicles-pickup",
-      "use": "Vehicle types",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: automotive detail page image. A handsome dark graphite double-cab pickup parked on a well-maintained paved road beside East African highland farmland. Front side three-quarter composition, full vehicle visible, natural tyre tread and proportions, simple clean background, soft dawn sunlight, powerful grounded commercial automotive photography. No brand badges, no lettering, no readable registration."
-    },
-    {
-      "name": "04-logistics-truck",
-      "use": "Logistics service hero",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: logistics service editorial hero, wide 3:2. A single clean ivory tractor truck with charcoal trailer making a gentle turn through a well-organized modern East African industrial distribution yard. Camera low three-quarter front, confident scale, realistic axles and wheel geometry, warm late afternoon sun, large clean architectural forms and uncluttered asphalt, subtle dust only, driver cab empty from this angle. No text on truck, no company branding, no readable registration."
-    },
-    {
-      "name": "05-foodstuffs",
-      "use": "Supplies service hero",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: foodstuffs procurement editorial. Beautiful real produce and dry goods arranged with practical warehouse precision: woven sacks of rice and beans, matte wooden crates of fresh tomatoes, green vegetables, bananas and sealed unlabelled flour sacks. Clean East African distribution setting, side light through a warehouse opening, warm charcoal and ivory neutral palette, abundant but very organized, premium natural food photography, not a supermarket scene. No readable packaging, no text, no brand names."
-    },
-    {
-      "name": "06-beverages",
-      "use": "Beverages supply",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: beverages supply editorial still life. Carefully arranged crates of unbranded sparkling water bottles, amber glass beverage bottles and clear mineral water, all sealed, in a clean commercial supply setting with soft olive and charcoal background. Sunlight catches glass condensation subtly, warm cream highlights, realistic bottle necks and caps, tasteful commercial food photography. No alcohol claims, no readable labels, no logos, no humans."
-    },
-    {
-      "name": "07-warehouse",
-      "use": "Supply coordination story",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: warehousing and coordination editorial. Wide interior of a pristine realistic medium-scale East African distribution warehouse, tidy timber pallets carrying sealed unbranded corrugated boxes and bagged food staples, natural high windows casting long warm sunbeams, concrete floor, steel shelving, sensible safe stacking. Editorial architectural photography, quiet human-scale operations, charcoal and ivory with muted brass light, no logos or signage, no people, no exaggerated endless rows."
-    },
-    {
-      "name": "08-dispatch-team",
-      "use": "About and process",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: people and planning editorial. Two professional East African Black logistics coordinators, a woman and a man in their early 30s, wearing neat charcoal work shirts, reviewing a clipboard together next to stacked unbranded delivery cartons at a bright modern warehouse loading bay. Natural candid interaction, realistic faces, anatomically correct hands, welcoming confident expressions, no posing at the camera. Waist up, warm side light, shallow depth of field, no readable paper text, no logos. This is conceptual service imagery."
-    },
-    {
-      "name": "09-highland-road",
-      "use": "Journey and closing banner",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: panoramic atmospheric website banner, 16:9. An elegant aerial drone photograph of a smooth paved road curving gently through lush East African rolling hills with one small white delivery truck naturally moving along the road. Long morning shadows, muted emerald and olive greens, warm brass sunrise, light distant haze, clear road geometry. Vast calm negative space, powerful journey motif, no labels or text, no map elements."
-    },
-    {
-      "name": "10-last-mile-van",
-      "use": "Delivery planning gallery",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: last mile delivery conceptual editorial. A clean unbranded pearl-white panel delivery van parked at a modern commercial loading dock in an East African city. A tidy stack of sealed corrugated cartons on a pallet beside it. Full vehicle in three-quarter rear-side view, realistic van body, subtle warm architectural shadows, mature potted greenery, cream concrete, natural afternoon light. No readable number plate, no logos, no staff implied as company employees."
-    },
-    {
-      "name": "11-container-port",
-      "use": "Trade and logistics gallery",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: international trade conceptual editorial. A sophisticated high-angle photographic view of a real-world East African container terminal at golden hour. Neat rows of muted charcoal, olive, sand and rust containers, one crane in the distance, a single truck on a clear lane, blue-grey ocean sliver on horizon. Credible engineering and scale, restrained premium color grade, not a crowded industrial spectacle. No lettering, no fake company names, no watermarks."
-    },
-    {
-      "name": "12-sourcing-detail",
-      "use": "Enquiry and sourcing detail",
-      "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: tactile procurement planning editorial detail. Overhead photography of a clean dark charcoal desk with a blank cream notebook, mechanical pencil, a small unlabelled paper produce sample bag, a neat set of unlabelled vehicle keys and a simple closed tablet. Warm natural window light, subtle fine paper texture, premium calm business arrangement, realistic object proportions, generous space, no visible screen text, no logos, no map or invented data."
-    },
-    {
-      "name": "13-mobile-hero",
-      "use": "Phone-specific homepage hero",
-      "prompt": "Use case: photorealistic-natural. Asset type: portrait website hero, 2:3 composition, for the PHONE version of Spear Line, an East African vehicles, supplies and logistics brand. Input image: reference for the same visual identity, vehicles, road, light, hills and colour grade; create an art-directed vertical companion, not a simple centre crop. A pearl-white premium SUV in rear three-quarter view is fully visible in the LOWER RIGHT quarter (whole vehicle, no clipped wheels), with one ivory freight truck farther ahead on a believable paved East African highland road curving through green hills toward a warm sunrise. The top 55% is quiet dark olive hills and atmospheric slate-green sky with restrained warm brass light, suitable for a large cream mobile headline. Place both vehicles primarily in the lower 40% so they remain visible BELOW the headline and above bottom navigation. Low tracking camera, cinematic natural photography, refined real textures, believable vehicle geometry, muted highlights, no oversaturation. Retain the reference's warm, premium, authentic atmosphere. No text, no labels, no logos, no watermark, no collage. Illustrative service imagery, not evidence of company-owned vehicles. Portrait high resolution."
-    }
-  ]
+ "generator": "Built-in image generation",
+ "date": "2026-10-24",
+ "note": "Illustrative imagery, not documentary evidence of company assets, staff, stock or facilities.",
+ "assets": [
+  {
+   "name": "01-hero-road",
+   "use": "Home hero",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: full width website hero, landscape 16:9. Scene: a beautifully paved East African highway curves through green rolling hills at early morning. A refined pearl-white SUV travels in the near right foreground, a single ivory container truck further ahead on the same correct lane, both natural proportions and realistic road geometry. Camera: low elevated commercial automotive tracking photograph, SUV on right third, warm backlighting and subtle atmospheric haze. Left 45% mostly darker landscape with quiet open composition for white website heading overlay. Clear road, powerful sense of forward motion, believable real-world scene. Avoid legible brand badges or number plates."
+  },
+  {
+   "name": "02-vehicles-suv",
+   "use": "Vehicles service hero",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: automotive service editorial, wide 3:2. A premium pearl-white modern four-wheel-drive SUV parked at a tasteful contemporary East African building, front three-quarter angle, right-hand drive implied, warm concrete and olive trees, late afternoon light. Vehicle fills lower right two-thirds, beautiful real metallic paint, correct wheels and reflections, quiet darker space at left for cropping. Natural professional automotive photograph, no visible brand badges, no readable registration."
+  },
+  {
+   "name": "03-vehicles-pickup",
+   "use": "Vehicle types",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: automotive detail page image. A handsome dark graphite double-cab pickup parked on a well-maintained paved road beside East African highland farmland. Front side three-quarter composition, full vehicle visible, natural tyre tread and proportions, simple clean background, soft dawn sunlight, powerful grounded commercial automotive photography. No brand badges, no lettering, no readable registration."
+  },
+  {
+   "name": "04-logistics-truck",
+   "use": "Logistics service hero",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: logistics service editorial hero, wide 3:2. A single clean ivory tractor truck with charcoal trailer making a gentle turn through a well-organized modern East African industrial distribution yard. Camera low three-quarter front, confident scale, realistic axles and wheel geometry, warm late afternoon sun, large clean architectural forms and uncluttered asphalt, subtle dust only, driver cab empty from this angle. No text on truck, no company branding, no readable registration."
+  },
+  {
+   "name": "05-foodstuffs",
+   "use": "Supplies service hero",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: foodstuffs procurement editorial. Beautiful real produce and dry goods arranged with practical warehouse precision: woven sacks of rice and beans, matte wooden crates of fresh tomatoes, green vegetables, bananas and sealed unlabelled flour sacks. Clean East African distribution setting, side light through a warehouse opening, warm charcoal and ivory neutral palette, abundant but very organized, premium natural food photography, not a supermarket scene. No readable packaging, no text, no brand names."
+  },
+  {
+   "name": "06-beverages",
+   "use": "Beverages supply",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: beverages supply editorial still life. Carefully arranged crates of unbranded sparkling water bottles, amber glass beverage bottles and clear mineral water, all sealed, in a clean commercial supply setting with soft olive and charcoal background. Sunlight catches glass condensation subtly, warm cream highlights, realistic bottle necks and caps, tasteful commercial food photography. No alcohol claims, no readable labels, no logos, no humans."
+  },
+  {
+   "name": "07-warehouse",
+   "use": "Supply coordination story",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: warehousing and coordination editorial. Wide interior of a pristine realistic medium-scale East African distribution warehouse, tidy timber pallets carrying sealed unbranded corrugated boxes and bagged food staples, natural high windows casting long warm sunbeams, concrete floor, steel shelving, sensible safe stacking. Editorial architectural photography, quiet human-scale operations, charcoal and ivory with muted brass light, no logos or signage, no people, no exaggerated endless rows."
+  },
+  {
+   "name": "08-dispatch-team",
+   "use": "About and process",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: people and planning editorial. Two professional East African Black logistics coordinators, a woman and a man in their early 30s, wearing neat charcoal work shirts, reviewing a clipboard together next to stacked unbranded delivery cartons at a bright modern warehouse loading bay. Natural candid interaction, realistic faces, anatomically correct hands, welcoming confident expressions, no posing at the camera. Waist up, warm side light, shallow depth of field, no readable paper text, no logos. This is conceptual service imagery."
+  },
+  {
+   "name": "09-highland-road",
+   "use": "Journey and closing banner",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: panoramic atmospheric website banner, 16:9. An elegant aerial drone photograph of a smooth paved road curving gently through lush East African rolling hills with one small white delivery truck naturally moving along the road. Long morning shadows, muted emerald and olive greens, warm brass sunrise, light distant haze, clear road geometry. Vast calm negative space, powerful journey motif, no labels or text, no map elements."
+  },
+  {
+   "name": "10-last-mile-van",
+   "use": "Delivery planning gallery",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: last mile delivery conceptual editorial. A clean unbranded pearl-white panel delivery van parked at a modern commercial loading dock in an East African city. A tidy stack of sealed corrugated cartons on a pallet beside it. Full vehicle in three-quarter rear-side view, realistic van body, subtle warm architectural shadows, mature potted greenery, cream concrete, natural afternoon light. No readable number plate, no logos, no staff implied as company employees."
+  },
+  {
+   "name": "11-container-port",
+   "use": "Trade and logistics gallery",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: international trade conceptual editorial. A sophisticated high-angle photographic view of a real-world East African container terminal at golden hour. Neat rows of muted charcoal, olive, sand and rust containers, one crane in the distance, a single truck on a clear lane, blue-grey ocean sliver on horizon. Credible engineering and scale, restrained premium color grade, not a crowded industrial spectacle. No lettering, no fake company names, no watermarks."
+  },
+  {
+   "name": "12-sourcing-detail",
+   "use": "Enquiry and sourcing detail",
+   "prompt": "Use case: photorealistic-natural. Create a premium editorial photograph for the Spear Line website, an East African vehicles, foodstuffs and beverages supply, and logistics business. Visual system: authentic East African setting, understated cinematic realism, charcoal shadows, warm ivory, olive landscape and restrained brass sunlight, natural material texture, excellent photographic detail, no artificial oversaturation, no text, no added logos, no watermarks. This is illustrative service imagery, not evidence of an owned fleet, staff, facilities or stock. One single coherent photograph, no montage, no borders. Landscape 3:2 unless specified.\nAsset type: tactile procurement planning editorial detail. Overhead photography of a clean dark charcoal desk with a blank cream notebook, mechanical pencil, a small unlabelled paper produce sample bag, a neat set of unlabelled vehicle keys and a simple closed tablet. Warm natural window light, subtle fine paper texture, premium calm business arrangement, realistic object proportions, generous space, no visible screen text, no logos, no map or invented data."
+  },
+  {
+   "name": "13-mobile-hero",
+   "use": "Phone-specific homepage hero",
+   "prompt": "Use case: photorealistic-natural. Asset type: portrait website hero, 2:3 composition, for the PHONE version of Spear Line, an East African vehicles, supplies and logistics brand. Input image: reference for the same visual identity, vehicles, road, light, hills and colour grade; create an art-directed vertical companion, not a simple centre crop. A pearl-white premium SUV in rear three-quarter view is fully visible in the LOWER RIGHT quarter (whole vehicle, no clipped wheels), with one ivory freight truck farther ahead on a believable paved East African highland road curving through green hills toward a warm sunrise. The top 55% is quiet dark olive hills and atmospheric slate-green sky with restrained warm brass light, suitable for a large cream mobile headline. Place both vehicles primarily in the lower 40% so they remain visible BELOW the headline and above bottom navigation. Low tracking camera, cinematic natural photography, refined real textures, believable vehicle geometry, muted highlights, no oversaturation. Retain the reference's warm, premium, authentic atmosphere. No text, no labels, no logos, no watermark, no collage. Illustrative service imagery, not evidence of company-owned vehicles. Portrait high resolution."
+  },
+  {
+   "generator": "GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action 'Generate An Image'",
+   "date": "2026-10-26",
+   "size": "1536x1024",
+   "quality": "high",
+   "moderation": "auto",
+   "prompt": "Cinematic editorial photograph, 3:2 landscape. Close, intimate moment of a vehicle key handover: two hands in the foreground, one hand passing a plain modern black car key fob (no logo, no badge) into another open palm, shot at eye level with a 50mm f/1.4 lens and very shallow depth of field. Behind them, softly out of focus, a pearl-white premium SUV parked on a red-earth driveway in front of green East African highland hills, low golden-hour sun from camera right creating a warm rim light along the knuckles and the edge of the key, long soft shadows, faint atmospheric haze and a few floating dust motes catching the light. Hands are natural and anatomically correct with five fingers each, skin tones realistic and varied, a simple rolled linen shirt cuff visible on one wrist, no jewellery, no watch. Colour palette: warm amber and honey highlights, deep umber and olive-green shadows, a touch of teal in the far hills, gentle film grain, rich but natural colour grading, high dynamic range, crisp focus on the key and fingertips, creamy bokeh. Composition: subject in the lower-left two thirds, generous soft empty space in the upper right for overlaid headline text. Strictly no text, no letters, no numbers, no logos, no brand marks, no licence plates, no signage, no watermark, no UI. Photorealistic, premium automotive-lifestyle campaign look.",
+   "name": "14-keys-handover",
+   "use": "Vehicles page, process step 4, gallery"
+  },
+  {
+   "generator": "GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action 'Generate An Image'",
+   "date": "2026-10-26",
+   "size": "1536x1024",
+   "quality": "high",
+   "moderation": "auto",
+   "prompt": "Cinematic interior photograph, 3:2 landscape, of an intimate upscale bar counter at dusk, completely empty of people. A long dark umber walnut bar top runs diagonally from the lower left into the distance. On it a row of heavy cut-crystal tumblers, each holding one large clear ice cube and an amber drink, one with a curl of orange peel, tiny condensation beads catching the light. Above the counter hang warm brass pendant lamps with glowing filament bulbs, casting honey-gold pools of light. Behind the bar, softly out of focus, shelves of plain dark unlabeled bottles in silhouette, brass rails, and deep teal-green leather stools. A tall window at the back shows the last blue-violet dusk light over green hills. Mood: warm, quiet, anticipatory, low-key lighting with rich shadows, creamy bokeh highlights, shallow depth of field with focus on the nearest two glasses, shot on a 35mm f/1.4 lens, subtle film grain, colour palette of amber, honey, deep umber, olive and a touch of teal. Composition leaves generous dark negative space in the upper left for overlaid headline text. Strictly no text, no letters, no numbers, no logos, no bottle labels, no brand marks, no signage, no menu boards, no watermark. Photorealistic, premium hospitality campaign look.",
+   "name": "15-bar-lounge",
+   "use": "Bar page hero, home Bar teaser backdrop"
+  },
+  {
+   "generator": "GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action 'Generate An Image'",
+   "date": "2026-10-26",
+   "size": "1536x1024",
+   "quality": "high",
+   "moderation": "auto",
+   "prompt": "Cinematic aerial drone photograph, 3:2 landscape, looking down at a steep angle on a ribbon of red-earth road winding through terraced green East African highlands at sunrise: neat rows of tea bushes and banana groves, patches of deep forest, layered ridgelines receding into soft golden haze, wisps of mist lying in the valleys. On the road, very small in the frame, a single white freight truck followed by a white SUV, each casting a long shadow toward the left. Low sun enters from the upper right producing warm rim light on the terraces and a gentle natural lens flare, long soft shadows, dew-fresh colours. Shot with a 24mm drone lens at about 120 metres altitude, crisp detail across the frame, subtle film grain, colour palette of amber gold, red-umber earth, rich olive and emerald green with cool teal haze in the distance. Composition: the road enters bottom-left and sweeps in an S-curve toward the upper right, leaving calm open sky and haze in the top third for overlaid headline text. Strictly no text, no letters, no numbers, no logos, no road signs, no licence plates, no watermark. Photorealistic, premium travel-and-logistics campaign look.",
+   "name": "16-aerial-road",
+   "use": "Home closing banner"
+  },
+  {
+   "generator": "GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action 'Generate An Image'",
+   "date": "2026-10-26",
+   "size": "1536x1024",
+   "quality": "high",
+   "moderation": "auto",
+   "prompt": "Cinematic documentary photograph, 3:2 landscape, shot from inside a large warehouse looking out toward the open loading doors at dawn. A white freight truck is backed up to the bay, its rear doors open. In the foreground and middle ground sit neatly stacked pallets of plain brown cartons wrapped in clear stretch film, glinting in the light. Two workers in plain orange high-visibility vests and caps are seen from behind and in silhouette, one guiding a pallet jack, so no faces are visible. Strong backlight pours through the doorway creating long golden shafts of light full of floating dust, lens haze, deep umber shadows inside the building and a luminous honey-gold glow outside over distant green hills. Shot on a 35mm lens at f/2.8, natural perspective with strong leading lines along the pallet rows toward the light, subtle film grain, colour palette of amber, honey, umber and olive with muted teal in the shadows. Composition keeps the bright doorway slightly right of centre and leaves calmer dark space on the left for overlaid headline text. Strictly no text, no letters, no numbers, no logos, no branding on the trucks, boxes, vests or forklifts, no signage, no licence plates, no watermark. Photorealistic, premium logistics campaign look.",
+   "name": "17-loading-bay",
+   "use": "Home approach section, logistics page"
+  },
+  {
+   "generator": "GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action 'Generate An Image'",
+   "date": "2026-10-26",
+   "size": "1536x1024",
+   "quality": "high",
+   "moderation": "auto",
+   "prompt": "Cinematic editorial still-life photograph, 3:2 landscape, of fresh produce for trade in an open-sided East African market warehouse at golden hour. Stacked wooden crates overflow with bunches of green cooking bananas, ripe red tomatoes, glossy purple onions and bright yellow maize cobs; beside them rest plain unmarked burlap sacks of grain with their tops rolled down. Warm low sun streams in from the left through the open side, lighting the produce with a golden rim and leaving soft deep umber shadows, tiny dust motes floating in the beams, a few water droplets on the tomatoes. Shot on an 85mm lens at f/2 with shallow depth of field: sharp focus on the nearest crate edge and tomatoes, background crates dissolving into creamy bokeh. Rich natural colour grading, subtle film grain, palette of amber, honey, tomato red, emerald and umber. Composition places the produce in the lower two thirds with a soft warm blurred background above for overlaid text. No people. Strictly no text, no letters, no numbers, no logos, no printed sack markings, no price tags, no labels, no stickers, no watermark. Photorealistic, premium food-supply campaign look.",
+   "name": "18-market-produce",
+   "use": "Supplies page, process step 2, gallery"
+  },
+  {
+   "generator": "GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action 'Generate An Image'",
+   "date": "2026-10-26",
+   "size": "1536x1024",
+   "quality": "high",
+   "moderation": "auto",
+   "prompt": "Abstract premium graphic illustration, 3:2 landscape, in the style of a luxury topographic map seen as art: extremely fine, elegant, glowing contour lines in warm gold (#F2B65A) flowing across a deep near-black umber background (#15110C), forming the rolling shapes of highland ridges and valleys, the lines varying subtly in brightness and thickness, brightest around a diagonal ridge in the centre-right and fading smoothly to nothing toward the edges and corners. A single thin luminous teal (#6CC0B4) route line sweeps in a gentle S-curve across the contours from lower left to upper right, with three small softly glowing circular nodes along it. A very subtle warm vignette and faint film grain give depth. Flat graphic style, crisp vector-like linework, no photographic elements, no 3D. The darkest zone is the left third, kept almost empty for overlaid text. Strictly no text, no letters, no numbers, no labels, no elevation figures, no map symbols, no compass, no logos, no watermark.",
+   "name": "19-topo-route",
+   "use": "Home route section texture, 404 page"
+  },
+  {
+   "generator": "GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action 'Generate An Image'",
+   "date": "2026-10-26",
+   "size": "1536x1024",
+   "quality": "high",
+   "moderation": "auto",
+   "prompt": "Cinematic lifestyle photograph, 3:2 landscape, of a quiet evening work desk by a window, completely free of people. A warm brass desk lamp casts a honey-gold pool of light over a dark walnut desk: an open notebook with blank cream pages and a fountain pen resting across it, a modern smartphone lying face-down, a small steaming ceramic cup of coffee, a plain car key fob, and a small brass compass. Through the tall window behind, softly out of focus, the last violet-and-amber dusk light over green highland hills and a faint distant road with tiny headlights. Mood: calm, focused, welcoming, the feeling of a message about to be written. Shot on a 50mm f/1.8 lens at slight downward angle with shallow depth of field, focus on the pen and notebook, creamy lamp bokeh, subtle film grain, colour palette of amber, honey, deep umber, olive and a hint of dusk teal. Composition: objects in the lower right, large soft dark negative space in the upper left for overlaid headline text. Strictly no text, no letters, no numbers, no logos, no writing on the pages, no brand marks, no screen content, no watermark. Photorealistic, premium editorial look.",
+   "name": "20-desk-contact",
+   "use": "Contact hero, process step 1, enquiry backdrop"
+  },
+  {
+   "generator": "GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action 'Generate An Image'",
+   "date": "2026-10-26",
+   "size": "1536x1024",
+   "quality": "high",
+   "moderation": "auto",
+   "prompt": "Cinematic documentary photograph, 3:2 landscape, of three people seen entirely from behind walking side by side along a line of parked white freight trucks and white SUVs in a vehicle yard at golden hour. They wear plain work clothes: a sand-coloured shirt, a dark olive jacket, and a rolled-sleeve white shirt; one carries a clipboard held at their side, no faces visible. Long soft shadows stretch toward the camera across red-earth ground, warm low sun backlights the scene with a gentle rim light along their shoulders and a haze of fine dust in the air, rolling green hills and a luminous honey-gold sky beyond. Shot on a 70mm lens at f/2.8, compressed perspective, vehicles receding in a clean line, shallow depth of field softening the far end of the yard, subtle film grain, colour palette of amber, honey, umber, olive and muted teal shadows. Composition: the group is small in the lower-right third, vast calm sky and open ground on the left for overlaid headline text. Strictly no text, no letters, no numbers, no logos, no vehicle branding, no licence plates, no signage, no watermark. Photorealistic, premium editorial look.",
+   "name": "21-team-yard",
+   "use": "About hero"
+  },
+  {
+   "generator": "GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action 'Generate An Image'",
+   "date": "2026-10-26",
+   "size": "1536x1024",
+   "quality": "high",
+   "moderation": "auto",
+   "prompt": "Cinematic automotive detail photograph, 3:2 landscape, low close-up of the front wheel and tyre of a rugged pearl-white 4x4 SUV standing on a red-earth highland road, shot from very low at about ankle height with a 35mm lens at f/2.8. Fine red dust coats the lower body and tyre sidewall, a few dried mud splashes on the wheel arch, the alloy wheel is clean modern five-spoke with a plain unbranded centre cap. Golden-hour sun low behind the vehicle on the right throws a strong rim light along the tyre tread and sparkles on loose dust in the air, with long shadows pulling across the ground toward the camera. Beyond, out of focus, rolling green hills and a hazy honey-gold sky. Sharp focus on the tyre shoulder and wheel edge, rest dissolving into creamy bokeh, subtle film grain, rich natural colour grading, palette of amber, red-umber, olive and teal haze. Composition: the wheel fills the lower-left, open soft background upper right for overlaid text. Strictly no text, no letters, no numbers, no logos, no tyre brand lettering, no badges, no licence plates, no watermark. Photorealistic, premium automotive campaign look.",
+   "name": "22-wheel-detail",
+   "use": "Vehicles closing banner, gallery"
+  },
+  {
+   "generator": "GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action 'Generate An Image'",
+   "date": "2026-10-26",
+   "size": "1536x1024",
+   "quality": "high",
+   "moderation": "auto",
+   "prompt": "Cinematic macro beverage photograph, 3:2 landscape, of a heavy cut-crystal tumbler on a dark polished umber wood bar top, holding a rich amber drink and one large clear ice cube with a fine curl of orange peel resting on the rim, condensation beads running down the glass, a second glass softly blurred behind it. Warm honey-gold backlight from a brass pendant lamp out of frame creates a glowing edge on the glass and caustic golden reflections on the wood, a few tiny bubbles rising near the ice, creamy circular bokeh lights filling the background in amber and deep teal. Shot on an 100mm macro lens at f/2.8, razor-sharp focus on the ice and glass rim, subtle film grain, low-key moody lighting, colour palette of amber, honey, umber and teal. Composition: the glass sits in the right third, soft dark negative space on the left for overlaid text. Strictly no text, no letters, no numbers, no logos, no etched marks on the glass, no labels, no brand marks, no watermark. Photorealistic, premium hospitality campaign look.",
+   "name": "23-bar-glass",
+   "use": "Bar page backdrop"
+  }
+ ]
 }

@@ -47,6 +47,10 @@ Every section declares a tone and the tones of its neighbours (`.section.tone-ea
 
 Pill buttons with an icon disc that slides on hover; primary is sun gold with ink text, secondary is glass. Text links carry an icon that moves, never a typed arrow. Every control is at least 44 px tall.
 
+## Photography
+
+Twenty-two scenes share one look: low golden-hour light, amber and umber with olive and teal shadows, shallow depth of field, calm space left for headlines, and no text or brand marks anywhere in the frame. Images are placed for meaning, not decoration: the key handover closes the four-step process, the desk and notebook open it, the loading bay sits beside "more than the next transaction", the aerial road closes the home page, the topographic illustration sits behind the route the spear travels, and the bar interior fills the Bar hero.
+
 ## Signature moments
 
 1. **Preloader**: the traced logo letterforms rise one by one, the spear travels a line driven by real load progress (fonts, hero image, window load), two doors open and the logo flies into its place in the header. Once per tab, only for arrivals from outside, never under Reduce motion or Save-Data.
@@ -55,6 +59,9 @@ Pill buttons with an icon disc that slides on hover; primary is sun gold with in
 4. **Route line**: the spear travels a drawn path between the three services as you scroll.
 5. **Sticky process**: steps light up as their images pass.
 6. **Bar card**: a glass that pours, ice drops and a pick stirs, once.
+7. **Light and dust**: a slow beam of low sun and drifting motes cross every hero photograph; the hero photograph and the enquiry note drift a few pixels against the pointer; the Bar hero's lamp glows.
+8. **Topographic route**: contour lines drift behind the route section while the spear travels the path.
+9. **Outlined tagline** that slides sideways as the closing banner crosses the screen, and a footer wordmark that rises into place.
 
 ## Responsive
 

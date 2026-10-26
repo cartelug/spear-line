@@ -601,7 +601,7 @@ html.pl-exit .pl-line,html.pl-exit .pl-caption{opacity:0;transition:opacity .3s}
 .bar-share-card{display:grid;gap:12px;justify-items:start;padding:clamp(24px,3vw,34px);border-radius:var(--r-lg)}
 .bar-share-card h3{font-size:var(--t-3xl)}
 .bar-share-card p{color:var(--chalk-2)}
-.bar-share-status{margin-top:8px;padding:6px 12px;border-radius:999px;border:1px solid rgba(242,182,90,.45);color:var(--sun);font-size:var(--t-xs);font-weight:650}
+.bar-share-status{display:inline-flex;align-items:center;margin-top:8px;padding:6px 14px;line-height:1.2;border-radius:999px;border:1px solid rgba(242,182,90,.45);color:var(--sun);font-size:var(--t-xs);font-weight:650}
 .enquiry-hero{--pad:0;padding-top:150px;padding-bottom:clamp(90px,12vw,150px)}
 .enquiry-hero-inner .lede{color:var(--chalk-2)}
 .enquiry-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:clamp(24px,4vw,56px);align-items:start;margin-top:calc(-1 * clamp(140px,18vw,220px))}
@@ -803,6 +803,58 @@ html.motion-reduced [data-parallax]{transform:none!important}
 [data-parallax]{transform:none!important}
 }
 @media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}html.motion-reduced{scroll-behavior:auto}}
+.topo{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;opacity:.5;-webkit-mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent)}
+.topo img{width:100%;height:100%;object-fit:cover;transform:scale(1.04)}
+.brief-photo{width:100%;aspect-ratio:3/2;border-radius:var(--r-xl);box-shadow:var(--shadow-2);border:1px solid var(--line-dark)}
+.brief-photo img{width:100%;height:100%;object-fit:cover}
+.bar-lamp{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.bar-lamp::before{content:"";position:absolute;inset:0;background:radial-gradient(48% 38% at 74% 16%,rgba(255,190,100,.32),transparent 70%),radial-gradient(30% 26% at 92% 40%,rgba(255,170,80,.16),transparent 70%)}
+.mega{position:absolute;z-index:0;top:clamp(20px,5vw,72px);left:0;display:flex;gap:.6em;width:max-content;pointer-events:none;font:700 clamp(4.2rem,15vw,13rem)/1 var(--font-display);letter-spacing:-.02em;white-space:nowrap;color:transparent;-webkit-text-stroke:1.5px rgba(245,239,230,.2);transform:translate3d(-4%,0,0)}
+.closing-inner{position:relative;z-index:1}
+.section-head::before{content:"";display:block;width:72px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--sun),var(--sun-2));transform-origin:0 50%;transition:transform .9s var(--ease-out) .1s}
+html.motion-ok .section-head:not(.is-in)::before{transform:scaleX(0)}
+.hero-veil{overflow:hidden}
+.hero-veil::before,.hero-veil::after{position:absolute;pointer-events:none}
+.hero-veil::before{content:none;top:-20%;bottom:-20%;left:0;width:55%;background:linear-gradient(104deg,transparent 30%,rgba(255,214,150,.09) 46%,rgba(255,236,200,.16) 50%,rgba(255,214,150,.09) 54%,transparent 70%)}
+.hero-veil::after{content:none}
+.hero-veil::after{left:0;right:0;top:0;bottom:-520px;opacity:.7;background-size:520px 520px;background-image:
+radial-gradient(circle at 11% 18%,rgba(255,222,170,.95) 0 1.6px,transparent 2.6px),
+radial-gradient(circle at 36% 62%,rgba(255,222,170,.7) 0 1.2px,transparent 2.2px),
+radial-gradient(circle at 58% 9%,rgba(255,236,200,.85) 0 2px,transparent 3px),
+radial-gradient(circle at 72% 47%,rgba(255,214,150,.75) 0 1.4px,transparent 2.4px),
+radial-gradient(circle at 88% 81%,rgba(255,236,200,.9) 0 1.8px,transparent 2.8px),
+radial-gradient(circle at 23% 91%,rgba(255,214,150,.6) 0 1px,transparent 2px),
+radial-gradient(circle at 94% 26%,rgba(255,222,170,.7) 0 1.2px,transparent 2.2px),
+radial-gradient(circle at 47% 33%,rgba(255,236,200,.55) 0 1px,transparent 2px)}
+.hero .hero-media .pan{inset:-7% -2%;translate:calc(var(--hx,0) * -16px) calc(var(--hy,0) * -10px)}
+.hero .waybill{translate:calc(var(--hx,0) * 9px) calc(var(--hy,0) * 7px)}
+.rail-item{transform-origin:50% 60%}
+html.motion-ok .topo img{animation:topo-drift 46s ease-in-out infinite alternate}
+html.motion-ok .bar-lamp::before{animation:lamp-glow 6s ease-in-out infinite}
+html.motion-ok .hero-veil::before{content:"";opacity:0;animation:sun-sweep 15s var(--ease-io) 1.5s infinite}
+html.motion-ok .hero-veil::after{content:"";animation:motes-rise 34s linear infinite}
+html.motion-ok .kicker .ico{animation:spear-nudge 4.2s ease-in-out infinite}
+html.motion-ok .route-node.is-on circle{transform-box:fill-box;transform-origin:center;animation:node-pulse 2.6s ease-in-out infinite}
+html.motion-ok .is-paused::before,html.motion-ok .is-paused::after,html.motion-ok .is-paused img{animation-play-state:paused}
+html.motion-ok .hero-veil::before,html.motion-ok .hero-veil::after,html.motion-ok .bar-lamp{transition:opacity .7s var(--ease-out)}
+html.is-scrolling .hero-veil::after,html.is-scrolling .bar-lamp{opacity:0;transition-duration:.25s}
+html.is-scrolling .hero-veil::before,html.is-scrolling .topo img{animation-play-state:paused}
+@supports (animation-timeline:view()){
+@media(min-width:700px){
+html.motion-ok .mega{animation:mega-slide linear both;animation-timeline:view();animation-range:cover}
+html.motion-ok .footer-wordmark{animation:wordmark-rise linear both;animation-timeline:view();animation-range:entry 0% cover 55%}
+}
+html.motion-ok .rail-item{animation:rail-focus linear both;animation-timeline:view(inline);animation-range:cover}
+}
+@keyframes topo-drift{from{transform:scale(1.04) translate3d(-1.5%,0,0)}to{transform:scale(1.14) translate3d(1.5%,-1%,0)}}
+@keyframes lamp-glow{0%,100%{opacity:.7}38%{opacity:1}52%{opacity:.82}70%{opacity:.95}}
+@keyframes sun-sweep{0%{opacity:0;transform:translate3d(-70%,0,0)}12%{opacity:1}60%{opacity:1}100%{opacity:0;transform:translate3d(190%,0,0)}}
+@keyframes motes-rise{to{transform:translate3d(-60px,-520px,0)}}
+@keyframes spear-nudge{0%,70%,100%{transform:none}82%{transform:translate(2px,-2px) rotate(8deg)}92%{transform:translate(-1px,1px) rotate(-3deg)}}
+@keyframes node-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+@keyframes mega-slide{from{transform:translate3d(8%,0,0)}to{transform:translate3d(-42%,0,0)}}
+@keyframes wordmark-rise{from{transform:translate3d(0,46%,0);opacity:0}to{transform:none;opacity:1}}
+@keyframes rail-focus{0%{transform:scale(.88);opacity:.55}50%{transform:scale(1);opacity:1}100%{transform:scale(.88);opacity:.55}}
 @media(pointer:coarse){
 body::after{content:none}
 .glass,.btn-glass,.menu-toggle,.site-header.is-scrolled,.dock{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}

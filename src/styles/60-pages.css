@@ -118,7 +118,7 @@
 .bar-share-card{display:grid;gap:12px;justify-items:start;padding:clamp(24px,3vw,34px);border-radius:var(--r-lg)}
 .bar-share-card h3{font-size:var(--t-3xl)}
 .bar-share-card p{color:var(--chalk-2)}
-.bar-share-status{margin-top:8px;padding:6px 12px;border-radius:999px;border:1px solid rgba(242,182,90,.45);color:var(--sun);font-size:var(--t-xs);font-weight:650}
+.bar-share-status{display:inline-flex;align-items:center;margin-top:8px;padding:6px 14px;line-height:1.2;border-radius:999px;border:1px solid rgba(242,182,90,.45);color:var(--sun);font-size:var(--t-xs);font-weight:650}
 
 /* Enquiry */
 .enquiry-hero{--pad:0;padding-top:150px;padding-bottom:clamp(90px,12vw,150px)}
