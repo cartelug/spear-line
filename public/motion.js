@@ -264,5 +264,9 @@ export function createMotion({ root = document.documentElement, preference = mat
   // Wait for the preloader so the first headline animates in view rather than behind the doors.
   if (root.classList.contains("is-preloading")) document.addEventListener("spear:preloaded", startReveals, { once: true });
   else startReveals();
+  // Ambient light and dust begin once the page has loaded and the browser is idle, never during start-up.
+  const startAmbient = () => root.classList.add("is-ambient");
+  const whenIdle = () => ("requestIdleCallback" in window ? requestIdleCallback(startAmbient, { timeout: 2500 }) : setTimeout(startAmbient, 1200));
+  if (document.readyState === "complete") setTimeout(whenIdle, 400); else window.addEventListener("load", () => setTimeout(whenIdle, 400), { once: true });
   return { get disabled() { return reduced(); } };
 }

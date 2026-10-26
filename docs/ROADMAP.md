@@ -7,7 +7,7 @@ Replaces the early analysis in `FINISH-PLAN.md`. Everything under "Measured" was
 | Area | Result | How |
 | --- | --- | --- |
 | Accessibility | axe-core: 0 violations on 12 pages × phone and desktop, with and without Reduce motion. Lighthouse accessibility 100 | WCAG 2.0–2.2 A/AA and best-practice rule sets |
-| Performance (phone, throttled) | 99–100 on all 12 pages, CLS 0 | Lighthouse against the Node server, V10 |
+| Performance (phone, throttled) | 97–100 on all 12 pages, CLS 0 | Lighthouse against the Node server, V11 |
 | Performance (desktop) | 99–100 | Lighthouse |
 | Best practices | 100 | Lighthouse |
 | SEO | 63–66 by default only because pages are deliberately `noindex`; launch mode adds canonical, share tags, structured data and sitemap | Lighthouse |
@@ -15,7 +15,7 @@ Replaces the early analysis in `FINISH-PLAN.md`. Everything under "Measured" was
 | Security | Security review of the branch: no high-confidence findings | Static review of build, client scripts and server |
 | Tests | 32 unit and server tests plus 7 browser tests pass | `npm test`, `npm run test:e2e` |
 
-V9 (the golden-hour redesign) replaced the V8 visual language; V10 made it fast (inlined first-screen styles, AVIF, 40 KB of fonts, prerendered links, offline support) and switched to the owner's fonts. See `DESIGN.md`, `CONTENT.md` and `VALIDATION.md`.
+V11 added ten new photographs (generated with GPT Image 1.5 through Zapier) and more motion. V9 (the golden-hour redesign) replaced the V8 visual language; V10 made it fast (inlined first-screen styles, AVIF, 40 KB of fonts, prerendered links, offline support) and switched to the owner's fonts. See `DESIGN.md`, `CONTENT.md` and `VALIDATION.md`.
 
 ## 2. What only the owner can unblock
 

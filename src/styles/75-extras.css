@@ -46,8 +46,10 @@ html.motion-ok .section-head:not(.is-in)::before{transform:scaleX(0)}
 
 html.motion-ok .topo img{animation:topo-drift 46s ease-in-out infinite alternate}
 html.motion-ok .bar-lamp::before{animation:lamp-glow 6s ease-in-out infinite}
-html.motion-ok .hero-veil::before{content:"";opacity:0;animation:sun-sweep 15s var(--ease-io) 1.5s infinite}
-html.motion-ok .hero-veil::after{content:"";animation:motes-rise 34s linear infinite}
+/* The beam and the dust start only once the page has loaded and the browser is idle (html.is-ambient, set by
+   motion.js), so they never compete with the first paint or the page becoming interactive. */
+html.motion-ok.is-ambient .hero-veil::before{content:"";opacity:0;animation:sun-sweep 15s var(--ease-io) 1.2s infinite}
+html.motion-ok.is-ambient .hero-veil::after{content:"";animation:ambient-in 1.6s var(--ease-out) both,motes-rise 34s linear infinite}
 html.motion-ok .kicker .ico{animation:spear-nudge 4.2s ease-in-out infinite}
 html.motion-ok .route-node.is-on circle{transform-box:fill-box;transform-origin:center;animation:node-pulse 2.6s ease-in-out infinite}
 html.motion-ok .is-paused::before,html.motion-ok .is-paused::after,html.motion-ok .is-paused img{animation-play-state:paused}
@@ -68,6 +70,7 @@ html.is-scrolling .hero-veil::before,html.is-scrolling .topo img{animation-play-
 @keyframes topo-drift{from{transform:scale(1.04) translate3d(-1.5%,0,0)}to{transform:scale(1.14) translate3d(1.5%,-1%,0)}}
 @keyframes lamp-glow{0%,100%{opacity:.7}38%{opacity:1}52%{opacity:.82}70%{opacity:.95}}
 @keyframes sun-sweep{0%{opacity:0;transform:translate3d(-70%,0,0)}12%{opacity:1}60%{opacity:1}100%{opacity:0;transform:translate3d(190%,0,0)}}
+@keyframes ambient-in{from{opacity:0}}
 @keyframes motes-rise{to{transform:translate3d(-60px,-520px,0)}}
 @keyframes spear-nudge{0%,70%,100%{transform:none}82%{transform:translate(2px,-2px) rotate(8deg)}92%{transform:translate(-1px,1px) rotate(-3deg)}}
 @keyframes node-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
