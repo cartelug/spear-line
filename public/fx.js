@@ -83,6 +83,17 @@ export function createFx({root=document.documentElement,preference=matchMedia('(
     });
   }
 
+  /* Bar card: the glass pours once when the card first comes into view. */
+  const barCards=$$('.bar-card');
+  if(barCards.length) {
+    if('IntersectionObserver' in window) {
+      const pour=new IntersectionObserver(entries=>{
+        for(const entry of entries)if(entry.isIntersecting){entry.target.classList.add('is-poured');pour.unobserve(entry.target);}
+      },{threshold:.55});
+      barCards.forEach(card=>pour.observe(card));
+    } else barCards.forEach(card=>card.classList.add('is-poured'));
+  }
+
   /* FAQ index follows the group in view. */
   const index=$('[data-faq-index]');
   if(index&&'IntersectionObserver' in window) {

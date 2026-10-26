@@ -5,14 +5,14 @@ Vehicles, foodstuffs and beverages, and logistics. A responsive, presentation-le
 ## What V7 adds
 
 - Three new pages: How it works (animated timeline and per-service checklists), Questions answered (grouped accordions with a scrolling topic index) and Contact (shows only the channels configured in site-config.js).
-- A Spear Line symbol (assets/spear-mark.svg), favicon set, app icons, web manifest, 1200×630 share image and a 16-symbol icon sprite (assets/icons.svg). The logo itself is unchanged.
+- A Spear Line symbol (assets/spear-mark.svg), favicon set, app icons, web manifest, 1200×630 share image and a 17-symbol icon sprite (assets/icons.svg). The logo itself is unchanged.
 - Upgraded typography: Bricolage Grotesque headings, Instrument Sans body copy, italic Fraunces accents.
 - New motion: a pausable service ticker, a scroll-driven route line on which the spear travels between the three services, a reading reveal on the introduction, timeline scrubbing, pointer spotlight cards, magnetic buttons, gentle image tilt and cross-page view transitions. All of it honours Reduce motion.
 - Search switches: pages stay hidden from search engines until you build with SITE_ORIGIN and SITE_LAUNCH=1 (see Launch below).
 
 ## Experience
 
-- A dedicated Spear Line Club coming-soon page and homepage feature.
+- A dedicated Spear Line Bar coming-soon page and homepage feature (the venue idea formerly drafted as a Club).
 - A phone-specific portrait hero, thumb navigation, larger controls and keyboard-aware enquiry layout.
 - More than 300 registered animation targets, coordinated text/scroll/component timelines and a saved Reduce motion control. See docs/MOTION.md.
 

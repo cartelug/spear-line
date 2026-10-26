@@ -19,7 +19,7 @@ html.menu-closing .site-header{background:var(--ink)}
 input:not([type=checkbox]):not([type=radio]),textarea{transition:border-color .22s,box-shadow .22s}
 .choice-options label>span{transition:background .28s,color .28s,border-color .28s,box-shadow .28s}
 .choice-options input:checked+span{box-shadow:inset 0 0 0 1px var(--gold)}
-@media(hover:hover) and (prefers-reduced-motion:no-preference){.gallery-item:hover{transform:translateY(-4px)}.text-link:hover{color:var(--gold-dark)}.ink .text-link:hover,.forest .text-link:hover,.club-hero .text-link:hover{color:var(--gold)}}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.gallery-item:hover{transform:translateY(-4px)}.text-link:hover{color:var(--gold-dark)}.ink .text-link:hover,.forest .text-link:hover,.bar-hero .text-link:hover{color:var(--gold)}}
 @media(max-width:599px){.motion-rule{bottom:-18px}.motion-toggle{font-size:11px;order:3}.imagery-note{order:4}.footer-bottom{column-gap:17px}.mobile-dock>a{transition:background .25s,color .25s}}
 html.motion-reduced{scroll-behavior:auto!important}
 html.motion-reduced *,html.motion-reduced *::before,html.motion-reduced *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}

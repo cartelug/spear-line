@@ -4,7 +4,7 @@ import { readFile, access } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 const pub = resolve(dirname(fileURLToPath(import.meta.url)),"..","public");
-const pages = ["index.html", "club.html","vehicles.html","supplies.html","logistics.html","timber-logistics.html","about.html","enquire.html","privacy.html","404.html","how-it-works.html","faq.html","contact.html"];
+const pages = ["index.html", "bar.html","vehicles.html","supplies.html","logistics.html","timber-logistics.html","about.html","enquire.html","privacy.html","404.html","how-it-works.html","faq.html","contact.html"];
 const read = name => readFile(resolve(pub,name),"utf8");
 const exists = async name => access(resolve(pub,name)).then(() => true,() => false);
 test("every page has one h1, unique ids, described images and no inline styles",async () => {
@@ -64,11 +64,14 @@ test("current services and illustrative imagery are clear without invented claim
   assert.equal(await read("timber-logistics.html"),await read("logistics.html"));
   for (const page of pages) assert.doesNotMatch(await read(page),/in stock|available now|fleet of|guaranteed delivery|testimonial|\bUSD \d{2,3},\d{3}\b(?!–)/i,page);
 });
-test("the Club is reachable throughout the site and clearly remains coming soon",async()=>{
-  for(const page of pages) assert.match(await read(page),/href="club\.html"/,page);
-  const club=await read("club.html");
-  assert.match(club,/<h1>Spear Line/); assert.match(club,/Coming soon/);
-  assert.doesNotMatch(club,/<form\b|Join now|Buy membership|Membership fee/i);
+test("the Bar is reachable throughout the site and clearly remains coming soon",async()=>{
+  for(const page of pages) assert.match(await read(page),/href="bar\.html"/,page);
+  const bar=await read("bar.html");
+  assert.match(bar,/<h1>Spear Line/); assert.match(bar,/<em>Bar\.<\/em>/); assert.match(bar,/Coming soon/);
+  assert.doesNotMatch(bar,/<form\b|Join now|Reserve|Book a table|Membership/i);
+  assert.doesNotMatch(bar,/\bopen(s|ing)? (daily|from|at|on)\b|happy hour|\$\s?\d|\d{1,2}\s?(am|pm)\b/i,"no invented hours or prices");
+  assert.equal((bar.match(/To be announced/g)||[]).length,3);
+  for(const page of pages) assert.doesNotMatch(await read(page),/\bClub\b/,page+" still says Club");
 });
 
 test("every icon reference resolves to a symbol in the sprite",async()=>{

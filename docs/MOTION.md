@@ -10,7 +10,7 @@ The V6 experience uses finite Web Animations timelines on mobile, tablet and des
 - Staggered navigation opening and a closing transition with focus and inert-background handling.
 - Service-tab image/copy replay, gallery position feedback and touch/button press responses.
 - Animated accordion expansion and collapse, with rapid-toggle cancellation.
-- Club-card depth and detail reveals, plus restrained desktop hover effects.
+- Bar-card depth and detail reveals, and a glass that pours once when the card first appears, plus restrained desktop hover effects.
 - Form label focus feedback and enquiry-result entrances.
 
 ## Timing and safeguards

@@ -31,7 +31,7 @@ const timber = {service:"timber",name:"Test Customer",contact:"+256700000000",pi
 test("server serves the site and stores valid requests privately",{timeout:20000},async t => {
   const {origin,dir} = await boot(t,true);
   const post = (body,options={}) => fetch(origin + "/api/enquiries",{method:"POST",headers:{"Content-Type":"application/json",Origin:origin,...options.headers},body:typeof body === "string" ? body : JSON.stringify(body)});
-  for (const page of ["/","/club.html","/vehicles.html","/supplies.html","/logistics.html","/timber-logistics.html","/about.html","/enquire.html","/privacy.html","/how-it-works.html","/faq.html","/contact.html","/favicon.ico","/site.webmanifest","/assets/spear-line-logo.png"]) assert.equal((await fetch(origin+page)).status,200,page);
+  for (const page of ["/","/bar.html","/vehicles.html","/supplies.html","/logistics.html","/timber-logistics.html","/about.html","/enquire.html","/privacy.html","/how-it-works.html","/faq.html","/contact.html","/favicon.ico","/site.webmanifest","/assets/spear-line-logo.png"]) assert.equal((await fetch(origin+page)).status,200,page);
   const response = await post(vehicle); assert.equal(response.status,201);
   const {reference} = await response.json(); assert.match(reference,/^[a-f0-9-]{36}$/);
   const record = JSON.parse(await readFile(resolve(dir,reference+".json"),"utf8")); assert.equal(record.model,"Pickup"); assert.equal(record.reference,reference);

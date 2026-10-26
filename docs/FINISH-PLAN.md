@@ -1,6 +1,6 @@
 # Spear Line — site analysis and plan to finish
 
-> **Status, 26 October 2026 (V7).** Done in code: icon, symbol and favicon set (Q2); SEO machinery behind a launch switch (B3, Q1, Q10); CSP cleanup (Q3, Unsplash removed); three new pages and a shared file manifest (Q5); font and motion upgrade; browser-checked on 12 pages × 4 widths (part of Q6). Still needing the owner: business details and enquiry hosting (B1, B2, Q7), real content and photography (B4), Club decision (Q9), legal review (Q8), and a real-device, axe and Lighthouse pass (rest of Q6). See `VALIDATION.md`.
+> **Status, 26 October 2026 (V7).** Done in code: icon, symbol and favicon set (Q2); SEO machinery behind a launch switch (B3, Q1, Q10); CSP cleanup (Q3, Unsplash removed); three new pages and a shared file manifest (Q5); font and motion upgrade; browser-checked on 12 pages × 4 widths (part of Q6). Still needing the owner: business details and enquiry hosting (B1, B2, Q7), real content and photography (B4), Bar decision (Q9), legal review (Q8), and a real-device, axe and Lighthouse pass (rest of Q6). See `VALIDATION.md`.
 
 Analysed 26 October 2026 at commit `4c54efb` (V6). `npm run check` and `npm test` pass (16/16).
 
@@ -33,7 +33,7 @@ Strong points: accessibility groundwork (skip link, focus handling, reduce-motio
 | Q6 | Testing is structural only. No browser test covers the form flow, menu, tabs or gallery; no automated accessibility, Lighthouse or visual regression check. The V6 browser review was manual and did not use real iOS/Android devices. |
 | Q7 | Operations undocumented as a runbook: the purge job (`scripts/purge-enquiries.mjs`) exists, but nothing schedules it; no backups, monitoring, spam control beyond the rate limiter and honeypot, no notification when an enquiry arrives. |
 | Q8 | Legal/compliance: privacy page has no controller name or contact (depends on B1); no cookie/analytics statement is needed today but must be revisited if analytics are added; vehicle and food sales may need regional disclosures (import, licensing, food safety) — to be confirmed by the owner. |
-| Q9 | The Club page is "coming soon" with no email capture, so the interest it generates is lost. Either collect interest properly or remove it from primary nav until it launches. |
+| Q9 | The Bar page is "coming soon" with no email capture, so the interest it generates is lost. Either collect interest properly or remove it from primary nav until it launches. |
 | Q10 | `timber-logistics.html` is a retained alias; on static hosting it is a full duplicate page, not a redirect, which duplicates content for search engines. |
 
 ## 3. Decisions the owner must make first
@@ -44,7 +44,7 @@ These change the work; nothing below should be guessed.
 2. **Enquiry delivery:** (a) Node host with the existing server (needs hosting, `.env`, purge schedule), or (b) a form service/email provider with the static site. Recommendation: (a) on a small managed Node host with a persistent volume, because validation, retention and privacy handling are already built; add an email notification so enquiries are not missed.
 3. **Domain:** the production URL and whether Pages stays the host for the public site.
 4. **Imagery:** keep illustrative AI images with the disclosure, or replace with real photos (inventory, warehouse, vehicles, team).
-5. **Club:** capture interest now, or hide until launch.
+5. **Bar:** capture interest now, or hide until launch.
 6. **Scope claims:** which vehicle makes, supply categories and routes can truthfully be named.
 
 ## 4. Plan
@@ -66,7 +66,7 @@ Answer section 3. Nothing downstream is blocked except content and contact detai
 1. Replace generic copy with specifics: actual vehicle types and sourcing process, supply categories and minimum quantities, routes and cargo types, typical response time.
 2. About page: who runs Spear Line, where it operates, why customers can trust it. Only verifiable facts.
 3. Swap in real photographs where available; otherwise keep the AI disclosure on every page that uses them.
-4. Club: add an interest-capture form that reuses the validated endpoint (new `club` service type, email only, own consent text), or drop it from the main nav.
+4. Bar: add an interest-capture form that reuses the validated endpoint (new `bar` service type, email only, own consent text), or drop it from the main nav.
 5. Update `privacy.html` with controller name, contact route, retention period and the processor/host used.
 
 ### Phase 3 — Go public and be findable (B3, Q1, Q2, Q3, Q10)

@@ -31,3 +31,7 @@ The shared V6 motion layer is documented in docs/MOTION.md. It replaces the earl
 - The mobile menu supports Escape, a focus loop and inert background content.
 
 Use real inventory, project and team photographs when those become available. The generated images are illustrative and are identified in the footer; do not turn them into claims of owned assets or completed work.
+
+## Spear Line Bar
+
+The bar page keeps the earlier Club layout (coming-soon pill, large title, tilted card on orbit rings, launch note) with a warmer, lower-lit palette. The card carries a rocks glass with a spear-shaped pick that pours, drops its ice and settles once when the card first enters view (static under Reduce motion). Because no location, hours, menu or prices exist, the page lists three things to look out for (where, when, what is pouring), each marked "To be announced", and makes no booking or membership offer.

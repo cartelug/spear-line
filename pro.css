@@ -3,7 +3,7 @@
 body{font-size:16px;font-optical-sizing:auto}
 h1{letter-spacing:-.035em}h2,h3{letter-spacing:-.04em}h1,h2,h3{font-weight:500}
 em{color:var(--gold-dark)}
-.photo-section em,.ink em,.forest em,.closing em,.club-hero em,.site-footer em,.hero em,.subhero em{color:var(--gold)}
+.photo-section em,.ink em,.forest em,.closing em,.bar-hero em,.site-footer em,.hero em,.subhero em{color:var(--gold)}
 h1 em,h2 em,h3 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.025em;padding-right:.04em}
 .eyebrow,.tab-list,.button,.text-link{font-feature-settings:"ss01"}
 .ico{width:28px;height:28px;flex:none;display:block}
@@ -184,3 +184,33 @@ html.fx-ready .timeline-step:not(.is-on) .timeline-copy{opacity:.5}
 @media(hover:none){.button,.nav-cta,.round-button{translate:none}}
 .eyebrow .eyebrow-icon{display:inline-block;vertical-align:-5px;margin-right:12px;flex:none}
 @media(min-width:600px) and (max-width:899px){.tab-list{gap:18px}.tab-list button{gap:12px;font-size:21px}.tab-icon{width:22px;height:22px}.tab-list button .arrow{display:none}}
+
+/* Spear Line Bar: warmer, lower light than the rest of the site, same layout. */
+.bar-hero{background:radial-gradient(ellipse at 78% 24%,#5a4322 0,rgba(90,67,34,.35) 32%,transparent 62%),radial-gradient(ellipse at 8% 100%,rgba(113,84,34,.28),transparent 55%),#14191a}
+.bar-orbit{border-color:rgba(207,177,125,.18)}
+.bar-card,.bar-hero .bar-card,.bar-teaser .bar-card{background:radial-gradient(ellipse at 18% 0%,#4b3a22,transparent 62%),linear-gradient(125deg,#241c12,#0f1311);box-shadow:0 35px 55px -24px rgba(0,0,0,.85),inset 0 0 0 1px rgba(207,177,125,.55)}
+.bar-card-title>strong{letter-spacing:.14em;margin-left:-.04em}
+.bar-glass{position:absolute;z-index:1;right:9%;top:50%;width:25%;max-width:122px;transform:translateY(-50%);overflow:visible;filter:drop-shadow(0 10px 22px rgba(0,0,0,.45))}
+.bar-glass-liquid{transform-box:fill-box;transform-origin:50% 100%}
+.bar-glass-pick{transform-box:fill-box;transform-origin:50% 100%}
+html.fx-ready:not(.motion-reduced) .bar-card:not(.is-poured) .bar-glass-liquid{transform:scaleY(.04)}
+html.fx-ready:not(.motion-reduced) .bar-card:not(.is-poured) .bar-glass-ice,html.fx-ready:not(.motion-reduced) .bar-card:not(.is-poured) .bar-glass-pick{transform:translateY(-14px)}
+html.fx-ready:not(.motion-reduced) .bar-card.is-poured .bar-glass-liquid{animation:bar-pour 1.7s var(--ease) .35s both}
+html.fx-ready:not(.motion-reduced) .bar-card.is-poured .bar-glass-ice{animation:bar-drop 1.1s var(--ease) 1.1s both}
+html.fx-ready:not(.motion-reduced) .bar-card.is-poured .bar-glass-pick{animation:bar-stir 1.4s var(--ease) 1.5s both}
+@keyframes bar-pour{from{transform:scaleY(.04)}to{transform:scaleY(1)}}
+@keyframes bar-drop{from{transform:translateY(-14px);opacity:.2}to{transform:translateY(0);opacity:1}}
+@keyframes bar-stir{0%{transform:translateY(-14px) rotate(0)}60%{transform:translateY(0) rotate(-5deg)}100%{transform:translateY(0) rotate(0)}}
+
+.bar-share{background:var(--paper)}
+.bar-share-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:0;padding:0;list-style:none}
+.bar-share-card{position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;min-height:300px;padding:30px 28px;background:#14191a;color:var(--paper);border:1px solid rgba(207,177,125,.3);transition:border-color .3s,transform .6s var(--ease)}
+.bar-share-card:hover{border-color:var(--gold)}
+html.fx-ready .bar-share-card::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(380px circle at var(--mx,50%) var(--my,0%),rgba(207,177,125,.22),transparent 62%);opacity:0;transition:opacity .4s;pointer-events:none}
+html.fx-ready .bar-share-card:hover::before{opacity:1}
+.bar-share-icon{width:46px;height:46px;color:var(--gold);margin-bottom:auto}
+.bar-share-num{position:absolute;right:26px;top:24px;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--gold)}
+.bar-share-card h3{font-size:clamp(28px,2.6vw,38px);margin:40px 0 6px}
+.bar-share-card p{color:#b7bdb2;font-size:15px}
+.bar-share-status{align-self:flex-start;margin-top:22px;padding:6px 12px;border:1px solid rgba(207,177,125,.4);color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-family:"Bricolage Grotesque","Bricolage Fallback",sans-serif}
+@media(max-width:899px){.bar-share-grid{grid-template-columns:1fr}.bar-share-card{min-height:0}.bar-share-card h3{margin-top:30px}}

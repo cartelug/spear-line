@@ -84,10 +84,10 @@ export function createMotion({root=document.documentElement,preference=matchMedi
       animate(entry.el,[{opacity:0,clipPath:'inset(7% 0 0 0)',transform:'translateY(18px)'},{opacity:1,clipPath:'inset(0% 0 0 0)',transform:'translateY(0px)'}],{duration:small?650:900,delay});
     } else if(entry.kind==='rule') {
       animate(entry.el,[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:small?600:900,delay});
-    } else if(entry.kind==='club-card') {
+    } else if(entry.kind==='bar-card') {
       const resting=getComputedStyle(entry.el).transform;
       animate(entry.el,[{opacity:0,transform:'translateY(28px) rotate(-12deg) rotateX(13deg)'},{opacity:1,transform:resting==='none'?'none':resting}],{duration:small?850:1100,delay});
-      $$('.club-card-top,.club-card-title,.club-card-bottom',entry.el).forEach((part,i)=>{
+      $$('.bar-card-top,.bar-card-title,.bar-card-bottom',entry.el).forEach((part,i)=>{
         register(part,'card-detail');animate(part,[{opacity:0,transform:'translateY(9px)'},{opacity:1,transform:'translateY(0px)'}],{duration:520,delay:delay+170+i*85,fill:'backwards'});
       });
     } else {
@@ -148,15 +148,15 @@ export function createMotion({root=document.documentElement,preference=matchMedi
       for(const entry of entries)if(entry.isIntersecting)play(groups.get(entry.target));
     },{rootMargin:'0px 0px 24px 0px',threshold:.06});
 
-    const texts=$$('main h1,main h2,main h3,main .eyebrow,main .lede,main .hero-description,main .section-head>p,main .service-copy>p,main .club-copy>p,main .club-tagline,main .club-description,.closing-content>p');
+    const texts=$$('main h1,main h2,main h3,main .eyebrow,main .lede,main .hero-description,main .section-head>p,main .service-copy>p,main .bar-copy>p,main .bar-tagline,main .bar-description,.closing-content>p');
     for(const el of texts) {
-      if(el.closest('.club-card,[aria-hidden="true"]')||el.querySelector('input,textarea,button,a'))continue;
+      if(el.matches('.coming-soon')||el.closest('.bar-card,[aria-hidden="true"]')||el.querySelector('input,textarea,button,a'))continue;
       const words=splitText(el);if(words.length)group(el,'text',words);
     }
     const wordmark=$('.footer-wordmark');if(wordmark)group(wordmark,'text',splitText(wordmark,true));
     for(const el of $$('.service-photo,.story-main,.story-inset,.detail-image,.brief-image,.wide-image,.enquiry-aside-image,.process-picture,.gallery-item>div'))group(el,'image');
-    for(const el of $$('.club-card'))group(el,'club-card');
-    for(const el of $$('main .intro-detail>p,main .story-copy>p,main .detail-copy>p,main .brief-layout>div>p,main .principles>article>p,.picture-caption,.story-index,.club-stage-caption,.service-tags>li,.footer-top>div,.club-launch-note,.field,.hero-actions,.subhero-content>.button')) {
+    for(const el of $$('.bar-card'))group(el,'bar-card');
+    for(const el of $$('main .intro-detail>p,main .story-copy>p,main .detail-copy>p,main .brief-layout>div>p,main .principles>article>p,.picture-caption,.story-index,.bar-stage-caption,.service-tags>li,.footer-top>div,.bar-launch-note,.field,.hero-actions,.subhero-content>.button')) {
       if(!groups.has(el)&&!el.querySelector('[data-motion-text]')&&!el.dataset.motionText)group(el,'copy');
     }
     for(const head of $$('.section-head')) {
@@ -167,7 +167,7 @@ export function createMotion({root=document.documentElement,preference=matchMedi
     }
     for(const el of $$('a.button,button,.text-link,.mobile-dock>a,.site-nav li>a,.mobile-service-strip>a,summary,.choice-options label'))register(el,'control');
     for(const el of $$('.field>label'))register(el,'field-label');
-    for(const el of $$('.club-card-top,.club-card-title,.club-card-bottom'))register(el,'card-detail');
+    for(const el of $$('.bar-card-top,.bar-card-title,.bar-card-bottom'))register(el,'card-detail');
 
     // Entrance timelines stay short on phones and wait for the desktop logo curtain.
     const introDelay=root.classList.contains('intro')?850:0;

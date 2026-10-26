@@ -50,7 +50,7 @@ ${closing()}`;
     ['About this website', [
       ['Are the images real photographs?', 'No. The imagery on this website is AI-generated and illustrates our service areas. It does not show Spear Line staff, stock, facilities or vehicles, and is not a claim of completed work.'],
       ['Do you list stock or prices here?', 'No. This website does not publish stock or price lists. Share what you need and the details are confirmed for your enquiry.'],
-      ['What is Spear Line Club?', 'The next chapter of Spear Line. It is coming soon, and details will be announced on its page. There is nothing to join yet.']
+      ['What is Spear Line Bar?', 'The next chapter of Spear Line. It is coming soon, and the location, opening details and menu will be announced on its page. Nothing is open or bookable yet.']
     ]]
   ];
   const liveAnswer = '<span data-faq-closed>Online submission is not currently open. You can prepare your enquiry on the website, which creates a downloadable draft. Nothing is sent to Spear Line until online submission opens. Check the contact page for direct channels.</span><span data-faq-open hidden>Yes. Choose a service on the enquiry page, complete the short form and send it. You will receive a reference once it is received.</span>';
