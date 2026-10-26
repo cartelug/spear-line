@@ -32,9 +32,9 @@ html.fx-ready .ticker-track{animation:ticker-scroll 52s linear infinite}
 html.fx-ready .ticker:hover .ticker-track,html.fx-ready .ticker:focus-within .ticker-track,html.fx-ready .ticker[data-paused] .ticker-track{animation-play-state:paused}
 html.motion-reduced .ticker-track{animation:none}
 html.motion-reduced .ticker-list+.ticker-list{display:none}
-html.motion-reduced .ticker{overflow-x:auto}
+
 @keyframes ticker-scroll{to{transform:translate3d(-50%,0,0)}}
-@media(prefers-reduced-motion:reduce){.ticker-track{animation:none!important}.ticker-list+.ticker-list{display:none!important}.ticker{overflow-x:auto}}
+@media(prefers-reduced-motion:reduce){.ticker-track{animation:none!important}}
 
 /* Pillars and cards with pointer spotlight */
 .pillars{background:var(--stone)}
@@ -72,8 +72,8 @@ html.fx-ready .pillar:hover::before,html.fx-ready .bring-card:hover::before,html
 .route-stop .arrow{grid-area:arrow;color:var(--gold)}
 
 /* Reading reveal for the introduction statement */
-html.fx-ready:not(.motion-reduced) .intro-statement .motion-word{transition:opacity .45s var(--ease),color .45s}
-html.fx-ready:not(.motion-reduced) .intro-statement .motion-word:not(.is-lit){opacity:.22}
+html.fx-ready:not(.motion-reduced) .intro-statement .motion-word{transition:color .45s var(--ease)}
+html.fx-ready:not(.motion-reduced) .intro-statement .motion-word:not(.is-lit){color:#767a70}
 
 /* Timeline (How it works) */
 .timeline-section{background:var(--paper)}
@@ -84,8 +84,8 @@ html.fx-ready:not(.motion-reduced) .intro-statement .motion-word:not(.is-lit){op
 .timeline-node{display:grid;place-items:center;width:72px;height:72px;border-radius:50%;background:var(--paper);border:1.5px solid var(--gold-dark);color:var(--gold-dark);transition:background-color .5s,color .5s,transform .7s var(--ease)}
 .timeline-node .ico{width:32px;height:32px}
 .timeline-step.is-on .timeline-node{background:var(--ink);color:var(--gold);border-color:var(--ink);transform:scale(1.06)}
-html.fx-ready .timeline-step:not(.is-on) .timeline-copy{opacity:.5}
-.timeline-copy{max-width:620px;transition:opacity .6s var(--ease)}
+html.fx-ready .timeline-step:not(.is-on) .timeline-copy h3{color:#6f736a}
+.timeline-copy{max-width:620px}.timeline-copy h3{transition:color .6s var(--ease)}
 .timeline-copy .step-no{display:block;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--gold-dark);margin-bottom:8px;flex:none}
 .timeline-copy h3{font-size:clamp(30px,3.4vw,50px);margin-bottom:14px}
 .timeline-copy p{color:var(--muted);font-size:16px;line-height:1.8}
@@ -214,3 +214,11 @@ html.fx-ready .bar-share-card:hover::before{opacity:1}
 .bar-share-card p{color:#b7bdb2;font-size:15px}
 .bar-share-status{align-self:flex-start;margin-top:22px;padding:6px 12px;border:1px solid rgba(207,177,125,.4);color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-family:"Bricolage Grotesque","Bricolage Fallback",sans-serif}
 @media(max-width:899px){.bar-share-grid{grid-template-columns:1fr}.bar-share-card{min-height:0}.bar-share-card h3{margin-top:30px}}
+
+/* Accessibility pass: decorative numerals live in generated content so they are not read as low-contrast text. */
+.service-big-number::before{content:attr(data-n)}
+:root{--muted:#5a5f56}
+html.motion-reduced .ticker,.ticker{overflow:hidden}
+html.motion-reduced .ticker-track{width:auto;flex-wrap:wrap}
+html.motion-reduced .ticker-list{flex-wrap:wrap;row-gap:0}
+@media(prefers-reduced-motion:reduce){.ticker{overflow:hidden}.ticker-track{width:auto;flex-wrap:wrap}.ticker-list{flex-wrap:wrap}}

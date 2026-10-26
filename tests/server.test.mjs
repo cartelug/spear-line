@@ -68,3 +68,16 @@ test("generated responsive images are served with the correct type and private f
   }
   for(const path of ["/assets/visuals/missing.webp","/visual-prompts.json","/scripts/render-pages.mjs"]) assert.equal((await fetch(origin+path)).status,404);
 });
+
+test("text assets are compressed for clients that accept it, and images are not",{timeout:20000},async t=>{
+  const {origin} = await boot(t,false);
+  const br = await fetch(origin + "/site.css",{headers:{"Accept-Encoding":"br"}});
+  assert.equal(br.headers.get("content-encoding"),"br"); assert.equal(br.headers.get("vary"),"Accept-Encoding");
+  assert.ok((await br.text()).includes(".service-panel"),"decoded stylesheet content");
+  const gz = await fetch(origin + "/index.html",{headers:{"Accept-Encoding":"gzip"}});
+  assert.equal(gz.headers.get("content-encoding"),"gzip"); assert.match(await gz.text(),/<h1/);
+  const plain = await fetch(origin + "/site.css",{headers:{"Accept-Encoding":"identity"}});
+  assert.equal(plain.headers.get("content-encoding"),null);
+  const image = await fetch(origin + "/assets/visuals/01-hero-road.webp",{headers:{"Accept-Encoding":"br, gzip"}});
+  assert.equal(image.headers.get("content-encoding"),null);
+});

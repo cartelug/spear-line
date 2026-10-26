@@ -3,6 +3,7 @@ import { readFile, mkdir, appendFile, realpath, stat } from "node:fs/promises";
 import { resolve, dirname, extname, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { randomUUID } from "node:crypto";
+import { gzipSync, brotliCompressSync, constants as zlibConstants } from "node:zlib";
 import { validateEnquiry } from "./public/validation.js";
 import { publicFiles } from "./scripts/site-manifest.mjs";
 
@@ -34,6 +35,21 @@ const actualDataRoot = await realpath(dataRoot);
 if (actualDataRoot === publicRoot || actualDataRoot.startsWith(publicRoot + sep)) throw new Error("DATA_DIR must be outside public/.");
 const allowedFiles = new Set(await publicFiles(publicRoot));
 const mime = {".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".png":"image/png",".webp":"image/webp",".woff2":"font/woff2",".txt":"text/plain; charset=utf-8",".svg":"image/svg+xml",".ico":"image/x-icon",".xml":"application/xml; charset=utf-8",".webmanifest":"application/manifest+json; charset=utf-8",".jpg":"image/jpeg"};
+const compressible = new Set([".html",".css",".js",".svg",".xml",".txt",".webmanifest"]);
+const compressedCache = new Map();
+function pickEncoding(header = "") {
+  const accepted = String(header).toLowerCase();
+  if (/\bbr\b/.test(accepted)) return "br";
+  if (/\bgzip\b/.test(accepted)) return "gzip";
+  return "";
+}
+function compressed(key,body,encoding) {
+  if (!compressedCache.has(key)) {
+    compressedCache.set(key,encoding === "br" ? brotliCompressSync(body,{params:{[zlibConstants.BROTLI_PARAM_QUALITY]:5}}) : gzipSync(body,{level:9}));
+    if (compressedCache.size > 300) compressedCache.delete(compressedCache.keys().next().value);
+  }
+  return compressedCache.get(key);
+}
 const rate = new Map();
 const cleanup = setInterval(() => { for (const [key,value] of rate) if (Date.now() > value.expires) rate.delete(key); },60000);
 cleanup.unref();
@@ -105,8 +121,13 @@ const server = http.createServer(async (req,res) => {
     if (!path.startsWith(publicRoot + sep)) return json(res,403,{message:"Forbidden."});
     const metadata = await stat(path);
     if (!metadata.isFile()) return json(res,404,{message:"Not found."});
-    res.writeHead(200,{"Content-Type":mime[extname(path)] || "application/octet-stream","Cache-Control":extname(path) === ".html" ? "no-cache" : "public, max-age=3600"});
-    res.end(req.method === "HEAD" ? "" : await readFile(path));
+    const headers = {"Content-Type":mime[extname(path)] || "application/octet-stream","Cache-Control":extname(path) === ".html" ? "no-cache" : "public, max-age=3600","Vary":"Accept-Encoding"};
+    let body = await readFile(path);
+    const encoding = compressible.has(extname(path)) && body.length > 512 ? pickEncoding(req.headers["accept-encoding"]) : "";
+    if (encoding) { body = compressed(path + "|" + metadata.mtimeMs + "|" + encoding,body,encoding); headers["Content-Encoding"] = encoding; }
+    headers["Content-Length"] = body.length;
+    res.writeHead(200,headers);
+    res.end(req.method === "HEAD" ? "" : body);
   } catch (error) {
     console.error("Request failed:",error.status || 500);
     if (!res.headersSent) json(res,error.status || 500,{message:error.status ? error.message : "Your request could not be completed. Please try again."});

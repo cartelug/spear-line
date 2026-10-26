@@ -101,3 +101,9 @@ test("the motion layer respects the reduce preference and avoids unbounded work"
   assert.match(fx,/reduced\(\)/); assert.match(fx,/spear:motion-preference/); assert.match(fx,/pointerType==='touch'/);
   assert.match(css,/html\.motion-reduced \.ticker-track\{animation:none\}/); assert.match(css,/prefers-reduced-motion:reduce/);
 });
+
+test("pages load one bundled stylesheet that matches its sources",async()=>{
+  for(const page of pages){const html=await read(page);assert.match(html,/href="site\.css\?v=[\d.]+"/,page);assert.doesNotMatch(html,/href="(styles|experience|motion|pro)\.css/,page);}
+  const bundle=await read("site.css");
+  for(const marker of [".service-panel",".bar-hero",".ticker-track",".timeline-line"]) assert.ok(bundle.includes(marker),marker);
+});
