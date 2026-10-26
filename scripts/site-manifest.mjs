@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 // One list of publishable files, shared by the Node server and the GitHub Pages mirror.
 const rootExtensions = new Set([".html",".css",".js",".txt",".xml",".webmanifest",".svg",".ico",".png"]);
-const assetExtensions = new Set([".png",".webp",".woff2",".svg",".txt",".ico",".jpg"]);
+const assetExtensions = new Set([".png",".webp",".avif",".woff2",".svg",".txt",".ico",".jpg"]);
 const safeName = /^[a-z0-9][a-z0-9._-]*$/i;
 const extension = name => name.slice(name.lastIndexOf(".")).toLowerCase();
 

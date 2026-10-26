@@ -88,27 +88,26 @@ export function createMotion({ root = document.documentElement, preference = mat
   }
   document.addEventListener("visibilitychange", () => root.classList.toggle("is-hidden-tab", document.hidden));
 
-  /* Parallax (larger screens only) */
-  const parallax = $$("[data-parallax]");
-  scrollTasks.push(() => {
-    const active = !reduced() && wide.matches;
+  /* Parallax (larger screens only). Browsers with scroll-driven animations run it in CSS, off the main thread. */
+  const parallax = CSS.supports?.("animation-timeline: view()") ? [] : $$("[data-parallax]");
+  if (parallax.length) scrollTasks.push(() => {
+    const active = !reduced() && wide.matches, updates = [];
     for (const el of parallax) {
-      if (!active) { el.style.removeProperty("--py"); continue; }
+      if (!active) { updates.push([el, ""]); continue; }
       const box = el.parentElement.getBoundingClientRect();
       if (box.bottom < -200 || box.top > innerHeight + 200) continue;
       const speed = parseFloat(el.dataset.parallax) || 0.1;
-      const offset = (box.top + box.height / 2 - innerHeight / 2) * -speed;
-      el.style.setProperty("--py", offset.toFixed(1) + "px");
+      updates.push([el, ((box.top + box.height / 2 - innerHeight / 2) * -speed).toFixed(1) + "px"]);
     }
+    return () => updates.forEach(([el, value]) => { if (value) el.style.setProperty("--py", value); else el.style.removeProperty("--py"); });
   });
 
   /* Reading reveal: words of the intro statement light up as it crosses the screen. */
   const statement = $("[data-read]");
   if (statement && readWords.length) scrollTasks.push(() => {
-    if (reduced()) { readWords.forEach(word => word.classList.add("is-lit")); return; }
-    const box = statement.getBoundingClientRect();
-    const lit = Math.round(clamp((innerHeight * 0.9 - box.top) / (innerHeight * 0.55 + box.height * 0.35)) * readWords.length);
-    readWords.forEach((word, i) => word.classList.toggle("is-lit", i < lit));
+    const box = reduced() ? null : statement.getBoundingClientRect();
+    const lit = box ? Math.round(clamp((innerHeight * 0.9 - box.top) / (innerHeight * 0.55 + box.height * 0.35)) * readWords.length) : readWords.length;
+    return () => readWords.forEach((word, i) => word.classList.toggle("is-lit", i < lit));
   });
 
   /* Route: the spear travels the path as the section scrolls past and lights each stop. */
@@ -133,9 +132,9 @@ export function createMotion({ root = document.documentElement, preference = mat
         marks.forEach((fraction, i) => { const on = progress >= fraction - 0.012; circles[i].classList.toggle("is-on", on); stops[i]?.classList.toggle("is-on", on); });
       };
       scrollTasks.push(() => {
-        if (reduced()) return draw(1);
-        const box = route.getBoundingClientRect();
-        draw(clamp((innerHeight * 0.9 - box.top) / (box.height + innerHeight * 0.3) * 1.2));
+        const box = reduced() ? null : route.getBoundingClientRect();
+        const progress = box ? clamp((innerHeight * 0.9 - box.top) / (box.height + innerHeight * 0.3) * 1.2) : 1;
+        return () => draw(progress);
       });
     }
   }
@@ -145,10 +144,9 @@ export function createMotion({ root = document.documentElement, preference = mat
   if (timeline) {
     const fill = $("[data-timeline-fill]", timeline), items = $$("[data-timeline-step]", timeline);
     scrollTasks.push(() => {
-      if (reduced()) { fill?.style.setProperty("--p", "1"); items.forEach(step => step.classList.add("is-on")); return; }
-      const box = timeline.getBoundingClientRect(), line = innerHeight * 0.62;
-      fill?.style.setProperty("--p", clamp((line - box.top) / box.height).toFixed(3));
-      items.forEach(step => step.classList.toggle("is-on", step.getBoundingClientRect().top < line));
+      const calm = reduced(), box = timeline.getBoundingClientRect(), line = innerHeight * 0.62;
+      const p = calm ? 1 : clamp((line - box.top) / box.height), on = items.map(step => calm || step.getBoundingClientRect().top < line);
+      return () => { fill?.style.setProperty("--p", p.toFixed(3)); items.forEach((step, i) => step.classList.toggle("is-on", on[i])); };
     });
   }
 
@@ -159,9 +157,12 @@ export function createMotion({ root = document.documentElement, preference = mat
     scrollTasks.push(() => {
       let active = 0;
       items.forEach((step, i) => { if (step.getBoundingClientRect().top < innerHeight * 0.55) active = i; });
-      items.forEach((step, i) => step.classList.toggle("is-on", reduced() || !wide.matches || i === active));
-      frames.forEach((frame, i) => frame.classList.toggle("is-active", i === active));
-      if (count) count.textContent = String(active + 1).padStart(2, "0");
+      const all = reduced() || !wide.matches;
+      return () => {
+        items.forEach((step, i) => step.classList.toggle("is-on", all || i === active));
+        frames.forEach((frame, i) => frame.classList.toggle("is-active", i === active));
+        if (count) count.textContent = String(active + 1).padStart(2, "0");
+      };
     });
   }
 
@@ -231,8 +232,11 @@ export function createMotion({ root = document.documentElement, preference = mat
     ["--rx", "--ry", "--tx", "--ty"].forEach(name => from.style.removeProperty(name));
   }, { passive: true });
 
-  /* One scroll loop for everything scroll-linked. */
-  function schedule() { if (!frame) frame = requestAnimationFrame(() => { frame = 0; scrollTasks.forEach(task => task()); }); }
+  /* One scroll loop for everything scroll-linked: every task measures first, then all of them write,
+     so a frame never alternates layout reads and style writes. */
+  function schedule() {
+    if (!frame) frame = requestAnimationFrame(() => { frame = 0; scrollTasks.map(task => task()).forEach(write => write?.()); });
+  }
   window.addEventListener("scroll", schedule, { passive: true });
   window.addEventListener("resize", schedule, { passive: true });
   window.addEventListener("pageshow", schedule);

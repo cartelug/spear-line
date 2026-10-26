@@ -1,4 +1,4 @@
-import { validateEnquiry } from "./validation.js?v=9.0";
+import { validateEnquiry } from "./validation.js?v=8be8a83d48";
 const config = window.SPEAR_CONFIG || {};
 const preview = window.SPEAR_PREVIEW === true;
 const canSubmit = config.enquiriesEnabled === true && !preview;
@@ -37,18 +37,25 @@ document.addEventListener("focusin", event => root.classList.toggle("is-editing"
 document.addEventListener("focusout", () => requestAnimationFrame(() => root.classList.toggle("is-editing", Boolean(editingField(document.activeElement)))));
 
 /* Header: glass once scrolled, tucked away while scrolling down, back on the way up. Reading progress on top. */
-const header = $(".site-header"), progress = $(".progress span");
+const header = $(".site-header"), progress = $(".progress span"), cssProgress = CSS.supports?.("animation-timeline: scroll()");
 let lastY = window.scrollY, ticking = false;
 function onScroll() {
   ticking = false;
-  const y = window.scrollY, range = root.scrollHeight - window.innerHeight;
+  const y = window.scrollY, range = cssProgress && root.classList.contains("motion-ok") ? 0 : root.scrollHeight - window.innerHeight;
   header?.classList.toggle("is-scrolled", y > 24);
   if (y > 480 && y > lastY + 4 && !root.classList.contains("menu-open")) header?.classList.add("is-hidden");
   else if (y < lastY - 4 || y < 480) header?.classList.remove("is-hidden");
   lastY = y;
-  if (progress) progress.style.transform = "scaleX(" + (range > 0 ? Math.min(1, Math.max(0, y / range)) : 0).toFixed(4) + ")";
+  // Browsers with scroll-driven animations fill the progress bar in CSS; this only runs for the others or under Reduce motion.
+  if (progress && !(cssProgress && root.classList.contains("motion-ok"))) progress.style.transform = "scaleX(" + (range > 0 ? Math.min(1, Math.max(0, y / range)) : 0).toFixed(4) + ")";
 }
-window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+let scrollIdle = 0;
+window.addEventListener("scroll", () => {
+  if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  // Marks an active scroll so ambient loops pause; cleared shortly after the last scroll event.
+  if (!scrollIdle) root.classList.add("is-scrolling");
+  clearTimeout(scrollIdle); scrollIdle = setTimeout(() => { scrollIdle = 0; root.classList.remove("is-scrolling"); }, 160);
+}, { passive: true });
 document.addEventListener("focusin", event => { if (header?.contains(event.target)) header.classList.remove("is-hidden"); });
 onScroll();
 
@@ -125,8 +132,44 @@ if (filter) {
   });
 }
 
+/* Links: browsers without speculation rules fetch an internal page as soon as a visitor points at or touches it. */
+if (!HTMLScriptElement.supports?.("speculationrules")) {
+  const warmed = new Set();
+  const warm = event => {
+    const link = event.target.closest?.("a[href]");
+    if (!link || link.origin !== location.origin || link.pathname === location.pathname || !/(\.html|\/)$/.test(link.pathname) || navigator.connection?.saveData) return;
+    const url = link.href.split("#")[0];
+    if (warmed.has(url)) return;
+    warmed.add(url);
+    const hint = document.createElement("link"); hint.rel = "prefetch"; hint.href = url; document.head.append(hint);
+  };
+  document.addEventListener("pointerover", warm, { passive: true });
+  document.addEventListener("touchstart", warm, { passive: true });
+  document.addEventListener("focusin", warm);
+}
+
+/* Connection status: says so when the visitor goes offline (saved pages keep working) and when they are back. */
+const netStatus = $(".net-status");
+let netTimer = 0;
+function announceNetwork() {
+  if (!netStatus) return;
+  clearTimeout(netTimer);
+  netStatus.textContent = navigator.onLine ? "Back online." : "You are offline. Pages you have visited still open.";
+  netStatus.hidden = false; netStatus.classList.toggle("is-offline", !navigator.onLine);
+  if (navigator.onLine) netTimer = setTimeout(() => { netStatus.hidden = true; }, 3000);
+}
+window.addEventListener("offline", announceNetwork);
+window.addEventListener("online", announceNetwork);
+if (!navigator.onLine) announceNetwork();
+
+/* Offline support and instant repeat visits on the published HTTPS site (add ?sw to try it locally). */
+if ("serviceWorker" in navigator && (location.protocol === "https:" || new URLSearchParams(location.search).has("sw"))) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+
 /* Motion layer: loaded separately so a failure never affects navigation or the enquiry form. */
-import("./motion.js?v=9.0").then(({ createMotion }) => createMotion({ root, preference: motionPreference })).catch(() => {
+// It measures the layout, so it starts once the full stylesheet applies (window.spearCss, from the inline boot script).
+Promise.all([import("./motion.js?v=8be8a83d48"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
   root.classList.remove("motion-ok");
   $$("[data-motion-toggle]").forEach(button => { button.hidden = true; });
 });

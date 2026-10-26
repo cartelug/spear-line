@@ -1,4 +1,4 @@
-# Spear Line V9 design: golden hour on the line
+# Spear Line V10 design: golden hour on the line
 
 Spear Line moves vehicles, food and drink, and freight across warm, green, sunlit country. V9 takes its whole palette and mood from that photography: dark earth sections lit by a low sun, light sand sections like dust on a loading bay, and gold reserved for action. Layout order follows V7/V8; the visual language, type, motion and preloader are new.
 
@@ -23,9 +23,10 @@ Radii 10/16/24/32 px; two shadows; easings `--ease-out` (expo), `--ease-io`, `--
 
 ## Type
 
-- **Hubot Sans** (variable weight 200–900, width 75–125%): display. Headlines sit at 108–118% width and weight 750–850; the width axis animates (condensed to wide) as headings enter, with each word's final width reserved so nothing shifts.
-- **Mona Sans** (variable weight): body and interface, 1.0625–1.125 rem, line height 1.6, 62ch measure.
-- Fluid scale `--t-xs` to `--t-6xl` with `clamp()`. Fallbacks are Arial with `size-adjust` and ascent/descent overrides measured in Chromium, so swapping fonts causes no layout shift.
+- **MTN Brighter Sans Bold** (`Spear Display`): headlines, buttons, labels, navigation and every bold run. Rounded, confident, legible at small sizes.
+- **Sky Text** (`Spear Text`): reading text, 1.0625–1.125 rem, line height 1.6, 62ch measure.
+- `Spear Text` maps weights 100–500 to Sky Text and 600–900 to MTN Brighter Sans Bold, so any bold text uses a real bold face; `font-synthesis: none` forbids faked bolds.
+- Fluid scale `--t-xs` to `--t-6xl` with `clamp()`. Fallbacks are Arial (regular and bold) with `size-adjust` and ascent/descent overrides measured in Chromium, so swapping fonts causes no layout shift. Both fonts together weigh 40 KB.
 - Sentence case everywhere, no tracked caps, no emojis. Kicker labels pair a sprite icon with plain text.
 
 ## Sections that blend
@@ -38,8 +39,8 @@ Every section declares a tone and the tones of its neighbours (`.section.tone-ea
 
 ## Cards
 
-- **Glass**: translucent gradient, 1 px light border, 18 px backdrop blur, inset highlight. On light grounds it turns into frosted white with a warm shadow.
-- **Image cards** (bento services, gallery, listings): photograph with a dark gradient veil, panning slowly; title and tags sit on glass; pointer tilt on fine pointers.
+- **Glass**: translucent gradient, 1 px light border and inset highlight. A real 18 px backdrop blur is used only where glass sits over a photograph (heroes, closing, approach inset); elsewhere the section behind is already a pre-blurred backdrop, so the blur would cost frames without changing the look. On light grounds glass turns into frosted white with a warm shadow. Touch devices use a 12 px blur.
+- **Image cards** (bento services, gallery, listings): photograph with a dark gradient veil, panning slowly; tags sit on dark translucent pills; pointer tilt on fine pointers (flat at rest, 3D only while tilting).
 - **Empty cards**: glass panel with an icon disc, a plain explanation and a single action. Used wherever real content is not yet available (listings, contact details).
 
 ## Buttons and links

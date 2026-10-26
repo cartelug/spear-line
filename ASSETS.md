@@ -9,7 +9,7 @@
 
 ## Photography
 
-Twelve illustrative scenes plus a portrait phone hero, generated with the built-in image tool on 24 October 2026 (prompts in visual-prompts.json). They are not documentary photographs of Spear Line staff, stock, facilities or vehicles, and the footer says so. Each is a 1536 px WebP with a 768 px variant in `assets/visuals/`; the phone hero adds 1024, 768 and 480 px portrait versions.
+Twelve illustrative scenes plus a portrait phone hero, generated with the built-in image tool on 24 October 2026 (prompts in visual-prompts.json). They are not documentary photographs of Spear Line staff, stock, facilities or vehicles, and the footer says so. Each master is a 1536 px WebP in `assets/visuals/`. `scripts/images.py` derives AVIF at 480, 768, 1080 and 1536 px and WebP at 480, 768 and 1080 px; pages serve AVIF first with WebP as the fallback, choosing the width from the layout. The phone hero master is `13-mobile-hero-1024.webp`, with 480 and 768 px variants. All AVIF files together are 2.3 MB on disk; a phone typically downloads 20–60 KB per photograph.
 
 | Stem | Use |
 | --- | --- |
@@ -38,9 +38,11 @@ Twelve illustrative scenes plus a portrait phone hero, generated with the built-
 
 ## Fonts
 
-SIL Open Font Licence 1.1, licence texts alongside in `assets/fonts/`:
+Supplied by the site owner, downloaded from OnlineWebFonts.com, and used on the owner's confirmation that they hold a licence for web use:
 
-- Hubot Sans, variable weight and width, latin subset (92 KB).
-- Mona Sans, variable weight, latin subset (40 KB).
+- `mtn-brighter-sans-bold.woff2` (13 KB): MTN Brighter Sans Bold. Name table: Copyright © 2017 Newlyn Works Limited, all rights reserved; licensing at newlyn.com/licensing.
+- `sky-text-regular.woff2` (27 KB): Sky Text. Name table: Copyright (c) 2009 BSkyB Ltd.
 
-The V8 fonts (Big Shoulders Display, Atkinson Hyperlegible Next and Mono) were removed.
+Both were converted to WOFF2 from the supplied TrueType files with all glyphs and layout features kept. `License-OnlineWebFonts.txt` is the notice that came with the download, and every page footer carries the credit it asks for, plus the icon credit line the owner requested. Note that these are corporate typefaces of MTN and Sky; keep the licence on file, and if it does not cover web embedding, swap them for open-licence fonts (two `@font-face` blocks in `src/styles/00-tokens.css`).
+
+Earlier fonts (Hubot Sans, Mona Sans; before them Big Shoulders Display and Atkinson Hyperlegible) were removed.

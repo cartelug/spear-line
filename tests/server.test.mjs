@@ -54,18 +54,26 @@ test("preparation mode cannot accept enquiries",{timeout:20000},async t => {
   assert.equal(response.status,503); assert.equal((await readdir(dir)).length,0);
   assert.match(await (await fetch(origin+"/site-config.js")).text(),/"enquiriesEnabled":false/);
 });
-test("fonts, boot script and a strict self-hosted CSP are served",{timeout:20000},async t => {
+test("fonts, scripts and a strict self-hosted CSP that allows only the page's own inline blocks are served",{timeout:20000},async t => {
   const {origin} = await boot(t,false);
-  for (const [path,type] of [["/assets/fonts/hubot-sans-latin-variable.woff2","font/woff2"],["/assets/fonts/mona-sans-latin-wght.woff2","font/woff2"],["/assets/fonts/OFL-Hubot-Sans.txt","text/plain"],["/assets/logo.svg","image/svg\\+xml"],["/assets/icons.svg","image/svg\\+xml"],["/assets/favicon.svg","image/svg\\+xml"],["/assets/og-image.jpg","image/jpeg"],["/assets/grain.png","image/png"],["/assets/backdrops/01-hero-road.webp","image/webp"],["/site.webmanifest","application/manifest\\+json"],["/boot.js","text/javascript"],["/motion.js","text/javascript"],["/site.css","text/css"]]) {
+  for (const [path,type] of [["/assets/fonts/mtn-brighter-sans-bold.woff2","font/woff2"],["/assets/fonts/sky-text-regular.woff2","font/woff2"],["/assets/fonts/License-OnlineWebFonts.txt","text/plain"],["/assets/logo.svg","image/svg\\+xml"],["/assets/icons.svg","image/svg\\+xml"],["/assets/favicon.svg","image/svg\\+xml"],["/assets/og-image.jpg","image/jpeg"],["/assets/grain.png","image/png"],["/assets/backdrops/01-hero-road.webp","image/webp"],["/site.webmanifest","application/manifest\\+json"],["/motion.js","text/javascript"],["/site.css","text/css"]]) {
     const response = await fetch(origin + path); assert.equal(response.status,200,path); assert.match(response.headers.get("content-type"),new RegExp(type),path);
   }
-  const csp = (await fetch(origin + "/")).headers.get("content-security-policy");
-  assert.doesNotMatch(csp,/unsafe-inline|googleapis|gstatic|data:/); assert.match(csp,/font-src 'self'(;|$)/); assert.match(csp,/img-src 'self';/); assert.doesNotMatch(csp,/unsplash/);
+  const home = await fetch(origin + "/"), csp = home.headers.get("content-security-policy"), html = await home.text();
+  assert.doesNotMatch(csp,/unsafe-inline|unsafe-eval|googleapis|gstatic|data:/); assert.match(csp,/font-src 'self'(;|$)/); assert.match(csp,/img-src 'self';/); assert.doesNotMatch(csp,/unsplash/);
+  // Every inline script and style on the page is allowed by its exact hash, and nothing else is.
+  const { createHash } = await import("node:crypto"), hash = text => "'sha256-" + createHash("sha256").update(text).digest("base64") + "'";
+  const scripts = [...html.matchAll(/<script(?: type="speculationrules")?>([\s\S]*?)<\/script>/g)].map(m => hash(m[1])), styles = [...html.matchAll(/<style>([\s\S]*?)<\/style>/g)].map(m => hash(m[1]));
+  assert.ok(scripts.length === 2 && styles.length === 1, "boot script, speculation rules and critical styles");
+  assert.equal(csp.match(/script-src ([^;]*)/)[1], ["'self'", ...scripts].join(" "));
+  assert.equal(csp.match(/style-src ([^;]*)/)[1], ["'self'", ...styles].join(" "));
+  assert.doesNotMatch(html, /\son[a-z]+="/);
+  const missing = await fetch(origin + "/no-such-page"); assert.equal(missing.status,404); assert.match(missing.headers.get("content-security-policy"),/style-src 'self' 'sha256-/);
 });
 test("generated responsive images are served with the correct type and private files stay inaccessible",{timeout:20000},async t=>{
   const {origin}=await boot(t,false);
-  for(const path of ["/assets/visuals/01-hero-road.webp","/assets/visuals/01-hero-road-768.webp","/assets/visuals/05-foodstuffs.webp","/assets/visuals/13-mobile-hero.webp"]){
-    const response=await fetch(origin+path);assert.equal(response.status,200);assert.equal(response.headers.get("content-type"),"image/webp");
+  for(const path of ["/assets/visuals/01-hero-road.webp","/assets/visuals/01-hero-road-768.webp","/assets/visuals/05-foodstuffs.webp","/assets/visuals/13-mobile-hero-768.webp","/assets/visuals/01-hero-road-1080.avif"]){
+    const response=await fetch(origin+path);assert.equal(response.status,200);assert.equal(response.headers.get("content-type"),path.endsWith(".avif")?"image/avif":"image/webp");
   }
   for(const path of ["/assets/visuals/missing.webp","/visual-prompts.json","/scripts/build.mjs","/content/site.mjs"]) assert.equal((await fetch(origin+path)).status,404);
 });

@@ -2,7 +2,7 @@ import http from "node:http";
 import { readFile, mkdir, appendFile, realpath, stat } from "node:fs/promises";
 import { resolve, dirname, extname, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
 import { gzipSync, brotliCompressSync, constants as zlibConstants } from "node:zlib";
 import { validateEnquiry } from "./public/validation.js";
 import { publicFiles } from "./scripts/site-manifest.mjs";
@@ -41,7 +41,7 @@ await mkdir(dataRoot,{recursive:true,mode:0o700});
 const actualDataRoot = await realpath(dataRoot);
 if (actualDataRoot === publicRoot || actualDataRoot.startsWith(publicRoot + sep)) throw new Error("DATA_DIR must be outside public/.");
 const allowedFiles = new Set(await publicFiles(publicRoot));
-const mime = {".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".png":"image/png",".webp":"image/webp",".woff2":"font/woff2",".txt":"text/plain; charset=utf-8",".svg":"image/svg+xml",".ico":"image/x-icon",".xml":"application/xml; charset=utf-8",".webmanifest":"application/manifest+json; charset=utf-8",".jpg":"image/jpeg"};
+const mime = {".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".png":"image/png",".webp":"image/webp",".woff2":"font/woff2",".txt":"text/plain; charset=utf-8",".svg":"image/svg+xml",".ico":"image/x-icon",".xml":"application/xml; charset=utf-8",".webmanifest":"application/manifest+json; charset=utf-8",".jpg":"image/jpeg",".avif":"image/avif"};
 const compressible = new Set([".html",".css",".js",".svg",".xml",".txt",".webmanifest"]);
 const compressedCache = new Map();
 function pickEncoding(header = "") {
@@ -52,7 +52,7 @@ function pickEncoding(header = "") {
 }
 function compressed(key,body,encoding) {
   if (!compressedCache.has(key)) {
-    compressedCache.set(key,encoding === "br" ? brotliCompressSync(body,{params:{[zlibConstants.BROTLI_PARAM_QUALITY]:5}}) : gzipSync(body,{level:9}));
+    compressedCache.set(key,encoding === "br" ? brotliCompressSync(body,{params:{[zlibConstants.BROTLI_PARAM_QUALITY]:11,[zlibConstants.BROTLI_PARAM_SIZE_HINT]:body.length}}) : gzipSync(body,{level:9}));
     if (compressedCache.size > 300) compressedCache.delete(compressedCache.keys().next().value);
   }
   return compressedCache.get(key);
@@ -65,7 +65,23 @@ function headers(res) {
   res.setHeader("Referrer-Policy","strict-origin-when-cross-origin");
   res.setHeader("X-Frame-Options","SAMEORIGIN");
   res.setHeader("Permissions-Policy","camera=(), microphone=(), geolocation=()");
-  res.setHeader("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'");
+  res.setHeader("Content-Security-Policy",policy());
+}
+// Pages inline their boot script, first-screen styles and speculation rules. The policy allows exactly those blocks
+// by hash, so no other inline code can run. Hashes are computed from each page as it is served.
+function policy(scripts = "",styles = "") {
+  return "default-src 'self'; script-src 'self'" + scripts + "; style-src 'self'" + styles + "; font-src 'self'; img-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'";
+}
+const pagePolicies = new Map();
+function pagePolicy(key,html) {
+  if (pagePolicies.has(key)) return pagePolicies.get(key);
+  const hash = text => " 'sha256-" + createHash("sha256").update(text).digest("base64") + "'";
+  let scripts = "", styles = "";
+  for (const [,attributes,body] of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) if (!/\bsrc=/.test(attributes) && !/application\/ld\+json/.test(attributes)) scripts += hash(body);
+  for (const [,body] of html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)) styles += hash(body);
+  const value = policy(scripts,styles);
+  pagePolicies.set(key,value);
+  return value;
 }
 function json(res,status,body) {
   res.writeHead(status,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});
@@ -116,6 +132,14 @@ async function submit(req,res) {
   void notify(record);
   return json(res,201,{reference});
 }
+// Versioned scripts and styles never change at the same address; fonts and photographs rarely do; pages are revalidated.
+function cacheControl(file,url) {
+  if (file.endsWith(".html") || file === "sw.js" || file === "site.webmanifest") return "no-cache";
+  if (url.searchParams.has("v")) return "public, max-age=31536000, immutable";
+  if (file.startsWith("assets/fonts/")) return "public, max-age=2592000";
+  if (file.startsWith("assets/")) return "public, max-age=604800, stale-while-revalidate=86400";
+  return "public, max-age=3600";
+}
 const server = http.createServer(async (req,res) => {
   headers(res);
   try {
@@ -137,15 +161,19 @@ const server = http.createServer(async (req,res) => {
     try { requested = decodeURIComponent(url.pathname).replace(/^\/+/,"") || "index.html"; }
     catch { return json(res,400,{message:"Invalid path."}); }
     if (requested.includes("\0") || requested.includes("\\") || !allowedFiles.has(requested)) {
-      res.writeHead(404,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store"});
-      return res.end(req.method === "HEAD" ? "" : await readFile(resolve(publicRoot,"404.html")));
+      const page = await readFile(resolve(publicRoot,"404.html"));
+      res.writeHead(404,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store","Content-Security-Policy":pagePolicy("404|" + page.length,page.toString("utf8"))});
+      return res.end(req.method === "HEAD" ? "" : page);
     }
     const path = await realpath(resolve(publicRoot,requested));
     if (!path.startsWith(publicRoot + sep)) return json(res,403,{message:"Forbidden."});
     const metadata = await stat(path);
     if (!metadata.isFile()) return json(res,404,{message:"Not found."});
-    const headers = {"Content-Type":mime[extname(path)] || "application/octet-stream","Cache-Control":extname(path) === ".html" ? "no-cache" : "public, max-age=3600","Vary":"Accept-Encoding"};
+    const headers = {"Content-Type":mime[extname(path)] || "application/octet-stream","Cache-Control":cacheControl(requested,url),"Vary":"Accept-Encoding","ETag":'W/"' + metadata.size.toString(36) + "-" + Math.round(metadata.mtimeMs).toString(36) + '"'};
     let body = await readFile(path);
+    // Set before any 304, because a revalidation response replaces the stored headers, including this policy.
+    if (extname(path) === ".html") res.setHeader("Content-Security-Policy",pagePolicy(path + "|" + metadata.mtimeMs,body.toString("utf8")));
+    if (req.headers["if-none-match"] === headers.ETag) { res.writeHead(304,{"Cache-Control":headers["Cache-Control"],"ETag":headers.ETag,"Vary":"Accept-Encoding"}); return res.end(); }
     const encoding = compressible.has(extname(path)) && body.length > 512 ? pickEncoding(req.headers["accept-encoding"]) : "";
     if (encoding) { body = compressed(path + "|" + metadata.mtimeMs + "|" + encoding,body,encoding); headers["Content-Encoding"] = encoding; }
     headers["Content-Length"] = body.length;

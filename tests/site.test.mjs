@@ -11,6 +11,7 @@ const read = name => readFile(resolve(pub, name), "utf8");
 const exists = async name => access(resolve(pub, name)).then(() => true, () => false);
 const visibleText = html => html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "").replace(/<[^>]+>/g, " ");
 const css = () => read("site.css");
+const bootSource = () => readFile(resolve(pub, "..", "src", "boot.js"), "utf8");
 
 test("every page has one h1, unique ids, described and sized images, and no inline styles", async () => {
   for (const page of pages) {
@@ -33,6 +34,8 @@ test("local links, scripts, styles, images, fonts and fragments resolve, with no
     const html = await read(page), ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]));
     for (const [, ref] of html.matchAll(/(?:href|src)="([^"#?][^"]*)"/g)) {
       if (/^(mailto:|tel:)/.test(ref)) continue;
+      // The only outbound links are the font and icon credits the licence asks for; nothing external is loaded.
+      if (/^https:\/\/www\.onlinewebfonts\.com(\/icon)?$/.test(ref)) { assert.ok(html.includes(`<a href="${ref}">`), page + " credit is a plain link"); continue; }
       assert.doesNotMatch(ref, /^https?:/, page + " loads an external resource: " + ref);
       const [file, fragment] = ref.split("#"), target = file.split("?")[0];
       assert.ok(await exists(target), page + " → " + ref);
@@ -45,18 +48,23 @@ test("local links, scripts, styles, images, fonts and fragments resolve, with no
   for (const [, asset] of styles.matchAll(/url\((assets\/[^)]+)\)/g)) assert.ok(await exists(asset), "stylesheet asset " + asset);
 });
 
-test("typography is Hubot Sans for display and Mona Sans for text, self-hosted with metric-matched fallbacks", async () => {
+test("typography is MTN Brighter Sans Bold for display and bold runs and Sky Text for reading, self-hosted with metric-matched fallbacks and credited", async () => {
   const styles = await css();
   assert.doesNotMatch(styles, /googleapis|gstatic|@import/i);
   const families = new Set([...styles.matchAll(/font-family:"([^"]+)"/g)].map(m => m[1]));
-  assert.deepEqual([...families].sort(), ["Hubot Fallback", "Hubot Sans", "Mona Fallback", "Mona Sans"]);
-  assert.match(styles, /font-family:"Hubot Sans";src:url\(assets\/fonts\/hubot-sans-latin-variable\.woff2\)[^}]*font-weight:200 900;font-stretch:75% 125%/);
-  assert.match(styles, /font-family:"Hubot Fallback";src:local\("Arial"\);size-adjust:120\.6%/);
-  assert.match(styles, /font-family:"Mona Fallback";src:local\("Arial"\);size-adjust:103\.5%/);
+  assert.deepEqual([...families].sort(), ["Display Fallback", "Spear Display", "Spear Text", "Text Fallback"]);
+  assert.match(styles, /font-family:"Spear Display";src:url\(assets\/fonts\/mtn-brighter-sans-bold\.woff2\)[^}]*font-weight:100 900/);
+  assert.match(styles, /font-family:"Spear Text";src:url\(assets\/fonts\/sky-text-regular\.woff2\)[^}]*font-weight:100 500/);
+  assert.match(styles, /font-family:"Spear Text";src:url\(assets\/fonts\/mtn-brighter-sans-bold\.woff2\)[^}]*font-weight:600 900/, "bold text uses the real bold face");
+  assert.match(styles, /font-family:"Text Fallback";src:local\("Arial"\);font-weight:100 500;size-adjust:92\.7%/);
+  assert.match(styles, /font-synthesis:none/);
+  assert.ok(await exists("assets/fonts/License-OnlineWebFonts.txt"));
   for (const page of pages) {
     const html = await read(page);
-    assert.match(html, /rel="preload" href="assets\/fonts\/hubot-sans-latin-variable\.woff2" as="font"/, page);
-    assert.match(html, /rel="preload" href="assets\/fonts\/mona-sans-latin-wght\.woff2" as="font"/, page);
+    assert.match(html, /rel="preload" href="assets\/fonts\/mtn-brighter-sans-bold\.woff2" as="font"/, page);
+    assert.match(html, /rel="preload" href="assets\/fonts\/sky-text-regular\.woff2" as="font"/, page);
+    assert.ok(html.includes('Fonts made from <a href="https://www.onlinewebfonts.com">Web Fonts</a> is licensed by CC BY 4.0'), page + " font credit");
+    assert.ok(html.includes('Icons made from <a href="https://www.onlinewebfonts.com/icon">svg icons</a> is licensed by CC BY 4.0'), page + " icon credit");
   }
 });
 
@@ -70,7 +78,7 @@ test("content is never hidden unless a script owns the exit", async () => {
     if (/display:none/.test(body) && !/opacity:0|visibility:hidden/.test(body) && /\.nav-list a::before|\.(dock|menu-toggle|nav-note|intro-media|process-media|rail-hint|hero-scroll|card-text|waybill-kind)|::-webkit|\.marquee ul\+ul|\.bar-card::after|\.btn-primary|\[hidden\]|\.form-message|is-filtered|\.cursor/.test(selector)) continue;
     assert.ok(guard.test(selector), "unguarded hidden state: " + selector.trim().slice(0, 90));
   }
-  const boot = await read("boot.js");
+  const boot = await bootSource();
   assert.match(boot, /if \(!root\.classList\.contains\("motion-live"\)\) \{ root\.classList\.remove\("motion-ok"\); root\.classList\.add\("motion-late"\); \}/, "reveal states are lifted if motion never starts");
   assert.match(await read("motion.js"), /if \(root\.classList\.contains\("motion-late"\)\) revealables\.forEach\(el => el\.classList\.add\("is-in"\)\)/, "a late motion module never hides content again");
   assert.match(boot, /setTimeout\(finish, MAX \+ 400\)/, "the preloader has a fail-safe");
@@ -111,7 +119,7 @@ test("the preloader assembles the real logo from glyphs that exist, and plays on
     assert.match(html, /<div class="preloader" aria-hidden="true">/, page);
     assert.match(html, /<use href="assets\/logo\.svg#logo"\/>/, page + " header logo is the vector mark");
   }
-  const boot = await read("boot.js");
+  const boot = await bootSource();
   assert.match(boot, /sessionStorage\.getItem\(KEY\)/); assert.match(boot, /if \(reduced \|\| seen \|\| document\.visibilityState === "hidden"\) return;/);
   assert.match(boot, /parts\[i\]\.inert = on/, "focus cannot reach the hidden page while the doors are closed");
 });
@@ -121,7 +129,7 @@ test("services, FAQ and Bar copy come from the content layer", async () => {
   for (const service of content.services) {
     assert.ok(index.includes(`href="${service.slug}.html"`), "home links " + service.slug);
     const page = await read(service.slug + ".html");
-    assert.ok(page.includes(service.hero.title.replace(/&/g, "&amp;").replace(/’/g, "’")), service.slug + " hero title");
+    assert.ok(visibleText(page).replace(/\s+/g, " ").includes(service.hero.title.replace(/&/g, "&amp;")), service.slug + " hero title");
     for (const item of service.items) assert.ok(page.includes(item.title.replace(/&/g, "&amp;")), service.slug + " item " + item.title);
   }
   const faq = await read("faq.html");
@@ -201,12 +209,25 @@ test("motion respects Reduce motion and pauses what is offscreen", async () => {
   assert.match(styles, /html\.motion-ok \.is-paused img,html\.motion-ok \.is-paused\{animation-play-state:paused\}/);
 });
 
-test("pages load one bundled stylesheet built from src/styles", async () => {
+test("pages inline their first-screen styles and boot script, then load one bundled stylesheet without blocking", async () => {
+  const { parseCss, styleRules } = await import("../scripts/css-rules.mjs");
+  const keys = new Set(styleRules(parseCss((await css()).replace(/\/\*[\s\S]*?\*\//g, ""))).map(rule => rule.key));
+  const critical = JSON.parse(await readFile(resolve(pub, "..", "src", "styles", "critical.json"), "utf8"));
+  const boot = await bootSource();
   for (const page of pages) {
-    const html = await read(page);
-    assert.match(html, /href="site\.css\?v=[\d.]+"/, page);
-    assert.equal((html.match(/rel="stylesheet"/g) || []).length, 1, page + " one stylesheet");
+    const html = await read(page), head = html.slice(0, html.indexOf("</head>"));
+    assert.equal((head.match(/<style>/g) || []).length, 1, page + " inline critical styles");
+    assert.match(head, /<\/style><link rel="stylesheet" href="site\.css\?v=[\w]+" media="print" data-defer><noscript><link rel="stylesheet" href="site\.css\?v=[\w]+"><\/noscript>/, page + " deferred stylesheet with a no-script fallback");
+    assert.ok(head.includes("window.spearCss"), page + " inline boot script");
+    assert.doesNotMatch(head, /src="boot\.js/, page);
+    assert.ok(head.indexOf("data-defer") < head.indexOf("window.spearCss"), page + " boot runs after the deferred link exists");
+    // The critical list must describe the current stylesheet: regenerate it with npm run critical after style changes.
+    const list = critical[page === "timber-logistics.html" ? "logistics.html" : page];
+    assert.ok(list && list.length > 100, page + " has critical rules");
+    const stale = list.filter(key => !keys.has(key));
+    assert.ok(stale.length <= list.length * 0.02, page + " critical.json is stale: " + stale.slice(0, 3).join(" / "));
   }
+  assert.match(boot, /link\.media = "all"/);
   const styles = await css();
   for (const marker of [".hero-veil", ".bento", ".route-stage", ".process-media", ".waybill", ".preloader", ".bar-card", ".form-card"]) assert.ok(styles.includes(marker), marker);
 });

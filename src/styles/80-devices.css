@@ -1,0 +1,40 @@
+/* Device adaptations. Last in the bundle so they override component and chrome rules of equal specificity. */
+/* Touch devices: lighter glass (smaller blur, no saturation pass) and no full-screen grain layer, which together
+   cost fill-rate on every scrolled frame of a phone GPU. The look holds: glass sits on pre-blurred backdrops. */
+@media(pointer:coarse){
+  body::after{content:none}
+  .glass,.btn-glass,.menu-toggle,.site-header.is-scrolled,.dock{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+}
+
+/* Touch screens wide enough for the desktop navigation (tablets in landscape) keep 44 px targets. */
+@media(pointer:coarse) and (min-width:1100px){.nav-list a{min-height:44px}}
+
+/* Long words never push a heading past its column. */
+h1,h2,h3{overflow-wrap:break-word}
+.process>*,.process-step>*,.timeline-step>*,.timeline-card{min-width:0}
+
+/* Very narrow phones: folded foldables and small Android handsets, 280 to 359 px. */
+@media(max-width:359px){
+  :root{--gutter:16px}
+  h1,.display,.page-title,.hero-title{font-size:clamp(1.85rem,10.5vw,2.3rem)}
+  h2{font-size:clamp(1.6rem,9vw,2rem)}
+  .waybill-choices{grid-template-columns:1fr}
+  .btn{max-width:100%;gap:10px;padding-left:18px}
+  .btn-label{white-space:normal;line-height:1.2}
+  .timeline-step{grid-template-columns:36px 1fr;gap:14px}
+  .process-step{column-gap:14px}
+  .timeline-card{padding:20px}
+}
+
+/* Short landscape screens (phones turned sideways): a compact header, an icon-only dock whose labels stay
+   available to screen readers, and first-screen headings sized to the height rather than the width. */
+@media(max-height:520px) and (orientation:landscape){
+  .header-inner,.site-header.is-scrolled .header-inner{height:66px}
+  .brand-logo,.site-header.is-scrolled .brand-logo{width:78px}
+  .hero-grid,.page-hero-inner{padding-top:84px}
+  .enquiry-hero,.bar-hero{padding-top:96px}
+  h1,.display,.page-title,.hero-title{font-size:clamp(1.9rem,9vh,3rem)}
+  .dock{width:auto;grid-template-columns:repeat(4,58px);bottom:calc(8px + env(safe-area-inset-bottom))}
+  .dock a{padding:12px 4px}
+  .dock span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}

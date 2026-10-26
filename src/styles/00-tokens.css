@@ -1,11 +1,15 @@
 /* Spear Line design tokens.
-   Type: Hubot Sans (display, variable width and weight) and Mona Sans (text), one superfamily.
-   Fallbacks are metric-matched to Arial from measurements in Chromium, so text does not shift when fonts arrive.
+   Type: MTN Brighter Sans Bold (display and every bold run) and Sky Text (reading text), self-hosted.
+   "Spear Text" maps regular weights to Sky Text and bold weights (600+) to MTN Brighter Sans Bold, so emphasis
+   always uses a real bold, never a synthesised one. Fallbacks are Arial scaled to each face's measured width and
+   vertical metrics (Chromium canvas against Arial), so text does not shift when the fonts arrive.
    Colour: sampled from the photography (umber, earth, olive, sand) with sun gold for action and river teal for focus. */
-@font-face{font-family:"Hubot Sans";src:url(assets/fonts/hubot-sans-latin-variable.woff2) format("woff2");font-weight:200 900;font-stretch:75% 125%;font-style:normal;font-display:swap}
-@font-face{font-family:"Mona Sans";src:url(assets/fonts/mona-sans-latin-wght.woff2) format("woff2");font-weight:200 900;font-style:normal;font-display:swap}
-@font-face{font-family:"Hubot Fallback";src:local("Arial");size-adjust:120.6%;ascent-override:90.4%;descent-override:26.5%;line-gap-override:0%}
-@font-face{font-family:"Mona Fallback";src:local("Arial");size-adjust:103.5%;ascent-override:105.3%;descent-override:30.9%;line-gap-override:0%}
+@font-face{font-family:"Spear Display";src:url(assets/fonts/mtn-brighter-sans-bold.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Spear Text";src:url(assets/fonts/sky-text-regular.woff2) format("woff2");font-weight:100 500;font-style:normal;font-display:swap}
+@font-face{font-family:"Spear Text";src:url(assets/fonts/mtn-brighter-sans-bold.woff2) format("woff2");font-weight:600 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Display Fallback";src:local("Arial Bold"),local("Arial-BoldMT"),local("Arial");font-weight:100 900;size-adjust:102.9%;ascent-override:94.9%;descent-override:31.5%;line-gap-override:0%}
+@font-face{font-family:"Text Fallback";src:local("Arial");font-weight:100 500;size-adjust:92.7%;ascent-override:94.8%;descent-override:22.7%;line-gap-override:2.7%}
+@font-face{font-family:"Text Fallback";src:local("Arial Bold"),local("Arial-BoldMT"),local("Arial");font-weight:600 900;size-adjust:102.9%;ascent-override:94.9%;descent-override:31.5%;line-gap-override:0%}
 
 :root{
   /* Tones, darkest to lightest */
@@ -17,8 +21,8 @@
   /* Lines and surfaces */
   --line-dark:rgba(245,239,230,.14);--line-light:rgba(27,22,17,.13);
   /* Type */
-  --font-display:"Hubot Sans","Hubot Fallback",system-ui,sans-serif;
-  --font-text:"Mona Sans","Mona Fallback",system-ui,sans-serif;
+  --font-display:"Spear Display","Display Fallback",system-ui,sans-serif;
+  --font-text:"Spear Text","Text Fallback",system-ui,sans-serif;
   --t-xs:.875rem;
   --t-sm:clamp(.9375rem,.91rem + .12vw,1rem);
   --t-base:clamp(1.0625rem,1.03rem + .16vw,1.125rem);

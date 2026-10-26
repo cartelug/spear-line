@@ -12,15 +12,27 @@ html.motion-ok [data-reveal=clip]:not(.is-in){opacity:1;--y:0px;clip-path:inset(
 html.motion-ok [data-reveal=clip]:not(.is-in) img{transform:scale(1.18)}
 
 /* Tilt cards combine reveal offset and pointer tilt in one transform. */
-[data-tilt]{--rx:0deg;--ry:0deg;transform:perspective(1100px) translate3d(0,var(--y,0px),0) scale(var(--s,1)) rotateX(var(--rx)) rotateY(var(--ry));transition:opacity 1s var(--ease-out) var(--d,0s),transform .9s var(--ease-out) var(--d,0s),box-shadow .5s}
-[data-tilt].is-tilting{transition:transform .14s linear,box-shadow .5s}
+/* Flat at rest; the 3D context exists only while the pointer tilts a card, so idle cards never cost a 3D layer. */
+[data-tilt]{--rx:0deg;--ry:0deg;transform:translate3d(0,var(--y,0px),0) scale(var(--s,1));transition:opacity 1s var(--ease-out) var(--d,0s),transform .9s var(--ease-out) var(--d,0s),box-shadow .5s}
+[data-tilt].is-tilting{transform:perspective(1100px) translate3d(0,var(--y,0px),0) scale(var(--s,1)) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .14s linear,box-shadow .5s}
 
 /* Split headings: words rise out of a mask while the width axis opens from condensed to wide. */
 [data-split] .w{display:inline-grid;overflow:clip;padding:.06em .02em .1em;margin:-.06em -.02em -.1em;vertical-align:top}
 /* Each word reserves its final width, so the width-axis animation never shifts the layout. */
 [data-split] .w::after{content:attr(data-w);height:0;overflow:hidden;visibility:hidden;user-select:none;pointer-events:none}
-[data-split] .wi{display:inline-block;transition:transform 1.05s var(--ease-out) calc(var(--i,0) * 55ms),font-stretch 1.3s var(--ease-out) calc(var(--i,0) * 55ms)}
-html.motion-ok [data-split]:not(.is-in) .wi{transform:translateY(112%);font-stretch:78%}
+[data-split] .wi{display:inline-block;transition:transform 1.05s var(--ease-out) calc(var(--i,0) * 55ms)}
+html.motion-ok [data-split]:not(.is-in) .wi{transform:translateY(112%)}
+
+/* First-screen headings are split at build time and animated in CSS from the first paint, so the largest text
+   never waits for a script, and each word starts partly in view so it counts as painted on the first frame. After the preloader (pl-ran) the words settle up from just below their line and are never hidden. */
+.title-intro .w{display:inline-grid;overflow:clip;padding:.06em .02em .1em;margin:-.06em -.02em -.1em;vertical-align:top}
+.title-intro .w::after{content:attr(data-w);height:0;overflow:hidden;visibility:hidden;user-select:none;pointer-events:none}
+.title-intro .wi{display:inline-block;animation-delay:calc((var(--i,0) + var(--l,0)) * 45ms)}
+.title-intro .w:nth-child(2){--i:1}.title-intro .w:nth-child(3){--i:2}.title-intro .w:nth-child(4){--i:3}.title-intro .w:nth-child(5){--i:4}.title-intro .w:nth-child(6){--i:5}.title-intro .w:nth-child(7){--i:6}.title-intro .w:nth-child(n+8){--i:7}
+.title-intro .line:nth-child(2){--l:2}.title-intro .line:nth-child(3){--l:4}
+html.motion-ok:not(.pl-ran) .title-intro .wi{animation-name:word-rise;animation-duration:1.05s;animation-timing-function:var(--ease-out);animation-fill-mode:both}
+html.motion-ok.pl-ran.pl-exit .title-intro .wi,html.motion-ok.pl-ran:not(.is-preloading) .title-intro .wi{animation-name:word-open;animation-duration:1.4s;animation-timing-function:var(--ease-out);animation-fill-mode:both}
+html.is-prerendering .title-intro .wi{animation-play-state:paused}
 
 /* Reading reveal on the intro statement */
 html.motion-ok [data-read] .rw{transition:color .5s var(--ease-out)}
@@ -32,7 +44,17 @@ html.motion-ok [data-read] .rw:not(.is-lit){color:#8C7F70}
 html.motion-ok .pan-a img{animation:pan-a 26s ease-in-out infinite alternate}
 html.motion-ok .pan-b img{animation:pan-b 30s ease-in-out infinite alternate}
 html.motion-ok .is-paused img,html.motion-ok .is-paused{animation-play-state:paused}
+/* Ambient drift holds still while the page is being scrolled, so scrolling gets the whole frame budget. */
+html.is-scrolling .backdrop,html.is-scrolling .glow span,html.is-scrolling .pan img{animation-play-state:paused}
 [data-parallax]{transform:translate3d(0,var(--py,0px),0)}
+/* Where scroll-driven animations exist, parallax and the reading progress run in CSS, off the main thread.
+   motion.js and app.js only drive them in other browsers. Same geometry as the script: the layer drifts
+   by its speed times half the travel as it crosses the screen. */
+[data-parallax="0.08"]{--k:.08}[data-parallax="0.1"]{--k:.1}[data-parallax="0.12"]{--k:.12}[data-parallax="0.15"]{--k:.15}[data-parallax="-0.08"]{--k:-.08}[data-parallax="-0.12"]{--k:-.12}
+@supports (animation-timeline:view()){
+  @media(min-width:900px){html.motion-ok [data-parallax]{animation:parallax linear both;animation-timeline:view();animation-range:cover}}
+  html.motion-ok .progress span{animation:progress linear both;animation-timeline:scroll(root block)}
+}
 
 /* Ambient */
 html.motion-ok .glow span{animation:glow-drift 22s ease-in-out infinite alternate}
@@ -67,7 +89,18 @@ html.motion-ok .lost-spear{animation:lost 4.5s var(--ease-io) .4s infinite}
   ::view-transition-new(root){animation:vt-in .55s var(--ease-out) both}
 }
 .site-header{view-transition-name:site-header}
+/* A service card's photograph grows into that service page's hero (and shrinks back on the way home). */
+.card-service[href="vehicles.html"] .card-media,.page-vehicle .page-hero .hero-media{view-transition-name:svc-vehicles}
+.card-service[href="supplies.html"] .card-media,.page-supplies .page-hero .hero-media{view-transition-name:svc-supplies}
+.card-service[href="logistics.html"] .card-media,.page-logistics .page-hero .hero-media{view-transition-name:svc-logistics}
+::view-transition-group(svc-vehicles),::view-transition-group(svc-supplies),::view-transition-group(svc-logistics){animation-duration:.7s;animation-timing-function:var(--ease-io)}
+::view-transition-image-pair(svc-vehicles),::view-transition-image-pair(svc-supplies),::view-transition-image-pair(svc-logistics){overflow:clip;border-radius:var(--r-lg)}
+::view-transition-old(svc-vehicles),::view-transition-new(svc-vehicles),::view-transition-old(svc-supplies),::view-transition-new(svc-supplies),::view-transition-old(svc-logistics),::view-transition-new(svc-logistics){height:100%;object-fit:cover}
 
+@keyframes parallax{from{transform:translate3d(0,calc(var(--k,.1) * -1 * (50vh + 50%)),0)}to{transform:translate3d(0,calc(var(--k,.1) * (50vh + 50%)),0)}}
+@keyframes progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes word-rise{from{transform:translateY(58%)}}
+@keyframes word-open{from{transform:translateY(24%)}}
 @keyframes pan-a{from{transform:scale(1.08) translate3d(-1.5%,0,0)}to{transform:scale(1.18) translate3d(1.5%,-1.5%,0)}}
 @keyframes pan-b{from{transform:scale(1.16) translate3d(1.5%,-1%,0)}to{transform:scale(1.06) translate3d(-1.5%,1%,0)}}
 @keyframes glow-drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(8vmax,6vmax,0) scale(1.15)}}

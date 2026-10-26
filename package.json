@@ -11,11 +11,12 @@
     "start": "node --env-file-if-exists=.env server.mjs",
     "dev": "node --env-file-if-exists=.env server.mjs",
     "test": "node --test",
-    "check": "node --check server.mjs && node --check public/boot.js && node --check public/app.js && node --check public/motion.js && node --check public/validation.js && node --check scripts/build.mjs && node --check content/site.mjs && node --check scripts/bundle-css.mjs && node --check tests/e2e/site.e2e.mjs && node scripts/bundle-css.mjs --check && node scripts/pages-root.mjs --check",
+    "check": "node --check server.mjs && node --check src/boot.js && node --check scripts/css-rules.mjs && node --check scripts/critical.mjs && node --check public/app.js && node --check public/motion.js && node --check public/validation.js && node --check scripts/build.mjs && node --check content/site.mjs && node --check scripts/bundle-css.mjs && node --check tests/e2e/site.e2e.mjs && node scripts/bundle-css.mjs --check && node scripts/pages-root.mjs --check",
     "sync:pages": "node scripts/bundle-css.mjs && node scripts/pages-root.mjs --write",
     "render:pages": "npm run build",
     "test:e2e": "node --test \"tests/e2e/*.e2e.mjs\"",
-    "build": "node scripts/build.mjs && node scripts/bundle-css.mjs && node scripts/pages-root.mjs --write"
+    "build": "node scripts/bundle-css.mjs && node scripts/build.mjs && node scripts/pages-root.mjs --write",
+    "critical": "node scripts/bundle-css.mjs && node scripts/critical.mjs && npm run build"
   },
   "devDependencies": {
     "axe-core": "^4.10.2",
