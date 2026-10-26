@@ -13,7 +13,7 @@ html.menu-closing .site-header{background:var(--ink)}
 @media(min-width:900px){.site-nav li>a::after{content:"";position:absolute;height:1px;bottom:-7px;left:0;right:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.22,.68,0,1)}.site-nav li>a:hover::after,.site-nav li>a:focus-visible::after{transform:scaleX(1)}}
 .gallery-item{transition:transform .5s cubic-bezier(.22,.68,0,1)}
 .service-tags li{transition:border-color .3s,background .3s}
-.service-tags li:hover{border-color:var(--gold);background:rgba(207,177,125,.07)}
+.service-tags li:hover{border-color:var(--gold);background:rgba(242,106,27,.07)}
 .field>label{transition:color .22s}
 .field:focus-within>label{color:var(--gold-dark)}
 input:not([type=checkbox]):not([type=radio]),textarea{transition:border-color .22s,box-shadow .22s}

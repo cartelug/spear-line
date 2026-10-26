@@ -33,3 +33,7 @@ During the audited service/gallery journey, 145 distinct mobile targets and 131 
 - **Pointer effects.** Spotlight on cards, magnetic buttons and image tilt are limited to fine pointers, use individual transform properties so they compose with the Web Animations timelines, and are skipped for touch input and Reduce motion.
 - **Page transitions.** Cross-document view transitions (a short fade and lift) where supported, disabled for the system preference and the site's Reduce motion control.
 - Default HTML and CSS remain readable if fx.js fails; its states are guarded by `html.fx-ready`.
+
+## V8 changes
+
+Removed: word-by-word copy, per-section fade-ups, card spotlight, image tilt and magnetic buttons. The homepage headline keeps its word entrance; images keep their mask reveal. Added: the consignment-note stamp (one CSS animation, 1.2 s after load, skipped under Reduce motion). The route line, timeline, reading reveal, ticker and bar pour are unchanged in behaviour.

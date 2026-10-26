@@ -1,10 +1,9 @@
-// V7 interaction layer: ticker, route line, timeline, spotlight, magnetic controls, tilt and reading reveal.
+// Interaction layer: ticker, route line, timeline, reading reveal and the bar card. No decorative pointer effects.
 // Everything is progressive. Default HTML/CSS is readable without it, and the shared Reduce motion preference wins.
 export function createFx({root=document.documentElement,preference=matchMedia('(prefers-reduced-motion: reduce)')}={}) {
   const $=(selector,base=document)=>base.querySelector(selector);
   const $$=(selector,base=document)=>[...base.querySelectorAll(selector)];
   const clamp=(value,min=0,max=1)=>Math.min(max,Math.max(min,value));
-  const finePointer=matchMedia('(hover:hover) and (pointer:fine)');
   const reduced=()=>preference.matches||root.classList.contains('motion-reduced');
   const SVG='http://www.w3.org/2000/svg';
   let frame=0;
@@ -107,36 +106,6 @@ export function createFx({root=document.documentElement,preference=matchMedia('(
     },{rootMargin:'-20% 0px -55% 0px'});
     for(const id of links.keys()){const el=document.getElementById(id);if(el)spy.observe(el);}
   }
-
-  /* Pointer effects only run with a fine pointer and full motion. */
-  document.addEventListener('pointermove',event=>{
-    if(event.pointerType==='touch'||reduced())return;
-    const card=event.target.closest?.('[data-spotlight]');
-    if(card) {
-      const box=card.getBoundingClientRect();
-      card.style.setProperty('--mx',(event.clientX-box.left).toFixed(0)+'px');card.style.setProperty('--my',(event.clientY-box.top).toFixed(0)+'px');
-    }
-    if(!finePointer.matches)return;
-    const tilt=event.target.closest?.('[data-tilt]');
-    if(tilt) {
-      const box=tilt.getBoundingClientRect();
-      const x=(event.clientX-box.left)/box.width-.5, y=(event.clientY-box.top)/box.height-.5;
-      tilt.style.transform='perspective(1000px) rotateX('+(-y*4).toFixed(2)+'deg) rotateY('+(x*5).toFixed(2)+'deg)';
-    }
-    const magnet=event.target.closest?.('.button,.nav-cta,.round-button');
-    if(magnet) {
-      const box=magnet.getBoundingClientRect();
-      const dx=event.clientX-(box.left+box.width/2), dy=event.clientY-(box.top+box.height/2);
-      magnet.style.setProperty('--tx',clamp(dx*.14,-7,7).toFixed(1)+'px');magnet.style.setProperty('--ty',clamp(dy*.2,-5,5).toFixed(1)+'px');
-    }
-  },{passive:true});
-  document.addEventListener('pointerout',event=>{
-    const from=event.target.closest?.('[data-tilt],.button,.nav-cta,.round-button');
-    if(!from||from.contains(event.relatedTarget))return;
-    if(from.matches('[data-tilt]'))from.style.removeProperty('transform');
-    from.style.removeProperty('--tx');from.style.removeProperty('--ty');
-  },{passive:true});
-  for(const el of $$('.service-photo,.detail-image,.story-main,.process-picture'))el.dataset.tilt='';
 
   const run=()=>schedule();
   if(tasks.length) {

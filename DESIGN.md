@@ -1,37 +1,37 @@
-# Spear Line V7 design
+# Spear Line V8 design: the consignment note
 
-The visual direction combines warm ivory, charcoal, forest green and brass. Photography and generous typography carry the story: the next move, three connected services, the details behind a requirement, then a practical enquiry.
+Spear Line moves vehicles, food and drink, and freight. The objects of that world are consignment notes, stencilled crate and sack markings, and shipping containers, so the site is one dispatch document. Layout and section order are unchanged from V7; the visual language is new.
 
-The existing white logo is retained and is never redrawn. Bricolage Grotesque (variable weight and optical size) sets headings, labels and controls; Instrument Sans sets body copy and forms; a Fraunces italic is reserved for the single accent word in a heading. All three are self-hosted variable fonts under the SIL Open Font Licence. On light sections accent words use the dark brass for contrast; on dark and photographic sections they use the bright brass.
+## Tokens
 
-## Symbol and icons
+| Name | Hex | Use |
+| --- | --- | --- |
+| Concrete paper | `#F2F3F0` | Page ground (cool, not cream) |
+| Manifest navy | `#12243A` | Text and dark sections |
+| Container steel | `#1D3A56` | Second dark tone for alternating sections |
+| Dispatch orange | `#F26A1B` | Flat fills (buttons, ticker, stamps) with navy text, small icons on dark; step numbers on dark use `#FF9B5C`, text on light uses `#9A3E00` |
+| Ballpoint blue | `#2342C8` | Entries and focus on the consignment note only |
+| Steel grey | `#4A5766` | Secondary text (5.4:1 on concrete) |
 
-The Spear Line symbol is a spear head on a shaft with a trailing line, set at 45° so it reads as forward movement and echoes the arrow used throughout the interface. It is drawn in assets/spear-mark.svg (currentColor) and assets/favicon.svg (brass on ink). Service and interface icons share one 2 px round-cap line style in assets/icons.svg and are referenced with `<use>`.
+## Type
 
-## Layout
+- **Big Shoulders Display** (variable, scaled 122% so sizes read like a normal face): headlines and freight lettering, sentence case, never tracked negatively.
+- **Atkinson Hyperlegible Next**: body and interface, chosen for legibility.
+- **Atkinson Hyperlegible Mono**: only the entries on the consignment note.
+All self-hosted, SIL Open Font Licence.
 
-The homepage moves through a full-height hero, editorial introduction, three-service switcher, warehouse/people story, swipeable image rail, process accordions and a photographic closing. Service pages use alternating image/text sections. The enquiry page presents only the fields required for the selected service.
+## Principles
 
-The grid adapts at 899 px and 599 px. Horizontal image scrolling is contained in its gallery. Mobile inputs use 16 px text to avoid unwanted focus zoom on common phone browsers.
+1. **One memorable thing: the consignment note** in the hero. A visitor chooses vehicles, supplies or logistics and says where it is going; the enquiry page opens with both filled in. A single stamp lands on load. It also works without JavaScript.
+2. **Quiet everywhere else.** Ruled rows (a 3 px navy rule above each item) replace card grids; hover is an inked colour change, not a glow; there are no gradient washes, drop shadows on every card, or tinted near-black.
+3. **No template chrome.** No accent word in headings, no tracked all-caps labels, no eyebrow labels above headings, no numbered markers except real sequences (the process steps and timeline), no dot-joined strings, no arrows appended to links. Tests enforce these.
+4. **Motion explains something.** The stamp, the route line that follows scroll, the timeline that fills as you read, the ticker as container corrugation (paused when offscreen or hovered), the bar's pour, and the reading reveal. Per-section fade-ups, word-by-word copy, spotlight, tilt and magnetic effects were removed. Everything stops under Reduce motion.
+5. **Symbol, not logo redraw.** The spear-and-line symbol and a 17-icon line set (2 px round caps) sit alongside the unchanged wordmark.
 
-## V7 pages
+## Pages
 
-How it works explains the four steps and what to bring for each service. Questions answered keeps every answer to claims the site already makes and switches its enquiry answer when online submission is enabled. Contact reveals email, phone, WhatsApp and address cards only when they are configured, and otherwise points to the enquiry form.
+Home, three service pages, How it works (timeline and what to bring), Questions answered, Contact (shows only configured channels), About, Spear Line Bar (the same document after dark, with a glass that pours once), Enquire, Privacy and 404.
 
-## Motion
+## Responsive
 
-The shared V6 motion layer is documented in docs/MOTION.md. It replaces the earlier scroll-reveal controller with finite word, image, rule and component timelines. Phones open directly into their portrait hero, and visitors can use the saved Reduce motion control.
-
-- The opening logo plays once per tab on an eligible first home-page visit, with a two-second fail-safe and a reduced-motion exemption.
-- Scroll reveals are triggered by registered observers. Default HTML/CSS does not hide narrative content.
-- Desktop parallax is limited to 24 px. It is disabled below 900 px and when reduced motion is requested through the system or website control.
-- Service tabs support Left/Right, Home and End. Without the module, all three service panels stay readable.
-- Gallery controls scroll one image at a time and reflect the start/end state. Native horizontal scrolling remains available.
-- Native details elements provide the process interaction.
-- The mobile menu supports Escape, a focus loop and inert background content.
-
-Use real inventory, project and team photographs when those become available. The generated images are illustrative and are identified in the footer; do not turn them into claims of owned assets or completed work.
-
-## Spear Line Bar
-
-The bar page keeps the earlier Club layout (coming-soon pill, large title, tilted card on orbit rings, launch note) with a warmer, lower-lit palette. The card carries a rocks glass with a spear-shaped pick that pours, drops its ice and settles once when the card first enters view (static under Reduce motion). Because no location, hours, menu or prices exist, the page lists three things to look out for (where, when, what is pouring), each marked "To be announced", and makes no booking or membership offer.
+Below 1100 px the note moves under the headline and the hero grows with its content; below 600 px tab icons drop out and the note's label is hidden. A script checks that no text renders below 14 px (18 px for the condensed face).

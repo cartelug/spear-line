@@ -1,4 +1,4 @@
-# V7 validation — 26 October 2026
+# V8 validation — 26 October 2026
 
 ## Automated checks
 
@@ -24,3 +24,11 @@ Native iOS and Android hardware, Safari and Firefox rendering, cross-document vi
 ## Existing operational limits
 
 Business contact details are not configured, so the Contact page shows its empty state, and online enquiry submission remains disabled. The site stays hidden from search engines until it is built with a launch origin. The Bar is announced as coming soon, without a location, hours, menu, prices or booking.
+
+## V8 redesign checks
+
+- Tests: 25 pass, including new checks for template tells (no `<em>`, eyebrow labels, dot-joined strings, arrow glyphs or uppercase transforms), the hero note's markup and prefill support, one stylesheet bundle, and compression.
+- axe-core: no violations on 12 pages at phone and desktop, with and without Reduce motion. It caught and the build fixed low contrast from the new greys and orange.
+- Hero note: submitting it opens the enquiry page with the right service and destination field filled for vehicles, supplies and logistics; it also works with JavaScript disabled and the radios respond to arrow keys.
+- Text size: a script checks that rendered text is at least 14 px (18 px for the condensed face); remaining exceptions are 13 px dock and "Soon" tags and the footer tagline.
+- Layout: no overflow at 320, 390, 768 and 1363 px; the tablet hero was fixed during the pass.

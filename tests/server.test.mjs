@@ -55,7 +55,7 @@ test("preparation mode cannot accept enquiries",{timeout:20000},async t => {
 });
 test("fonts, boot script and a strict self-hosted CSP are served",{timeout:20000},async t => {
   const {origin} = await boot(t,false);
-  for (const [path,type] of [["/assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2","font/woff2"],["/assets/fonts/instrument-sans-latin-wght-normal.woff2","font/woff2"],["/assets/fonts/fraunces-latin-wght-italic.woff2","font/woff2"],["/assets/icons.svg","image/svg\\+xml"],["/assets/favicon.svg","image/svg\\+xml"],["/assets/og-image.jpg","image/jpeg"],["/site.webmanifest","application/manifest\\+json"],["/fx.js","text/javascript"],["/pro.css","text/css"],["/assets/fonts/OFL.txt","text/plain"],["/boot.js","text/javascript"],["/motion.js","text/javascript"],["/motion.css","text/css"],["/experience.css","text/css"]]) {
+  for (const [path,type] of [["/assets/fonts/big-shoulders-display-latin-wght-normal.woff2","font/woff2"],["/assets/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2","font/woff2"],["/assets/fonts/atkinson-hyperlegible-mono-latin-400-normal.woff2","font/woff2"],["/assets/icons.svg","image/svg\\+xml"],["/assets/favicon.svg","image/svg\\+xml"],["/assets/og-image.jpg","image/jpeg"],["/site.webmanifest","application/manifest\\+json"],["/fx.js","text/javascript"],["/pro.css","text/css"],["/assets/fonts/OFL.txt","text/plain"],["/boot.js","text/javascript"],["/motion.js","text/javascript"],["/motion.css","text/css"],["/experience.css","text/css"]]) {
     const response = await fetch(origin + path); assert.equal(response.status,200,path); assert.match(response.headers.get("content-type"),new RegExp(type),path);
   }
   const csp = (await fetch(origin + "/")).headers.get("content-security-policy");

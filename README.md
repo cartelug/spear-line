@@ -1,8 +1,14 @@
-# Spear Line — V7
+# Spear Line — V8
 
-Vehicles, foodstuffs and beverages, and logistics. A responsive, presentation-led website using self-hosted Bricolage Grotesque, Instrument Sans and a Fraunces italic accent, the existing Spear Line logo, a new spear symbol and icon set, and thirteen coordinated generated photographs.
+Vehicles, foodstuffs and beverages, and logistics. A responsive, presentation-led website using self-hosted Big Shoulders Display, Atkinson Hyperlegible Next and Atkinson Hyperlegible Mono, the existing Spear Line logo, a new spear symbol and icon set, and thirteen coordinated generated photographs.
 
-## What V7 adds
+## What V8 changes
+
+- A new visual language built around the consignment note: condensed freight lettering, flat navy / concrete / dispatch orange, ruled rows instead of cards, and a hero note that starts an enquiry with the chosen service and destination. See DESIGN.md.
+- Template habits removed and tested for: accent words, eyebrow labels, tracked caps, arrows on links, non-sequence numerals.
+- Decorative pointer effects and per-section fade-ups removed; meaningful motion kept.
+
+## What V7 added
 
 - Three new pages: How it works (animated timeline and per-service checklists), Questions answered (grouped accordions with a scrolling topic index) and Contact (shows only the channels configured in site-config.js).
 - A Spear Line symbol (assets/spear-mark.svg), favicon set, app icons, web manifest, 1200×630 share image and a 17-symbol icon sprite (assets/icons.svg). The logo itself is unchanged.

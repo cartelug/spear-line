@@ -7,15 +7,17 @@ Replaces the early analysis in `FINISH-PLAN.md`. Everything under "Measured" was
 | Area | Result | How |
 | --- | --- | --- |
 | Accessibility | axe-core: 0 violations on 12 pages × phone and desktop, with and without Reduce motion. Lighthouse accessibility 100 | WCAG 2.0–2.2 A/AA and best-practice rule sets |
-| Performance (phone, throttled) | 92–97 across home, vehicles, how it works, FAQ, enquire. LCP 2.4–3.3 s, CLS ≤ 0.008, TBT ≤ 10 ms | Lighthouse against the Node server |
-| Performance (desktop) | 99–100, LCP under 1 s | Lighthouse |
+| Performance (phone, throttled) | 95–99 across home, vehicles, how it works, FAQ, enquire. LCP 1.9–2.9 s, CLS ≤ 0.008, TBT ≤ 10 ms | Lighthouse against the Node server, after the V8 redesign |
+| Performance (desktop) | 100 on all five pages, LCP under 1 s | Lighthouse |
 | Best practices | 100 | Lighthouse |
 | SEO | 100 in launch mode; 66 by default only because pages are deliberately `noindex` | Lighthouse, build with a launch origin |
 | Layout | No horizontal overflow, no console errors or failed requests: 12 pages × 320/390/768/1363 px | Playwright sweep |
 | Security | Security review of the branch: no high-confidence findings | Static review of server, manifest, scripts |
-| Tests | 23 pass: structure, links, fonts, icons, manifest, noindex default, motion safeguards, server MIME/CSP/compression, enquiry validation | `npm test` |
+| Tests | 25 pass: structure, links, fonts, icons, manifest, noindex default, motion safeguards, server MIME/CSP/compression, enquiry validation | `npm test` |
 
 Fixed during this audit: a disallowed ARIA role on tab panels, low-contrast captions, decorative numerals read as text, dimmed words in the reading reveal, a keyboard-inaccessible ticker under Reduce motion, four render-blocking stylesheets (now one bundle), and uncompressed responses from the Node server (76 KB stylesheet is now 15 KB with brotli).
+
+V8 (the consignment-note redesign) kept these scores while replacing the visual language; see `DESIGN.md`.
 
 ## 2. What only the owner can unblock
 

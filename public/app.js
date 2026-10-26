@@ -181,6 +181,14 @@ if (form) {
   form.elements.service.value = selected;
   const type = new URLSearchParams(location.search).get("type");
   if (selected === "vehicle" && type) form.elements.model.value = type.slice(0,160);
+  // The homepage consignment note passes where the requirement is going; it fills whichever destination field the chosen service uses.
+  const destination = (new URLSearchParams(location.search).get("destination") || "").replace(/[\u0000-\u001f\u007f]/g,"").trim().slice(0,200);
+  const destinationField = {vehicle:"location",supplies:"supplyDestination",logistics:"destination"};
+  function fillDestination(service) {
+    const field = form.elements[destinationField[service]];
+    if (destination && field && !field.value) field.value = destination;
+  }
+  fillDestination(selected);
   let downloadURL = null, busy = false;
   function clearErrors() {
     $$(".field-error",form).forEach(el => { el.textContent = ""; });
@@ -192,6 +200,7 @@ if (form) {
       const active = el.dataset.serviceFields === service;
       el.hidden = !active; el.disabled = !active;
     });
+    fillDestination(service);
     clearErrors(); message.replaceChildren(); message.className = "form-message";
   }
   $$('input[name="service"]',form).forEach(el => el.addEventListener("change",updateService));

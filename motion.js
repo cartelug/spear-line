@@ -148,22 +148,15 @@ export function createMotion({root=document.documentElement,preference=matchMedi
       for(const entry of entries)if(entry.isIntersecting)play(groups.get(entry.target));
     },{rootMargin:'0px 0px 24px 0px',threshold:.06});
 
-    const texts=$$('main h1,main h2,main h3,main .eyebrow,main .lede,main .hero-description,main .section-head>p,main .service-copy>p,main .bar-copy>p,main .bar-tagline,main .bar-description,.closing-content>p');
-    for(const el of texts) {
-      if(el.matches('.coming-soon')||el.closest('.bar-card,[aria-hidden="true"]')||el.querySelector('input,textarea,button,a'))continue;
+    // One orchestrated entrance: the homepage headline. Other copy is not animated on scroll.
+    for(const el of $$('.hero h1')) {
       const words=splitText(el);if(words.length)group(el,'text',words);
     }
     const wordmark=$('.footer-wordmark');if(wordmark)group(wordmark,'text',splitText(wordmark,true));
     for(const el of $$('.service-photo,.story-main,.story-inset,.detail-image,.brief-image,.wide-image,.enquiry-aside-image,.process-picture,.gallery-item>div'))group(el,'image');
     for(const el of $$('.bar-card'))group(el,'bar-card');
-    for(const el of $$('main .intro-detail>p,main .story-copy>p,main .detail-copy>p,main .brief-layout>div>p,main .principles>article>p,.picture-caption,.story-index,.bar-stage-caption,.service-tags>li,.footer-top>div,.bar-launch-note,.field,.hero-actions,.subhero-content>.button')) {
-      if(!groups.has(el)&&!el.querySelector('[data-motion-text]')&&!el.dataset.motionText)group(el,'copy');
-    }
     for(const head of $$('.section-head')) {
       const line=document.createElement('span');line.className='motion-rule';line.setAttribute('aria-hidden','true');head.append(line);group(line,'rule');
-    }
-    for(const el of $$('[data-reveal],[data-draw]')) {
-      if(!groups.has(el)&&!el.querySelector('[data-motion-group]'))group(el,'copy');
     }
     for(const el of $$('a.button,button,.text-link,.mobile-dock>a,.site-nav li>a,.mobile-service-strip>a,summary,.choice-options label'))register(el,'control');
     for(const el of $$('.field>label'))register(el,'field-label');

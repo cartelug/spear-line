@@ -35,4 +35,4 @@ A portrait companion was generated with the built-in image tool from the origina
 - assets/icons.svg: 17 original line icons (spear and arrow marks, vehicle, glass, supplies, logistics, route, brief, chat, check, pin, clock, shield, mail, phone, a chat-and-phone bubble and a star).
 - assets/favicon-32.png, favicon-48.png, favicon.ico, apple-touch-icon.png, icon-192.png and icon-512.png are rendered from favicon.svg.
 - assets/og-image.jpg (1200 × 630) combines the existing hero image, logo and tagline.
-- Fonts (SIL Open Font Licence 1.1, licence texts alongside): Bricolage Grotesque, Fraunces italic and Instrument Sans, latin subsets of the variable files published by Fontsource. The Archivo and Lexend files were removed; OFL.txt remains from that set.
+- Fonts (SIL Open Font Licence 1.1, licence texts alongside): Big Shoulders Display, Atkinson Hyperlegible Next and Atkinson Hyperlegible Mono, latin subsets published by Fontsource. Earlier Archivo, Lexend, Bricolage, Instrument Sans and Fraunces files were removed; OFL.txt remains from the first set.

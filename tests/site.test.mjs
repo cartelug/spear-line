@@ -35,12 +35,12 @@ test("local links, scripts, styles, fonts and fragments resolve",async () => {
   const css = await read("styles.css")+await read("experience.css")+await read("motion.css")+await read("pro.css");
   for (const [,font] of css.matchAll(/url\((assets\/fonts\/[^)]+)\)/g)) assert.ok(await exists(font),font);
 });
-test("typography is exactly Bricolage Grotesque, Instrument Sans and the Fraunces accent, self-hosted",async () => {
+test("typography is Big Shoulders Display, Atkinson Hyperlegible Next and Mono, self-hosted",async () => {
   const css = await read("styles.css")+await read("experience.css")+await read("motion.css")+await read("pro.css");
-  assert.doesNotMatch(css,/googleapis|gstatic|@import|Source Sans|"Inter"|Playfair|Archivo|Lexend/i);
+  assert.doesNotMatch(css,/googleapis|gstatic|@import|Source Sans|"Inter"|Playfair|Archivo|Lexend|Bricolage|Instrument|Fraunces/i);
   const families = new Set([...css.matchAll(/font-family:"([^"]+)"/g)].map(m => m[1]));
-  assert.deepEqual([...families].sort(),["Bricolage Fallback","Bricolage Grotesque","Fraunces","Fraunces Fallback","Instrument Fallback","Instrument Sans"]);
-  assert.match(css,/font-weight:200 800/); assert.match(css,/font-weight:400 700/); assert.match(css,/font-weight:100 900/);
+  assert.deepEqual([...families].sort(),["Atkinson Fallback","Atkinson Hyperlegible Mono","Atkinson Hyperlegible Next","Big Shoulders Display","Big Shoulders Fallback"]);
+  assert.match(css,/font-weight:100 900/); assert.match(css,/font-weight:200 800/); assert.match(css,/font-weight:400;/);
 });
 test("content is never hidden unless a script has registered its own exit",async () => {
   const css = await read("styles.css")+await read("experience.css")+await read("motion.css")+await read("pro.css");
@@ -49,7 +49,7 @@ test("content is never hidden unless a script has registered its own exit",async
     const [selector,body = ""] = rule.split("{");
     if (!/opacity:0[;}]|visibility:hidden/.test(body) && !/transform:scale[XY]\(0\)/.test(body)) continue;
     if (/^\s*(from|to|\d+%)\s*$/.test(selector)) continue;
-    assert.ok(/html\.(reveal-ready|intro|fx-ready)|\.intro-overlay|\.honey|\.choice-options input|^\s*\[hidden\]|\.menu-|\.site-nav|\.skip|\.thread|\.reading-progress|\.tab-list button::after|\.site-nav li>a::after|@media/.test(selector) || /\.intro-line|\.intro-stack/.test(selector),"unguarded hidden state: " + selector.slice(0,80));
+    assert.ok(/html\.(reveal-ready|intro|fx-ready)|\.intro-overlay|\.honey|\.choice-options input|\.waybill-choices input|^\s*\[hidden\]|\.menu-|\.site-nav|\.skip|\.thread|\.reading-progress|\.tab-list button::after|\.site-nav li>a::after|@media/.test(selector) || /\.intro-line|\.intro-stack/.test(selector),"unguarded hidden state: " + selector.slice(0,80));
   }
   assert.match(await read("boot.js"),/setTimeout\(exit,\s*2000\)/);
 });
@@ -67,7 +67,7 @@ test("current services and illustrative imagery are clear without invented claim
 test("the Bar is reachable throughout the site and clearly remains coming soon",async()=>{
   for(const page of pages) assert.match(await read(page),/href="bar\.html"/,page);
   const bar=await read("bar.html");
-  assert.match(bar,/<h1>Spear Line/); assert.match(bar,/<em>Bar\.<\/em>/); assert.match(bar,/Coming soon/);
+  assert.match(bar,/<h1>Spear Line/); assert.match(bar,/Bar\.<\/span><\/h1>/); assert.match(bar,/Coming soon/);
   assert.doesNotMatch(bar,/<form\b|Join now|Reserve|Book a table|Membership/i);
   assert.doesNotMatch(bar,/\bopen(s|ing)? (daily|from|at|on)\b|happy hour|\$\s?\d|\d{1,2}\s?(am|pm)\b/i,"no invented hours or prices");
   assert.equal((bar.match(/To be announced/g)||[]).length,3);
@@ -98,7 +98,7 @@ test("pages stay out of search results until a launch origin is supplied",async(
 });
 test("the motion layer respects the reduce preference and avoids unbounded work",async()=>{
   const fx=await read("fx.js"), css=await read("pro.css");
-  assert.match(fx,/reduced\(\)/); assert.match(fx,/spear:motion-preference/); assert.match(fx,/pointerType==='touch'/);
+  assert.match(fx,/reduced\(\)/); assert.match(fx,/spear:motion-preference/); assert.doesNotMatch(fx,/pointermove|mousemove/,"no decorative pointer effects");
   assert.match(css,/html\.motion-reduced \.ticker-track\{animation:none\}/); assert.match(css,/prefers-reduced-motion:reduce/);
 });
 
@@ -106,4 +106,23 @@ test("pages load one bundled stylesheet that matches its sources",async()=>{
   for(const page of pages){const html=await read(page);assert.match(html,/href="site\.css\?v=[\d.]+"/,page);assert.doesNotMatch(html,/href="(styles|experience|motion|pro)\.css/,page);}
   const bundle=await read("site.css");
   for(const marker of [".service-panel",".bar-hero",".ticker-track",".timeline-line"]) assert.ok(bundle.includes(marker),marker);
+});
+
+test("the design avoids template tells: no accent words, eyebrow labels, dot-joined strings, link arrows or tracked caps",async()=>{
+  for(const page of pages){
+    const html=await read(page);
+    assert.doesNotMatch(html,/<em>/,page+" accent word");
+    assert.doesNotMatch(html,/class="eyebrow/,page+" eyebrow label");
+    assert.doesNotMatch(html.replace(/<script[\s\S]*?<\/script>/g,"").replace(/<[^>]+>/g," "),/\s·\s|↗|→/,page+" separator or arrow glyph");
+  }
+  const css=await read("styles.css")+await read("experience.css")+await read("motion.css")+await read("pro.css");
+  assert.doesNotMatch(css.replace(/\.eyebrow[^{]*\{[^}]*\}/g,""),/text-transform:uppercase/,"no uppercase labels");
+});
+test("the homepage consignment note starts an enquiry with the chosen service and destination",async()=>{
+  const html=await read("index.html");
+  assert.match(html,/<form class="waybill" action="enquire\.html" method="get"/);
+  for(const service of ["vehicle","supplies","logistics"]) assert.match(html,new RegExp('name="service" value="'+service+'"'));
+  assert.match(html,/name="destination"[^>]*maxlength="120"/);
+  const app=await read("app.js");
+  assert.match(app,/get\("destination"\)/); assert.match(app,/supplyDestination/);
 });
