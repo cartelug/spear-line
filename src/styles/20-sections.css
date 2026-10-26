@@ -1,0 +1,48 @@
+/* Sections: each has a tone; neighbouring tones meet at their 50% mix, so seams blend instead of cutting. */
+.wrap{width:min(calc(100% - 2 * var(--gutter)),var(--max));margin-inline:auto}
+.section{--pad:clamp(80px,8.5vw,136px);--blend:clamp(48px,6vw,104px);--tone-c:var(--bone);position:relative;isolation:isolate;overflow-x:clip;padding-block:var(--pad);background-color:var(--tone-c);background-image:linear-gradient(180deg,var(--from-c,var(--tone-c)) 0,var(--tone-c) var(--blend),var(--tone-c) calc(100% - var(--blend)),var(--to-c,var(--tone-c)) 100%)}
+.tone-soil{--tone-c:var(--soil)}.tone-umber{--tone-c:var(--umber)}.tone-earth{--tone-c:var(--earth)}.tone-olive{--tone-c:var(--olive)}.tone-dusk{--tone-c:var(--dusk)}.tone-sand{--tone-c:var(--sand)}.tone-bone{--tone-c:var(--bone)}
+.tone-soil,.tone-umber,.tone-earth,.tone-olive,.tone-dusk{color:var(--chalk);--muted:var(--chalk-2);--accent:var(--sun);--line:var(--line-dark)}
+.tone-sand,.tone-bone{color:var(--ink);--muted:var(--ink-2);--accent:var(--sun-deep);--line:var(--line-light);color-scheme:light}
+.from-soil{--from-c:color-mix(in oklab,var(--tone-c),var(--soil))}.from-umber{--from-c:color-mix(in oklab,var(--tone-c),var(--umber))}.from-earth{--from-c:color-mix(in oklab,var(--tone-c),var(--earth))}.from-olive{--from-c:color-mix(in oklab,var(--tone-c),var(--olive))}.from-dusk{--from-c:color-mix(in oklab,var(--tone-c),var(--dusk))}.from-sand{--from-c:color-mix(in oklab,var(--tone-c),var(--sand))}.from-bone{--from-c:color-mix(in oklab,var(--tone-c),var(--bone))}
+.to-soil{--to-c:color-mix(in oklab,var(--tone-c),var(--soil))}.to-umber{--to-c:color-mix(in oklab,var(--tone-c),var(--umber))}.to-earth{--to-c:color-mix(in oklab,var(--tone-c),var(--earth))}.to-olive{--to-c:color-mix(in oklab,var(--tone-c),var(--olive))}.to-dusk{--to-c:color-mix(in oklab,var(--tone-c),var(--dusk))}.to-sand{--to-c:color-mix(in oklab,var(--tone-c),var(--sand))}.to-bone{--to-c:color-mix(in oklab,var(--tone-c),var(--bone))}
+
+/* Image-derived backgrounds: pre-blurred photographs, faded at both edges so they melt into the blend. */
+.backdrop{position:absolute;inset:0;z-index:-1;background-size:cover;background-position:center;opacity:.34;-webkit-mask-image:linear-gradient(180deg,transparent,#000 24%,#000 76%,transparent);mask-image:linear-gradient(180deg,transparent,#000 24%,#000 76%,transparent);pointer-events:none}
+.backdrop-01-hero-road{background-image:url(assets/backdrops/01-hero-road.webp)}
+.backdrop-02-vehicles-suv{background-image:url(assets/backdrops/02-vehicles-suv.webp)}
+.backdrop-03-vehicles-pickup{background-image:url(assets/backdrops/03-vehicles-pickup.webp)}
+.backdrop-04-logistics-truck{background-image:url(assets/backdrops/04-logistics-truck.webp)}
+.backdrop-05-foodstuffs{background-image:url(assets/backdrops/05-foodstuffs.webp)}
+.backdrop-06-beverages{background-image:url(assets/backdrops/06-beverages.webp)}
+.backdrop-07-warehouse{background-image:url(assets/backdrops/07-warehouse.webp)}
+.backdrop-08-dispatch-team{background-image:url(assets/backdrops/08-dispatch-team.webp)}
+.backdrop-09-highland-road{background-image:url(assets/backdrops/09-highland-road.webp)}
+.backdrop-10-last-mile-van{background-image:url(assets/backdrops/10-last-mile-van.webp)}
+.backdrop-11-container-port{background-image:url(assets/backdrops/11-container-port.webp)}
+.backdrop-12-sourcing-detail{background-image:url(assets/backdrops/12-sourcing-detail.webp)}
+
+/* Ambient light: two soft sun and river glows that drift slowly behind dark sections. */
+.glow{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.glow span{position:absolute;width:56vmax;height:56vmax;border-radius:50%;background:radial-gradient(circle,rgba(242,182,90,.16),transparent 62%)}
+.glow span:first-child{left:-14vmax;top:4%}
+.glow span:last-child{right:-18vmax;bottom:-4%;background:radial-gradient(circle,rgba(108,192,180,.1),transparent 60%)}
+
+/* Section heads */
+.section-head{display:grid;gap:22px;max-width:880px;margin-bottom:clamp(40px,6vw,80px)}
+.section-head p{max-width:52ch;font-size:var(--t-lg);line-height:1.55;color:var(--muted)}
+.split-head{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:end;max-width:none;gap:clamp(24px,5vw,96px)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,110px);align-items:start}
+.kicker{display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;font:600 var(--t-sm)/1.2 var(--font-display);font-stretch:100%;letter-spacing:.005em;color:var(--accent,var(--sun))}
+.kicker .ico{width:22px;height:22px}
+.lede{max-width:46ch;font-size:var(--t-lg);line-height:1.52;color:var(--muted,var(--chalk-2))}
+.lede-sm{font-size:var(--t-lg);line-height:1.6;color:var(--muted)}
+.lede-sm+.lede-sm{margin-top:18px}
+.fine{margin-top:36px;max-width:64ch;font-size:var(--t-sm);color:var(--muted)}
+.display{font-size:var(--t-6xl);font-weight:700;font-stretch:118%;line-height:.95;letter-spacing:-.035em}
+.actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+
+@media(max-width:899px){
+  .split-head,.split{grid-template-columns:1fr}
+  .section{--pad:clamp(72px,16vw,104px);--blend:56px}
+}

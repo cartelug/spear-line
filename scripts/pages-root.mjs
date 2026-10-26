@@ -5,6 +5,10 @@ import { publicFiles } from "./site-manifest.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const paths = await publicFiles(resolve(root, "public"));
+// The mirror records what it wrote, so it only ever removes its own files that public/ no longer has.
+const ledger = resolve(root, "scripts/pages-files.json");
+const written = JSON.parse(await readFile(ledger, "utf8").catch(() => "[]"));
+const stale = written.filter(path => !paths.includes(path));
 const checking = process.argv.includes("--check");
 const writing = process.argv.includes("--write");
 if (checking === writing) throw new Error("Use exactly one of --check or --write.");
@@ -31,10 +35,12 @@ if (checking) {
   } catch {
     mismatches.push(".nojekyll");
   }
+  mismatches.push(...stale.map(path => path + " (stale)"));
   if (mismatches.length) throw new Error("Pages root is out of sync: " + mismatches.join(", ") + ". Run npm run sync:pages.");
   console.log("Pages root matches public/ (" + paths.length + " files).");
 } else {
-  for (const stale of ["sitemap.xml"]) if (!paths.includes(stale)) await rm(resolve(root, stale), { force: true });
+  for (const path of stale) await rm(resolve(root, path), { force: true });
+  await writeFile(ledger, JSON.stringify(paths, null, 1) + "\n");
   await writeFile(resolve(root, ".nojekyll"), "");
   console.log("Updated Pages root from public/ (" + paths.length + " files).");
 }

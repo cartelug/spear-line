@@ -1,0 +1,30 @@
+/* Base: typography logic and element defaults. */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:96px}
+body{margin:0;min-height:100vh;overflow-x:hidden;overflow-x:clip;background:var(--soil);color:var(--chalk);font:400 var(--t-base)/1.62 var(--font-text);font-kerning:normal;font-feature-settings:"kern","liga","calt";font-optical-sizing:auto;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body::after{content:"";position:fixed;inset:0;z-index:300;pointer-events:none;background:url(assets/grain.png);opacity:.55}
+h1,h2,h3,h4{margin:0;font-family:var(--font-display);font-weight:650;font-stretch:114%;line-height:1.04;letter-spacing:-.022em;text-wrap:balance;font-feature-settings:"kern","liga","ss01"}
+h1{font-size:var(--t-5xl);letter-spacing:-.032em;line-height:.98}
+h2{font-size:var(--t-4xl);letter-spacing:-.03em}
+h3{font-size:var(--t-2xl);font-weight:620;font-stretch:108%}
+h4{font-size:var(--t-xl)}
+p,ul,ol,figure,blockquote{margin:0}
+p{text-wrap:pretty;hanging-punctuation:first}
+ul,ol{list-style:none;padding:0}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+img{height:auto}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+button:disabled{cursor:default;opacity:.55}
+strong{font-weight:650}
+small{font-size:var(--t-xs)}
+[hidden]{display:none!important}
+::selection{background:var(--sun);color:var(--ink)}
+:focus-visible{outline:2px solid var(--river);outline-offset:4px;border-radius:6px}
+.tone-bone :focus-visible,.tone-sand :focus-visible{outline-color:var(--river-deep)}
+.ico{width:24px;height:24px;flex:none}
+.line{display:block}
+.skip{position:fixed;left:16px;top:-80px;z-index:1100;padding:12px 18px;border-radius:999px;background:var(--sun);color:var(--ink);font-weight:650;transition:top .2s}
+.skip:focus{top:16px}
+.tnum{font-variant-numeric:tabular-nums}

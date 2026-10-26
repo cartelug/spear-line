@@ -1,39 +1,37 @@
-# Spear Line motion system
+# Spear Line motion system (V9)
 
-The V6 experience uses finite Web Animations timelines on mobile, tablet and desktop. The first homepage audit registered 308 animated targets on phones and 307 on tablet/desktop, including 226 individually revealed words. These counts describe unique elements, rather than claiming hundreds of unrelated visual styles.
+Motion lives in three places: `public/boot.js` (preference and preloader, runs before paint), `public/motion.js` (scroll and pointer effects) and `src/styles/70-motion.css` (states and keyframes).
 
-## Coordinated effects
+## Safety model
 
-- Word-by-word heading, eyebrow and selected short-copy entrances, preserving the original text nodes' whitespace and heading semantics.
-- Scroll-triggered image masks, copy entrances, section-rule drawing and footer letter reveals.
-- Opening logo/hero sequences, with a direct, shorter entrance on phones.
-- Staggered navigation opening and a closing transition with focus and inert-background handling.
-- Service-tab image/copy replay, gallery position feedback and touch/button press responses.
-- Animated accordion expansion and collapse, with rapid-toggle cancellation.
-- Bar-card depth and detail reveals, and a glass that pours once when the card first appears, plus restrained desktop hover effects.
-- Form label focus feedback and enquiry-result entrances.
+- Every hidden starting state is guarded by `html.motion-ok`. boot.js adds it before first paint; motion.js confirms with `motion-live`. If motion.js has not confirmed within 4 s, boot.js swaps `motion-ok` for `motion-late` and all content shows. Without JavaScript nothing is ever hidden.
+- `html.motion-reduced` (set from the system preference or the saved site control) and `@media (prefers-reduced-motion: reduce)` both stop every animation and transition, remove parallax and show final states (route drawn, process lit, words lit, glass full).
+- Continuous effects (panning, marquee, glow, backdrops) pause when offscreen via `.is-paused`, and the marquee pauses on hover.
 
-## Timing and safeguards
+## Effects
 
-Text stagger is capped at 360 ms. Word duration is 500 ms on phones and 690 ms on larger screens. Image reveals take 650–900 ms; menu closing takes 210 ms. Animations do not run in indefinite loops. Scroll observers release completed groups, and hidden/offscreen panels are not animated until they become relevant.
+| Effect | Where | How |
+| --- | --- | --- |
+| Preloader | First external visit | Logo glyphs rise in sequence, spear travels with real load progress, doors open, logo FLIPs into the header (1.3–3 s on phones, 1.9–3.8 s on desktop, hard cap +0.4 s) |
+| Split headings | Every `h2[data-split]` and hero titles | Words rise out of a mask while the width axis opens 78% → final; widths reserved |
+| Reveals | `data-reveal` up / fade / scale / clip | Intersection Observer adds `.is-in`; clip reveals un-crop the frame and settle the image scale |
+| Stagger | `data-stagger` lists | Children get `--d` delays |
+| Reading reveal | Intro statement | Words brighten as the statement scrolls through the viewport |
+| Image panning | `.pan-a`, `.pan-b` | 26–30 s alternating scale and drift |
+| Parallax | `data-parallax` | rAF-throttled translate from scroll, fine pointers and wide screens only |
+| Tilt | `data-tilt` cards | Pointer-driven rotateX/Y, fine pointers only |
+| Counters | Stats (when filled) | Count up once on entry |
+| Marquee | Tape, partners | 42 s loop, paused offscreen or on hover |
+| Route line | Home | SVG path drawn from scroll, spear positioned with `getPointAtLength`, nodes light |
+| Process | Home, How it works | Sticky image swaps as steps become active |
+| Stamp | Hero waybill | Once, 1.1 s after load (held while the preloader runs) |
+| Bar pour | Bar card | Liquid scales up, ice drops, pick stirs, once |
+| Menu | Phone | Circular clip reveal from the button, links rise in |
+| Header | All | Hides on scroll down, returns on scroll up, glass when scrolled |
+| Page transitions | Supported browsers | Cross-document view transitions: fade out, lift in |
+| 404 | Lost page | Spear travels a broken route |
+| Cursor | Fine pointers | Soft ring that grows over interactive elements |
 
-Content is readable in default CSS. The application loads the motion layer progressively; a motion-module failure leaves navigation, tabs and enquiry validation available. Visibility/page lifecycle cleanup cancels active timelines. Reduced motion follows the system setting or the visitor's saved Reduce motion preference. That control cancels active effects, disables CSS transitions/parallax and persists across page navigation. Preference storage failure is harmless.
+## Performance
 
-The phone floating navigation hides while editing a text field. Radio-card inputs fill their visible touch targets. Native service choices made before the application module finishes loading are preserved.
-
-## Verification
-
-During the audited service/gallery journey, 145 distinct mobile targets and 131 desktop targets had started an actual animation. The homepage's initial 308/307 target inventories can be inspected through data-motion-targets on the document element; data-motion-played records the distinct targets triggered in that session. See motion-audit.json and VALIDATION.md.
-
-## V7 layer (public/fx.js, public/pro.css)
-
-- **Ticker.** The only continuous animation. CSS runs it at 52 s per loop; fx.js pauses it when it is offscreen, the tab is hidden, or the pointer or focus is on it. With Reduce motion it stops and becomes a horizontally scrollable strip.
-- **Route line.** The SVG path is drawn and the spear glyph is positioned along it from scroll position (getPointAtLength), three stop nodes light as it passes, and the matching service cards highlight. Reduce motion shows the completed route.
-- **Timeline and reading reveal.** Scroll position fills the timeline and lights its steps; words of the introduction statement brighten in sequence. Reduce motion shows both fully lit.
-- **Pointer effects.** Spotlight on cards, magnetic buttons and image tilt are limited to fine pointers, use individual transform properties so they compose with the Web Animations timelines, and are skipped for touch input and Reduce motion.
-- **Page transitions.** Cross-document view transitions (a short fade and lift) where supported, disabled for the system preference and the site's Reduce motion control.
-- Default HTML and CSS remain readable if fx.js fails; its states are guarded by `html.fx-ready`.
-
-## V8 changes
-
-Removed: word-by-word copy, per-section fade-ups, card spotlight, image tilt and magnetic buttons. The homepage headline keeps its word entrance; images keep their mask reveal. Added: the consignment-note stamp (one CSS animation, 1.2 s after load, skipped under Reduce motion). The route line, timeline, reading reveal, ticker and bar pour are unchanged in behaviour.
+Animations use transform, opacity, clip-path and font-stretch only. Measured CLS is 0.001 with all motion running. Observers disconnect after one-shot effects.

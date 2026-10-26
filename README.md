@@ -1,70 +1,61 @@
-# Spear Line — V8
+# Spear Line — V9
 
-Vehicles, foodstuffs and beverages, and logistics. A responsive, presentation-led website using self-hosted Big Shoulders Display, Atkinson Hyperlegible Next and Atkinson Hyperlegible Mono, the existing Spear Line logo, a new spear symbol and icon set, and thirteen coordinated generated photographs.
+Vehicles, foodstuffs and beverages, and logistics, plus the coming-soon Spear Line Bar. A cinematic, image-led static site with self-hosted Hubot Sans and Mona Sans, a traced vector logo, blended photographic section backgrounds, glass cards and a logo preloader. Ready to be filled with real content.
 
-## What V8 changes
+## What V9 changes
 
-- A new visual language built around the consignment note: condensed freight lettering, flat navy / concrete / dispatch orange, ruled rows instead of cards, and a hero note that starts an enquiry with the chosen service and destination. See DESIGN.md.
-- Template habits removed and tested for: accent words, eyebrow labels, tracked caps, arrows on links, non-sequence numerals.
-- Decorative pointer effects and per-section fade-ups removed; meaningful motion kept.
-
-## What V7 added
-
-- Three new pages: How it works (animated timeline and per-service checklists), Questions answered (grouped accordions with a scrolling topic index) and Contact (shows only the channels configured in site-config.js).
-- A Spear Line symbol (assets/spear-mark.svg), favicon set, app icons, web manifest, 1200×630 share image and a 17-symbol icon sprite (assets/icons.svg). The logo itself is unchanged.
-- Upgraded typography: Bricolage Grotesque headings, Instrument Sans body copy, italic Fraunces accents.
-- New motion: a pausable service ticker, a scroll-driven route line on which the spear travels between the three services, a reading reveal on the introduction, timeline scrubbing, pointer spotlight cards, magnetic buttons, gentle image tilt and cross-page view transitions. All of it honours Reduce motion.
-- Search switches: pages stay hidden from search engines until you build with SITE_ORIGIN and SITE_LAUNCH=1 (see Launch below).
-
-## Experience
-
-- A dedicated Spear Line Bar coming-soon page and homepage feature (the venue idea formerly drafted as a Club).
-- A phone-specific portrait hero, thumb navigation, larger controls and keyboard-aware enquiry layout.
-- More than 300 registered animation targets, coordinated text/scroll/component timelines and a saved Reduce motion control. See docs/MOTION.md.
-
-- Cinematic road hero and a brief first-visit logo entrance.
-- Keyboard-accessible service tabs, horizontal image gallery, scroll reveals and restrained desktop parallax.
-- Dedicated vehicles, supplies, logistics, about and enquiry pages.
-- Responsive phone/tablet navigation with Escape dismissal and focus management.
-- Reduced-motion support and readable content if animation scripts fail.
-- Local WebP imagery in 1536 px and 768 px versions; no external image or font requests.
-- The former timber-logistics.html address remains an alias for logistics.html.
+- Complete redesign: warm golden-hour palette sampled from the photography (umber, earth, olive, sand, sun gold), sections that blend into one another instead of hard edges, image-derived blurred backdrops, glass and image cards, a 12-column bento of services that becomes a swipe carousel on phones. See DESIGN.md.
+- Variable-font typography: Hubot Sans display with width-axis animation, Mona Sans text, metric-matched fallbacks so nothing shifts as fonts load.
+- A preloader built from the logo itself: the traced letterforms rise in, the spear travels the line with real load progress, the doors open and the logo flies into the header.
+- Much more motion (split headings, clip reveals, image panning, parallax, tilt, marquee, route line, sticky process, counters, pour) — all guarded, all off under Reduce motion. See docs/MOTION.md.
+- One content file (`content/site.mjs`) with empty slots for inventory, stats, testimonials, partners and team that appear when filled. See CONTENT.md.
 
 ## Local development
 
-Node 22.21 or newer. No package installation is required.
+Node 22.21 or newer. No package installation is required for building or unit tests.
 
 ```sh
-npm run dev
-npm run render:pages
-npm run check
-npm test
+npm run dev       # serve on http://localhost:3000
+npm run build     # content/site.mjs + scripts/build.mjs -> public/*.html, src/styles -> public/site.css, mirror to root
+npm run check     # syntax checks, CSS bundle and root mirror are up to date
+npm test          # unit and server tests
 ```
 
-Edit public/ for direct source changes. Shared HTML structure and content are authored in scripts/render-pages.mjs, with the homepage additions and the How it works, FAQ and Contact pages in scripts/content-extra.mjs. Run render:pages after changing the generator; it generates the pages and mirrors public/ into the repository root for GitHub Pages. After direct CSS or JavaScript edits, run npm run sync:pages. The check command catches mismatches between the two locations.
+Where things live:
 
-The server accepts HOST/PORT environment variables and --host / --port arguments. Reload the browser after edits; restart the server when adding new asset filenames.
+| Path | What |
+| --- | --- |
+| `content/site.mjs` | All words, image keys and optional collections |
+| `scripts/build.mjs` | Page templates and layout |
+| `src/styles/*.css` | Styles by layer (tokens, base, sections, components, chrome, home, pages, motion); bundled into `public/site.css` |
+| `public/boot.js` | Runs in `<head>`: motion preference, preloader |
+| `public/app.js` | Menu, header, forms, accordions, gallery rail, enquiry draft |
+| `public/motion.js` | Reveals, split text, route, process, parallax, tilt, counters |
+| `public/validation.js` | Enquiry validation shared by browser and server |
+| `server.mjs` | Optional Node server (compression, CSP, enquiries) |
+
+`npm run build` mirrors `public/` into the repository root for GitHub Pages (tracked in `scripts/pages-files.json` so only mirrored files are ever removed). After a direct CSS or JavaScript edit run `npm run sync:pages`; `npm run check` catches mismatches.
 
 ## Enquiries
 
-GitHub Pages serves the static configuration in site-config.js. Online submission is currently disabled and no company contact information is configured. The form validates requirements and creates a downloadable text draft in the browser. It does not claim to send a draft.
+GitHub Pages serves the static configuration in site-config.js. Online submission is currently disabled and no company contact information is configured. The form validates requirements and creates a downloadable text draft in the browser. It does not claim to send anything.
 
-The existing Node server can accept enquiries when the operator configures ENQUIRIES_ENABLED, BUSINESS_LEGAL_NAME, PUBLIC_CONTACT_EMAIL, RETENTION_DAYS and PUBLIC_ORIGIN. See .env.example for the remaining optional contact settings. Enquiries are stored outside public/; preserve that separation. The browser and server share public/validation.js. Supplies, vehicles and logistics have different required fields. Old service=timber requests are normalised to logistics.
+The Node server can accept enquiries when the operator configures ENQUIRIES_ENABLED, BUSINESS_LEGAL_NAME, PUBLIC_CONTACT_EMAIL, RETENTION_DAYS and PUBLIC_ORIGIN. See .env.example. Enquiries are stored outside public/; preserve that separation. Old service=timber requests are normalised to logistics.
 
 ## Deploy and test
 
-See docs/DEPLOY.md for the container, environment variables, owner notification webhook, retention schedule and backups. Browser tests (including accessibility) run with `npm run test:e2e` after a one-time `npm ci && npx playwright install chromium`; CI runs them on every push. Everything else still needs no installed packages.
+See docs/DEPLOY.md for the container, environment variables, owner notification webhook, retention and backups. Browser tests (including axe accessibility checks) run with `npm run test:e2e` after a one-time `npm ci && npx playwright install chromium`; CI runs them on every push.
 
 ## Launch
 
 By default every page carries noindex and robots.txt blocks crawlers, because no production address or business details exist yet. When they do:
 
 ```sh
-SITE_ORIGIN=https://your-domain SITE_LAUNCH=1 npm run render:pages
+SITE_ORIGIN=https://your-domain SITE_LAUNCH=1 npm run build
 ```
 
-This publishes indexable pages with canonical links, Open Graph and Twitter share tags, Organization and FAQ structured data, robots.txt with a sitemap reference and sitemap.xml. The 404 page stays noindex. Then fill in site-config.js (legal name, email, phone, WhatsApp, address) so the Contact page, footer and privacy page show real details, and set the enquiry server variables described above.
+This publishes indexable pages with canonical links, Open Graph and Twitter tags, Organization and FAQ structured data, robots.txt with a sitemap reference and sitemap.xml. The 404 page stays noindex. Then fill in site-config.js (legal name, email, phone, WhatsApp, address) so the Contact page, footer and privacy page show real details.
 
-## Assets and maintenance
+## More
 
-See ASSETS.md for provenance, visual-prompts.json for the complete generation prompts, DESIGN.md for design and motion notes, and VALIDATION.md for checks completed for this upgrade. Keep source logo and font licence files intact.
+CONTENT.md (editing content), DESIGN.md (design system), docs/MOTION.md (motion), ASSETS.md (provenance), VALIDATION.md (checks), docs/ROADMAP.md (what only the owner can unblock). Keep the logo and font licence files intact.

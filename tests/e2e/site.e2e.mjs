@@ -29,8 +29,10 @@ test.before(async () => {
 });
 test.after(async () => { await browser?.close(); if (server?.exitCode === null) { server.kill("SIGTERM"); await once(server, "exit"); } await rm(dataDir, { recursive: true, force: true }); });
 
+const skipIntro = context => context.addInitScript(() => { try { sessionStorage.setItem("spear-line-intro", "1"); } catch { /* storage optional */ } });
 async function open(path, { width = 1363, height = 800, reduced = false, saved = false, touch = false } = {}) {
   const context = await browser.newContext({ viewport: { width, height }, reducedMotion: reduced ? "reduce" : "no-preference", isMobile: touch, hasTouch: touch });
+  await skipIntro(context);
   if (saved) await context.addInitScript(() => localStorage.setItem("spear-line-motion", "reduce"));
   const page = await context.newPage(); const problems = [];
   page.on("pageerror", error => problems.push("page error: " + error.message));
@@ -43,6 +45,7 @@ async function open(path, { width = 1363, height = 800, reduced = false, saved =
 test("every page loads cleanly with no horizontal overflow at four widths", { timeout: 240000 }, async () => {
   for (const width of [320, 390, 768, 1363]) {
     const context = await browser.newContext({ viewport: { width, height: 800 }, isMobile: width < 600, hasTouch: width < 600 });
+    await skipIntro(context);
     for (const name of pages) {
       const page = await context.newPage(); const problems = [];
       page.on("pageerror", error => problems.push(error.message)); page.on("response", r => { if (r.status() >= 400 && !name.startsWith("404")) problems.push(r.status() + " " + r.url()); });
@@ -60,6 +63,7 @@ test("axe finds no accessibility violations, with and without reduced motion", {
   for (const reduced of [true, false]) {
     for (const [width, touch] of [[1363, false], [390, true]]) {
       const context = await browser.newContext({ viewport: { width, height: 800 }, isMobile: touch, hasTouch: touch, reducedMotion: reduced ? "reduce" : "no-preference" });
+      await skipIntro(context);
       for (const name of pages) {
         const page = await context.newPage();
         await page.goto(base + "/" + name + ".html", { waitUntil: "networkidle" }); await page.waitForTimeout(reduced ? 400 : 3200);
@@ -76,7 +80,7 @@ test("axe finds no accessibility violations, with and without reduced motion", {
 test("the homepage consignment note opens the enquiry with service and destination filled in", { timeout: 60000 }, async () => {
   for (const [service, field] of [["logistics", "destination"], ["supplies", "supplyDestination"], ["vehicle", "location"]]) {
     const { page, context } = await open("/index.html");
-    await page.click(".waybill input[value=" + service + "] + span"); await page.fill("#waybill-to", "Mbarara");
+    await page.check(".waybill input[value=" + service + "]"); await page.fill("#waybill-to", "Mbarara");
     await Promise.all([page.waitForURL(/enquire\.html/), page.click(".waybill button")]);
     assert.equal(await page.evaluate(() => document.querySelector("input[name=service]:checked").value), service);
     assert.equal(await page.inputValue("[name=" + field + "]"), "Mbarara");
@@ -120,17 +124,46 @@ test("menu, tabs, FAQ and timeline behave, and Reduce motion is honoured", { tim
   for (const y of [0, 900, 1500]) { await how.page.evaluate(top => scrollTo(0, top), y); await how.page.waitForTimeout(500); counts.push(await how.page.evaluate(() => document.querySelectorAll(".timeline-step.is-on").length)); }
   assert.ok(counts[0] < counts[2], "timeline lights steps as you scroll: " + counts); await how.context.close();
 
-  const home = await open("/index.html"); const before = await home.page.evaluate(() => getComputedStyle(document.querySelector(".ticker-track")).animationName);
-  assert.equal(before, "ticker-scroll");
-  await home.page.evaluate(() => scrollTo(0, document.querySelector("[data-route]").offsetTop - 300)); await home.page.waitForTimeout(800);
+  const home = await open("/index.html"); const before = await home.page.evaluate(() => getComputedStyle(document.querySelector(".marquee-track")).animationName);
+  assert.equal(before, "marquee");
+  await home.page.evaluate(() => scrollTo(0, document.querySelector("[data-route]").getBoundingClientRect().top + scrollY - innerHeight * 0.75)); await home.page.waitForTimeout(800);
   const a = await home.page.getAttribute("[data-route-spear]", "transform"); await home.page.evaluate(() => scrollBy(0, 380)); await home.page.waitForTimeout(600);
   assert.notEqual(a, await home.page.getAttribute("[data-route-spear]", "transform"), "the spear moves along the route"); await home.context.close();
 
   for (const mode of [{ saved: true }, { reduced: true }]) {
     const calm = await open("/index.html", mode);
-    assert.equal(await calm.page.evaluate(() => getComputedStyle(document.querySelector(".ticker-track")).animationName), "none");
-    await calm.page.evaluate(() => scrollTo(0, document.querySelector("[data-route]").offsetTop)); await calm.page.waitForTimeout(600);
+    assert.equal(await calm.page.evaluate(() => getComputedStyle(document.querySelector(".marquee-track")).animationName), "none");
+    await calm.page.evaluate(() => scrollTo(0, document.querySelector("[data-route]").getBoundingClientRect().top + scrollY - 200)); await calm.page.waitForTimeout(600);
     assert.equal(parseFloat(await calm.page.evaluate(() => document.querySelector("[data-route-path]").style.strokeDashoffset)), 0, "route is fully drawn");
     assert.deepEqual(calm.problems, []); await calm.context.close();
   }
+});
+
+test("the logo preloader plays once per tab, unlocks the page, and is skipped under Reduce motion", { timeout: 60000 }, async () => {
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } }); const page = await context.newPage();
+  await page.goto(base + "/index.html");
+  assert.ok(await page.evaluate(() => document.documentElement.classList.contains("is-preloading")), "preloader runs on the first view");
+  assert.ok(await page.evaluate(() => document.querySelector("main").inert), "page is inert behind the doors");
+  await page.waitForFunction(() => !document.documentElement.classList.contains("is-preloading"), null, { timeout: 6000 });
+  assert.equal(await page.evaluate(() => document.querySelector("main").inert), false, "page is interactive afterwards");
+  assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector(".preloader")).display), "none");
+  await page.goto(base + "/faq.html");
+  assert.equal(await page.evaluate(() => document.documentElement.classList.contains("is-preloading")), false, "not replayed in the same tab");
+  await context.close();
+  const calm = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" }); const quiet = await calm.newPage();
+  await quiet.goto(base + "/index.html");
+  assert.equal(await quiet.evaluate(() => document.documentElement.classList.contains("is-preloading")), false, "skipped under Reduce motion");
+  await calm.close();
+});
+
+test("the FAQ search filters questions and says so when nothing matches", { timeout: 30000 }, async () => {
+  const { page, context } = await open("/faq.html");
+  await page.fill("#faq-filter", "privacy");
+  const shown = await page.evaluate(() => [...document.querySelectorAll(".faq-list details")].filter(d => !d.classList.contains("is-filtered")).length);
+  assert.ok(shown > 0 && shown < 9, "some questions match: " + shown);
+  await page.fill("#faq-filter", "zzzz");
+  assert.equal(await page.isVisible("[data-faq-empty]"), true);
+  await page.fill("#faq-filter", "");
+  assert.equal(await page.evaluate(() => document.querySelectorAll(".faq-list details.is-filtered").length), 0);
+  await context.close();
 });

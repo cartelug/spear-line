@@ -1,237 +1,246 @@
-// Progressive motion: readable HTML first, finite animations, and one shared preference.
-const EASE = 'cubic-bezier(.22,.68,0,1)';
-const STORAGE_KEY = 'spear-line-motion';
+// Spear Line motion engine. Progressive: content is complete without it, and Reduce motion (system or site
+// control) stops everything decorative. Animations use transform, opacity and the variable width axis only.
+const STORAGE_KEY = "spear-line-motion";
+const SVG = "http://www.w3.org/2000/svg";
 
-export function createMotion({root=document.documentElement,preference=matchMedia('(prefers-reduced-motion: reduce)')}={}) {
-  const $=(selector,base=document)=>base.querySelector(selector);
-  const $$=(selector,base=document)=>[...base.querySelectorAll(selector)];
-  const phone=()=>matchMedia('(max-width:599px)').matches;
-  let saved=false;
-  try { saved=localStorage.getItem(STORAGE_KEY)==='reduce'; } catch { /* Preferences are optional. */ }
-  let reduced=preference.matches||saved;
-  const supported=typeof Element.prototype.animate==='function';
-  const active=new Set(), targets=new Set(), groups=new Map(), played=new Set();
-  const detailAnimations=new Map();
-  let observer=null, menuAnimations=[], menuGeneration=0;
+export function createMotion({ root = document.documentElement, preference = matchMedia("(prefers-reduced-motion: reduce)") } = {}) {
+  const $ = (selector, base = document) => base.querySelector(selector);
+  const $$ = (selector, base = document) => [...base.querySelectorAll(selector)];
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+  const fine = matchMedia("(hover:hover) and (pointer:fine)");
+  const wide = matchMedia("(min-width:900px)");
+  let saved = false;
+  try { saved = localStorage.getItem(STORAGE_KEY) === "reduce"; } catch { /* Preferences are optional. */ }
+  const reduced = () => preference.matches || saved;
+  const scrollTasks = [];
+  let frame = 0;
 
-  function register(el,kind) {
-    if(!el)return;
-    targets.add(el); el.dataset.motionKind=kind;
-  }
-  function audit() {
-    root.dataset.motionTargets=String(targets.size);
-    root.dataset.motionPlayed=String(played.size);
-    root.dataset.motionState=reduced?'reduced':'full';
-  }
-  function animate(el,frames,{duration=580,delay=0,easing=EASE,fill='none'}={}) {
-    if(reduced||!supported||!el||!el.isConnected)return null;
-    if(!targets.has(el))register(el,'interaction');
-    let animation;
-    try {
-      animation=el.animate(frames,{duration,delay,easing,fill});
-      active.add(animation); played.add(el); el.dataset.motionPlayed='true'; audit();
-      animation.finished.then(()=>active.delete(animation),()=>active.delete(animation));
-    } catch { return null; }
-    return animation;
-  }
-  function splitText(el,characters=false) {
-    if(el.dataset.motionText)return $$('[data-motion-word]',el);
-    el.dataset.motionText=characters?'characters':'words';
-    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,{
-      acceptNode(node) {
-        if(!node.textContent.trim())return NodeFilter.FILTER_REJECT;
-        if(node.parentElement.closest('a,button,input,textarea,select,svg,[data-motion-word]'))return NodeFilter.FILTER_REJECT;
-        return NodeFilter.FILTER_ACCEPT;
-      }
+  /* Preference control */
+  function applyPreference() {
+    root.classList.toggle("motion-reduced", reduced());
+    root.classList.toggle("motion-ok", !reduced());
+    root.classList.toggle("cursor-on", !reduced() && fine.matches);
+    $$("[data-motion-toggle]").forEach(button => {
+      button.hidden = false; button.setAttribute("aria-pressed", String(reduced()));
+      // When the device asks for reduced motion, the site follows it and the control says so.
+      button.disabled = preference.matches;
+      button.textContent = preference.matches ? "Motion reduced by your device" : reduced() ? "Motion reduced" : "Reduce motion";
     });
-    const nodes=[]; while(walker.nextNode())nodes.push(walker.currentNode);
-    const words=[];
-    for(const node of nodes) {
-      const parts=characters?[...node.textContent]:node.textContent.split(/(\s+)/);
-      const fragment=document.createDocumentFragment();
-      for(const part of parts) {
-        if(!part)continue;
-        if(/^\s+$/.test(part)){fragment.append(document.createTextNode(part));continue;}
-        const word=document.createElement('span');
-        word.className=characters?'motion-char':'motion-word';word.dataset.motionWord='';
-        word.textContent=part;fragment.append(word);words.push(word);register(word,characters?'letter':'word');
+    if (reduced()) $$("[data-reveal],[data-split]").forEach(el => el.classList.add("is-in"));
+    schedule();
+  }
+  $$("[data-motion-toggle]").forEach(button => button.addEventListener("click", () => {
+    saved = !reduced();
+    try { if (saved) localStorage.setItem(STORAGE_KEY, "reduce"); else localStorage.removeItem(STORAGE_KEY); } catch { /* No storage needed. */ }
+    applyPreference();
+  }));
+  preference.addEventListener("change", applyPreference);
+  window.addEventListener("storage", event => { if (event.key === STORAGE_KEY) { saved = event.newValue === "reduce"; applyPreference(); } });
+
+  /* Split headings into masked words. Text stays in the heading, so screen readers read it normally. */
+  function split(el, wordClass = "w", innerClass = "wi") {
+    if (el.dataset.splitDone) return [];
+    el.dataset.splitDone = "true";
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, { acceptNode: node => node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT });
+    const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+    const words = [];
+    for (const node of nodes) {
+      const fragment = document.createDocumentFragment();
+      for (const part of node.textContent.split(/(\s+)/)) {
+        if (!part) continue;
+        if (/^\s+$/.test(part)) { fragment.append(document.createTextNode(part)); continue; }
+        const outer = document.createElement("span"); outer.className = wordClass;
+        if (innerClass) outer.dataset.w = part;
+        if (innerClass) { const inner = document.createElement("span"); inner.className = innerClass; inner.textContent = part; outer.append(inner); }
+        else outer.textContent = part;
+        fragment.append(outer); words.push(outer);
       }
       node.replaceWith(fragment);
     }
+    words.forEach((word, i) => word.style.setProperty("--i", i));
     return words;
   }
-  function group(el,kind,items=null) {
-    if(!el||groups.has(el))return;
-    const entry={el,kind,items:items||[el],seen:false,delay:el.matches('.hero-actions')?180:0};
-    groups.set(el,entry);el.dataset.motionGroup=kind;
-    if(kind!=='text')register(el,kind);
-    observer?.observe(el);
-  }
-  function play(entry,{replay=false,delay=0}={}) {
-    if(!entry||reduced)return;
-    if(entry.seen&&!replay)return;
-    delay+=entry.delay;
-    entry.seen=true;observer?.unobserve(entry.el);
-    const small=phone();
-    if(entry.kind==='text') {
-      const total=entry.items.length;
-      const interval=Math.min(small?25:34,360/Math.max(1,total-1));
-      entry.items.forEach((word,i)=>animate(word,[
-        {opacity:0,transform:`translate3d(0,${small?16:25}px,0) rotate(${i%2?'.8':'-.8'}deg)`},
-        {opacity:1,transform:'translate3d(0,0,0) rotate(0deg)'}
-      ],{duration:small?500:690,delay:delay+i*interval,fill:'backwards'}));
-    } else if(entry.kind==='image') {
-      animate(entry.el,[{opacity:0,clipPath:'inset(7% 0 0 0)',transform:'translateY(18px)'},{opacity:1,clipPath:'inset(0% 0 0 0)',transform:'translateY(0px)'}],{duration:small?650:900,delay});
-    } else if(entry.kind==='rule') {
-      animate(entry.el,[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:small?600:900,delay});
-    } else if(entry.kind==='bar-card') {
-      const resting=getComputedStyle(entry.el).transform;
-      animate(entry.el,[{opacity:0,transform:'translateY(28px) rotate(-12deg) rotateX(13deg)'},{opacity:1,transform:resting==='none'?'none':resting}],{duration:small?850:1100,delay});
-      $$('.bar-card-top,.bar-card-title,.bar-card-bottom',entry.el).forEach((part,i)=>{
-        register(part,'card-detail');animate(part,[{opacity:0,transform:'translateY(9px)'},{opacity:1,transform:'translateY(0px)'}],{duration:520,delay:delay+170+i*85,fill:'backwards'});
-      });
-    } else {
-      animate(entry.el,[{opacity:0,transform:`translateY(${small?12:20}px)`},{opacity:1,transform:'translateY(0px)'}],{duration:small?460:650,delay});
-    }
-  }
-  function revealEntries() {
-    if(reduced)return;
-    for(const entry of groups.values()) {
-      if(entry.seen||entry.el.closest('[hidden]'))continue;
-      const box=entry.el.getBoundingClientRect();
-      if(!box.width||!box.height)continue;
-      if(box.bottom<0) { entry.seen=true;observer?.unobserve(entry.el);continue; }
-      if(box.top<innerHeight*.98&&box.right>0&&box.left<innerWidth)play(entry);
-    }
-  }
-  let settle;
-  function settleScroll(){clearTimeout(settle);settle=setTimeout(revealEntries,130);}
-  function updatePreference() {
-    reduced=preference.matches||saved;
-    root.classList.toggle('motion-reduced',reduced);
-    if(reduced) {
-      for(const animation of active)animation.cancel();active.clear();
-      for(const [step,record] of detailAnimations){step.open=record.open;step.style.removeProperty('overflow');}
-      detailAnimations.clear();
-      menuGeneration++;root.classList.remove('menu-closing','intro','intro-out');
-      const nav=$('#site-menu');if(nav)nav.inert=false;
-    }
-    $$('[data-motion-toggle]').forEach(button=>{
-      button.hidden=false;
-      button.setAttribute('aria-pressed',String(reduced));
-      button.textContent=reduced?'Motion reduced':'Reduce motion';
-    });
-    audit();document.dispatchEvent(new CustomEvent('spear:motion-preference'));
-  }
-  // Cleanup is registered before any animation can run. No text is hidden in default CSS.
-  function settleAll() {
-    for(const animation of active)animation.cancel();active.clear();
-    root.classList.remove('menu-closing');
-    for(const [step,record] of detailAnimations){step.open=record.open;step.style.removeProperty('overflow');}
-    detailAnimations.clear();
-  }
-  window.addEventListener('pagehide',settleAll);
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)settleAll();});
-  window.addEventListener('pageshow',()=>{updatePreference();revealEntries();});
-  preference.addEventListener('change',updatePreference);
-  window.addEventListener('storage',event=>{
-    if(event.key===STORAGE_KEY){saved=event.newValue==='reduce';updatePreference();}
-  });
-  $$('[data-motion-toggle]').forEach(button=>button.addEventListener('click',()=>{
-    saved=!reduced;
-    try { if(saved)localStorage.setItem(STORAGE_KEY,'reduce');else localStorage.removeItem(STORAGE_KEY); } catch { /* No storage is required. */ }
-    updatePreference();
+  $$("[data-split]").forEach(el => split(el));
+  const readWords = $$("[data-read]").flatMap(el => split(el, "rw", null));
+
+  /* Stagger children of grids and lists. */
+  $$("[data-stagger]").forEach(group => [...group.children].forEach((child, i) => {
+    if (!child.hasAttribute("data-reveal")) child.setAttribute("data-reveal", "up");
+    child.style.setProperty("--d", (i * 0.09).toFixed(2) + "s");
   }));
 
-  if(supported) {
-    if('IntersectionObserver' in window)observer=new IntersectionObserver(entries=>{
-      for(const entry of entries)if(entry.isIntersecting)play(groups.get(entry.target));
-    },{rootMargin:'0px 0px 24px 0px',threshold:.06});
-
-    // One orchestrated entrance: the homepage headline. Other copy is not animated on scroll.
-    for(const el of $$('.hero h1')) {
-      const words=splitText(el);if(words.length)group(el,'text',words);
-    }
-    const wordmark=$('.footer-wordmark');if(wordmark)group(wordmark,'text',splitText(wordmark,true));
-    for(const el of $$('.service-photo,.story-main,.story-inset,.detail-image,.brief-image,.wide-image,.enquiry-aside-image,.process-picture,.gallery-item>div'))group(el,'image');
-    for(const el of $$('.bar-card'))group(el,'bar-card');
-    for(const head of $$('.section-head')) {
-      const line=document.createElement('span');line.className='motion-rule';line.setAttribute('aria-hidden','true');head.append(line);group(line,'rule');
-    }
-    for(const el of $$('a.button,button,.text-link,.mobile-dock>a,.site-nav li>a,.mobile-service-strip>a,summary,.choice-options label'))register(el,'control');
-    for(const el of $$('.field>label'))register(el,'field-label');
-    for(const el of $$('.bar-card-top,.bar-card-title,.bar-card-bottom'))register(el,'card-detail');
-
-    // Entrance timelines stay short on phones and wait for the desktop logo curtain.
-    const introDelay=root.classList.contains('intro')?850:0;
-    for(const entry of groups.values()) {
-      const box=entry.el.getBoundingClientRect();
-      if(!box.width||!box.height||entry.el.closest('[hidden]'))continue;
-      if(box.top<innerHeight&&box.bottom>0&&box.left<innerWidth&&box.right>0)play(entry,{delay:introDelay});
-    }
-    const hero=$('.hero-image img,.subhero .photo-bg img');
-    if(hero){register(hero,'hero-image');animate(hero,[{transform:'scale(1.045)'},{transform:'scale(1)'}],{duration:phone()?1200:1800,delay:introDelay});}
-    const brand=$('.site-header .brand');if(brand){register(brand,'brand');animate(brand,[{opacity:0,transform:'translateY(-10px)'},{opacity:1,transform:'translateY(0px)'}],{duration:480,delay:introDelay});}
-    if(!phone())$$('.site-nav li>a,.site-nav .nav-cta').forEach((el,i)=>{if(el.getBoundingClientRect().width)animate(el,[{opacity:0,transform:'translateY(-8px)'},{opacity:1,transform:'translateY(0px)'}],{duration:480,delay:introDelay+50+i*45});});
-    const dock=$('.mobile-dock');if(dock&&getComputedStyle(dock).display!=='none'){
-      register(dock,'dock');animate(dock,[{opacity:0,transform:'translateY(25px)'},{opacity:1,transform:'translateY(0px)'}],{duration:520,delay:180});
-      $$('a',dock).forEach((el,i)=>animate(el,[{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'translateY(0px)'}],{duration:300,delay:210+i*35,fill:'backwards'}));
-    }
-    window.addEventListener('scroll',settleScroll,{passive:true});window.addEventListener('resize',settleScroll,{passive:true});
-    document.addEventListener('pointerdown',event=>{
-      if(reduced)return;
-      const control=event.target.closest('a.button,button,.mobile-dock>a,.mobile-service-strip>a');
-      if(!control||control.disabled||control.hasAttribute('data-motion-toggle'))return;
-      animate(control,[{transform:'scale(1)'},{transform:'scale(.96)',offset:.4},{transform:'scale(1)'}],{duration:250});
-    },{passive:true});
-    document.addEventListener('focusin',event=>{
-      const label=event.target.closest('.field')?.querySelector('label');
-      if(label)animate(label,[{transform:'translateY(2px)',opacity:.7},{transform:'translateY(0px)',opacity:1}],{duration:240});
-    });
-    root.classList.add('motion-ready');
+  /* Reveal on scroll */
+  const revealables = $$("[data-reveal],[data-split]");
+  // If this module arrived after boot.js lifted the reveal states, show everything rather than hiding it again.
+  if (root.classList.contains("motion-late")) revealables.forEach(el => el.classList.add("is-in"));
+  const revealObserver = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); revealObserver.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }) : null;
+  function startReveals() {
+    for (const el of revealables) { if (revealObserver) revealObserver.observe(el); else el.classList.add("is-in"); }
   }
-  updatePreference();audit();
-  return {
-    get disabled(){return reduced||!supported;},
-    accordionOpen(step){return detailAnimations.get(step)?.open??step.open;},
-    panel(panel) {
-      if(reduced)return;
-      for(const entry of groups.values())if(panel.contains(entry.el))play(entry,{replay:true,delay:entry.kind==='image'?0:60});
-    },
-    menu(open,nav) {
-      menuGeneration++;const generation=menuGeneration;
-      menuAnimations.forEach(animation=>animation?.cancel());menuAnimations=[];
-      root.classList.remove('menu-closing');nav.inert=false;
-      if(reduced||!supported||matchMedia('(min-width:900px)').matches)return;
-      if(!open){root.classList.add('menu-closing');nav.inert=true;}
-      const animation=animate(nav,open?[
-        {opacity:0,clipPath:'inset(0 0 100% 0)',transform:'translateY(-8px)'},
-        {opacity:1,clipPath:'inset(0 0 0% 0)',transform:'translateY(0px)'}
-      ]:[{opacity:1,transform:'translateY(0px)'},{opacity:0,transform:'translateY(-14px)'}],{duration:open?470:210});
-      menuAnimations.push(animation);
-      if(open)$$('.menu-heading,li>a,.nav-cta,.menu-foot',nav).forEach((el,i)=>{
-        register(el,'menu-item');menuAnimations.push(animate(el,[{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'translateY(0px)'}],{duration:400,delay:70+i*35,fill:'backwards'}));
+
+  /* Pause panning, marquees and glows when they are offscreen or the tab is hidden. */
+  const pausable = $$(".pan,.marquee,.glow,.backdrop");
+  if ("IntersectionObserver" in window) {
+    const pauseObserver = new IntersectionObserver(entries => { for (const entry of entries) entry.target.classList.toggle("is-paused", !entry.isIntersecting); }, { rootMargin: "120px" });
+    pausable.forEach(el => pauseObserver.observe(el));
+  }
+  document.addEventListener("visibilitychange", () => root.classList.toggle("is-hidden-tab", document.hidden));
+
+  /* Parallax (larger screens only) */
+  const parallax = $$("[data-parallax]");
+  scrollTasks.push(() => {
+    const active = !reduced() && wide.matches;
+    for (const el of parallax) {
+      if (!active) { el.style.removeProperty("--py"); continue; }
+      const box = el.parentElement.getBoundingClientRect();
+      if (box.bottom < -200 || box.top > innerHeight + 200) continue;
+      const speed = parseFloat(el.dataset.parallax) || 0.1;
+      const offset = (box.top + box.height / 2 - innerHeight / 2) * -speed;
+      el.style.setProperty("--py", offset.toFixed(1) + "px");
+    }
+  });
+
+  /* Reading reveal: words of the intro statement light up as it crosses the screen. */
+  const statement = $("[data-read]");
+  if (statement && readWords.length) scrollTasks.push(() => {
+    if (reduced()) { readWords.forEach(word => word.classList.add("is-lit")); return; }
+    const box = statement.getBoundingClientRect();
+    const lit = Math.round(clamp((innerHeight * 0.9 - box.top) / (innerHeight * 0.55 + box.height * 0.35)) * readWords.length);
+    readWords.forEach((word, i) => word.classList.toggle("is-lit", i < lit));
+  });
+
+  /* Route: the spear travels the path as the section scrolls past and lights each stop. */
+  const route = $("[data-route]");
+  if (route) {
+    const path = $("[data-route-path]", route), spear = $("[data-route-spear]", route), nodes = $("[data-route-nodes]", route), stops = $$("[data-route-stop]", route);
+    if (path?.getTotalLength && spear && nodes) {
+      const length = path.getTotalLength(), marks = [0.02, 0.5, 0.98];
+      const circles = marks.map(fraction => {
+        const point = path.getPointAtLength(length * fraction);
+        const group = document.createElementNS(SVG, "g"); group.setAttribute("class", "route-node");
+        const circle = document.createElementNS(SVG, "circle");
+        circle.setAttribute("cx", point.x.toFixed(1)); circle.setAttribute("cy", point.y.toFixed(1)); circle.setAttribute("r", "9");
+        group.append(circle); nodes.append(group); return group;
       });
-      if(!open&&animation)animation.finished.then(()=>{
-        if(generation===menuGeneration){root.classList.remove('menu-closing');nav.inert=false;}
-      },()=>{});
-    },
-    accordion(step,open) {
-      if(reduced){step.open=open;return;}
-      const before=step.getBoundingClientRect().height;
-      const previous=detailAnimations.get(step);if(previous)previous.animation.cancel();
-      if(open)step.open=true;
-      const after=open?step.getBoundingClientRect().height:step.querySelector('summary').getBoundingClientRect().height;
-      step.style.overflow='hidden';
-      const animation=animate(step,[{height:before+'px'},{height:after+'px'}],{duration:phone()?300:390});
-      if(!animation){step.open=open;step.style.removeProperty('overflow');return;}
-      detailAnimations.set(step,{animation,open});
-      if(open)animate(step.querySelector('.step-content'),[{opacity:0,transform:'translateY(-5px)'},{opacity:1,transform:'translateY(0px)'}],{duration:300,delay:70});
-      animation.finished.then(()=>{
-        if(detailAnimations.get(step)?.animation===animation){step.open=open;step.style.removeProperty('overflow');detailAnimations.delete(step);}
-      },()=>{});
-    },
-    gallery(status) {if(status)animate(status,[{opacity:.25,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0px)'}],{duration:220});},
-    message(el) {if(el)animate(el,[{opacity:0,transform:'translateY(7px)'},{opacity:1,transform:'translateY(0px)'}],{duration:300});}
-  };
+      path.style.strokeDasharray = String(length);
+      const draw = progress => {
+        path.style.strokeDashoffset = String(length * (1 - progress));
+        const at = length * progress, ahead = path.getPointAtLength(Math.min(length, at + 2)), here = path.getPointAtLength(at), behind = path.getPointAtLength(Math.max(0, at - 2));
+        const angle = Math.atan2(ahead.y - behind.y, ahead.x - behind.x) * 180 / Math.PI;
+        spear.setAttribute("transform", "translate(" + here.x.toFixed(1) + " " + here.y.toFixed(1) + ") rotate(" + (angle + 45).toFixed(1) + ")");
+        marks.forEach((fraction, i) => { const on = progress >= fraction - 0.012; circles[i].classList.toggle("is-on", on); stops[i]?.classList.toggle("is-on", on); });
+      };
+      scrollTasks.push(() => {
+        if (reduced()) return draw(1);
+        const box = route.getBoundingClientRect();
+        draw(clamp((innerHeight * 0.9 - box.top) / (box.height + innerHeight * 0.3) * 1.2));
+      });
+    }
+  }
+
+  /* Timeline (how it works): the line fills and steps light as they pass the reading line. */
+  const timeline = $("[data-timeline]");
+  if (timeline) {
+    const fill = $("[data-timeline-fill]", timeline), items = $$("[data-timeline-step]", timeline);
+    scrollTasks.push(() => {
+      if (reduced()) { fill?.style.setProperty("--p", "1"); items.forEach(step => step.classList.add("is-on")); return; }
+      const box = timeline.getBoundingClientRect(), line = innerHeight * 0.62;
+      fill?.style.setProperty("--p", clamp((line - box.top) / box.height).toFixed(3));
+      items.forEach(step => step.classList.toggle("is-on", step.getBoundingClientRect().top < line));
+    });
+  }
+
+  /* Process (home): the sticky photograph and counter follow the step being read. */
+  const processBlock = $("[data-process]");
+  if (processBlock) {
+    const frames = $$("[data-process-frame]", processBlock), items = $$("[data-process-step]", processBlock), count = $("[data-process-count]", processBlock);
+    scrollTasks.push(() => {
+      let active = 0;
+      items.forEach((step, i) => { if (step.getBoundingClientRect().top < innerHeight * 0.55) active = i; });
+      items.forEach((step, i) => step.classList.toggle("is-on", reduced() || !wide.matches || i === active));
+      frames.forEach((frame, i) => frame.classList.toggle("is-active", i === active));
+      if (count) count.textContent = String(active + 1).padStart(2, "0");
+    });
+  }
+
+  /* FAQ topic index follows the group in view. */
+  const index = $("[data-faq-index]");
+  if (index && "IntersectionObserver" in window) {
+    const links = new Map($$("a", index).map(link => [link.hash.slice(1), link]));
+    const seen = new Map();
+    const spy = new IntersectionObserver(entries => {
+      for (const entry of entries) seen.set(entry.target.id, entry.isIntersecting ? entry.boundingClientRect.top : null);
+      const current = [...seen].filter(([, top]) => top !== null).sort((a, b) => Math.abs(a[1]) - Math.abs(b[1]))[0];
+      for (const [id, link] of links) { if (current?.[0] === id) link.setAttribute("aria-current", "true"); else link.removeAttribute("aria-current"); }
+    }, { rootMargin: "-20% 0px -55% 0px" });
+    for (const id of links.keys()) { const el = document.getElementById(id); if (el) spy.observe(el); }
+  }
+
+  /* Bar card pours once; counters count once. */
+  if ("IntersectionObserver" in window) {
+    const once = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const el = entry.target; once.unobserve(el);
+        if (el.classList.contains("bar-card")) el.classList.add("is-poured");
+        if (el.dataset.count !== undefined) {
+          const target = Number(el.dataset.count) || 0;
+          if (reduced()) { el.textContent = String(target); continue; }
+          const start = performance.now(), duration = 1600;
+          const tick = now => { const t = clamp((now - start) / duration), eased = 1 - Math.pow(1 - t, 4); el.textContent = String(Math.round(target * eased)); if (t < 1) requestAnimationFrame(tick); };
+          requestAnimationFrame(tick);
+        }
+      }
+    }, { threshold: 0.5 });
+    $$(".bar-card,[data-count]").forEach(el => once.observe(el));
+  } else $$(".bar-card").forEach(el => el.classList.add("is-poured"));
+
+  /* Pointer: tilt and spotlight on cards, magnetic buttons and a cursor ring. Fine pointers only. */
+  const cursor = $(".cursor"), cursorRing = cursor?.firstElementChild;
+  let cx = -100, cy = -100, rx = -100, ry = -100, cursorFrame = 0;
+  function cursorLoop() {
+    rx += (cx - rx) * 0.2; ry += (cy - ry) * 0.2;
+    if (cursorRing) cursorRing.style.transform = "translate3d(" + rx.toFixed(1) + "px," + ry.toFixed(1) + "px,0)";
+    cursorFrame = Math.abs(cx - rx) + Math.abs(cy - ry) > 0.3 ? requestAnimationFrame(cursorLoop) : 0;
+  }
+  document.addEventListener("pointermove", event => {
+    if (event.pointerType !== "mouse" || reduced()) return;
+    cx = event.clientX; cy = event.clientY;
+    if (!cursorFrame && root.classList.contains("cursor-on")) cursorFrame = requestAnimationFrame(cursorLoop);
+    const tilt = event.target.closest?.("[data-tilt]");
+    if (tilt) {
+      const box = tilt.getBoundingClientRect(), x = (event.clientX - box.left) / box.width, y = (event.clientY - box.top) / box.height;
+      tilt.classList.add("is-tilting");
+      tilt.style.setProperty("--rx", ((0.5 - y) * 6).toFixed(2) + "deg"); tilt.style.setProperty("--ry", ((x - 0.5) * 8).toFixed(2) + "deg");
+      tilt.style.setProperty("--mx", (x * 100).toFixed(1) + "%"); tilt.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+    }
+    const magnet = event.target.closest?.(".btn,.round");
+    if (magnet) {
+      const box = magnet.getBoundingClientRect();
+      magnet.style.setProperty("--tx", clamp((event.clientX - box.left - box.width / 2) * 0.16, -8, 8).toFixed(1) + "px");
+      magnet.style.setProperty("--ty", clamp((event.clientY - box.top - box.height / 2) * 0.24, -6, 6).toFixed(1) + "px");
+    }
+    cursor?.classList.toggle("is-hover", Boolean(event.target.closest?.("a,button,label,summary,[data-tilt],input,textarea")));
+  }, { passive: true });
+  document.addEventListener("pointerout", event => {
+    const from = event.target.closest?.("[data-tilt],.btn,.round");
+    if (!from || from.contains(event.relatedTarget)) return;
+    from.classList.remove("is-tilting");
+    ["--rx", "--ry", "--tx", "--ty"].forEach(name => from.style.removeProperty(name));
+  }, { passive: true });
+
+  /* One scroll loop for everything scroll-linked. */
+  function schedule() { if (!frame) frame = requestAnimationFrame(() => { frame = 0; scrollTasks.forEach(task => task()); }); }
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", schedule, { passive: true });
+  window.addEventListener("pageshow", schedule);
+
+  applyPreference();
+  root.classList.add("motion-live");
+  // Wait for the preloader so the first headline animates in view rather than behind the doors.
+  if (root.classList.contains("is-preloading")) document.addEventListener("spear:preloaded", startReveals, { once: true });
+  else startReveals();
+  return { get disabled() { return reduced(); } };
 }

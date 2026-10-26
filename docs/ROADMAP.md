@@ -7,17 +7,15 @@ Replaces the early analysis in `FINISH-PLAN.md`. Everything under "Measured" was
 | Area | Result | How |
 | --- | --- | --- |
 | Accessibility | axe-core: 0 violations on 12 pages × phone and desktop, with and without Reduce motion. Lighthouse accessibility 100 | WCAG 2.0–2.2 A/AA and best-practice rule sets |
-| Performance (phone, throttled) | 95–99 across home, vehicles, how it works, FAQ, enquire. LCP 1.9–2.9 s, CLS ≤ 0.008, TBT ≤ 10 ms | Lighthouse against the Node server, after the V8 redesign |
-| Performance (desktop) | 100 on all five pages, LCP under 1 s | Lighthouse |
+| Performance (phone, throttled) | 91–96, CLS 0.001 | Lighthouse against the Node server, after the V9 redesign |
+| Performance (desktop) | 99–100 | Lighthouse |
 | Best practices | 100 | Lighthouse |
-| SEO | 100 in launch mode; 66 by default only because pages are deliberately `noindex` | Lighthouse, build with a launch origin |
-| Layout | No horizontal overflow, no console errors or failed requests: 12 pages × 320/390/768/1363 px | Playwright sweep |
-| Security | Security review of the branch: no high-confidence findings | Static review of server, manifest, scripts |
-| Tests | 29 unit and server tests plus 5 browser tests pass: structure, links, fonts, icons, manifest, noindex default, motion safeguards, server MIME/CSP/compression, enquiry validation | `npm test` |
+| SEO | 63–66 by default only because pages are deliberately `noindex`; launch mode adds canonical, share tags, structured data and sitemap | Lighthouse |
+| Layout | No horizontal overflow 320–1920 px on 12 pages; 200% zoom holds | Playwright sweep |
+| Security | Security review of the branch: no high-confidence findings | Static review of build, client scripts and server |
+| Tests | 32 unit and server tests plus 7 browser tests pass | `npm test`, `npm run test:e2e` |
 
-Fixed during this audit: a disallowed ARIA role on tab panels, low-contrast captions, decorative numerals read as text, dimmed words in the reading reveal, a keyboard-inaccessible ticker under Reduce motion, four render-blocking stylesheets (now one bundle), and uncompressed responses from the Node server (76 KB stylesheet is now 15 KB with brotli).
-
-V8 (the consignment-note redesign) kept these scores while replacing the visual language; see `DESIGN.md`.
+V9 (the golden-hour redesign: blended photographic sections, glass cards, Hubot/Mona Sans, logo preloader, single content file) replaced the V8 visual language; see `DESIGN.md` and `CONTENT.md`.
 
 ## 2. What only the owner can unblock
 
@@ -36,7 +34,7 @@ V8 (the consignment-note redesign) kept these scores while replacing the visual 
 Each phase leaves the site shippable. Items marked ✅ are already done.
 
 ### Phase A — Foundations ✅
-Symbol, icon sprite, favicon and share assets; new type system; How it works, FAQ, Contact, Bar pages; motion layer with Reduce motion; launch switch; shared file manifest; CSS bundle; compression; accessibility, performance and security passes; documentation and tests.
+Symbol, icon sprite, favicon and share assets; new type system; V9 redesign with one content file (`content/site.mjs`) and empty slots for inventory, stats, testimonials, partners and team; How it works, FAQ, Contact, Bar pages; motion layer with Reduce motion; launch switch; shared file manifest; CSS bundle; compression; accessibility, performance and security passes; documentation and tests.
 
 ### Phase B — Make it receive business (needs #1 and #3)
 Built and tested without your details: the owner-notification webhook (`NOTIFY_WEBHOOK_URL`), `/healthz`, the Dockerfile and `docs/DEPLOY.md`. Still needed: your business details, the host, and a real end-to-end enquiry on that host.
@@ -48,7 +46,7 @@ Built and tested without your details: the owner-notification webhook (`NOTIFY_W
 Exit test: a real enquiry arrives in the owner's inbox within minutes.
 
 ### Phase C — Go public (needs #2)
-1. `SITE_ORIGIN=https://… SITE_LAUNCH=1 npm run render:pages`; deploy.
+1. `SITE_ORIGIN=https://… SITE_LAUNCH=1 npm run build`; deploy.
 2. Submit `sitemap.xml` in Search Console; verify the property.
 3. Re-run Lighthouse and axe on production; keep scores at or above Section 1.
 4. Add privacy-respecting uptime monitoring. Add analytics only if wanted, and update the privacy page first.
@@ -83,6 +81,6 @@ Already used here: axe-core, Lighthouse, Playwright, the security-review skill. 
 
 - **Invented claims.** Every new sentence must restate something the owner has confirmed. Tests already block stock, price, testimonial and opening-hours wording.
 - **Illustrative imagery.** AI images must never be presented as real stock, staff or premises.
-- **Motion.** Keep the ticker the only continuous animation; keep every effect behind Reduce motion.
+- **Motion.** Keep continuous effects paused offscreen and every effect behind Reduce motion; keep CLS near zero by animating transform, opacity and reserved-width font-stretch only.
 - **Hosting split.** GitHub Pages cannot run the enquiry server; do not enable submission on a static-only deployment.
 - **Privacy.** Enquiries must stay outside `public/`; retention must be set before enabling submission.

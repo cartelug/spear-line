@@ -56,7 +56,7 @@ test("preparation mode cannot accept enquiries",{timeout:20000},async t => {
 });
 test("fonts, boot script and a strict self-hosted CSP are served",{timeout:20000},async t => {
   const {origin} = await boot(t,false);
-  for (const [path,type] of [["/assets/fonts/big-shoulders-display-latin-wght-normal.woff2","font/woff2"],["/assets/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2","font/woff2"],["/assets/fonts/atkinson-hyperlegible-mono-latin-400-normal.woff2","font/woff2"],["/assets/icons.svg","image/svg\\+xml"],["/assets/favicon.svg","image/svg\\+xml"],["/assets/og-image.jpg","image/jpeg"],["/site.webmanifest","application/manifest\\+json"],["/fx.js","text/javascript"],["/pro.css","text/css"],["/assets/fonts/OFL.txt","text/plain"],["/boot.js","text/javascript"],["/motion.js","text/javascript"],["/motion.css","text/css"],["/experience.css","text/css"]]) {
+  for (const [path,type] of [["/assets/fonts/hubot-sans-latin-variable.woff2","font/woff2"],["/assets/fonts/mona-sans-latin-wght.woff2","font/woff2"],["/assets/fonts/OFL-Hubot-Sans.txt","text/plain"],["/assets/logo.svg","image/svg\\+xml"],["/assets/icons.svg","image/svg\\+xml"],["/assets/favicon.svg","image/svg\\+xml"],["/assets/og-image.jpg","image/jpeg"],["/assets/grain.png","image/png"],["/assets/backdrops/01-hero-road.webp","image/webp"],["/site.webmanifest","application/manifest\\+json"],["/boot.js","text/javascript"],["/motion.js","text/javascript"],["/site.css","text/css"]]) {
     const response = await fetch(origin + path); assert.equal(response.status,200,path); assert.match(response.headers.get("content-type"),new RegExp(type),path);
   }
   const csp = (await fetch(origin + "/")).headers.get("content-security-policy");
@@ -67,14 +67,14 @@ test("generated responsive images are served with the correct type and private f
   for(const path of ["/assets/visuals/01-hero-road.webp","/assets/visuals/01-hero-road-768.webp","/assets/visuals/05-foodstuffs.webp","/assets/visuals/13-mobile-hero.webp"]){
     const response=await fetch(origin+path);assert.equal(response.status,200);assert.equal(response.headers.get("content-type"),"image/webp");
   }
-  for(const path of ["/assets/visuals/missing.webp","/visual-prompts.json","/scripts/render-pages.mjs"]) assert.equal((await fetch(origin+path)).status,404);
+  for(const path of ["/assets/visuals/missing.webp","/visual-prompts.json","/scripts/build.mjs","/content/site.mjs"]) assert.equal((await fetch(origin+path)).status,404);
 });
 
 test("text assets are compressed for clients that accept it, and images are not",{timeout:20000},async t=>{
   const {origin} = await boot(t,false);
   const br = await fetch(origin + "/site.css",{headers:{"Accept-Encoding":"br"}});
   assert.equal(br.headers.get("content-encoding"),"br"); assert.equal(br.headers.get("vary"),"Accept-Encoding");
-  assert.ok((await br.text()).includes(".service-panel"),"decoded stylesheet content");
+  assert.ok((await br.text()).includes(".hero-veil"),"decoded stylesheet content");
   const gz = await fetch(origin + "/index.html",{headers:{"Accept-Encoding":"gzip"}});
   assert.equal(gz.headers.get("content-encoding"),"gzip"); assert.match(await gz.text(),/<h1/);
   const plain = await fetch(origin + "/site.css",{headers:{"Accept-Encoding":"identity"}});
