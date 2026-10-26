@@ -24,3 +24,12 @@ The phone floating navigation hides while editing a text field. Radio-card input
 ## Verification
 
 During the audited service/gallery journey, 145 distinct mobile targets and 131 desktop targets had started an actual animation. The homepage's initial 308/307 target inventories can be inspected through data-motion-targets on the document element; data-motion-played records the distinct targets triggered in that session. See motion-audit.json and VALIDATION.md.
+
+## V7 layer (public/fx.js, public/pro.css)
+
+- **Ticker.** The only continuous animation. CSS runs it at 52 s per loop; fx.js pauses it when it is offscreen, the tab is hidden, or the pointer or focus is on it. With Reduce motion it stops and becomes a horizontally scrollable strip.
+- **Route line.** The SVG path is drawn and the spear glyph is positioned along it from scroll position (getPointAtLength), three stop nodes light as it passes, and the matching service cards highlight. Reduce motion shows the completed route.
+- **Timeline and reading reveal.** Scroll position fills the timeline and lights its steps; words of the introduction statement brighten in sequence. Reduce motion shows both fully lit.
+- **Pointer effects.** Spotlight on cards, magnetic buttons and image tilt are limited to fine pointers, use individual transform properties so they compose with the Web Animations timelines, and are skipped for touch input and Reduce motion.
+- **Page transitions.** Cross-document view transitions (a short fade and lift) where supported, disabled for the system preference and the site's Reduce motion control.
+- Default HTML and CSS remain readable if fx.js fails; its states are guarded by `html.fx-ready`.

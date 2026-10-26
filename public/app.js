@@ -135,10 +135,12 @@ for (const group of $$("[data-accordion]")) {
 }
 
 // The shared motion layer owns scroll, text and component entrance timelines.
-import("./motion.js?v=6.3").then(({createMotion})=>{motion=createMotion({root,preference:motionPreference});}).catch(()=>{
+import("./motion.js?v=7.0").then(({createMotion})=>{motion=createMotion({root,preference:motionPreference});}).catch(()=>{
   root.classList.remove("motion-ready");root.dataset.motionState="unavailable";
   $$("[data-motion-toggle]").forEach(button=>{button.hidden=true;});
 });
+
+import("./fx.js?v=7.0").then(({createFx})=>createFx({root,preference:motionPreference})).catch(()=>{root.classList.remove("fx-ready");});
 
 function addContact(selector, href, label) {
   $$(selector).forEach(el => {
@@ -151,6 +153,10 @@ if (emailOK) addContact("[data-contact-email]", "mailto:" + config.email, config
 if (typeof config.phone === "string" && /^\+?[\d\s()-]{7,30}$/.test(config.phone)) addContact("[data-contact-phone]", "tel:" + config.phone.replace(/[^\d+]/g,""), config.phone);
 if (typeof config.whatsapp === "string" && /^\+?\d{7,15}$/.test(config.whatsapp)) addContact("[data-contact-whatsapp]", "https://wa.me/" + config.whatsapp.replace(/\D/g,""), "WhatsApp");
 $$("[data-contact-container]").forEach(el => { el.hidden = !el.querySelector("a"); });
+if (config.address) $$("[data-address]").forEach(el => { el.hidden = false; el.textContent = config.address; });
+const contactCards = $$("[data-contact-card]");
+contactCards.forEach(card => { card.hidden = !card.querySelector("[data-contact-email]:not([hidden]),[data-contact-phone]:not([hidden]),[data-contact-whatsapp]:not([hidden]),[data-address]:not([hidden])"); });
+$$("[data-contact-empty]").forEach(el => { el.hidden = contactCards.some(card => !card.hidden); });
 if (config.legalName) $$("[data-legal-identity]").forEach(el => { el.textContent = "The operator is " + config.legalName + "."; });
 if (config.address) $$("[data-address]").forEach(el => { el.hidden = false; el.textContent = config.address; });
 if (emailOK) {
@@ -162,6 +168,7 @@ if (emailOK) {
   });
 }
 $$("[data-enquiry-step]").forEach(el => { if (canSubmit) el.textContent = el.dataset.live; });
+if (canSubmit) { $$("[data-faq-closed]").forEach(el => { el.hidden = true; }); $$("[data-faq-open]").forEach(el => { el.hidden = false; }); }
 if (canSubmit) $$("[data-privacy-status]").forEach(el => { el.textContent = "Online enquiries are enabled. Details you submit are stored for Spear Line to review."; });
 if (canSubmit && Number.isInteger(config.retentionDays)) $$("[data-retention]").forEach(el => { el.textContent = "Unconverted website enquiry records are retained for up to " + config.retentionDays + " days, unless an applicable record-keeping requirement requires a different period. Contact the operator about records associated with an agreed transaction."; });
 

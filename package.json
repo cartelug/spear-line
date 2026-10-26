@@ -11,7 +11,7 @@
     "start": "node --env-file-if-exists=.env server.mjs",
     "dev": "node --env-file-if-exists=.env server.mjs",
     "test": "node --test",
-    "check": "node --check server.mjs && node --check public/boot.js && node --check public/app.js && node --check public/motion.js && node --check public/validation.js && node scripts/pages-root.mjs --check",
+    "check": "node --check server.mjs && node --check public/boot.js && node --check public/app.js && node --check public/motion.js && node --check public/fx.js && node --check scripts/render-pages.mjs && node --check scripts/content-extra.mjs && node --check public/validation.js && node scripts/pages-root.mjs --check",
     "sync:pages": "node scripts/pages-root.mjs --write",
     "render:pages": "node scripts/render-pages.mjs && node scripts/pages-root.mjs --write"
   }

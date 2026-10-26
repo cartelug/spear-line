@@ -1,18 +1,10 @@
-import { readFile, copyFile, mkdir, writeFile, readdir } from "node:fs/promises";
+import { readFile, copyFile, mkdir, writeFile, rm } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { publicFiles } from "./site-manifest.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const paths = [
-  "index.html", "club.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html",
-  "enquire.html", "privacy.html", "404.html", "robots.txt",
-  "site-config.js", "boot.js", "app.js", "validation.js", "styles.css", "experience.css", "motion.css", "motion.js",
-  "assets/spear-line-logo.png", "assets/fonts/archivo-latin-500-800.woff2",
-  "assets/fonts/lexend-latin-400-600.woff2", "assets/fonts/OFL.txt"
-];
-for (const name of await readdir(resolve(root,"public/assets/visuals"))) {
-  if (/^[a-z0-9-]+\.webp$/.test(name)) paths.push("assets/visuals/"+name);
-}
+const paths = await publicFiles(resolve(root, "public"));
 const checking = process.argv.includes("--check");
 const writing = process.argv.includes("--write");
 if (checking === writing) throw new Error("Use exactly one of --check or --write.");
@@ -42,6 +34,7 @@ if (checking) {
   if (mismatches.length) throw new Error("Pages root is out of sync: " + mismatches.join(", ") + ". Run npm run sync:pages.");
   console.log("Pages root matches public/ (" + paths.length + " files).");
 } else {
+  for (const stale of ["sitemap.xml"]) if (!paths.includes(stale)) await rm(resolve(root, stale), { force: true });
   await writeFile(resolve(root, ".nojekyll"), "");
   console.log("Updated Pages root from public/ (" + paths.length + " files).");
 }

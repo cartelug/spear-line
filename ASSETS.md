@@ -28,3 +28,11 @@ Each image is available as a full-width .webp and a -768.webp variant under publ
 ## V6 phone hero
 
 A portrait companion was generated with the built-in image tool from the original road hero reference. The full prompt is included as 13-mobile-hero in visual-prompts.json. The vehicle identities, landscape and warm colour direction follow the desktop image. Optimised files are 13-mobile-hero-1024.webp (1024 × 1536), 13-mobile-hero.webp (768 × 1152) and 13-mobile-hero-480.webp (480 × 720). The mobile picture source selects these variants; desktop keeps the original hero.
+
+## V7 symbol, icons and fonts
+
+- assets/spear-mark.svg and assets/favicon.svg: an original spear-and-line symbol drawn as vector paths for this site. The existing logo was not modified.
+- assets/icons.svg: 16 original line icons (spear and arrow marks, vehicle, supplies, logistics, route, brief, chat, check, pin, clock, shield, mail, phone, a chat-and-phone bubble and a star).
+- assets/favicon-32.png, favicon-48.png, favicon.ico, apple-touch-icon.png, icon-192.png and icon-512.png are rendered from favicon.svg.
+- assets/og-image.jpg (1200 × 630) combines the existing hero image, logo and tagline.
+- Fonts (SIL Open Font Licence 1.1, licence texts alongside): Bricolage Grotesque, Fraunces italic and Instrument Sans, latin subsets of the variable files published by Fontsource. The Archivo and Lexend files were removed; OFL.txt remains from that set.

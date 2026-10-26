@@ -1,5 +1,7 @@
 # Spear Line — site analysis and plan to finish
 
+> **Status, 26 October 2026 (V7).** Done in code: icon, symbol and favicon set (Q2); SEO machinery behind a launch switch (B3, Q1, Q10); CSP cleanup (Q3, Unsplash removed); three new pages and a shared file manifest (Q5); font and motion upgrade; browser-checked on 12 pages × 4 widths (part of Q6). Still needing the owner: business details and enquiry hosting (B1, B2, Q7), real content and photography (B4), Club decision (Q9), legal review (Q8), and a real-device, axe and Lighthouse pass (rest of Q6). See `VALIDATION.md`.
+
 Analysed 26 October 2026 at commit `4c54efb` (V6). `npm run check` and `npm test` pass (16/16).
 
 ## 1. What exists

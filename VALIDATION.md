@@ -1,19 +1,22 @@
-# V6 validation — 24 October 2026
+# V7 validation — 26 October 2026
 
 ## Automated checks
 
-npm run check and npm test pass. Sixteen tests cover page structure, local and cross-page fragment links, responsive image sources, typography, readable fallback states, current services, the Club coming-soon state, enquiry validation and private storage, disabled submission, and serving the new motion/image assets with the correct MIME types. The publishable root mirrors public/ for 50 files.
+`npm run check` and `npm test` pass: 21 tests covering page structure, link and fragment resolution, self-hosted typography (Bricolage Grotesque, Instrument Sans, Fraunces), guarded hidden states, no invented claims, the Club's coming-soon state, enquiry validation and private storage, server MIME types and CSP (self-only images, no third-party hosts), icon references against the sprite, favicon/manifest/share-image presence, the three new pages and their navigation links, the default noindex state and the motion safeguards. The publishable root mirrors `public/` for 70 files, and the file list is now generated from one manifest shared by the server and the mirror.
 
-## Browser checks
+## Browser checks (Chromium via Playwright, same-origin)
 
-Reviewed same-origin phone frames at 320, 390 and 430 px, tablet at 768 px, and a 1363 px desktop viewport. The settled views reviewed have no horizontal page overflow. Native iOS/Android hardware was not used in this pass.
+- All 12 pages at 320, 390, 768 and 1363 px: no horizontal overflow, no console errors, no failed requests (48 combinations). A tablet overflow caused by the new tab icons at 768 px was found and fixed.
+- Behaviour: ticker animates and pauses offscreen; the route spear moves with scroll and lights three nodes; the timeline lights 0, 2 then 4 steps as the page scrolls; FAQ accordion collapses siblings and the topic index follows the scroll; the menu lists How it works and closes on Escape; `?service=supplies` still preselects the enquiry form; magnetic offsets are applied for a fine pointer.
+- Reduced motion, both the saved site control and the system setting: ticker static, route fully drawn, timeline fully lit, reading-reveal words lit.
+- Launch build (`SITE_ORIGIN=https://example.test SITE_LAUNCH=1`) produces canonical links, `index,follow` robots tags (404 stays noindex), valid Organization and FAQPage JSON-LD, robots.txt with a sitemap line and sitemap.xml; the default build restores noindex and removes the sitemap. The example origin was only used for this check.
 
-The homepage registered 308 motion targets on phones and 307 on larger views, including 226 word targets. The tested journeys triggered 145 distinct animated targets on phone and 131 on desktop. These are animated elements, not hundreds of distinct effects. See docs/motion-audit.json.
+Payload: three variable fonts total about 153 KB (previously about 55 KB); all CSS and JavaScript about 117 KB uncompressed.
 
-Verified mobile menu opening/closing and Escape, inert background handling, service tabs and arrow-key navigation, gallery movement and its position counter, accordion expansion and sibling collapse, the Club layouts, full-size radio touch targets, immediate service selection while loading, 16 px form inputs, and hiding/restoring bottom navigation during editing. A completed logistics form produced a downloadable enquiry draft without sending it.
+## Not verified
 
-The Reduce motion control cancels active effects and keeps words visible. Its preference survived navigation to the Club page, where no new animations started. System preferences are also honoured by the implementation.
+Native iOS and Android hardware, Safari and Firefox rendering, cross-document view transitions in browsers that do not support them (they fall back to normal navigation), screen-reader walkthroughs, and a Lighthouse or axe run. The new FAQ and process copy should be read by the business owner before launch.
 
 ## Existing operational limits
 
-Business contact details are not configured and online enquiry submission remains disabled. Draft preparation continues to work. The Club is announced as coming soon, without membership registration, launch dates, prices or promised benefits.
+Business contact details are not configured, so the Contact page shows its empty state, and online enquiry submission remains disabled. The site stays hidden from search engines until it is built with a launch origin. The Club is announced as coming soon, without registration, dates, prices or benefits.
