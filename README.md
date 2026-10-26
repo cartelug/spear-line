@@ -51,6 +51,10 @@ GitHub Pages serves the static configuration in site-config.js. Online submissio
 
 The existing Node server can accept enquiries when the operator configures ENQUIRIES_ENABLED, BUSINESS_LEGAL_NAME, PUBLIC_CONTACT_EMAIL, RETENTION_DAYS and PUBLIC_ORIGIN. See .env.example for the remaining optional contact settings. Enquiries are stored outside public/; preserve that separation. The browser and server share public/validation.js. Supplies, vehicles and logistics have different required fields. Old service=timber requests are normalised to logistics.
 
+## Deploy and test
+
+See docs/DEPLOY.md for the container, environment variables, owner notification webhook, retention schedule and backups. Browser tests (including accessibility) run with `npm run test:e2e` after a one-time `npm ci && npx playwright install chromium`; CI runs them on every push. Everything else still needs no installed packages.
+
 ## Launch
 
 By default every page carries noindex and robots.txt blocks crawlers, because no production address or business details exist yet. When they do:

@@ -25,6 +25,13 @@ const config = {
   retentionDays
 };
 if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error("PORT must be between 1 and 65535.");
+// Optional owner notification: each stored enquiry is also POSTed as JSON to this address (a chat or automation webhook).
+const notifyUrl = process.env.NOTIFY_WEBHOOK_URL?.trim() || "";
+if (notifyUrl) {
+  let parsed; try { parsed = new URL(notifyUrl); } catch { throw new Error("NOTIFY_WEBHOOK_URL must be a valid URL."); }
+  if (!["https:","http:"].includes(parsed.protocol)) throw new Error("NOTIFY_WEBHOOK_URL must use http or https.");
+  if (process.env.NODE_ENV === "production" && parsed.protocol !== "https:") throw new Error("NOTIFY_WEBHOOK_URL must use HTTPS in production.");
+}
 const parsedOrigin = new URL(origin);
 if (!["http:","https:"].includes(parsedOrigin.protocol) || parsedOrigin.origin !== origin) throw new Error("PUBLIC_ORIGIN must be an origin without a trailing slash or path.");
 if (enabled && (!config.legalName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(config.email) || !Number.isInteger(retentionDays) || retentionDays < 1 || retentionDays > 3650)) throw new Error("Enabling enquiries requires BUSINESS_LEGAL_NAME, PUBLIC_CONTACT_EMAIL and RETENTION_DAYS (1–3650).");
@@ -74,6 +81,17 @@ async function readBody(req) {
   try { return JSON.parse(Buffer.concat(chunks).toString("utf8")); }
   catch { const error = new Error("Invalid JSON."); error.status = 400; throw error; }
 }
+const labels = {vehicle:"vehicle",supplies:"supplies",logistics:"logistics"};
+async function notify(record) {
+  if (!notifyUrl) return;
+  const text = "New " + (labels[record.service] || "website") + " enquiry from " + record.name + " (" + record.contact + "). Reference " + record.reference + ".";
+  try {
+    const response = await fetch(notifyUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text,enquiry:record}),signal:AbortSignal.timeout(5000)});
+    if (!response.ok) console.warn("Enquiry notification was rejected:",response.status,record.reference);
+  } catch (error) {
+    console.warn("Enquiry notification failed:",error.name,record.reference);
+  }
+}
 async function submit(req,res) {
   if (!enabled) return json(res,503,{message:"Online enquiries are not enabled. Please prepare your enquiry and use the published contact details."});
   if (req.headers.origin !== origin) return json(res,403,{message:"Please submit your enquiry from the Spear Line website."});
@@ -95,6 +113,7 @@ async function submit(req,res) {
   // One private file per enquiry avoids append/purge races and supports targeted deletion.
   await appendFile(resolve(actualDataRoot,reference + ".json"),JSON.stringify(record) + "\n",{encoding:"utf8",flag:"wx",mode:0o600,flush:true});
   console.info("Enquiry stored:",reference);
+  void notify(record);
   return json(res,201,{reference});
 }
 const server = http.createServer(async (req,res) => {
@@ -106,6 +125,10 @@ const server = http.createServer(async (req,res) => {
       return await submit(req,res);
     }
     if (!["GET","HEAD"].includes(req.method)) { res.setHeader("Allow","GET, HEAD"); return json(res,405,{message:"Method not allowed."}); }
+    if (url.pathname === "/healthz") {
+      res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});
+      return res.end(req.method === "HEAD" ? "" : JSON.stringify({status:"ok"}));
+    }
     if (url.pathname === "/site-config.js") {
       res.writeHead(200,{"Content-Type":"text/javascript; charset=utf-8","Cache-Control":"no-store"});
       return res.end(req.method === "HEAD" ? "" : "window.SPEAR_CONFIG=Object.freeze(" + JSON.stringify(config).replace(/</g,"\\u003c") + ");");

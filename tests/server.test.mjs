@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { once } from "node:events";
 import net from "node:net";
-import { mkdtemp, readdir, readFile, rm } from "node:fs/promises";
+import http from "node:http";
+import { mkdtemp, readdir, readFile, rm, cp, mkdir, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -12,10 +13,10 @@ async function freePort() {
   const socket = net.createServer(); socket.listen(0,"127.0.0.1"); await once(socket,"listening");
   const port = socket.address().port; await new Promise((resolve,reject) => socket.close(error => error ? reject(error) : resolve())); return port;
 }
-async function boot(t,enabled) {
+async function boot(t,enabled,extraEnv={},cwd=root) {
   const dir = await mkdtemp(resolve(tmpdir(),"spear-line-test-"));
   const port = await freePort(), origin = "http://127.0.0.1:" + port;
-  const child = spawn(process.execPath,["server.mjs"],{cwd:root,env:{...process.env,HOST:"127.0.0.1",PORT:String(port),PUBLIC_ORIGIN:origin,ENQUIRIES_ENABLED:String(enabled),BUSINESS_LEGAL_NAME:"Test Operator",PUBLIC_CONTACT_EMAIL:"test@example.com",PUBLIC_CONTACT_PHONE:"",PUBLIC_WHATSAPP:"",PUBLIC_ADDRESS:"",RETENTION_DAYS:"30",DATA_DIR:dir,NODE_ENV:"test"},stdio:["ignore","pipe","pipe"]});
+  const child = spawn(process.execPath,["server.mjs"],{cwd,env:{...process.env,HOST:"127.0.0.1",PORT:String(port),PUBLIC_ORIGIN:origin,ENQUIRIES_ENABLED:String(enabled),BUSINESS_LEGAL_NAME:"Test Operator",PUBLIC_CONTACT_EMAIL:"test@example.com",PUBLIC_CONTACT_PHONE:"",PUBLIC_WHATSAPP:"",PUBLIC_ADDRESS:"",RETENTION_DAYS:"30",DATA_DIR:dir,NODE_ENV:"test",NOTIFY_WEBHOOK_URL:"",...extraEnv},stdio:["ignore","pipe","pipe"]});
   const exited = new Promise(resolve => child.once("exit",resolve));
   t.after(async () => { if (child.exitCode === null) child.kill("SIGTERM"); await exited; await rm(dir,{recursive:true,force:true}); });
   await new Promise((resolve,reject) => {
@@ -80,4 +81,53 @@ test("text assets are compressed for clients that accept it, and images are not"
   assert.equal(plain.headers.get("content-encoding"),null);
   const image = await fetch(origin + "/assets/visuals/01-hero-road.webp",{headers:{"Accept-Encoding":"br, gzip"}});
   assert.equal(image.headers.get("content-encoding"),null);
+});
+
+test("health endpoint answers without exposing anything",{timeout:20000},async t=>{
+  const {origin}=await boot(t,false);
+  const response=await fetch(origin+"/healthz");
+  assert.equal(response.status,200); assert.deepEqual(await response.json(),{status:"ok"});
+  assert.equal(response.headers.get("cache-control"),"no-store");
+  assert.equal((await fetch(origin+"/healthz",{method:"POST"})).status,405);
+});
+test("a stored enquiry is also posted to the notification webhook, and a failing webhook never blocks the visitor",{timeout:30000},async t=>{
+  const received=[]; const mode={status:200};
+  const hook=http.createServer((req,res)=>{let body="";req.on("data",d=>body+=d);req.on("end",()=>{received.push({method:req.method,type:req.headers["content-type"],body:JSON.parse(body)});res.writeHead(mode.status);res.end();});});
+  await new Promise(resolve=>hook.listen(0,"127.0.0.1",resolve)); t.after(()=>new Promise(resolve=>hook.close(resolve)));
+  const {origin}=await boot(t,true,{NOTIFY_WEBHOOK_URL:"http://127.0.0.1:"+hook.address().port+"/enquiries"});
+  const post=body=>fetch(origin+"/api/enquiries",{method:"POST",headers:{"Content-Type":"application/json",Origin:origin},body:JSON.stringify(body)});
+  const first=await post(vehicle); assert.equal(first.status,201); const {reference}=await first.json();
+  for(let i=0;i<50&&!received.length;i++) await new Promise(resolve=>setTimeout(resolve,50));
+  assert.equal(received.length,1); assert.equal(received[0].method,"POST"); assert.match(received[0].type,/application\/json/);
+  assert.equal(received[0].body.enquiry.reference,reference); assert.equal(received[0].body.enquiry.model,"Pickup");
+  assert.match(received[0].body.text,/New vehicle enquiry from Test Buyer/);
+  mode.status=500;
+  assert.equal((await post(timber)).status,201,"visitor still gets a receipt when the webhook rejects");
+  const dead=await boot(t,true,{NOTIFY_WEBHOOK_URL:"http://127.0.0.1:9/unreachable"});
+  assert.equal((await fetch(dead.origin+"/api/enquiries",{method:"POST",headers:{"Content-Type":"application/json",Origin:dead.origin},body:JSON.stringify(vehicle)})).status,201,"visitor still gets a receipt when the webhook is unreachable");
+});
+test("production refuses a plain-HTTP notification address",{timeout:20000},async()=>{
+  const child=spawn(process.execPath,["server.mjs"],{cwd:root,env:{...process.env,PORT:"39871",NODE_ENV:"production",NOTIFY_WEBHOOK_URL:"http://hooks.example.test/x",DATA_DIR:await mkdtemp(resolve(tmpdir(),"spear-line-hook-"))},stdio:["ignore","pipe","pipe"]});
+  let err=""; child.stderr.on("data",d=>err+=d); const [code]=await once(child,"exit");
+  assert.notEqual(code,0); assert.match(err,/NOTIFY_WEBHOOK_URL must use HTTPS in production/);
+});
+test("the files the Dockerfile copies are enough to run the site, answer health checks and purge old enquiries",{timeout:40000},async t=>{
+  const dockerfile=await readFile(resolve(root,"Dockerfile"),"utf8");
+  const stage=await mkdtemp(resolve(tmpdir(),"spear-line-image-")); t.after(()=>rm(stage,{recursive:true,force:true}));
+  const copies=[...dockerfile.matchAll(/^COPY\s+(.+?)\s+(\S+)$/gm)];
+  assert.ok(copies.length>=3,"Dockerfile copies the app");
+  for(const [,sources,target] of copies){
+    for(const source of sources.split(/\s+/)){
+      const destination=target.endsWith("/")?resolve(stage,target,source.split("/").pop()):resolve(stage,target);
+      await mkdir(dirname(destination),{recursive:true}); await cp(resolve(root,source),destination,{recursive:true});
+    }
+  }
+  const {origin,dir}=await boot(t,true,{NODE_ENV:"production",PUBLIC_ORIGIN:"https://example.test"},stage).catch(error=>{throw error;});
+  assert.equal((await fetch(origin+"/healthz")).status,200);
+  assert.equal((await fetch(origin+"/")).status,200);
+  const old={reference:"00000000-0000-4000-8000-000000000000",receivedAt:"2020-01-01T00:00:00.000Z",service:"vehicle"};
+  await writeFile(resolve(dir,old.reference+".json"),JSON.stringify(old)+"\n");
+  const purge=spawn(process.execPath,["scripts/purge-enquiries.mjs","--apply"],{cwd:stage,env:{...process.env,RETENTION_DAYS:"30",DATA_DIR:dir},stdio:["ignore","pipe","pipe"]});
+  let out=""; purge.stdout.on("data",d=>out+=d); await once(purge,"exit"); assert.match(out,/Deleted 1 expired/);
+  assert.ok(!(await readdir(dir)).includes(old.reference+".json"));
 });

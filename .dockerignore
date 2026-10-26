@@ -1,0 +1,20 @@
+.git
+.github
+node_modules
+data
+.env
+.env.*
+!.env.example
+tests
+docs
+*.md
+# GitHub Pages mirror of public/ at the repository root
+/*.html
+/*.css
+/*.js
+/*.xml
+/*.ico
+/*.webmanifest
+/*.txt
+/assets
+!package.json

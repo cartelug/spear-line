@@ -13,7 +13,7 @@ Replaces the early analysis in `FINISH-PLAN.md`. Everything under "Measured" was
 | SEO | 100 in launch mode; 66 by default only because pages are deliberately `noindex` | Lighthouse, build with a launch origin |
 | Layout | No horizontal overflow, no console errors or failed requests: 12 pages × 320/390/768/1363 px | Playwright sweep |
 | Security | Security review of the branch: no high-confidence findings | Static review of server, manifest, scripts |
-| Tests | 25 pass: structure, links, fonts, icons, manifest, noindex default, motion safeguards, server MIME/CSP/compression, enquiry validation | `npm test` |
+| Tests | 29 unit and server tests plus 5 browser tests pass: structure, links, fonts, icons, manifest, noindex default, motion safeguards, server MIME/CSP/compression, enquiry validation | `npm test` |
 
 Fixed during this audit: a disallowed ARIA role on tab panels, low-contrast captions, decorative numerals read as text, dimmed words in the reading reveal, a keyboard-inaccessible ticker under Reduce motion, four render-blocking stylesheets (now one bundle), and uncompressed responses from the Node server (76 KB stylesheet is now 15 KB with brotli).
 
@@ -39,6 +39,7 @@ Each phase leaves the site shippable. Items marked ✅ are already done.
 Symbol, icon sprite, favicon and share assets; new type system; How it works, FAQ, Contact, Bar pages; motion layer with Reduce motion; launch switch; shared file manifest; CSS bundle; compression; accessibility, performance and security passes; documentation and tests.
 
 ### Phase B — Make it receive business (needs #1 and #3)
+Built and tested without your details: the owner-notification webhook (`NOTIFY_WEBHOOK_URL`), `/healthz`, the Dockerfile and `docs/DEPLOY.md`. Still needed: your business details, the host, and a real end-to-end enquiry on that host.
 1. Deploy `server.mjs` on a Node host; set `ENQUIRIES_ENABLED`, `PUBLIC_ORIGIN` (HTTPS), `BUSINESS_LEGAL_NAME`, `PUBLIC_CONTACT_EMAIL`, `RETENTION_DAYS`, `DATA_DIR` on a private volume.
 2. Add an owner notification when an enquiry is stored (email or webhook), and show the reference to the visitor.
 3. Schedule `scripts/purge-enquiries.mjs` daily; document backup and restore; test both.
@@ -65,6 +66,7 @@ Exit test: Lighthouse SEO 100 and a canonical, indexable page set on the live do
 3. Confirm licensing and age-gating wording with a professional before promoting any drinks.
 
 ### Phase F — Quality gates in CI
+Done: a `browser` CI job runs Playwright tests with axe (12 pages × phone and desktop, with and without Reduce motion), overflow checks at four widths, the hero note, the draft flow, menu, FAQ, timeline and Reduce motion. Still open: a Lighthouse budget job, real devices, Safari and Firefox, and screen-reader passes.
 1. Add Playwright browser tests to `check.yml` (menu, tabs, FAQ, form, Reduce motion, no overflow at four widths).
 2. Add axe and a Lighthouse budget (performance ≥ 90 on phone, accessibility 100, no regressions) as a CI job.
 3. Test on real iPhone and Android devices, Safari and Firefox; fix any divergences.
