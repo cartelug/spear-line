@@ -1,6 +1,6 @@
 # Spear Line roadmap to launch and beyond
 
-Replaces the early analysis in `FINISH-PLAN.md`. Everything under "Measured" was run on 26 October 2026 against the real pages; everything under "Needs you" cannot be completed by anyone but the owner.
+Replaces the early analysis in `FINISH-PLAN.md`. Everything under "Measured" was run on 26 October 2026 against the real pages; everything under "Needs you" cannot be completed by anyone but the owner. On 31 October 2026 a visual review (section 1a), the owner's Drive records (section 1b) and a services expansion were added as Phases H to L: foundations for six divisions, the **Founders page**, **Spear Line Timber**, **digital services** and a **visual upgrade**. The detail is in `SERVICES-PLAN.md`.
 
 ## 1. Where the site stands (measured)
 
@@ -17,6 +17,33 @@ Replaces the early analysis in `FINISH-PLAN.md`. Everything under "Measured" was
 
 V11 added ten new photographs (generated with GPT Image 1.5 through Zapier) and more motion. V9 (the golden-hour redesign) replaced the V8 visual language; V10 made it fast (inlined first-screen styles, AVIF, 40 KB of fonts, prerendered links, offline support) and switched to the owner's fonts. See `DESIGN.md`, `CONTENT.md` and `VALIDATION.md`.
 
+## 1a. Visual review, 31 October 2026
+
+Scope: home, About, Vehicles and Contact at 1440 px, and home and About at 390 px, with Reduce motion on; screenshots only. Lighthouse and axe were not re-run. Not yet reviewed: Supplies, Logistics, How it works, FAQ, Enquire, Bar, Privacy and 404 (done in Phase L).
+
+Keep: the golden-hour palette, the type scale, the hero waybill, blended sections and the speed in section 1.
+
+| # | Finding |
+| --- | --- |
+| V1 | No real people anywhere. The only team image shows three people from behind |
+| V2 | About is thin (hero, one paragraph, one image, three cards) with large empty bands at 1440 px |
+| V3 | Contact dead-ends: "Direct contact details will appear here", and the footer "Get in touch" column holds one link |
+| V4 | One closing banner (aerial road, "Let's move something forward") repeats on home, About and Contact |
+| V5 | At 1440 by 900 the service chips at the foot of the home hero are partly hidden by the marquee tape |
+| V6 | Vehicles: three wide alternating rows leave large gaps; titles over photographs on the two cross-sell cards need a legibility check |
+| V7 | The footer note calls all imagery AI-generated, which stops being true once real photographs are added |
+
+## 1b. What the owner's Drive records change
+
+The owner's records describe a company wider than the current site, and a core focus the site has drifted from.
+
+- **Core focus is vehicles and timber haulage** (Kampala and the DR Congo). The word "timber" appears nowhere in `content/site.mjs`; the site leads with foodstuffs and beverages, which the records call a developing direction.
+- **Six divisions**, not three services: building materials and equipment, motors, food and beverages, fitness and wellness, real estate, and leisure and hospitality. Sourcing, transport, warehousing, imports and agribusiness are shared capabilities, not headline divisions.
+- **Digital services** (websites, brand identity, social media growth and advertising management) are proposed but not yet owner-approved.
+- **Status vocabulary:** Active only with evidence, Preparing to launch, Planned. The site has no way to show this yet.
+- **One named founder**, Joe Ayom. A Founder Series of ten scenes plus three other images exists in Drive, and the records describe them as generated storytelling assets, not evidence of operations.
+- **Open conflict:** the site uses MTN Brighter Sans Bold and Sky Text (licence unconfirmed, see `ASSETS.md`); the records list Archivo and Lexend as the latest requested pair.
+
 ## 2. What only the owner can unblock
 
 | # | Decision or input | Unblocks | Default if you say nothing |
@@ -28,6 +55,13 @@ V11 added ten new photographs (generated with GPT Image 1.5 through Zapier) and 
 | 5 | What the Bar will be: location, opening details, menu, whether it serves alcohol, local licensing | Replacing the three "To be announced" cards | Page stays a teaser |
 | 6 | Which vehicle makes, supply categories and routes can be named truthfully | Specific service copy and richer SEO | Copy stays general |
 | 7 | Legal and compliance review: import, food safety, alcohol licensing, privacy by market | Final privacy and FAQ text | Current copy makes no regulated claims |
+| 8 | Status of each division (Active with evidence, Preparing to launch, Planned) | Home grid, division pages, sitemap | Motors and Timber haulage: Preparing to launch; the rest Planned |
+| 9 | Founder details: names, role wording, verified bio and message, written approval for the likeness in generated images, ideally one real photograph | Founders page | Page built but hidden |
+| 10 | Digital services: seventh division or shared capability, and approval to publish | Digital page and navigation | Shared capability, Planned |
+| 11 | Timber boundary: transport only or also sales; routes and carriers | Spear Line Timber section and page | Transport coordination only |
+| 12 | Hospitality name (Bar, Club or wider) | Hospitality page | "Leisure and hospitality", with Spear Line Bar first |
+| 13 | Typeface: keep MTN Brighter Sans and Sky Text, or move to Archivo and Lexend (recommended, open licence) | Visual upgrade | Keep current |
+| 14 | Scope: which pages beyond the owner-approved seven are agreed | Wave 3 pages | Seven first |
 
 ## 3. Phased plan
 
@@ -73,6 +107,45 @@ Done: a `browser` CI job runs Playwright tests with axe (12 pages × phone and d
 ### Phase G — Growth (after launch)
 Targeted landing pages per service and market, backed by real keywords and content; case studies once real; analytics-driven copy changes; email follow-up for enquiries; localisation if serving several languages.
 
+### Phase H — Foundations for six divisions (needs #8, #14)
+Full detail in `SERVICES-PLAN.md` sections 2 to 5.
+1. Add `divisions[]` and `founders[]` to `content/site.mjs`, and one template in `scripts/build.mjs` that generates the division pages, hub cards, home grid, navigation, footer, sitemap and structured data.
+2. Status rules in code: every division has a `status`; `active` needs an `evidence` string; Planned pages are `noindex`, offer Register interest and stay out of the sitemap. Tests enforce all three.
+3. Navigation: a Businesses panel, and a Services sheet in the phone dock; at most seven top-level items.
+4. Enquiry types for construction, property, fitness, hospitality and digital, plus an optional `cargo` on logistics, in `validation.js`, the server and the tests.
+5. Redirect aliases for `vehicles.html`, `supplies.html`, `bar.html` and `timber-logistics.html`.
+6. Extend the claim tests to block unsupported wording.
+Exit test: a dummy division renders end to end and `npm run check`, `npm test` and the browser tests pass.
+
+### Phase I — Founders page (needs #9)
+1. `founders.html` with the cutout hero, founder's message, a captioned storyboard of the Founder Series scenes tied to divisions, principles, businesses grid and a call to action. A founder strip on About links to it.
+2. Every generated image of a person carries an "AI-generated illustration" caption; a real portrait replaces the generated one as soon as it exists.
+3. Nothing publishes until the founder's bio, message and likeness approval are supplied. No biography is invented.
+4. Masters go in `source-images/` (not served); `scripts/images.py` gains portrait and alpha support.
+Exit test: axe 0 violations; every founder has a name, role and `approvedOn`; every generated image on the page has its caption.
+
+### Phase J — Spear Line Timber (needs #11)
+1. A full-bleed "timber line" section on home, the same module on `timber.html`, and a short version on Logistics: tree-ring contour layer, a four-stop consignment strip (yard check, loading, route, delivery) and a waybill-style cargo note that opens the logistics enquiry pre-filled with `cargo=timber`.
+2. Five new illustrations (recorded in `visual-prompts.json`), replaced by real photographs first when available.
+3. Copy says timber haulage and transport coordination only: no ownership, stock, fleet, tonnage, transit time, certification or lawful-origin guarantee.
+Exit test: CLS 0, phone performance at or above 90, all effects off under Reduce motion.
+
+### Phase K — Digital services and the other new divisions (needs #8, #10, #12)
+1. Digital page: websites and landing pages, brand identity, social media growth and advertising management; Facebook and Instagram only until other platforms are confirmed eligible. "Request a quote", no public prices, no promised followers, reach or sales, no fake engagement. Proof section stays an empty state until real, permitted case studies exist.
+2. Building supplies, fitness and wellness (non-clinical), real estate and hospitality pages from the template, each in its true status, with Register interest where Planned and no booking, listing or membership claims.
+3. Motors, food and beverages and hospitality pages are the existing Vehicles, Supplies and Bar pages renamed and widened.
+4. Lead register: point `NOTIFY_WEBHOOK_URL` at a private sheet or database; update the privacy page for every service in the chain before switching it on.
+Exit test: every page passes axe and Lighthouse; Planned pages are `noindex`; a real enquiry reaches the register.
+
+### Phase L — Visual upgrade, V12 (needs #13)
+1. Fix V2 to V7 (section 1a): rebuild About, enrich Contact, vary the closing banners, re-seat the marquee tape, tighten Vehicles and check card legibility, make image wording per-image.
+2. Division system: six sprite icons, a status chip, one accent per division from existing tokens.
+3. Home restructure: waybill offers every live division, then the businesses grid, then the timber line.
+4. Decide the typeface (#13) and, optionally, align the gold with the brand guide.
+5. Review the pages not yet reviewed (section 1a), then real devices, Safari and Firefox, and screen readers (Phase F).
+6. No new continuous effects beyond the tree rings; update `DESIGN.md`, `ASSETS.md` and `VALIDATION.md`.
+Exit test: scores in section 1 hold or improve, with no overflow from 280 to 3440 px.
+
 ## 4. Skills and tools
 
 Already used here: axe-core, Lighthouse, Playwright, the security-review skill. Offered for install: `frontend-design`, `rampstack-seo` (technical and on-page SEO), `design-skills` (UX writing, critique, journey mapping), Website Copywriting & Positioning, `brand-studio`, and Anthropic's Marketing plugin. Recommended order once installed: copywriting for Phase D, SEO for Phase C, brand-studio before any Bar launch, design-skills for Phase F user testing. Third-party connectors that would send the site or analytics to outside services were deliberately not offered.
@@ -80,7 +153,11 @@ Already used here: axe-core, Lighthouse, Playwright, the security-review skill. 
 ## 5. Risks to watch
 
 - **Invented claims.** Every new sentence must restate something the owner has confirmed. Tests already block stock, price, testimonial and opening-hours wording.
-- **Illustrative imagery.** AI images must never be presented as real stock, staff or premises.
+- **Illustrative imagery.** AI images must never be presented as real stock, staff or premises. This now includes generated images of the founder: they are captioned as illustrations and never shown as proof of a deal, site or customer.
+- **Status inflation.** A division is Active only with recorded evidence. Planned divisions get no booking, listing, membership or stock wording, and stay out of search until they are real.
+- **Timber.** Haulage is not ownership of timber. No claim about stock, fleet, tonnage, certification or lawful origin.
+- **Digital services.** Never promise followers, reach, sales or a platform that cannot lawfully serve the market. Internal rates and profit arrangements stay out of this public repository.
+- **Scope.** The owner-approved plan is seven pages; pages beyond it need a written agreement.
 - **Motion.** Keep continuous effects paused offscreen and every effect behind Reduce motion; keep CLS near zero by animating transform, opacity and reserved-width font-stretch only.
 - **Hosting split.** GitHub Pages cannot run the enquiry server; do not enable submission on a static-only deployment.
 - **Privacy.** Enquiries must stay outside `public/`; retention must be set before enabling submission.
