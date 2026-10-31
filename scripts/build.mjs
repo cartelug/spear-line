@@ -358,7 +358,7 @@ for (const s of ALL) output[s.slug + '.html'] = servicePage(s);
 output['businesses.html'] = layout('businesses', 'Our businesses', 'The businesses of Spear Line, from vehicles and timber haulage to property and hospitality, each with its true status.', businessesPage);
 output['trade-supply.html'] = layout('trade-supply', hubs.trade.crumb, hubs.trade.description, hubPage(hubs.trade));
 output['lifestyle-property.html'] = layout('lifestyle-property', hubs.lifestyle.crumb, hubs.lifestyle.description, hubPage(hubs.lifestyle));
-output['founders.html'] = layout('founders', 'Meet the founder', 'Meet Joe Ayom, founder of Spear Line.', foundersPageList, { ld: foundersLd, unlisted: !founder.approvedOn });
+output['founders.html'] = layout('founders', 'Meet the founder', 'Meet Joh Ayom, founder of Spear Line.', foundersPageList, { ld: foundersLd, unlisted: !founder.approvedOn });
 // Keep the former public address useful for existing links and bookmarks.
 output['timber-logistics.html'] = output['timber.html'];
 

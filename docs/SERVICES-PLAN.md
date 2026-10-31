@@ -54,7 +54,7 @@ The owner's vocabulary is **Active** (only with evidence), **Preparing to launch
 | --- | --- | --- |
 | D1 | Status of each division, with evidence for any marked Active | Motors and Timber haulage: Preparing to launch. Everything else: Planned |
 | D2 | Digital services: a seventh division, or a shared capability under the existing six (the proposal itself leaves this open) | Shown as a shared capability, "Planned", no navigation slot of its own |
-| D3 | Founder details: names of everyone to be shown (the records name Joe Ayom only), wording of the role, a verified bio and message in the founder's own words, written approval for the likeness in generated images | Founders page is built but hidden (not in navigation or sitemap) |
+| D3 | Founder details: names of everyone to be shown (the records name one founder, spelled Joe in Drive; the owner confirmed "Joh Ayom" on 31 October 2026), wording of the role, a verified bio and message in the founder's own words, written approval for the likeness in generated images | Founders page is built but hidden (not in navigation or sitemap) |
 | D4 | Timber boundary: transport coordination only, or timber sales as well; routes and carriers | Transport coordination only |
 | D5 | Hospitality name: Bar, Club or a wider division name | "Leisure and hospitality" with "Spear Line Bar" as the first card |
 | D6 | Typeface. The site uses MTN Brighter Sans Bold and Sky Text (supplied by the owner in V10, licence unconfirmed per `ASSETS.md`). The master register records Archivo and Lexend as the latest requested pair, both open licence | Keep current fonts. Recommended: move to Archivo and Lexend, which removes the licence risk |
@@ -133,7 +133,7 @@ Shared: an optional preferred reply channel (call, WhatsApp, email). Register-in
 
 ## 7. Founders page
 
-**What the Drive holds.** The master register names **Joe Ayom** as founder; no other founder appears. The "Joe Ayom - Founder Series - 30 Oct 2026" folder holds ten numbered scenes, and the brand folder holds three more images:
+**What the Drive holds.** The master register names one founder, spelled "Joe Ayom" in Drive; the owner confirmed on 31 October 2026 that the site should read **Joh Ayom**, so the picture file names (`joe-ayom-...`) and the displayed name differ on purpose. No other founder appears. The "Joe Ayom - Founder Series - 30 Oct 2026" folder holds ten numbered scenes, and the brand folder holds three more images:
 
 | File | Proposed use |
 | --- | --- |

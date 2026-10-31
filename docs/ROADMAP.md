@@ -41,7 +41,7 @@ The owner's records describe a company wider than the current site, and a core f
 - **Six divisions**, not three services: building materials and equipment, motors, food and beverages, fitness and wellness, real estate, and leisure and hospitality. Sourcing, transport, warehousing, imports and agribusiness are shared capabilities, not headline divisions.
 - **Digital services** (websites, brand identity, social media growth and advertising management) are proposed but not yet owner-approved.
 - **Status vocabulary:** Active only with evidence, Preparing to launch, Planned. The site has no way to show this yet.
-- **One named founder**, Joe Ayom. A Founder Series of ten scenes plus three other images exists in Drive, and the records describe them as generated storytelling assets, not evidence of operations.
+- **One named founder**, written "Joh Ayom" on the site because the owner confirmed that spelling on 31 October 2026 (the Drive records and picture file names say "Joe"). A Founder Series of ten scenes plus three other images exists in Drive, and the records describe them as generated storytelling assets, not evidence of operations.
 - **Open conflict:** the site uses MTN Brighter Sans Bold and Sky Text (licence unconfirmed, see `ASSETS.md`); the records list Archivo and Lexend as the latest requested pair.
 
 ## 2. What only the owner can unblock

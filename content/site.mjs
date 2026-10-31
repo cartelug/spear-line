@@ -408,7 +408,9 @@ export const digitalOffers = {
 // ---------------------------------------------------------------------------------------------
 export const founders = [
   {
-    id: 'joe-ayom', name: 'Joe Ayom', role: 'Founder of Spear Line',
+    // The owner confirmed the spelling "Joh Ayom" on 31 October 2026. The picture names below keep the spelling of the
+    // files in Drive (joe-ayom-...), because the build finds each picture by its file name.
+    id: 'joh-ayom', name: 'Joh Ayom', role: 'Founder of Spear Line',
     hero: ['joe-ayom-founder-cutout', 'joe-ayom-founder-hero', '10-joe-ayom-founder-environmental-hero'],
     portrait: ['joe-ayom-founder-portrait', '01-joe-ayom-founder-warm-front-portrait'],
     message: [],
@@ -428,7 +430,7 @@ export const founders = [
 ];
 
 export const foundersPage = {
-  hero: { title: 'Meet the founder.', lede: 'Spear Line was founded by Joe Ayom.' },
+  hero: { title: 'Meet the founder.', lede: 'Spear Line was founded by Joh Ayom.' },
   messageTitle: 'In his own words.',
   emptyTitle: 'A message from the founder will appear here.',
   emptyText: 'It will be written by Joe and published once he has approved it.',
