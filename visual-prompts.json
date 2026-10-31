@@ -168,5 +168,76 @@
    "name": "23-bar-glass",
    "use": "Bar page backdrop"
   }
- ]
+ ],
+ "queued": {
+  "note": "Prompts ready to run (GPT Image 1.5 via Zapier, 1536 x 1024, high quality) when the connected OpenAI account has credit. Not generated yet: on 31 October 2026 the account returned \"no credits remaining\". Until then these pages reuse existing images or the contour illustration. Replace with real photographs where possible.",
+  "style": "Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people.",
+  "assets": [
+   {
+    "name": "timber-yard-dawn",
+    "use": "Timber page and home Timber section",
+    "prompt": "Stacked sawn hardwood planks and square beams in an open timber yard, red-earth ground, low sun raking across the rough-sawn end grain, a distant truck silhouette, no people, no markings on the timber. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "timber-loading",
+    "use": "Timber consignment strip, load it right",
+    "prompt": "A flatbed truck being loaded with strapped bundles of timber at dusk, seen from a low angle, dust in the light, workers only as small distant silhouettes. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "timber-grain-detail",
+    "use": "Timber consignment strip, check the load",
+    "prompt": "Macro of the end grain of a stack of timber beams showing growth rings, razor-sharp focus on the rings, warm side light, creamy background. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "timber-road-highland",
+    "use": "Timber consignment strip, plan the route",
+    "prompt": "A loaded timber truck on a red-earth highland road winding through green hills at sunrise, seen from far away. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "timber-paperwork",
+    "use": "Timber consignment strip, hand it over",
+    "prompt": "Two pairs of hands over a clipboard with unreadable blank paper on the tailgate of a truck, timber bundles blurred behind. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "building-materials-yard",
+    "use": "Building supplies hero",
+    "prompt": "A tidy yard of roofing sheets, steel bars and stacked concrete blocks under evening light, no people, no brand marks. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "building-tools-detail",
+    "use": "Building supplies, tools and equipment",
+    "prompt": "Hand tools laid out on a workbench: spirit level, hammer, tape and gloves, shallow depth of field, warm side light. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "fitness-gym-floor",
+    "use": "Fitness and wellness hero",
+    "prompt": "An empty gym floor at dawn with free weights on racks and low sun through tall windows, no people, no logos on the equipment. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "fitness-group-class",
+    "use": "Fitness and wellness, group sessions",
+    "prompt": "A small group seen from behind stretching on mats outdoors at sunrise, no faces visible. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "property-residential-street",
+    "use": "Real estate hero",
+    "prompt": "A quiet residential street of modern single-storey homes with green gardens in warm evening light, no people, no signage. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "property-viewing",
+    "use": "Real estate, renting and letting",
+    "prompt": "An open front door of an empty home with soft light inside and a set of keys on the step, no signage. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "hospitality-lounge-terrace",
+    "use": "Hospitality, lounges and social spaces",
+    "prompt": "A calm terrace lounge at dusk with low seating and warm string lights, no people, no signage. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   },
+   {
+    "name": "digital-desk-laptop",
+    "use": "Digital services hero",
+    "prompt": "A laptop and phone on a desk beside a notebook and coffee at dusk, screens showing only soft abstract colour with no readable text, no interface elements. Cinematic documentary photograph, 3:2 landscape, East African setting at golden hour, warm amber highlights with olive and umber shadows, shallow depth of field, natural proportions, subtle film grain, calm darker negative space on the left for an overlaid headline. Strictly no readable text, no letters, no numbers, no logos, no brand marks, no number plates, no watermark. Illustrative imagery, not a record of any real stock, premises, vehicles or people."
+   }
+  ]
+ }
 }

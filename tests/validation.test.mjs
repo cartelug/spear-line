@@ -38,3 +38,18 @@ test("legacy timber requests and current logistics requests share the logistics 
   assert.equal(validateEnquiry(timber).value.service,"logistics");
   assert.equal(validateEnquiry({...timber,service:"logistics"}).ok,true);
 });
+test("businesses still being set up take interest enquiries with their own fields",() => {
+  const property = {service:"property",name:"Test Visitor",contact:"visitor@example.com",propertyNeed:"A two-bedroom flat to rent",propertyArea:"Kampala",consent:true};
+  const result = validateEnquiry({...property,model:"Should not be stored",propertyWhen:"Next year"});
+  assert.equal(result.ok,true); assert.equal(result.value.mode,"interest");
+  assert.equal(result.value.propertyNeed,"A two-bedroom flat to rent"); assert.equal(result.value.propertyWhen,"Next year"); assert.equal(result.value.model,undefined);
+  for (const field of ["propertyNeed","propertyArea"]) assert.ok(validateEnquiry({...property,[field]:""}).errors[field],field);
+  assert.equal(validateEnquiry({...property,propertyWhen:""}).ok,true,"timing is optional");
+  assert.ok(validateEnquiry({...property,propertyNeed:"a".repeat(401)}).errors.propertyNeed);
+  assert.equal(validateEnquiry({service:"fitness",name:"Test Visitor",contact:"+256 700 000000",fitnessNeed:"Group classes",consent:true}).ok,true,"place is optional for fitness");
+  assert.equal(validateEnquiry({service:"hospitality",name:"Test Visitor",contact:"visitor@example.com",hospitalityNeed:"Private events",consent:true}).ok,true);
+  assert.equal(validateEnquiry({service:"digital",name:"Test Visitor",contact:"visitor@example.com",digitalNeed:"A company website",consent:true}).ok,true);
+  assert.equal(validateEnquiry({service:"construction",name:"Test Visitor",contact:"visitor@example.com",constructionNeed:"Roofing sheets",constructionArea:"Juba",consent:true}).value.constructionWhen,"");
+  assert.equal(validateEnquiry(vehicle).value.mode,"quote");
+  assert.equal(validateEnquiry({...vehicle,service:"constructor"}).ok,false,"inherited object keys are not services");
+});

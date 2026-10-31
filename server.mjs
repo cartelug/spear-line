@@ -97,7 +97,7 @@ async function readBody(req) {
   try { return JSON.parse(Buffer.concat(chunks).toString("utf8")); }
   catch { const error = new Error("Invalid JSON."); error.status = 400; throw error; }
 }
-const labels = {vehicle:"vehicle",supplies:"supplies",logistics:"logistics"};
+const labels = {vehicle:"vehicle",supplies:"supplies",logistics:"logistics",construction:"building supplies (interest)",property:"property (interest)",fitness:"fitness and wellness (interest)",hospitality:"hospitality (interest)",digital:"digital services (interest)"};
 async function notify(record) {
   if (!notifyUrl) return;
   const text = "New " + (labels[record.service] || "website") + " enquiry from " + record.name + " (" + record.contact + "). Reference " + record.reference + ".";

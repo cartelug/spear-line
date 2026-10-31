@@ -81,7 +81,7 @@ export function createMotion({ root = document.documentElement, preference = mat
   }
 
   /* Pause panning, marquees and glows when they are offscreen or the tab is hidden. */
-  const pausable = $$(".pan,.marquee,.glow,.backdrop,.topo,.bar-lamp,.hero-veil,.mega");
+  const pausable = $$(".pan,.marquee,.glow,.backdrop,.topo,.bar-lamp,.hero-veil,.mega,.timber-rings");
   if ("IntersectionObserver" in window) {
     const pauseObserver = new IntersectionObserver(entries => { for (const entry of entries) entry.target.classList.toggle("is-paused", !entry.isIntersecting); }, { rootMargin: "120px" });
     pausable.forEach(el => pauseObserver.observe(el));

@@ -49,7 +49,7 @@ export const images = {
 
 export const services = [
   {
-    id: 'vehicle', slug: 'vehicles', name: 'Vehicles', label: 'Vehicle sales & trading', icon: 'i-vehicle',
+    id: 'vehicle', slug: 'vehicles', name: 'Vehicles', label: 'Vehicle sales & trading', icon: 'i-vehicle', status: 'preparing', group: 'trade',
     image: 'vehicles-suv', backdrop: 'vehicles-suv', moment: 'keys-handover', closing: 'wheel-detail',
     card: 'From everyday journeys to the demands of business. Tell us the vehicle you have in mind, your budget and where you need it.',
     tags: ['SUVs & 4×4s', 'Pickups', 'Business vehicles'],
@@ -65,7 +65,7 @@ export const services = [
     cta: 'Start a vehicle enquiry'
   },
   {
-    id: 'supplies', slug: 'supplies', name: 'Supplies', label: 'Foodstuffs & beverages', icon: 'i-supplies',
+    id: 'supplies', slug: 'supplies', name: 'Supplies', label: 'Foodstuffs & beverages', icon: 'i-supplies', status: 'preparing', group: 'trade',
     image: 'foodstuffs', backdrop: 'foodstuffs', moment: 'market-produce', closing: 'beverages',
     card: 'Foodstuffs and beverages, shaped around your requirements. Start with your product list, quantities and delivery destination.',
     tags: ['Foodstuffs', 'Beverages', 'Business supply'],
@@ -81,7 +81,7 @@ export const services = [
     cta: 'Start a supply enquiry'
   },
   {
-    id: 'logistics', slug: 'logistics', name: 'Logistics', label: 'Transport & coordination', icon: 'i-logistics',
+    id: 'logistics', slug: 'logistics', name: 'Logistics', label: 'Transport & coordination', icon: 'i-logistics', status: 'preparing', group: 'movement',
     image: 'logistics-truck', backdrop: 'highland-road', moment: 'loading-bay', closing: 'container-port',
     card: 'A clear brief makes a better journey. Share the cargo, pickup point, destination and timing to discuss the right transport arrangements.',
     tags: ['Cargo movement', 'Delivery planning', 'Route coordination'],
@@ -100,19 +100,19 @@ export const services = [
 
 export const home = {
   hero: {
-    kicker: 'Vehicles, supplies and logistics',
+    kicker: 'Vehicles, timber, supplies and logistics',
     title: ['Your next move.', 'Our line of work.'],
-    lede: 'Vehicle sales, business supplies and logistics, brought together in one practical conversation.',
+    lede: 'Vehicle sales, timber haulage, business supplies and logistics, brought together in one practical conversation.',
     primary: 'Start an enquiry',
     secondary: 'Explore services'
   },
-  marquee: ['Vehicle sales & trading', 'Foodstuffs & beverages', 'Transport & coordination', 'One line. More possibilities.'],
+  marquee: ['Vehicle sales & trading', 'Timber haulage', 'Foodstuffs & beverages', 'Transport & coordination', 'One line. More possibilities.'],
   intro: {
     statement: ['The right vehicle.', 'The supplies you need.', 'A clear way to get there.'],
-    text: 'Spear Line brings vehicle sales, foodstuffs and beverages, and logistics into one practical conversation. Wherever your requirement starts, we start by listening.'
+    text: 'Spear Line brings vehicle sales, timber haulage, foodstuffs and beverages, and logistics into one practical conversation, with more businesses planned. Wherever your requirement starts, we start by listening.'
   },
   servicesTitle: 'Built around what you need.',
-  servicesText: 'Three connected business areas. Choose the one that moves you forward, or start with all three in one enquiry.',
+  servicesText: 'Three business areas that start from the same simple enquiry. Choose the one that moves you forward, or start with all three in one enquiry.',
   route: {
     title: 'Three stops. One line.',
     text: 'Wherever your requirement starts, it joins the same line: a clear brief, the right details, a confirmed next move.'
@@ -174,8 +174,10 @@ export const faq = [
     { q: 'How is my information used?', a: 'To review and respond to your request. The privacy page explains what is collected, how long it is kept when online enquiries are enabled, and how to ask about your information.' }
   ] },
   { group: 'About this website', items: [
-    { q: 'Are the images real photographs?', a: 'No. The imagery on this website is AI-generated and illustrates our service areas. It does not show Spear Line staff, stock, facilities or vehicles, and is not a claim of completed work.' },
+    { q: 'Are the images real photographs?', a: 'No. The imagery on this website is AI-generated. It illustrates our service areas and, on the founders page, the founder, where it is captioned as an illustration. It does not document real staff, stock, facilities, vehicles or completed work.' },
     { q: 'Do you list stock or prices here?', a: 'Not yet. When verified vehicle listings are published they will appear on the vehicles page. Until then, share what you need and the details are confirmed for your enquiry.' },
+    { q: 'What do the status labels mean?', a: 'Preparing to launch means Spear Line is getting ready and welcomes enquiries; availability, specifications, price and arrangements are confirmed for each one. Planned means the business is an idea being worked toward. Nothing planned is open, listed or bookable, and you can register interest. A business is labelled Active only when it is running and the evidence is on record.' },
+    { q: 'Is Spear Line Timber a timber supplier?', a: 'No. Spear Line Timber is about moving timber: haulage and transport coordination. No timber is listed for sale on this website.' },
     { q: 'What is Spear Line Bar?', a: 'The next chapter of Spear Line. It is coming soon, and the location, opening details and menu will be announced on its page. Nothing is open or bookable yet.' }
   ] }
 ];
@@ -199,7 +201,242 @@ export const bar = {
 export const contactPage = {
   hero: { title: 'The next move starts with a message.', lede: 'A short enquiry gets you a better first conversation than a general message.' },
   emptyTitle: 'Direct contact details will appear here.',
-  emptyText: 'No public email, phone or address has been published yet. Start an enquiry to put your requirement in front of Spear Line.'
+  emptyText: 'No public email, phone or address has been published yet. Start an enquiry to put your requirement in front of Spear Line.',
+  nextTitle: 'What happens after you send it.',
+  next: [
+    { icon: 'i-brief', title: 'You send the details', text: 'Choose a business and share the essentials. The more precise the brief, the better the first conversation.' },
+    { icon: 'i-search', title: 'Your enquiry is reviewed', text: 'Availability, specifications and arrangements are checked for your request.' },
+    { icon: 'i-shield', title: 'You hear what happens next', text: 'Scope, price and arrangements are confirmed in writing before any commitment.' }
+  ]
+};
+
+// ---------------------------------------------------------------------------------------------
+// Businesses, status and the pages that go with them.
+//
+// Every business has a status, using the owner's vocabulary. 'active' is allowed only with an `evidence` note
+// (for example "Owner confirmed, 12 November 2026"); a test fails otherwise. Planned businesses offer
+// "Register interest", carry noindex in launch mode and stay out of the sitemap until they move up.
+// The three live services above are the existing pages; the entries below add the new ones. Both share one template.
+// ---------------------------------------------------------------------------------------------
+
+export const statuses = {
+  active: { label: 'Active', note: '' },
+  preparing: { label: 'Preparing to launch', note: 'We are preparing this business. Enquiries are welcome, and availability, specifications, price and arrangements are confirmed for each one.' },
+  planned: { label: 'Planned', note: 'This is a planned business. Nothing is open, listed or bookable yet. Register your interest and it will be taken into account when this business is ready.' }
+};
+
+export const divisions = [
+  {
+    id: 'timber', slug: 'timber', name: 'Spear Line Timber', short: 'Timber', label: 'Timber haulage & coordination', icon: 'i-timber', status: 'preparing', group: 'movement',
+    enquiry: 'logistics', enquiryType: 'Timber',
+    image: 'logistics-truck', backdrop: 'highland-road', moment: 'loading-bay', closing: 'highland-road',
+    card: 'Timber, moved with care. Tell us the cargo, where it is collected and where it needs to go, and the right transport arrangements can be discussed.',
+    tags: ['Haulage', 'Route coordination', 'Documented handover'],
+    hero: { title: 'Timber, moved with care.', lede: 'A timber consignment needs a clear brief: what is moving, where from, where to and when. Share it and start a focused transport conversation.' },
+    items: [
+      { title: 'Haulage', text: 'Tell us the type of timber, the estimated volume or weight, the packaging and how it will be loaded.', image: 'logistics-truck' },
+      { title: 'Route coordination', text: 'Share the collection point, the destination and any border crossings or access details to discuss.', image: 'highland-road' },
+      { title: 'Handover and paperwork', text: 'Agree the handover, and the documents that apply to your consignment, before anything moves.', image: 'sourcing-detail' }
+    ],
+    include: ['What is being moved, and the type of timber', 'Estimated volume or weight, and packaging', 'Where it is collected and where it needs to go', 'When it is ready and when it is needed'],
+    briefTitle: 'A clear consignment note starts it.',
+    brief: 'Include the cargo, the estimated volume or weight, the collection point, the destination, your timing and the documents that apply to your consignment.',
+    cta: 'Start a timber enquiry',
+    boundary: 'This service is for moving timber. No timber is listed for sale on this website.'
+  },
+  {
+    id: 'building', slug: 'building-supplies', name: 'Building supplies', label: 'Building materials & equipment', icon: 'i-build', status: 'planned', group: 'trade',
+    enquiry: 'construction',
+    image: 'loading-bay', backdrop: 'loading-bay', moment: 'dispatch-team', closing: 'logistics-truck',
+    card: 'A planned business for builders, contractors and homeowners: materials, tools and equipment sourced to your specification and delivered to site.',
+    tags: ['Materials', 'Tools & equipment', 'Delivery to site'],
+    hero: { title: 'Build with what the job needs.', lede: 'Spear Line is planning to supply building materials, tools and equipment. Tell us what your project needs and register your interest.' },
+    items: [
+      { title: 'Materials', text: 'Roofing, steel, cement, blocks, tiles and finishes are the kinds of products being planned. Share the list your project needs.', image: 'warehouse', alt: 'Palletised sacks stacked in an organised warehouse' },
+      { title: 'Tools and equipment', text: 'Hand tools, power tools and building equipment. Tell us what you use and in what quantity.', image: 'sourcing-detail' },
+      { title: 'Delivery to site', text: 'Materials are only useful where the work is. Share the site location and the date you need them there.', image: 'logistics-truck' }
+    ],
+    include: ['What you need, and in what quantities', 'Where it needs to be delivered', 'When you need it', 'Any brand or specification that matters'],
+    briefTitle: 'Your materials list is the best place to start.',
+    brief: 'Tell us what your project needs, how much, where it is going and when. Registering interest does not request a quote; it tells us this business matters to you.',
+    cta: 'Register interest',
+    boundary: 'No products, stock or prices are listed. Supply arrangements are being worked out.'
+  },
+  {
+    id: 'fitness', slug: 'fitness-wellness', name: 'Fitness & wellness', label: 'Fitness, health & wellness', icon: 'i-fitness', status: 'planned', group: 'lifestyle',
+    enquiry: 'fitness',
+    image: 'topo-route', backdrop: 'topo-route', moment: 'highland-road', closing: 'highland-road',
+    card: 'A planned business for everyday fitness and general wellbeing: a place to train, group sessions and healthy-lifestyle programmes.',
+    tags: ['Training', 'Group sessions', 'Wellbeing'],
+    hero: { title: 'A stronger routine, planned.', lede: 'Spear Line is planning fitness and wellness services. Register your interest and tell us what you would look for.' },
+    items: [
+      { title: 'A place to train', text: 'Tell us what matters most to you in a place to train, from the space to the hours that suit your day.', image: 'topo-route' },
+      { title: 'Group sessions', text: 'Classes and supervised sessions at different levels. Tell us what you would join.', image: 'highland-road' },
+      { title: 'Everyday wellbeing', text: 'General, non-clinical wellness programmes for individuals and for teams at work.', image: 'aerial-road' }
+    ],
+    include: ['What you would like to do: train, take classes or work with a coach', 'Where you would want it to be', 'When you would use it'],
+    briefTitle: 'Tell us what would make you join.',
+    brief: 'Share what you would want from a fitness and wellness business and where you are. It helps decide what comes first.',
+    cta: 'Register interest',
+    boundary: 'Fitness and wellness here means exercise and general wellbeing. It is not a medical or clinical service.'
+  },
+  {
+    id: 'property', slug: 'real-estate', name: 'Real estate', label: 'Real estate services', icon: 'i-property', status: 'planned', group: 'lifestyle',
+    enquiry: 'property',
+    image: 'aerial-road', backdrop: 'aerial-road', moment: 'desk-contact', closing: 'aerial-road',
+    card: 'A planned business for people who want to buy, sell, rent or let property, or who need a property looked after.',
+    tags: ['Buying & selling', 'Renting & letting', 'Property care'],
+    hero: { title: 'Property, handled with care.', lede: 'Spear Line is planning real estate services. Tell us what you are looking for and register your interest.' },
+    items: [
+      { title: 'Buying and selling', text: 'Looking for a property, or thinking of selling one? Tell us the type, the area and what matters most.', image: 'aerial-road' },
+      { title: 'Renting and letting', text: 'Whether you need a place to rent or have one to let, share the details and what you are hoping for.', image: 'desk-contact' },
+      { title: 'Property care', text: 'Ongoing care for a property, from tenants to maintenance, is part of what is being planned.', image: 'dispatch-team' }
+    ],
+    include: ['Whether you want to buy, sell, rent, let or have a property managed', 'The area and type of property', 'When you would like to begin'],
+    briefTitle: 'Describe the property you have in mind.',
+    brief: 'Share what you are looking for, where, and when. Registering interest does not start a transaction.',
+    cta: 'Register interest',
+    boundary: 'No properties are listed on this website, and nothing here says Spear Line owns, sells or lets any property.'
+  },
+  {
+    id: 'hospitality', slug: 'hospitality', name: 'Leisure & hospitality', label: 'Leisure, entertainment & hospitality', icon: 'i-glass', status: 'planned', group: 'lifestyle',
+    enquiry: 'hospitality',
+    image: 'bar-lounge', backdrop: 'bar-lounge', moment: 'bar-glass', closing: 'bar-lounge',
+    card: 'A planned business for places to relax and meet, starting with Spear Line Bar. Details will appear here as they are decided.',
+    tags: ['Spear Line Bar', 'Lounges', 'Stays & events'],
+    hero: { title: 'Somewhere to slow down.', lede: 'Spear Line is planning places to relax, meet and stay. Register your interest and tell us what you would like to see.' },
+    items: [
+      { title: 'Spear Line Bar', text: 'The first idea taking shape: a place to pull up a seat. Its details will be announced on its own page.', image: 'bar-lounge', href: 'bar.html', linkText: 'See the Bar page' },
+      { title: 'Lounges and social spaces', text: 'Spaces to relax and meet. Tell us what you would want from one.', image: 'bar-glass' },
+      { title: 'Stays and events', text: 'Guest accommodation and private events are part of the wider plan, and nothing is open or bookable yet.', image: 'aerial-road' }
+    ],
+    include: ['What you would like to see: a venue, a stay or a space for events', 'Where you would want it to be', 'When you might use it'],
+    briefTitle: 'Tell us what you would come for.',
+    brief: 'Share what you would like from a Spear Line venue and where you are. It helps shape what comes first.',
+    cta: 'Register interest',
+    boundary: 'No venue, room or event is advertised here, and nothing can be booked yet.'
+  },
+  {
+    id: 'digital', slug: 'digital', name: 'Digital services', label: 'Websites, brand & social media', icon: 'i-digital', status: 'planned', group: 'digital',
+    enquiry: 'digital',
+    image: 'desk-contact', backdrop: 'desk-contact', moment: 'sourcing-detail', closing: 'desk-contact',
+    card: 'A planned service for businesses that want to be found online: websites, a consistent brand and social media growth.',
+    tags: ['Websites', 'Brand identity', 'Social media'],
+    hero: { title: 'Be easy to find, online.', lede: 'Spear Line is planning digital services for businesses: a clear website, a consistent brand and help with social media. Tell us what you need.' },
+    items: [
+      { title: 'Websites and landing pages', text: 'A clear, fast website built around what your customers need to find. Tell us what you want it to do.', image: 'desk-contact' },
+      { title: 'Brand identity', text: 'A consistent name, mark and look for print, vehicles, paperwork and social media.', image: 'sourcing-detail' },
+      { title: 'Social media growth', text: 'Managing paid advertising and organic growth on the platforms your customers use, starting with Facebook and Instagram.', image: 'dispatch-team' }
+    ],
+    include: ['What you want to achieve: more enquiries, bookings, sales or awareness', 'Which platforms or website pages matter to you', 'When you would like to begin'],
+    briefTitle: 'Start with what you want to achieve.',
+    brief: 'Share your goal, the platforms or pages that matter, and when you would like to begin. A written scope is agreed before any work starts.',
+    cta: 'Register interest',
+    boundary: 'Results depend on your offer, your audience and your budget, so no outcome is promised. Advertising budgets are separate from service fees and are paid to the advertising platform.'
+  }
+];
+
+// The Spear Line Timber section, shown on the home page, the Logistics page and the Timber page.
+export const timber = {
+  kicker: 'Spear Line Timber',
+  title: 'Timber, moved with care.',
+  fullTitle: 'From the yard to the destination.',
+  text: 'Haulage and transport coordination for timber consignments. Routes, timing and arrangements are discussed for each one.',
+  stops: [
+    { icon: 'i-search', title: 'Check the load', text: 'The cargo, the grades and the quantities are set out before anything is loaded.', image: 'sourcing-detail' },
+    { icon: 'i-supplies', title: 'Load it right', text: 'How the load is secured and handled is agreed before it moves.', image: 'loading-bay' },
+    { icon: 'i-route', title: 'Plan the route', text: 'The route, the timing and any border steps are planned in advance.', image: 'highland-road' },
+    { icon: 'i-check', title: 'Hand it over', text: 'Delivery and the documents that apply are handed over and recorded.', image: 'dispatch-team' }
+  ],
+  noteTitle: 'Describe the consignment',
+  ask: ['What is being moved, and the type of timber', 'Estimated volume or weight, and packaging', 'Where it is collected and where it needs to go', 'When it is ready and when it is needed', 'The documents that apply to your consignment'],
+  note: 'This service is for moving timber. No timber is listed for sale on this website.'
+};
+
+// Hub pages that group the businesses.
+export const hubs = {
+  businesses: {
+    hero: { title: 'Six businesses. One line.', lede: 'Spear Line is building a family of businesses around trade, movement and everyday life. Each one shows its true status.' },
+    groups: [
+      { id: 'trade', title: 'Trade and supply', text: 'Vehicles, building materials, foodstuffs and beverages.' },
+      { id: 'lifestyle', title: 'Lifestyle and property', text: 'Fitness and wellness, real estate, and leisure and hospitality.' },
+      { id: 'movement', title: 'Movement', text: 'Logistics and Spear Line Timber carry what the other businesses sell, and what you need moved.' },
+      { id: 'digital', title: 'Digital', text: 'Websites, brand and social media for other businesses.' }
+    ],
+    sharedTitle: 'What every business shares.',
+    shared: [
+      { icon: 'i-supplies', title: 'Sourcing', text: 'Finding the right supplier or product for your specification.' },
+      { icon: 'i-logistics', title: 'Transport', text: 'Moving what you buy, with the route and timing agreed.' },
+      { icon: 'i-brief', title: 'Clear paperwork', text: 'Scope, price and arrangements confirmed in writing.' },
+      { icon: 'i-chat', title: 'One conversation', text: 'Every business starts from the same simple enquiry.' }
+    ]
+  },
+  trade: {
+    id: 'trade-supply', crumb: 'Trade and supply', kicker: 'Trade and supply', image: 'warehouse', members: ['vehicle', 'building', 'supplies'],
+    hero: { title: 'Trade and supply.', lede: 'Vehicles, building materials, foodstuffs and beverages: three businesses that start from the same simple question. What do you need?' },
+    listTitle: 'Three ways to start.', listText: 'Choose the business that fits what you need.',
+    description: 'Vehicles, building materials, foodstuffs and beverages from Spear Line, each shown with its status.'
+  },
+  lifestyle: {
+    id: 'lifestyle-property', crumb: 'Lifestyle and property', kicker: 'Lifestyle and property', image: 'aerial-road', members: ['fitness', 'property', 'hospitality'],
+    hero: { title: 'Lifestyle and property.', lede: 'Fitness and wellness, real estate, and leisure and hospitality: three planned businesses. Register your interest in any of them.' },
+    listTitle: 'Three planned businesses.', listText: 'Register your interest in the ones that matter to you.',
+    description: 'Fitness and wellness, real estate, and leisure and hospitality from Spear Line. All are planned; register interest.'
+  }
+};
+
+// Digital services page: the three things it covers, shown as cards under the template sections.
+export const digitalOffers = {
+  title: 'Three ways to help you be found.',
+  text: 'Each is quoted for your business and agreed in writing before work starts.',
+  cards: [
+    { icon: 'i-digital', title: 'Website', text: 'Pages that explain what you do and make it easy to get in touch.', points: ['A clear structure for your services', 'Fast on phones', 'An enquiry route that reaches you'] },
+    { icon: 'i-mark', title: 'Brand', text: 'One consistent look across everything your customers see.', points: ['Name and mark in the right formats', 'Colours and type chosen with you', 'Ready for print, vehicles and social media'] },
+    { icon: 'i-chat', title: 'Social media', text: 'Help with the platforms where your customers already are.', points: ['Paid advertising set up and managed', 'Organic growth through steady posting', 'Reporting you can follow'] }
+  ]
+};
+
+// ---------------------------------------------------------------------------------------------
+// The founder. Only facts the owner has confirmed are written here.
+// `message` and `bio` stay empty until the founder supplies them in his own words; the page shows a
+// plain empty state until then. Set `approvedOn` (for example '12 November 2026') once he has approved
+// the page and the use of his likeness in the generated images; structured data is added only then.
+//
+// Images: put the masters in source-images/founders/ and run  python3 scripts/images.py
+// Each stem below is the file name without .png. Anything missing is simply left out of the page.
+// All of these are AI-generated illustrations and are captioned as such wherever they appear.
+// ---------------------------------------------------------------------------------------------
+export const founders = [
+  {
+    id: 'joe-ayom', name: 'Joe Ayom', role: 'Founder of Spear Line',
+    hero: ['joe-ayom-founder-cutout', 'joe-ayom-founder-hero', '10-joe-ayom-founder-environmental-hero'],
+    portrait: ['joe-ayom-founder-portrait', '01-joe-ayom-founder-warm-front-portrait'],
+    message: [],
+    bio: [],
+    approvedOn: '',
+    scenes: [
+      { stem: '02-joe-ayom-vehicle-detail-inspection', title: 'Looking closely at a vehicle', area: 'Vehicles', href: 'vehicles.html' },
+      { stem: '03-joe-ayom-client-vehicle-handover', title: 'Handing over the keys', area: 'Vehicles', href: 'vehicles.html' },
+      { stem: '05-joe-ayom-food-supply-conversation', title: 'A supply conversation', area: 'Supplies', href: 'supplies.html' },
+      { stem: '06-joe-ayom-beverage-dispatch-walkthrough', title: 'Walking through a dispatch', area: 'Supplies', href: 'supplies.html' },
+      { stem: '04-joe-ayom-shipment-paperwork', title: 'Checking shipment paperwork', area: 'Logistics', href: 'logistics.html' },
+      { stem: '09-joe-ayom-logistics-delivery-coordination', title: 'Coordinating a delivery', area: 'Logistics', href: 'logistics.html' },
+      { stem: '07-joe-ayom-timber-quality-review', title: 'Reviewing timber quality', area: 'Timber', href: 'timber.html' },
+      { stem: '08-joe-ayom-client-meeting-natural-smile', title: 'Listening to a client', area: 'Enquiries', href: 'enquire.html' }
+    ]
+  }
+];
+
+export const foundersPage = {
+  hero: { title: 'Meet the founder.', lede: 'Spear Line was founded by Joe Ayom.' },
+  messageTitle: 'In his own words.',
+  emptyTitle: 'A message from the founder will appear here.',
+  emptyText: 'It will be written by Joe and published once he has approved it.',
+  scenesTitle: 'How the work looks.',
+  scenesText: 'Illustrations of the kind of conversation each business starts with. They are AI-generated pictures, not records of real events.',
+  principlesTitle: 'What guides the work.',
+  businessesTitle: 'The businesses behind the line.',
+  caption: 'AI-generated illustration'
 };
 
 // ---------------------------------------------------------------------------------------------

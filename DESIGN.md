@@ -51,6 +51,15 @@ Pill buttons with an icon disc that slides on hover; primary is sun gold with in
 
 Twenty-two scenes share one look: low golden-hour light, amber and umber with olive and teal shadows, shallow depth of field, calm space left for headlines, and no text or brand marks anywhere in the frame. Images are placed for meaning, not decoration: the key handover closes the four-step process, the desk and notebook open it, the loading bay sits beside "more than the next transaction", the aerial road closes the home page, the topographic illustration sits behind the route the spear travels, and the bar interior fills the Bar hero.
 
+## Businesses, status and Timber (V12)
+
+- **Status chip:** a small pill with a dot and the status in words (Active, Preparing to launch, Planned). Gold for Preparing, teal for Planned, green for Active; never colour alone. On image cards it sits in the top corner on a dark pill.
+- **Business cards** (`.card-biz`): glass card with an icon disc, the chip, a name, one sentence and a link. Grouped on the Businesses page under Trade and supply, Lifestyle and property, Movement and Digital.
+- **Spear Line Timber:** an olive section with growth rings drawn as one inline SVG, turning once every 160 seconds under Motion and paused offscreen; a four-stop consignment strip of image cards (check the load, load it right, plan the route, hand it over); a waybill-style cargo note that opens the logistics form with the cargo named.
+- **Founders:** a cut-out portrait over a dark hero, a captioned storyboard of illustrations tied to the businesses, an honest empty state for the founder's message.
+- **Illustrations of people** always carry a visible caption and alt text that says they are AI-generated.
+- Pages for planned businesses use existing photographs or the contour illustration rather than pictures that imply a real operation.
+
 ## Signature moments
 
 1. **Preloader**: the traced logo letterforms rise one by one, the spear travels a line driven by real load progress (fonts, hero image, window load), two doors open and the logo flies into its place in the header. Once per tab, only for arrivals from outside, never under Reduce motion or Save-Data.

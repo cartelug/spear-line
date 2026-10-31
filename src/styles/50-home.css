@@ -22,7 +22,7 @@
 /* The glass enquiry note */
 .waybill{position:relative;display:grid;gap:18px;padding:26px;border-radius:var(--r-xl);color:var(--chalk)}
 .waybill-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.waybill-head h2{font-size:var(--t-2xl)}
+.waybill-head h2,.waybill-head h3{font-size:var(--t-2xl)}
 .waybill-kind{font-size:var(--t-xs);color:var(--chalk-2)}
 .waybill-row{margin:0;padding:0;border:0;min-width:0}
 .waybill-row legend,.waybill-row>label{display:block;margin-bottom:10px;font-size:var(--t-xs);font-weight:600;color:var(--chalk-2)}

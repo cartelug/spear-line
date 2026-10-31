@@ -13,7 +13,7 @@ import { chromium } from "playwright";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const axeSource = await readFile(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
-const pages = ["index", "vehicles", "supplies", "logistics", "how-it-works", "faq", "contact", "about", "bar", "enquire", "privacy", "404"];
+const pages = ["index", "vehicles", "supplies", "logistics", "how-it-works", "faq", "contact", "about", "bar", "enquire", "privacy", "404", "businesses", "trade-supply", "lifestyle-property", "founders", "timber", "building-supplies", "fitness-wellness", "real-estate", "hospitality", "digital"];
 
 async function freePort() {
   const probe = net.createServer(); probe.listen(0, "127.0.0.1"); await once(probe, "listening");

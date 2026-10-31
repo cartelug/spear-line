@@ -6,6 +6,24 @@ Six divisions, Spear Line Timber, digital services and the Founders page. Compan
 
 **What this plan does not do.** It adds no public claim. Every new page, section and image is gated by the status rules in section 2 and by the owner decisions in section 3.
 
+## Build status, 31 October 2026
+
+Waves 1 to 3 are built and the status rules are enforced by the build and by tests; Wave 4 is partly done. Where the build differs from the plan below:
+
+| Plan | What was built | Why |
+| --- | --- | --- |
+| Rename `vehicles.html`, `supplies.html` and `bar.html` to `motors.html`, `food-beverages.html` and `hospitality.html` with aliases | The three keep their addresses and are shown as Motors, Food and beverages and the Bar. `hospitality.html` is a new page for the wider division, and the Bar is its first card | Avoids redirects on a static host and keeps existing links working |
+| `timber-logistics.html` redirects to `timber.html` | It mirrors `timber.html` (canonical points at `timber.html` in launch mode) | The static host cannot redirect; the duplicate is excluded from the sitemap |
+| Five new timber photographs, about twenty new generated images in all | None generated. The OpenAI account connected through Zapier returned "no credits remaining". Thirteen prompts are queued in `visual-prompts.json`; new pages use existing photographs or the contour illustration | Out of credit |
+| Founders page hidden until the founder's details are supplied | Built, in the navigation and footer, showing an honest empty state; kept out of the sitemap and `noindex` in launch mode until `approvedOn` is set | The page needs the owner's pictures and words; hiding it from search achieves the same safety |
+| Founder pictures wired in | Wired through `source-images/founders/` and `scripts/images.py --founders-only`; tested end to end with temporary images, then removed | The PNG masters could not be retrieved from Drive with the available tools (the connector returns no pixels and the files are about 2 MB each) |
+| Seven top-level navigation items | Six: Businesses, Logistics, Timber, How it works, Founders, About, plus the Start an enquiry button | Fits the header at 1100 px; Digital stays off the header as the plan's default for decision D2 |
+| Hospitality, fitness and digital hero pictures | Existing pictures (bar interior, contour illustration, desk) | No honest picture of a real operation exists |
+
+Done: `divisions[]`, `statuses`, `timber`, `hubs`, `digitalOffers`, `founders` data; one template for ten new pages; status chips; Spear Line Timber on home, Logistics and its own page; interest enquiry types with validation, server and tests; the Contact "what happens next" section; the About founder strip; per-page closing banners on About and Contact (V4); the services heading fix on the home page; axe with 0 violations and no overflow on all 22 pages at 1363 and 390 px.
+
+Not done: V5 (hero chips behind the marquee tape) and V6 (Vehicles layout density and cross-card legibility) from the visual review; a typeface decision (D6); real photography; the lead register through the webhook; privacy page updates for any new processor; real-device, Safari and Firefox passes.
+
 ## 1. What the owner's records say, against what the site says
 
 | Area | Owner's records | Proposed public status | Website today | Gap |

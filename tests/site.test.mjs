@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import * as content from "../content/site.mjs";
 
 const pub = resolve(dirname(fileURLToPath(import.meta.url)), "..", "public");
-const pages = ["index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
+const pages = ["index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "404.html", "how-it-works.html", "faq.html", "contact.html", "businesses.html", "trade-supply.html", "lifestyle-property.html", "founders.html", "timber.html", "building-supplies.html", "fitness-wellness.html", "real-estate.html", "hospitality.html", "digital.html"];
 const read = name => readFile(resolve(pub, name), "utf8");
 const exists = async name => access(resolve(pub, name)).then(() => true, () => false);
 const visibleText = html => html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "").replace(/<[^>]+>/g, " ");
@@ -132,6 +132,12 @@ test("services, FAQ and Bar copy come from the content layer", async () => {
     assert.ok(visibleText(page).replace(/\s+/g, " ").includes(service.hero.title.replace(/&/g, "&amp;")), service.slug + " hero title");
     for (const item of service.items) assert.ok(page.includes(item.title.replace(/&/g, "&amp;")), service.slug + " item " + item.title);
   }
+  for (const division of content.divisions) {
+    assert.ok(index.includes(`href="${division.slug}.html"`), "home links " + division.slug);
+    const page = await read(division.slug + ".html");
+    assert.ok(visibleText(page).replace(/\s+/g, " ").includes(division.hero.title.replace(/&/g, "&amp;")), division.slug + " hero title");
+    for (const item of division.items) assert.ok(page.includes(item.title.replace(/&/g, "&amp;")), division.slug + " item " + item.title);
+  }
   const faq = await read("faq.html");
   const questions = content.faq.flatMap(group => group.items);
   assert.equal((faq.match(/<details/g) || []).length, questions.length);
@@ -157,7 +163,7 @@ test("no invented claims, and illustrative imagery is labelled on every page", a
   }
   assert.match(await read("enquire.html"), /Online submission is not currently open/);
   assert.match(await read("app.js"), /Nothing has been sent to Spear Line/);
-  assert.equal(await read("timber-logistics.html"), await read("logistics.html"));
+  assert.equal(await read("timber-logistics.html"), await read("timber.html"), "the old timber address still works and mirrors the Timber page");
 });
 
 test("the Bar is reachable everywhere and clearly remains coming soon", async () => {
@@ -222,7 +228,7 @@ test("pages inline their first-screen styles and boot script, then load one bund
     assert.doesNotMatch(head, /src="boot\.js/, page);
     assert.ok(head.indexOf("data-defer") < head.indexOf("window.spearCss"), page + " boot runs after the deferred link exists");
     // The critical list must describe the current stylesheet: regenerate it with npm run critical after style changes.
-    const list = critical[page === "timber-logistics.html" ? "logistics.html" : page];
+    const list = critical[page === "timber-logistics.html" ? "timber.html" : page];
     assert.ok(list && list.length > 100, page + " has critical rules");
     const stale = list.filter(key => !keys.has(key));
     assert.ok(stale.length <= list.length * 0.02, page + " critical.json is stale: " + stale.slice(0, 3).join(" / "));
@@ -249,4 +255,93 @@ test("the homepage enquiry note starts an enquiry with the chosen service and de
   assert.match(html, /name="destination"[^>]*maxlength="120"/);
   const app = await read("app.js");
   assert.match(app, /get\("destination"\)/); assert.match(app, /supplyDestination/);
+});
+
+test("every business has a known status, and Active needs evidence on record", async () => {
+  const all = [...content.services, ...content.divisions];
+  assert.equal(new Set(all.map(b => b.id)).size, all.length, "business ids are unique");
+  assert.equal(new Set(all.map(b => b.slug)).size, all.length, "business slugs are unique");
+  for (const business of all) {
+    assert.ok(content.statuses[business.status], business.id + " has a status");
+    if (business.status === "active") assert.ok(String(business.evidence || "").trim(), business.id + " is active without evidence");
+  }
+});
+
+test("planned businesses offer Register interest, show their status and stay noindex; the rest show Preparing to launch", async () => {
+  for (const business of [...content.services, ...content.divisions]) {
+    const page = await read(business.slug + ".html"), text = visibleText(page).replace(/\s+/g, " ");
+    assert.ok(text.includes(content.statuses[business.status].label), business.id + " shows its status");
+    if (business.status === "planned") {
+      assert.ok(text.includes("Register interest"), business.id + " offers Register interest");
+      assert.doesNotMatch(text, /Request a quote|Start a \w+ enquiry/, business.id + " does not promise a quote");
+      assert.ok(text.includes(content.statuses.planned.note), business.id + " explains that nothing is open yet");
+    }
+  }
+  const hub = visibleText(await read("businesses.html")).replace(/&amp;/g, "&");
+  for (const group of content.hubs.businesses.groups) assert.ok(hub.includes(group.title), group.title);
+  for (const business of [...content.services, ...content.divisions]) assert.ok(hub.includes(business.name), "hub lists " + business.name);
+});
+
+test("planned pages are excluded from the sitemap and from indexing when the site launches", async () => {
+  // Build in a throwaway copy so the real public/ folder is never touched.
+  const { execFile } = await import("node:child_process"), { promisify } = await import("node:util"), run = promisify(execFile);
+  const { mkdtemp, cp, mkdir, symlink, rm } = await import("node:fs/promises"), { tmpdir } = await import("node:os");
+  const root = resolve(pub, ".."), tmp = await mkdtemp(resolve(tmpdir(), "spear-launch-"));
+  try {
+    for (const dir of ["scripts", "content", "src"]) await cp(resolve(root, dir), resolve(tmp, dir), { recursive: true });
+    await mkdir(resolve(tmp, "public"));
+    for (const file of ["site.css", "app.js", "motion.js", "validation.js", "site-config.js"]) await cp(resolve(pub, file), resolve(tmp, "public", file));
+    await symlink(resolve(pub, "assets"), resolve(tmp, "public", "assets"));
+    await run(process.execPath, ["scripts/build.mjs"], { cwd: tmp, env: { ...process.env, SITE_ORIGIN: "https://example.test", SITE_LAUNCH: "1" } });
+    const launched = name => readFile(resolve(tmp, "public", name), "utf8"), sitemap = await launched("sitemap.xml");
+    for (const division of content.divisions) {
+      const page = await launched(division.slug + ".html"), listed = sitemap.includes(`https://example.test/${division.slug}.html`);
+      if (division.status === "planned") { assert.equal(listed, false, division.id + " is not in the sitemap"); assert.match(page, /<meta name="robots" content="noindex,nofollow">/, division.id + " stays noindex"); }
+      else { assert.equal(listed, true, division.id + " is in the sitemap"); assert.match(page, /<meta name="robots" content="index,follow">/, division.id + " is indexable"); }
+    }
+    assert.match(await launched("index.html"), /<meta name="robots" content="index,follow">/);
+    assert.match(await launched("businesses.html"), /<meta name="robots" content="index,follow">/);
+    const approved = content.founders.every(f => f.approvedOn);
+    assert.equal(sitemap.includes("/founders.html"), approved, "the founders page is listed only once approved");
+    assert.equal(/"@type":"Person"/.test(await launched("founders.html")), approved, "Person data only once approved");
+  } finally { await rm(tmp, { recursive: true, force: true }); }
+});
+
+test("Spear Line Timber appears on the home, Logistics and Timber pages and only offers haulage", async () => {
+  for (const page of ["index.html", "logistics.html", "timber.html"]) {
+    const html = await read(page), text = visibleText(html).replace(/\s+/g, " ");
+    assert.match(html, /class="[^"]*timber-section/, page + " has the Timber section");
+    assert.ok(text.includes(content.timber.title), page + " title");
+    assert.ok(text.includes(content.timber.note), page + " says no timber is for sale");
+    for (const stop of content.timber.stops) assert.ok(text.includes(stop.title), page + " stop " + stop.title);
+    assert.match(html, /name="service" value="logistics"/); assert.match(html, /name="type" value="Timber"/);
+  }
+  assert.equal((await read("timber.html")).match(/id="timber-line"/g).length, 1);
+  for (const page of pages) assert.doesNotMatch(visibleText(await read(page)), /timber (for sale|stock)|buy timber|sawmill|certified timber|legally sourced/i, page + " makes no timber supply claim");
+});
+
+test("the founders page labels every illustration and shows a plain empty state without real inputs", async () => {
+  const html = await read("founders.html"), text = visibleText(html).replace(/\s+/g, " ");
+  for (const founder of content.founders) {
+    assert.ok(founder.name && founder.role, "founder has a name and role");
+    assert.ok(text.includes(founder.name), founder.name + " is on the page");
+    if (!founder.message.length && !founder.bio.length) assert.ok(text.includes(content.foundersPage.emptyTitle), "no invented biography while the message is empty");
+    if (founder.approvedOn) assert.match(founder.approvedOn, /\d{4}/, "approval date");
+  }
+  const figures = html.match(/<figure class="[^"]*illus[^"]*">[\s\S]*?<\/figure>/g) || [];
+  for (const figure of figures) { assert.match(figure, /<figcaption>AI-generated illustration<\/figcaption>/, "illustration caption"); assert.match(figure, /alt="AI-generated illustration of /, "illustration alt text"); }
+  if (figures.length === 0) assert.ok(text.includes("Portrait to come"), "an honest placeholder while pictures are missing");
+  assert.match(await read("about.html"), /href="founders\.html"/, "About links to the founders page");
+  assert.match(text, /AI-generated imagery illustrates our service areas/);
+});
+
+test("every enquiry route opens a form that exists, and every service has its own fields", async () => {
+  const enquire = await read("enquire.html");
+  const values = [...enquire.matchAll(/name="service" value="([a-z]+)"/g)].map(m => m[1]);
+  for (const service of ["vehicle", "supplies", "logistics", "construction", "property", "fitness", "hospitality", "digital"]) {
+    assert.ok(values.includes(service), service + " can be chosen");
+    assert.ok(enquire.includes(`data-service-fields="${service}"`), service + " has a fieldset");
+  }
+  for (const page of pages) for (const [, service] of (await read(page)).matchAll(/enquire\.html\?service=([a-z]+)/g)) assert.ok(values.includes(service), page + " links to service " + service);
+  assert.match(enquire, /This business is planned\. Registering interest does not request a quote\./);
 });

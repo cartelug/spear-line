@@ -39,6 +39,14 @@ Twelve illustrative scenes plus a portrait phone hero were generated with the bu
 
 The two Bar images show amber drinks over ice. The Bar's menu, and whether it serves alcohol, are still undecided (see docs/ROADMAP.md), so replace 15-bar-lounge and 23-bar-glass if the Bar will not serve drinks like these.
 
+## Founder pictures
+
+The master information register in the owner's Drive describes the Joe Ayom "Founder Series" (ten numbered scenes) and three other portraits as generated visual-storytelling assets, "not proof of staff, stock, premises, completed transactions or company-owned facilities". They are used only as captioned illustrations on the Founders page (and a founder strip on About). The masters (about 2 MB each) are not in this repository: they are stored in the owner's Drive and are copied into `source-images/founders/` (ignored by git) when the pages are built. `scripts/images.py --founders-only` derives `f-<name>-<width>` AVIF and WebP files and `content/founder-images.json`; metadata from the originals is not carried over. Written approval from the founder for the use of his likeness is still to be recorded in `founders[0].approvedOn`.
+
+## Queued images
+
+`visual-prompts.json` holds thirteen prompts under `queued` (timber ×5, building supplies ×2, fitness ×2, real estate ×2, hospitality ×1, digital ×1). They were not generated: on 31 October 2026 the OpenAI account connected through Zapier returned "no credits remaining". Until they run, the new pages reuse existing photographs or the contour illustration. Prefer real photographs where possible.
+
 ## Backdrops and texture
 
 - `assets/backdrops/*.webp`: 480 px wide, low-quality versions of each photograph (1.5–2 KB each, 56 KB total) used as blurred, drifting section backgrounds so each section's colour comes from a real image.
@@ -46,7 +54,7 @@ The two Bar images show amber drinks over ice. The Bar's menu, and whether it se
 
 ## Icons
 
-`assets/icons.svg`: 23 original line icons in one sprite (2 px round strokes): spear, mark, arrow, chevron, vehicle, supplies, logistics, glass, route, brief, chat, check, pin, clock, shield, mail, phone, WhatsApp, star, grid, home, search and quote. No emojis are used anywhere.
+`assets/icons.svg`: 28 original line icons in one sprite (2 px round strokes): spear, mark, arrow, chevron, vehicle, supplies, logistics, glass, route, brief, chat, check, pin, clock, shield, mail, phone, WhatsApp, star, grid, home, search and quote, plus timber (growth rings), build (brickwork), fitness (dumbbell), property (house) and digital (code in a screen) added in V12. No emojis are used anywhere.
 
 ## Fonts
 

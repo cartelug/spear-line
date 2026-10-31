@@ -1,4 +1,23 @@
-# V11 validation — 26 October 2026
+# V12 validation — 31 October 2026
+
+Release focus: ten new pages (Our businesses, Trade and supply, Lifestyle and property, Founders, Spear Line Timber, Building supplies, Fitness and wellness, Real estate, Leisure and hospitality, Digital services), status labels on every business, the Spear Line Timber section, interest enquiries for the new businesses, and the founder-picture pipeline.
+
+## Automated checks
+
+- `npm run check`: syntax of every script, CSS bundle and root mirror up to date.
+- `npm test`: 39 unit and server tests pass. New: status rules (known status; Active needs evidence), planned pages offer Register interest and say nothing is open, a launch build in a temporary copy keeps planned pages out of the sitemap and `noindex`, the Timber section on three pages and no timber supply claim anywhere, every founder illustration carries its caption, every enquiry link opens a form that exists, interest enquiries validate and store with `mode: interest`.
+- `npm run test:e2e`: 7 Playwright tests pass, including axe with 0 violations on all 22 pages at phone and desktop, with and without Reduce motion. A separate sweep of the same 22 pages at 1363 and 390 px found 0 violations and no horizontal overflow, also with the founder pictures present.
+- Found and fixed by axe: the new hub pages skipped from the page title straight to card headings (heading order); each hub now has its own section heading.
+
+## Reviewed by eye (screenshots)
+
+Home, Timber, Businesses, Founders (empty state, and with temporary pictures to prove the pipeline, since removed), Fitness and wellness, Enquire, About and Contact at 1440 px; Timber and Founders at 390 px. Fixed after review: status chips collided with card labels on the home service cards; the home "Built around what you need" heading sat in the wrong column (the gold rule counted as a grid item); the Timber page repeated its hero headline; the fourth "shared" card was orphaned in a three-column grid; a link on Contact was not visibly a link.
+
+## Not verified
+
+Lighthouse was not re-run on the new pages, so the V11 scores below do not yet cover them. Pages not reviewed by eye on screen: Building supplies, Real estate, Hospitality, Digital, Trade and supply, Lifestyle and property, How it works, FAQ, Privacy, Bar and 404 (axe and the structure tests do cover them). Real founder pictures: none were available, so the layout with real pictures is untested. No real devices, Safari, Firefox or screen readers. The two V12 visual-review items still open are V5 (hero chips behind the marquee tape) and V6 (Vehicles layout density).
+
+# Previous release: V11 validation — 26 October 2026
 
 Release focus: ten new photographs, new motion layers, finishing touches. The speed and responsive work from V10 was re-checked against the new content.
 

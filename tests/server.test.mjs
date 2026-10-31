@@ -32,12 +32,15 @@ const timber = {service:"timber",name:"Test Customer",contact:"+256700000000",pi
 test("server serves the site and stores valid requests privately",{timeout:20000},async t => {
   const {origin,dir} = await boot(t,true);
   const post = (body,options={}) => fetch(origin + "/api/enquiries",{method:"POST",headers:{"Content-Type":"application/json",Origin:origin,...options.headers},body:typeof body === "string" ? body : JSON.stringify(body)});
-  for (const page of ["/","/bar.html","/vehicles.html","/supplies.html","/logistics.html","/timber-logistics.html","/about.html","/enquire.html","/privacy.html","/how-it-works.html","/faq.html","/contact.html","/favicon.ico","/site.webmanifest","/assets/spear-line-logo.png"]) assert.equal((await fetch(origin+page)).status,200,page);
+  for (const page of ["/","/bar.html","/vehicles.html","/supplies.html","/logistics.html","/timber-logistics.html","/about.html","/businesses.html","/timber.html","/founders.html","/digital.html","/real-estate.html","/enquire.html","/privacy.html","/how-it-works.html","/faq.html","/contact.html","/favicon.ico","/site.webmanifest","/assets/spear-line-logo.png"]) assert.equal((await fetch(origin+page)).status,200,page);
   const response = await post(vehicle); assert.equal(response.status,201);
   const {reference} = await response.json(); assert.match(reference,/^[a-f0-9-]{36}$/);
   const record = JSON.parse(await readFile(resolve(dir,reference+".json"),"utf8")); assert.equal(record.model,"Pickup"); assert.equal(record.reference,reference);
   assert.equal((await post(timber)).status,201);
   assert.equal((await post({service:"supplies",name:"Test Buyer",contact:"buyer@example.com",products:"Rice",quantity:"100 bags",supplyDestination:"Kampala",supplyTiming:"November",consent:true})).status,201);
+  const interest = await post({service:"digital",name:"Test Visitor",contact:"visitor@example.com",digitalNeed:"A company website",consent:true}); assert.equal(interest.status,201);
+  const stored = JSON.parse(await readFile(resolve(dir,(await interest.json()).reference+".json"),"utf8")); assert.equal(stored.mode,"interest"); assert.equal(stored.digitalNeed,"A company website");
+  assert.equal((await post({service:"digital",name:"Test Visitor",contact:"visitor@example.com",digitalNeed:"",consent:true})).status,422);
   assert.equal((await post({...vehicle,model:""})).status,422);
   assert.equal((await post({...vehicle,consent:false})).status,422);
   assert.equal((await post({...vehicle,website:"spam"})).status,400);
@@ -46,7 +49,7 @@ test("server serves the site and stores valid requests privately",{timeout:20000
   assert.equal((await post("{")).status,400);
   assert.equal((await fetch(origin+"/api/enquiries")).status,405);
   for (const path of ["/data/"+reference+".json","/.env","/server.mjs","/missing-page"]) assert.equal((await fetch(origin+path)).status,404,path);
-  assert.equal((await readdir(dir)).length,3);
+  assert.equal((await readdir(dir)).length,4);
 });
 test("preparation mode cannot accept enquiries",{timeout:20000},async t => {
   const {origin,dir} = await boot(t,false);

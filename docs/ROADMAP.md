@@ -107,8 +107,8 @@ Done: a `browser` CI job runs Playwright tests with axe (12 pages × phone and d
 ### Phase G — Growth (after launch)
 Targeted landing pages per service and market, backed by real keywords and content; case studies once real; analytics-driven copy changes; email follow-up for enquiries; localisation if serving several languages.
 
-### Phase H — Foundations for six divisions (needs #8, #14)
-Full detail in `SERVICES-PLAN.md` sections 2 to 5.
+### Phase H — Foundations for six divisions (needs #8, #14) ✅ built
+Built 31 October 2026 with the plan's defaults; see "Build status" in `SERVICES-PLAN.md` for the differences. Still open: redirect aliases for renamed pages (not renamed), the lead register in Phase K. Full detail in `SERVICES-PLAN.md` sections 2 to 5.
 1. Add `divisions[]` and `founders[]` to `content/site.mjs`, and one template in `scripts/build.mjs` that generates the division pages, hub cards, home grid, navigation, footer, sitemap and structured data.
 2. Status rules in code: every division has a `status`; `active` needs an `evidence` string; Planned pages are `noindex`, offer Register interest and stay out of the sitemap. Tests enforce all three.
 3. Navigation: a Businesses panel, and a Services sheet in the phone dock; at most seven top-level items.
@@ -117,27 +117,31 @@ Full detail in `SERVICES-PLAN.md` sections 2 to 5.
 6. Extend the claim tests to block unsupported wording.
 Exit test: a dummy division renders end to end and `npm run check`, `npm test` and the browser tests pass.
 
-### Phase I — Founders page (needs #9)
+### Phase I — Founders page (needs #9) built, waiting on the owner
+The page, the picture pipeline, the captions and the tests are done. Needs from the owner: the founder pictures copied into `source-images/founders/`, the founder's message and bio, and written approval of the likeness (`approvedOn`).
 1. `founders.html` with the cutout hero, founder's message, a captioned storyboard of the Founder Series scenes tied to divisions, principles, businesses grid and a call to action. A founder strip on About links to it.
 2. Every generated image of a person carries an "AI-generated illustration" caption; a real portrait replaces the generated one as soon as it exists.
 3. Nothing publishes until the founder's bio, message and likeness approval are supplied. No biography is invented.
 4. Masters go in `source-images/` (not served); `scripts/images.py` gains portrait and alpha support.
 Exit test: axe 0 violations; every founder has a name, role and `approvedOn`; every generated image on the page has its caption.
 
-### Phase J — Spear Line Timber (needs #11)
+### Phase J — Spear Line Timber (needs #11) built, without dedicated timber photographs
+The section, strip, cargo note, page and tests are done using existing images. The five timber illustrations are queued in `visual-prompts.json` (the connected OpenAI account has no credit); real photographs should replace them.
 1. A full-bleed "timber line" section on home, the same module on `timber.html`, and a short version on Logistics: tree-ring contour layer, a four-stop consignment strip (yard check, loading, route, delivery) and a waybill-style cargo note that opens the logistics enquiry pre-filled with `cargo=timber`.
 2. Five new illustrations (recorded in `visual-prompts.json`), replaced by real photographs first when available.
 3. Copy says timber haulage and transport coordination only: no ownership, stock, fleet, tonnage, transit time, certification or lawful-origin guarantee.
 Exit test: CLS 0, phone performance at or above 90, all effects off under Reduce motion.
 
-### Phase K — Digital services and the other new divisions (needs #8, #10, #12)
+### Phase K — Digital services and the other new divisions (needs #8, #10, #12) pages built; lead register open
+The Digital, Building supplies, Fitness and wellness, Real estate and Hospitality pages exist in their true status. Open: step 4, the private lead register through `NOTIFY_WEBHOOK_URL`, and the matching privacy page update.
 1. Digital page: websites and landing pages, brand identity, social media growth and advertising management; Facebook and Instagram only until other platforms are confirmed eligible. "Request a quote", no public prices, no promised followers, reach or sales, no fake engagement. Proof section stays an empty state until real, permitted case studies exist.
 2. Building supplies, fitness and wellness (non-clinical), real estate and hospitality pages from the template, each in its true status, with Register interest where Planned and no booking, listing or membership claims.
 3. Motors, food and beverages and hospitality pages are the existing Vehicles, Supplies and Bar pages renamed and widened.
 4. Lead register: point `NOTIFY_WEBHOOK_URL` at a private sheet or database; update the privacy page for every service in the chain before switching it on.
 Exit test: every page passes axe and Lighthouse; Planned pages are `noindex`; a real enquiry reaches the register.
 
-### Phase L — Visual upgrade, V12 (needs #13)
+### Phase L — Visual upgrade, V12 (needs #13) partly done
+Done: V2 (About founder strip; the page is still thin), V3 (Contact next steps), V4 (closing banners on About and Contact), the status chip and division icons, the home restructure and the services heading layout. Open: V5, V6, V7, the typeface decision, real photography, the pages not yet reviewed, and real devices.
 1. Fix V2 to V7 (section 1a): rebuild About, enrich Contact, vary the closing banners, re-seat the marquee tape, tighten Vehicles and check card legibility, make image wording per-image.
 2. Division system: six sprite icons, a status chip, one accent per division from existing tokens.
 3. Home restructure: waybill offers every live division, then the businesses grid, then the timber line.

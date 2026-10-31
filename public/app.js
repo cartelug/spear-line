@@ -1,4 +1,4 @@
-import { validateEnquiry } from "./validation.js?v=a0c689bdbe";
+import { validateEnquiry } from "./validation.js?v=165645f6ac";
 const config = window.SPEAR_CONFIG || {};
 const preview = window.SPEAR_PREVIEW === true;
 const canSubmit = config.enquiriesEnabled === true && !preview;
@@ -169,7 +169,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || new URLSe
 
 /* Motion layer: loaded separately so a failure never affects navigation or the enquiry form. */
 // It measures the layout, so it starts once the full stylesheet applies (window.spearCss, from the inline boot script).
-Promise.all([import("./motion.js?v=a0c689bdbe"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
+Promise.all([import("./motion.js?v=165645f6ac"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
   root.classList.remove("motion-ok");
   $$("[data-motion-toggle]").forEach(button => { button.hidden = true; });
 });
@@ -211,13 +211,16 @@ if (form) {
   const params = new URLSearchParams(preview ? (window.SPEAR_PREVIEW_QUERY || "") : location.search);
   const query = params.get("service");
   const currentChoice = form.elements.service.value || "vehicle";
-  const selected = form.dataset.serviceTouched === "true" ? currentChoice : query === "timber" ? "logistics" : ["vehicle", "supplies", "logistics"].includes(query) ? query : currentChoice;
+  const known = $$('input[name="service"]', form).map(el => el.value);
+  const selected = form.dataset.serviceTouched === "true" ? currentChoice : query === "timber" ? "logistics" : known.includes(query) ? query : currentChoice;
   form.elements.service.value = selected;
   const type = new URLSearchParams(location.search).get("type");
   if (selected === "vehicle" && type) form.elements.model.value = type.slice(0, 160);
+  // The Timber page opens the logistics form with the cargo already named.
+  if (selected === "logistics" && type) form.elements.load.value = type.replace(/[\u0000-\u001f\u007f]/g, "").trim().slice(0, 60) + ", ";
   // The homepage enquiry note passes where the requirement is going; it fills whichever destination field the chosen service uses.
   const destination = (new URLSearchParams(location.search).get("destination") || "").replace(/[\u0000-\u001f\u007f]/g, "").trim().slice(0, 200);
-  const destinationField = { vehicle: "location", supplies: "supplyDestination", logistics: "destination" };
+  const destinationField = { vehicle: "location", supplies: "supplyDestination", logistics: "destination", construction: "constructionArea", property: "propertyArea", fitness: "fitnessArea", hospitality: "hospitalityArea" };
   function fillDestination(service) {
     const field = form.elements[destinationField[service]];
     if (destination && field && !field.value) field.value = destination;
@@ -265,6 +268,8 @@ if (form) {
     if (!result.ok) { renderErrors(result.errors); return; }
     if (!canSubmit) {
       const names = { service: "Service", name: "Name", contact: "Contact", model: "Vehicle", budget: "Budget", location: "Vehicle destination", products: "Products & specifications", quantity: "Quantities & packaging", supplyDestination: "Delivery destination", supplyTiming: "Preferred timing", pickup: "Pickup", destination: "Delivery destination", load: "Cargo & estimated load", timing: "Preferred timing", notes: "Additional details" };
+      // Businesses still being set up use one naming pattern: the service name plus Need, Area or When.
+      for (const service of ["construction", "property", "fitness", "hospitality", "digital"]) Object.assign(names, { [service + "Need"]: "What you need", [service + "Area"]: "Where", [service + "When"]: "Preferred timing" });
       const text = "SPEAR LINE — ENQUIRY DRAFT\nNot submitted. Prepared on " + new Date().toISOString().slice(0, 10) + "\n\n" + Object.entries(result.value).filter(([key, value]) => names[key] && value).map(([key, value]) => names[key] + ": " + value).join("\n");
       if (downloadURL) URL.revokeObjectURL(downloadURL);
       downloadURL = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));

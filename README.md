@@ -1,8 +1,17 @@
-# Spear Line — V11
+# Spear Line — V12
 
-Vehicles, foodstuffs and beverages, and logistics, plus the coming-soon Spear Line Bar. A cinematic, image-led static site with self-hosted MTN Brighter Sans Bold and Sky Text, a traced vector logo, blended photographic section backgrounds, glass cards and a logo preloader. Ready to be filled with real content.
+Vehicles, timber haulage, foodstuffs and beverages, and logistics, plus planned businesses in building supplies, fitness and wellness, real estate, hospitality and digital services, and the coming-soon Spear Line Bar. A cinematic, image-led static site with self-hosted MTN Brighter Sans Bold and Sky Text, a traced vector logo, blended photographic section backgrounds, glass cards and a logo preloader. Ready to be filled with real content.
 
-## What V11 changes: imagery and motion
+## What V12 changes: businesses, Timber and the founder
+
+- **Status on everything.** Each business is labelled Active (only with evidence in the content file), Preparing to launch or Planned. Planned businesses offer Register interest instead of a quote, and in launch mode they stay `noindex` and out of the sitemap. A test and the build both enforce it.
+- **Twelve new pages:** Our businesses, Trade and supply, Lifestyle and property, Founders, Spear Line Timber, Building supplies, Fitness and wellness, Real estate, Leisure and hospitality and Digital services, all generated from one template and one data file. Vehicles, Supplies, Logistics and the Bar keep their addresses.
+- **Spear Line Timber:** a visual section (growth rings, a four-stop consignment strip, a cargo note that opens the logistics form with the cargo named) on the home page, the Logistics page and its own page. It describes haulage only; no timber is offered for sale.
+- **Founders page:** ready for the founder pictures. Drop the PNG masters in `source-images/founders/`, run `python3 scripts/images.py --founders-only` and build; every picture is captioned as an AI-generated illustration. Until then the page shows an honest empty state.
+- **Enquiries** for building supplies, property, fitness, hospitality and digital services are interest enquiries with their own fields; the Timber page opens the logistics form with the cargo filled in.
+- **Navigation, footer and phone dock** reorganised around the businesses; Contact explains what happens after an enquiry; About links to the founder.
+
+## What V11 changed: imagery and motion
 
 - **Ten new photographs** generated with GPT Image 1.5 through Zapier (prompts in `visual-prompts.json`) and used where they carry meaning: a key handover, a loading bay at dawn, produce crates, an aerial road, a team in the yard, a desk at dusk, a wheel detail, and a bar interior and glass for the Bar. An eleventh image, a topographic route illustration, sits behind the route section and the 404 page.
 - **New motion:** a beam of low sun and drifting dust across every hero, hero photograph and enquiry note that move against the pointer, drifting contours behind the route, a glowing bar lamp, an outlined tagline that slides across the closing banner, a footer wordmark that rises into place, gallery photographs that grow as they reach the middle of the rail, and gold rules that draw in under section headings. All of it respects Reduce motion, pauses offscreen and fades out while scrolling.
@@ -44,10 +53,10 @@ Where things live:
 | --- | --- |
 | `content/site.mjs` | All words, image keys and optional collections |
 | `scripts/build.mjs` | Page templates and layout |
-| `src/styles/*.css` | Styles by layer (tokens, base, sections, components, chrome, home, pages, motion); bundled into `public/site.css` |
+| `src/styles/*.css` | Styles by layer (tokens, base, sections, components, chrome, home, pages, motion, businesses); bundled into `public/site.css` |
 | `src/boot.js` | Inlined into `<head>` by the build: motion preference, deferred stylesheet, preloader |
 | `src/sw.js` | Service worker template; the build writes `public/sw.js` with the release version |
-| `scripts/images.py` | Generates AVIF/WebP widths for photographs (Pillow) |
+| `scripts/images.py` | Generates AVIF/WebP widths for photographs; `--founders-only` handles the founder masters (Pillow) |
 | `scripts/critical.mjs` | Finds each page's first-screen rules (`npm run critical`, uses Playwright) |
 | `public/app.js` | Menu, header, forms, accordions, gallery rail, enquiry draft |
 | `public/motion.js` | Reveals, split text, route, process, parallax, tilt, counters |
@@ -74,8 +83,8 @@ By default every page carries noindex and robots.txt blocks crawlers, because no
 SITE_ORIGIN=https://your-domain SITE_LAUNCH=1 npm run build
 ```
 
-This publishes indexable pages with canonical links, Open Graph and Twitter tags, Organization and FAQ structured data, robots.txt with a sitemap reference and sitemap.xml. The 404 page stays noindex. Then fill in site-config.js (legal name, email, phone, WhatsApp, address) so the Contact page, footer and privacy page show real details.
+This publishes indexable pages with canonical links, Open Graph and Twitter tags, Organization and FAQ structured data, robots.txt with a sitemap reference and sitemap.xml. The 404 page, every Planned business page and the Founders page (until the founder is marked approved) stay noindex and out of the sitemap. Then fill in site-config.js (legal name, email, phone, WhatsApp, address) so the Contact page, footer and privacy page show real details.
 
 ## More
 
-CONTENT.md (editing content), DESIGN.md (design system), docs/MOTION.md (motion), ASSETS.md (provenance), VALIDATION.md (checks), docs/ROADMAP.md (what only the owner can unblock). Keep the logo and font licence files intact.
+CONTENT.md (editing content), DESIGN.md (design system), docs/MOTION.md (motion), ASSETS.md (provenance), VALIDATION.md (checks), docs/ROADMAP.md (what only the owner can unblock), docs/SERVICES-PLAN.md (the businesses plan and what is built). Keep the logo and font licence files intact.

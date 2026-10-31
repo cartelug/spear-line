@@ -8,3 +8,8 @@ coverage/
 *.log
 # Local responsive inspection fixtures
 public/qa-responsive.*
+
+# Founder masters (large PNGs) stay out of the repository; the derived images and content/founder-images.json are committed.
+source-images/
+__pycache__/
+*.pyc

@@ -17,7 +17,7 @@ You never edit the HTML files directly; they are regenerated on every build.
 
 ## Copy
 
-Each section of the file matches a page or block: `brand`, `services` (vehicles, supplies, logistics), `home`, `process`, `about`, `faq`, `bar`, `contactPage`. Change the strings and rebuild. Headings animate word by word, so a short heading (under about 9 words) reads best.
+Each section of the file matches a page or block: `brand`, `services` (vehicles, supplies, logistics), `divisions` (timber, building supplies, fitness, real estate, hospitality, digital), `statuses`, `timber`, `hubs`, `digitalOffers`, `founders`, `foundersPage`, `home`, `process`, `about`, `faq`, `bar`, `contactPage`. Change the strings and rebuild. Headings animate word by word, so a short heading (under about 9 words) reads best.
 
 FAQ answers that depend on online enquiries use `null`; the build swaps in the right text depending on whether `enquiriesEnabled` is on.
 
@@ -37,6 +37,26 @@ To use a real photograph:
 Section backdrops (the soft colour behind dark sections) are the small 480 px WebP files in `public/assets/backdrops/`; `scripts/images.py` creates one for each new photograph. When the photos become real, remove `brand.imageNote` or change it.
 
 If you change styles or the layout of a page's first screen, run `npm run critical` so the inlined first-screen styles stay in step (a test fails when they drift).
+
+## Businesses and their status
+
+`services` and `divisions` share one shape and one page template. Every entry needs a `status`:
+
+- `preparing` (Preparing to launch): enquiries are welcome and the page offers a quote route.
+- `planned` (Planned): nothing is open or listed. The page offers Register interest, carries `noindex` in launch mode and stays out of the sitemap.
+- `active`: only with an `evidence` note, for example `evidence: 'Owner confirmed, 12 November 2026'`. The build and a test both fail without it.
+
+To add a business, add one entry to `divisions` (copy an existing one: `id`, `slug`, `name`, `label`, `icon`, `status`, `group`, `enquiry`, images, `card`, `tags`, `hero`, `items`, `include`, `brief`, `cta`, `boundary`), add its enquiry fields in `public/validation.js` and `scripts/build.mjs` if it needs a new enquiry type, and run `npm run build`. Use `boundary` for the plain "this is not X" line that every planned business needs. Do not add prices, stock, availability or licence claims.
+
+## Spear Line Timber
+
+`timber` holds the section shown on the home, Logistics and Timber pages: the title, the four stops, what to include and the note. The section describes transport only. If the owner decides to supply timber as well, change the boundary note and the copy together, and confirm routes before naming any destination.
+
+## The founder
+
+`founders` holds only confirmed facts. `message` and `bio` stay empty until the founder supplies them in his own words; the page shows a plain empty state until then. Set `approvedOn` (for example `'12 November 2026'`) once he has approved the page and the use of his likeness in generated images: that adds the page to the sitemap and adds `Person` structured data in launch mode.
+
+Pictures: save the PNG masters in `source-images/founders/` (ignored by git) using the names in `founders[0]` (`joe-ayom-founder-cutout`, `joe-ayom-founder-portrait`, `07-joe-ayom-timber-quality-review` and so on), then run `python3 scripts/images.py --founders-only` and `npm run build`. The script writes `f-<name>-<width>` AVIF and WebP files (alpha kept for cut-outs) and `content/founder-images.json`. Any picture that is missing is left out. Every picture is shown with the caption "AI-generated illustration"; when a real photograph exists, add it as another image and adjust `founderPortrait` in `scripts/build.mjs` so that picture does not carry the AI caption (every founder picture is captioned today).
 
 ## Optional collections
 

@@ -3,9 +3,9 @@
 // Pages: network first, so content is always current, with the cached copy when offline.
 // Versioned scripts, styles, fonts and icons: cache first; their addresses change with every release.
 // Photographs: served from cache while a fresh copy is fetched, capped so the cache stays small.
-const VERSION = "a0c689bdbe";
+const VERSION = "165645f6ac";
 const CORE = "spear-core-" + VERSION, PAGES = "spear-pages-" + VERSION, MEDIA = "spear-media";
-const PRECACHE = ["index.html","site.css?v=a0c689bdbe","app.js?v=a0c689bdbe","motion.js?v=a0c689bdbe","validation.js?v=a0c689bdbe","assets/fonts/mtn-brighter-sans-bold.woff2","assets/fonts/sky-text-regular.woff2","assets/icons.svg","assets/logo.svg","assets/favicon.svg"];
+const PRECACHE = ["index.html","site.css?v=165645f6ac","app.js?v=165645f6ac","motion.js?v=165645f6ac","validation.js?v=165645f6ac","assets/fonts/mtn-brighter-sans-bold.woff2","assets/fonts/sky-text-regular.woff2","assets/icons.svg","assets/logo.svg","assets/favicon.svg"];
 const MEDIA_LIMIT = 60;
 
 self.addEventListener("install", event => {
