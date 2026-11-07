@@ -120,7 +120,7 @@
  .v12-trading-grid .card-service{min-height:520px}
  .v12-digital-visual{min-height:470px}
  .v12-founder-type{min-height:420px}
- .v12-founder-type>span{font-size:clamp(9rem,30vw,18rem)}
+ .v12-founder-type>span{font-size:clamp(5rem,26vw,12rem)}
  .v12-founder-hero{padding-block:150px 55px}
  .v12-founder-hero-grid h1{font-size:clamp(5rem,16vw,8rem)}
  .v12-founder-hero-art{min-height:420px}
@@ -136,6 +136,7 @@
  .v12-digital-visual{min-height:360px}
  .v12-founder-type{min-height:340px}
  .v12-founder-hero-art{min-height:360px}
+ .v12-founder-hero-art>span{font-size:clamp(5rem,26vw,12rem)}
  .v12-direction-content h2{font-size:clamp(2.6rem,12vw,4.8rem)}
  .v12-section-head h2{font-size:clamp(2.6rem,12vw,4.8rem)}
 }
