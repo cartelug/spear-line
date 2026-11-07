@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import * as content from "../content/site.mjs";
 
 const pub = resolve(dirname(fileURLToPath(import.meta.url)), "..", "public");
-const pages = ["index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
+const pages = ["divisions.html", "digital.html", "founder.html", "index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
 const read = name => readFile(resolve(pub, name), "utf8");
 const exists = async name => access(resolve(pub, name)).then(() => true, () => false);
 const visibleText = html => html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "").replace(/<[^>]+>/g, " ");
@@ -186,7 +186,7 @@ test("icons, favicons, manifest and share image are present and linked", async (
 test("navigation reaches every page, and contact details are never hard-coded", async () => {
   for (const page of pages) {
     const html = await read(page);
-    for (const target of ["vehicles.html", "supplies.html", "logistics.html", "how-it-works.html", "faq.html", "contact.html", "about.html", "enquire.html", "privacy.html"]) assert.ok(html.includes('href="' + target + '"'), page + " → " + target);
+    for (const target of ["divisions.html", "digital.html", "founder.html", "vehicles.html", "supplies.html", "logistics.html", "how-it-works.html", "faq.html", "contact.html", "about.html", "enquire.html", "privacy.html"]) assert.ok(html.includes('href="' + target + '"'), page + " → " + target);
     assert.match(html, /aria-controls="site-menu"/, page + " menu toggle");
   }
   const contact = await read("contact.html");
