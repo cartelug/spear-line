@@ -158,7 +158,7 @@ export const home = {
     { image: 'container-port', label: 'Logistics', title: 'Think beyond the pickup.', href: 'logistics.html' },
     { image: 'sourcing-detail', label: 'Your enquiry', title: 'Your brief brings it together.', href: 'enquire.html' }
   ],
-  closing: { title: 'Let’s move something forward.', text: 'A vehicle to find. Supplies to source. Cargo to move.' }
+  closing: { title: 'Let’s move something forward.', text: 'A vehicle, a business requirement, an opportunity worth discussing.' }
 };
 
 export const process = [
@@ -169,10 +169,10 @@ export const process = [
 ];
 
 export const about = {
-  hero: { title: 'One line. More possibilities.', lede: 'Spear Line brings together vehicle sales and trading, the supply of foodstuffs and beverages, and logistics.' },
+  hero: { title: 'One company. More ways forward.', lede: 'Spear Line connects vehicle trading, sourcing, supply and logistics with a developing six-division business vision.' },
   who: {
-    title: 'A practical connection to what comes next.',
-    text: ['We start with a simple question: what do you need? The answer guides the conversation, from vehicle preferences to product specifications and transport requirements.', 'Our approach is clear: understand the requirement, work through the details, and agree the next step.']
+    title: 'Business begins with a better understanding.'
+    text: ['Spear Line starts with practical requirements for vehicles, goods and transport, then makes space for opportunities in materials, wellness, real estate and hospitality.', 'Each division has its own maturity and scope. Our approach remains the same: understand the need, clarify the details and agree the next step before making commitments.']
   },
   principles: [
     { icon: 'i-chat', title: 'Listen first.', text: 'The requirement comes before the recommendation. Your priorities, destination and timing set the direction.' },
@@ -183,7 +183,7 @@ export const about = {
 
 export const faq = [
   { group: 'Getting started', items: [
-    { q: 'What does Spear Line do?', a: 'Spear Line brings together vehicle sales and trading, foodstuffs and beverages, and logistics. Each starts with the same conversation: what do you need, where is it going and when?' },
+    { q: 'What does Spear Line do?', a: 'Spear Line is developing a six-division portfolio across materials and equipment, motors and automotive, food and beverages, fitness and wellness, real estate, and leisure and hospitality. Vehicle trading, supplies and transport coordination remain practical areas for enquiries. Planned activities are labelled as such.' },
     { q: 'What should I include in an enquiry?', a: 'Your name and how to reach you, then the details for your service. Vehicles: the model or type, a budget if you wish, and the destination. Supplies: products, quantities, delivery destination and timing. Logistics: pickup, destination, cargo and timing.' },
     { q: 'Is an enquiry a booking or a purchase?', a: 'No. An enquiry starts a conversation. Availability, specifications, price and arrangements are confirmed for each enquiry, and in writing, before you make any commitment.' }
   ] },
