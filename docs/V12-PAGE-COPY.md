@@ -59,14 +59,14 @@
 
 **Introduction:** “Behind every transaction is a decision to build something useful. Meet the people shaping Spear Line's direction, the standards they want to uphold and the opportunities they are working to develop.”
 
-### Founder feature: Joe Ayom
+### Founder feature: Joh Ayom
 
-**Display name:** Joe Ayom  
+**Display name:** Joh Ayom  
 **Display role:** Founder — **pending owner confirmation for public release**  
 **Portrait:** use authentic approved photograph from the supplied assets only.
 
 **Biography placeholder (do not publish verbatim):**  
-“Joe Ayom is named as the founder of Spear Line in the current working company record. His full professional biography, business background and founding story will be added after he approves the wording.”
+“Joh Ayom is named as the founder of Spear Line in the current working company record. His full professional biography, business background and founding story will be added after he approves the wording.”
 
 **Founder statement placeholder:**  
 “[Insert a personally approved 60–100 word statement about why Spear Line was started, the real challenges customers face and the standard the company wants to set.]”
