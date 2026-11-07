@@ -13,7 +13,7 @@ import { chromium } from "playwright";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const axeSource = await readFile(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
-const pages = ["index", "vehicles", "supplies", "logistics", "how-it-works", "faq", "contact", "about", "bar", "enquire", "privacy", "404"];
+const pages = ["divisions", "digital", "founder", "index", "vehicles", "supplies", "logistics", "how-it-works", "faq", "contact", "about", "bar", "enquire", "privacy", "404"];
 
 async function freePort() {
   const probe = net.createServer(); probe.listen(0, "127.0.0.1"); await once(probe, "listening");
@@ -110,7 +110,7 @@ test("menu, tabs, FAQ and timeline behave, and Reduce motion is honoured", { tim
   const phone = await open("/index.html", { width: 390, height: 844, touch: true });
   await phone.page.click(".menu-toggle"); await phone.page.waitForTimeout(700);
   assert.equal(await phone.page.getAttribute(".menu-toggle", "aria-expanded"), "true");
-  assert.ok(await phone.page.$("#site-menu a[href='how-it-works.html']"));
+  assert.ok(await phone.page.$("#site-menu a[href='divisions.html']"));
   await phone.page.keyboard.press("Escape"); await phone.page.waitForTimeout(500);
   assert.equal(await phone.page.getAttribute(".menu-toggle", "aria-expanded"), "false"); await phone.context.close();
 
@@ -124,17 +124,16 @@ test("menu, tabs, FAQ and timeline behave, and Reduce motion is honoured", { tim
   for (const y of [0, 900, 1500]) { await how.page.evaluate(top => scrollTo(0, top), y); await how.page.waitForTimeout(500); counts.push(await how.page.evaluate(() => document.querySelectorAll(".timeline-step.is-on").length)); }
   assert.ok(counts[0] < counts[2], "timeline lights steps as you scroll: " + counts); await how.context.close();
 
-  const home = await open("/index.html"); const before = await home.page.evaluate(() => getComputedStyle(document.querySelector(".marquee-track")).animationName);
-  assert.equal(before, "marquee");
-  await home.page.evaluate(() => scrollTo(0, document.querySelector("[data-route]").getBoundingClientRect().top + scrollY - innerHeight * 0.75)); await home.page.waitForTimeout(800);
-  const a = await home.page.getAttribute("[data-route-spear]", "transform"); await home.page.evaluate(() => scrollBy(0, 380)); await home.page.waitForTimeout(600);
-  assert.notEqual(a, await home.page.getAttribute("[data-route-spear]", "transform"), "the spear moves along the route"); await home.context.close();
+  const home = await open("/index.html");
+  assert.equal(await home.page.locator(".v12-division-card").count(), 6, "six visible company divisions");
+  assert.ok(await home.page.locator('a[href="digital.html"]').count(), "digital offering is reachable");
+  assert.ok(await home.page.locator('a[href="founder.html"]').count(), "founder profile is reachable");
+  assert.deepEqual(home.problems, []);
+  await home.context.close();
 
   for (const mode of [{ saved: true }, { reduced: true }]) {
     const calm = await open("/index.html", mode);
-    assert.equal(await calm.page.evaluate(() => getComputedStyle(document.querySelector(".marquee-track")).animationName), "none");
-    await calm.page.evaluate(() => scrollTo(0, document.querySelector("[data-route]").getBoundingClientRect().top + scrollY - 200)); await calm.page.waitForTimeout(600);
-    assert.equal(parseFloat(await calm.page.evaluate(() => document.querySelector("[data-route-path]").style.strokeDashoffset)), 0, "route is fully drawn");
+    assert.ok(await calm.page.isVisible(".v12-division-grid"), "all divisions stay visible with reduced motion");
     assert.deepEqual(calm.problems, []); await calm.context.close();
   }
 });
