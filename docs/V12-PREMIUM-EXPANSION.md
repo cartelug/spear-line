@@ -90,7 +90,7 @@ Lead generation: “What are you trying to build?” with selectable categories,
 - Founder opening: “Meet the people behind the direction.” Pair a real portrait with a short, credible founder statement explaining why Spear Line was established and what the business intends to solve.
 - Page modules: portrait hero; brief company origin timeline based on supplied dates; founder's mission; principles; leadership (only verified names/roles); field photo editorial; company vision; contact CTA.
 - Add contributors/co-founders **only when the owner gives their names, titles and consent**. Do not turn the delivery agency THE 97 World into Spear Line's ownership team.
-- Existing Drive filenames include “joh-ayom-founder-hero.png”, “joh-ayom-founder-portrait.png” and “joh-ayom-founder-cutout.png”; labels alone do not establish that they are genuine photos. Verify before public use.
+- Existing Drive filenames include “joe-ayom-founder-hero.png”, “joe-ayom-founder-portrait.png” and “joe-ayom-founder-cutout.png”; labels alone do not establish that they are genuine photos. Verify before public use.
 - If a user photo is supplied for editing, preserve identity, body proportions, hair and skin appearance; never create a synthetic image that falsely purports to show a real meeting, handover, transaction or owned facility.
 
 ## 6. Art direction
