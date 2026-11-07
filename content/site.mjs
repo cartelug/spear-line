@@ -16,8 +16,8 @@
 export const brand = {
   name: 'Spear Line',
   tagline: 'One line. More possibilities.',
-  summary: 'Vehicle sales, foodstuffs and beverages, and logistics.',
-  description: 'Vehicle sales, foodstuffs and beverages, and logistics. Spear Line connects what you need with what comes next.',
+  summary: 'Trading, vehicles, supply, logistics and an expanding portfolio of business opportunities.',
+  description: 'Spear Line connects trading, automotive, supply and logistics needs with a broader vision for enterprise and opportunity.',
   imageNote: 'AI-generated imagery illustrates our service areas.'
 };
 
@@ -46,6 +46,25 @@ export const images = {
   'wheel-detail': { file: '22-wheel-detail', alt: 'A dusty SUV wheel on a red-earth road with green hills behind it', ratio: [1536, 1024] },
   'bar-glass': { file: '23-bar-glass', alt: 'A crystal tumbler with an amber drink, a large ice cube and an orange peel', ratio: [1536, 1024] }
 };
+
+// V12 company map: opportunities are not presented as verified operational facilities.
+export const divisions = [
+  { number: '01', name: 'Building Materials & Equipment', category: 'Construction & sourcing', status: 'Developing', image: 'warehouse', href: 'contact.html', text: 'Explore requirements for building materials, tools and equipment through a considered sourcing conversation.' },
+  { number: '02', name: 'Motors & Automotive', category: 'Vehicles & mobility', status: 'Enquiry-led', image: 'vehicles-suv', href: 'vehicles.html', text: 'Vehicle trading and sourcing conversations shaped around your preferred model, destination and budget.' },
+  { number: '03', name: 'Food & Beverages', category: 'Business supply', status: 'Enquiry-led', image: 'foodstuffs', href: 'supplies.html', text: 'Discuss product lists, quantities, preferred packaging and delivery requirements.' },
+  { number: '04', name: 'Fitness, Health & Wellness', category: 'Nonclinical concepts', status: 'Concept', image: 'sourcing-detail', href: 'contact.html', text: 'An emerging area of the Spear Line vision, focused on fitness and everyday wellbeing opportunities.' },
+  { number: '05', name: 'Real Estate Services', category: 'Property opportunities', status: 'Concept', image: 'aerial-road', href: 'contact.html', text: 'An area of development for property-related services, subject to confirmation of the operating model.' },
+  { number: '06', name: 'Leisure, Entertainment & Hospitality', category: 'Places & experiences', status: 'Developing', image: 'bar-lounge', href: 'bar.html', text: 'Explore the ideas taking shape around hospitality, leisure and the upcoming Spear Line Bar.' }
+];
+
+export const digitalCapabilities = [
+  { number: '01', title: 'Websites & online presence', text: 'Responsive business websites, landing pages, company profiles and search foundations.' },
+  { number: '02', title: 'Brand identity & creative', text: 'Visual identities, business documents, presentations and campaign design.' },
+  { number: '03', title: 'Booking & business systems', text: 'Scoping for bookings, ticketing, QR check-in, dashboards and customer portals.' },
+  { number: '04', title: 'Content & video production', text: 'Campaign ideas, motion design, promotional edits and social media content.' },
+  { number: '05', title: 'Marketing & advertising', text: 'Professional social profiles, advertising creative and measurable campaign planning.' },
+  { number: '06', title: 'Automation & infrastructure', text: 'Enquiry workflows, reporting, business email, domains, hosting and support by agreement.' }
+];
 
 export const services = [
   {
@@ -100,19 +119,19 @@ export const services = [
 
 export const home = {
   hero: {
-    kicker: 'Vehicles, supplies and logistics',
-    title: ['Your next move.', 'Our line of work.'],
-    lede: 'Vehicle sales, business supplies and logistics, brought together in one practical conversation.',
-    primary: 'Start an enquiry',
-    secondary: 'Explore services'
+    kicker: 'South Sudan · Trading, enterprise & opportunity',
+    title: ['One company.', 'More ways forward.'],
+    lede: 'Vehicles, sourcing, business supplies and logistics today. A wider portfolio of ideas and opportunities for tomorrow.',
+    primary: 'Start a conversation',
+    secondary: 'Explore our divisions'
   },
   marquee: ['Vehicle sales & trading', 'Foodstuffs & beverages', 'Transport & coordination', 'One line. More possibilities.'],
   intro: {
     statement: ['The right vehicle.', 'The supplies you need.', 'A clear way to get there.'],
     text: 'Spear Line brings vehicle sales, foodstuffs and beverages, and logistics into one practical conversation. Wherever your requirement starts, we start by listening.'
   },
-  servicesTitle: 'Built around what you need.',
-  servicesText: 'Three connected business areas. Choose the one that moves you forward, or start with all three in one enquiry.',
+  servicesTitle: 'Where the work begins.',
+  servicesText: 'Start with the practical needs: a vehicle, goods for your business or a load to move. Every request starts with a clear brief.',
   route: {
     title: 'Three stops. One line.',
     text: 'Wherever your requirement starts, it joins the same line: a clear brief, the right details, a confirmed next move.'
