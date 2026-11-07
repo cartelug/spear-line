@@ -32,7 +32,7 @@ One connected visual world for a diversified African company: confident, warm, t
 | 16 | hospitality-table-detail | Hospitality | Concept | Carefully composed table setting, amber and olive, subtle background people |
 | 17 | digital-workspace | Digital Solutions | Curated photo or illustration | Modern African creative workspace, realistic monitor/phone with abstract unbranded screens |
 | 18 | digital-craft-detail | Digital Solutions | Illustrative | Designer working on wireframes / edited video on screen, no fake client logos or text |
-| 19 | founder-hero | Founders | **Real approved founder photography only** | Joe Ayom in a natural environmental portrait, calm expression, room for text |
+| 19 | founder-hero | Founders | **Real approved founder photography only** | Joh Ayom in a natural environmental portrait, calm expression, room for text |
 | 20 | founder-portrait | Founders/profile card | **Real approved founder photography only** | Medium close portrait, eye contact, neutral background, accurate facial identity |
 | 21 | founder-working | Founders/profile story | **Real approved founder photography only** | Genuine candid working scene or clearly labelled conceptual alternative without impersonation |
 | 22 | operations-documents | How We Work | Real or illustrative | Map, clipboard, supplier notes, vehicle requirements without legible confidential information |
