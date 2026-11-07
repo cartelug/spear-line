@@ -2,6 +2,16 @@
 
 **Status:** design and content specification, not deployed. Prepared 7 November 2026 after reviewing the V11 repository and Spear Line's 30 October business scope in Drive.
 
+## V12 professional-design specification index (7 November 2026)
+
+This V12 plan now includes three detailed, linked implementation contracts. They are **future work specifications**, not evidence that all enhancements have been built or that the branch is launch-ready.
+
+1. **[Complete Motion System & Interaction Choreography](V12-MOTION-SYSTEM.md)** — existing-engine audit, design grammar, token timings, per-page choreography, menu/preloader behavior, reduced-motion, pointer/touch and performance gates.
+2. **[Complete Responsive Layout & Device Architecture](V12-RESPONSIVE-ARCHITECTURE.md)** — width regimes, fluid grids, type and imagery, mobile-first page compositions, keyboard/zoom/safe-area rules and detailed QA matrix.
+3. **[Premium Art Direction & Design QA](V12-PREMIUM-ART-DIRECTION.md)** — identity system, original visual concepts based on competitor information architecture, components, imagery, licensing, content/brand validation and delivery priorities.
+
+**Implementation rule:** preserve the existing Node-based generator and reviewed draft branch. No move to another framework or new motion library without a demonstrated benefit, performance test and owner approval. Do not merge, deploy, change DNS, or enable online enquiries from a design-plan change. Competitor sites inform patterns only; no direct copying of their protected assets, branding, original written expression or source code.
+
 ## 1. Source of truth and hard constraints
 
 - Canonical website source: this repository; production domain remains **unconfirmed**. The address spearline.com currently belongs to / redirects to an unrelated entity, so do not configure it for Spear Line.
