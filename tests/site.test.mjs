@@ -250,3 +250,24 @@ test("the homepage enquiry note starts an enquiry with the chosen service and de
   const app = await read("app.js");
   assert.match(app, /get\("destination"\)/); assert.match(app, /supplyDestination/);
 });
+
+
+test("V12 six-division model, digital offer and Joh Ayom profile remain grounded", async () => {
+  const homePage = await read("index.html");
+  const divisionPage = await read("divisions.html");
+  const digitalPage = await read("digital.html");
+  const founderPage = await read("founder.html");
+  assert.equal(content.divisions.length, 6, "six business divisions");
+  for (const division of content.divisions) {
+    assert.ok(homePage.includes(division.name.replace(/&/g, "&amp;")), division.name + " on home");
+    assert.ok(divisionPage.includes(division.name.replace(/&/g, "&amp;")), division.name + " on divisions");
+    assert.ok(["Developing", "Enquiry-led", "Concept"].includes(division.status), division.name + " status");
+  }
+  assert.equal(content.digitalCapabilities.length, 6);
+  for (const capability of content.digitalCapabilities) assert.ok(digitalPage.includes(capability.title.replace(/&/g, "&amp;")), capability.title);
+  assert.match(digitalPage, /THE 97 World/);
+  assert.match(digitalPage, /subject to confirmation/);
+  assert.match(founderPage, /Joh Ayom/);
+  assert.doesNotMatch(founderPage, /Joe Ayom/);
+  assert.match(founderPage, /approved biography/);
+});
