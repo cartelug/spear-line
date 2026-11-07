@@ -1,0 +1,38 @@
+name: Synchronize V12 generated website
+
+on:
+  push:
+    branches:
+      - design/v12-digital-founders-expansion
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v12-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    if: github.ref == 'refs/heads/design/v12-digital-founders-expansion'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build public website and GitHub Pages mirror
+        run: npm run build
+      - name: Commit regenerated website assets to redesign branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "build(v12): regenerate website and Pages mirror"
+            git push origin HEAD:design/v12-digital-founders-expansion
+          fi
