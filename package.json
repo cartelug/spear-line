@@ -22,7 +22,8 @@
     "qa:responsive": "node scripts/qa/responsive.mjs",
     "qa:perf": "node scripts/qa/perf.mjs",
     "qa:preloader": "node scripts/qa/preloader.mjs",
-    "qa:shots": "node scripts/qa/capture.mjs"
+    "qa:shots": "node scripts/qa/capture.mjs",
+    "profile": "node profile/build-profile.mjs"
   },
   "devDependencies": {
     "axe-core": "^4.10.2",
