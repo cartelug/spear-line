@@ -32,7 +32,7 @@ const timber = {service:"timber",name:"Test Customer",contact:"+256700000000",pi
 test("server serves the site and stores valid requests privately",{timeout:20000},async t => {
   const {origin,dir} = await boot(t,true);
   const post = (body,options={}) => fetch(origin + "/api/enquiries",{method:"POST",headers:{"Content-Type":"application/json",Origin:origin,...options.headers},body:typeof body === "string" ? body : JSON.stringify(body)});
-  for (const page of ["/","/bar.html","/vehicles.html","/supplies.html","/logistics.html","/timber-logistics.html","/about.html","/enquire.html","/privacy.html","/how-it-works.html","/faq.html","/contact.html","/favicon.ico","/site.webmanifest","/assets/spear-line-logo.png"]) assert.equal((await fetch(origin+page)).status,200,page);
+  for (const page of ["/","/bar.html","/vehicles.html","/supplies.html","/logistics.html","/timber-logistics.html","/about.html","/enquire.html","/privacy.html","/how-it-works.html","/faq.html","/contact.html","/favicon.ico","/site.webmanifest","/assets/logo-wordmark-gold.png"]) assert.equal((await fetch(origin+page)).status,200,page);
   const response = await post(vehicle); assert.equal(response.status,201);
   const {reference} = await response.json(); assert.match(reference,/^[a-f0-9-]{36}$/);
   const record = JSON.parse(await readFile(resolve(dir,reference+".json"),"utf8")); assert.equal(record.model,"Pickup"); assert.equal(record.reference,reference);
@@ -56,7 +56,7 @@ test("preparation mode cannot accept enquiries",{timeout:20000},async t => {
 });
 test("fonts, scripts and a strict self-hosted CSP that allows only the page's own inline blocks are served",{timeout:20000},async t => {
   const {origin} = await boot(t,false);
-  for (const [path,type] of [["/assets/fonts/mtn-brighter-sans-bold.woff2","font/woff2"],["/assets/fonts/sky-text-regular.woff2","font/woff2"],["/assets/fonts/License-OnlineWebFonts.txt","text/plain"],["/assets/logo.svg","image/svg\\+xml"],["/assets/icons.svg","image/svg\\+xml"],["/assets/favicon.svg","image/svg\\+xml"],["/assets/og-image.jpg","image/jpeg"],["/assets/grain.png","image/png"],["/assets/backdrops/01-hero-road.webp","image/webp"],["/site.webmanifest","application/manifest\\+json"],["/motion.js","text/javascript"],["/site.css","text/css"]]) {
+  for (const [path,type] of [["/assets/fonts/mtn-brighter-sans-bold.woff2","font/woff2"],["/assets/fonts/sky-text-regular.woff2","font/woff2"],["/assets/fonts/License-OnlineWebFonts.txt","text/plain"],["/assets/logo-wordmark-gold.png","image/png"],["/assets/icons.svg","image/svg\\+xml"],["/assets/favicon-32.png","image/png"],["/assets/og-image.png","image/png"],["/assets/grain.png","image/png"],["/assets/backdrops/01-hero-road.webp","image/webp"],["/site.webmanifest","application/manifest\\+json"],["/motion.js","text/javascript"],["/site.css","text/css"]]) {
     const response = await fetch(origin + path); assert.equal(response.status,200,path); assert.match(response.headers.get("content-type"),new RegExp(type),path);
   }
   const home = await fetch(origin + "/"), csp = home.headers.get("content-security-policy"), html = await home.text();

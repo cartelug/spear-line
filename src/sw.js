@@ -59,6 +59,6 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET" || url.origin !== location.origin) return;
   if (url.pathname.endsWith("/site-config.js") || url.pathname.includes("/api/")) return;
   if (request.mode === "navigate") return event.respondWith(page(event));
-  if (url.searchParams.has("v") || /\/assets\/(fonts\/|icons\.svg|logo\.svg|favicon|grain)/.test(url.pathname)) return event.respondWith(asset(request));
+  if (url.searchParams.has("v") || /\/assets\/(fonts\/|icons\.svg|logo-wordmark-gold\.png|favicon|grain)/.test(url.pathname)) return event.respondWith(asset(request));
   if (/\/assets\/(visuals|backdrops)\//.test(url.pathname)) return event.respondWith(media(event));
 });

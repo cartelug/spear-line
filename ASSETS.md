@@ -2,10 +2,11 @@
 
 ## Logo
 
-- `assets/spear-line-logo.png`: the original Spear Line white transparent logo, unchanged.
-- `assets/logo.svg`: a vector trace of that logo made for V9, with each letterform as its own `<symbol>` (`g-s`, `g-p`, `g-e1`, `g-a`, `g-r`, …) so the preloader can animate them individually and the header can draw the logo crisply at any size. It is a trace, not a redesign.
-- `assets/spear-mark.svg`, `assets/favicon.svg`: the spear-and-line symbol from V7, recoloured to the V9 palette (`#211A13` ground, `#F2B65A` mark). `favicon-32.png`, `favicon-48.png`, `favicon.ico`, `apple-touch-icon.png`, `icon-192.png` and `icon-512.png` are rendered from it.
-- `assets/og-image.jpg` (1200 × 630): the road hero, logo and tagline, regenerated for V9.
+- `assets/logo-wordmark-gold.png`: the approved complete horizontal lowercase gold Spear Line wordmark, with the hunter and antelope details intact and the circle removed. The exact supplied 2172 × 724 artwork is used in the header, footer, preloader and Bar card. Its geometry has not been redrawn or rearranged. The header applies the permitted black production conversion on white.
+- `favicon-32.png`, `favicon-48.png`, `favicon.ico`, `apple-touch-icon.png`, `icon-192.png` and `icon-512.png`: square production exports with the complete wordmark centred on navy.
+- `assets/og-image.png` (1200 × 630): a launch share card pairing the exact wordmark with the current port illustration and headline.
+
+Run `node scripts/render-brand-assets.mjs` to regenerate the icon and share exports from the approved PNG. The script scales the supplied wordmark proportionally; no isolated figure or alternate lettering is used.
 
 ## Photography
 

@@ -1249,3 +1249,21 @@ body{background:#fff;color:var(--ink)}body::after{content:none}
 @media(prefers-reduced-motion:reduce){
 .v13-service-card,.v13-service-photo img,.v13-path{transition:none}
 }
+.site-header .brand-logo{display:block;width:154px;height:auto;filter:brightness(0);object-fit:contain}
+.site-header.is-scrolled .brand-logo{width:142px}
+.footer-logo{display:block;width:195px;height:auto;max-width:100%;margin-bottom:22px;object-fit:contain}
+.footer-wordmark{height:clamp(90px,17vw,260px);opacity:.18}
+.footer-wordmark .wordmark{display:block;width:100%;height:auto;object-fit:contain}
+.bar-card-logo{display:block;width:155px;height:auto;object-fit:contain}
+.pl-logo{display:block;width:min(74vw,520px);height:auto;object-fit:contain;opacity:1}
+.pl-line{width:min(74vw,520px)}
+.site-header .nav-cta{--bg:#086e93;--sweep:#075574;--disc-fg:#075574}
+.dock .dock-cta{background:#086e93;color:#fff}
+.btn-primary{--bg:#a45b0c;--fg:#fff;--sweep:#783d06}
+.v13-hero .hero-title .v13-accent{color:#995005}
+.v13-eyebrow,.v13-service-label{color:#895014}
+.v13-path-sand .v13-tags span{color:#82470b}
+.v13-path-sand .v13-path-icon{background:#a45b0c}
+@media(max-width:1170px){.site-header .brand-logo{width:135px}}
+@media(max-width:599px){.site-header .brand-logo{width:132px}.site-header.is-scrolled .brand-logo{width:126px}.footer-logo{width:175px}}
+@media(prefers-reduced-motion:reduce){.pl-logo{transition:none}}

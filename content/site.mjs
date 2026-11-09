@@ -119,7 +119,7 @@ export const services = [
 
 export const home = {
   hero: {
-    kicker: 'South Sudan · Trading, enterprise & opportunity',
+    kicker: 'Trading, supply & logistics',
     title: ['One company.', 'More ways forward.'],
     lede: 'Vehicles, sourcing, business supplies and logistics today. A wider portfolio of ideas and opportunities for tomorrow.',
     primary: 'Start a conversation',
