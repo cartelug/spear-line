@@ -1,0 +1,8 @@
+| Command | Result |
+| --- | --- |
+| `npm run build` | 16 pages, 11 stylesheets (75.2 KB), Pages mirror in sync |
+| `npm run check` | pass: syntax of every script, `site.css` matches `src/styles`, Pages root matches `public/` |
+| `npm test` (content, structure, tones and seams, CSP, motion tokens, icons, Line Field, wordmark integrity, server) | **39 / 39 pass** |
+| `npm run test:e2e` (Chromium, the real Node host) | **18 / 18 pass** |
+
+The browser suite covers: axe (WCAG 2.2 AA and best practice) on all 15 pages at desktop and phone with and without Reduce motion; no overflow at four widths and, for the key pages, at all ten widths plus landscape phones, 200% zoom and large text; the preloader's duration (under 1.8 s desktop, 1.2 s phone) with images and fonts blocked, and its skip conditions (Save-Data, 2g, reload, back/forward, same-site link); Reduce motion as a complete static design (nothing hidden, nothing animating, route drawn); no hidden content without JavaScript or without IntersectionObserver; reveals armed only below the first screen; both call lines exact and no `mailto:`; the phone menu (sheet, focus trap, focus return); visible keyboard focus; view-transition navigation, back and forward; 44 px phone tap targets and the dock never covering footer links; plus the existing enquiry, consignment-note, FAQ and timeline behaviour.

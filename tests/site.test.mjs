@@ -70,19 +70,26 @@ test("typography is MTN Brighter Sans Bold for display and bold runs and Sky Tex
 
 test("content is never hidden unless a script owns the exit", async () => {
   const styles = (await css()).replace(/\/\*[\s\S]*?\*\//g, "");
-  const guard = /html\.(motion-ok|is-preloading|pl-run|pl-exit|menu-open|is-scrolling)|\.pl-|\.preloader|^\s*\[hidden\]|\.skip|\.honey|input|\.site-nav|\.nl::after|\.w::after|\.marquee ul\+ul|\.cursor|\[data-tilt\]::after|\.process-frame|\.bar-card::after|\.is-editing|\.form-message:empty|\.faq-list details\.is-filtered/;
+  const guard = /html\.(rv-on|is-preloading|pl-exit|menu-open|is-scrolling)|\.rv-arm|\.hero\+\.seam|^\.lf,\.hero-panel::before$|\.pl-|\.preloader|^\s*\[hidden\]|\.skip|\.honey|input|\.site-nav|\.nl::after|\.w::after|\.marquee ul\+ul|\.cursor|\[data-tilt\]::after|\.process-frame|\.bar-card::after|\.is-editing|\.form-message:empty|\.faq-list details\.is-filtered/;
   for (const rule of styles.split(/(?<=\})/).map(r => r.trim()).filter(Boolean)) {
     const [selector, body = ""] = rule.split("{");
     if (!/opacity:0[;}]|visibility:hidden|display:none/.test(body)) continue;
     if (/^\s*(from|to|\d+%)/.test(selector) || /@keyframes/.test(selector)) continue;
-    if (/display:none/.test(body) && !/opacity:0|visibility:hidden/.test(body) && /\.nav-list a::before|\.(dock|menu-toggle|nav-note|intro-media|process-media|rail-hint|hero-scroll|card-text|waybill-kind)|::-webkit|\.marquee ul\+ul|\.bar-card::after|\.btn-primary|\[hidden\]|\.form-message|is-filtered|\.cursor/.test(selector)) continue;
+    if (/display:none/.test(body) && !/opacity:0|visibility:hidden/.test(body) && /\.nav-list a::before|\.(dock|menu-toggle|nav-note|menu-call|rail-hint|card-text|waybill-kind)|::-webkit|\.marquee ul\+ul|\.bar-card::after|\.btn-primary|\[hidden\]|\.form-message|is-filtered|\.cursor/.test(selector)) continue;
     assert.ok(guard.test(selector), "unguarded hidden state: " + selector.trim().slice(0, 90));
   }
-  const boot = await bootSource();
-  assert.match(boot, /if \(!root\.classList\.contains\("motion-live"\)\) \{ root\.classList\.remove\("motion-ok"\); root\.classList\.add\("motion-late"\); \}/, "reveal states are lifted if motion never starts");
-  assert.match(await read("motion.js"), /if \(root\.classList\.contains\("motion-late"\)\) revealables\.forEach\(el => el\.classList\.add\("is-in"\)\)/, "a late motion module never hides content again");
-  assert.match(boot, /setTimeout\(finish, MAX \+ 400\)/, "the preloader has a fail-safe");
-  assert.match(await read("motion.js"), /root\.classList\.add\("motion-live"\)/);
+  const boot = await bootSource(), motion = await read("motion.js");
+  // Nothing is hidden on account of a script that may never run: reveal states exist only on elements that
+  // motion.js has armed (rv-arm), after IntersectionObserver is proven, and only below the first screen.
+  assert.doesNotMatch(boot, /motion-late/, "no start-up lift is needed because nothing is hidden at start-up");
+  assert.match(styles, /html\.rv-on \[data-reveal\]\.rv-arm:not\(\.is-in\)\{opacity:0/);
+  assert.doesNotMatch(styles, /html\.motion-ok \[data-reveal\]/, "reveals are not hidden by the motion flag alone");
+  assert.match(motion, /"IntersectionObserver" in window/); assert.match(motion, /classList\.add\("rv-arm"\)/); assert.match(motion, /getBoundingClientRect\(\)\.top > innerHeight/, "only elements below the first screen are armed");
+  assert.match(motion, /root\.classList\.add\("rv-on"\)/); assert.match(motion, /setTimeout\(sweep, 4000\)/, "a safety net lifts anything still hidden on screen");
+  assert.match(boot, /setTimeout\(finish, LIFT\)/, "the preloader has a fail-safe");
+  assert.ok(boot.indexOf("setTimeout(finish, LIFT)") < boot.indexOf("function init()"), "the fail-safe is registered before anything that could throw");
+  assert.match(styles, /pl-failsafe 1ms linear 2\.4s forwards/, "a CSS timer hides the preloader even if scripts stop");
+  assert.match(motion, /root\.classList\.add\("motion-live"\)/);
 });
 
 test("neighbouring sections blend at their seam and the footer picks up the last tone", async () => {
@@ -98,10 +105,10 @@ test("neighbouring sections blend at their seam and the footer picks up the last
       }
     });
     const last = tones.at(-1)?.tone;
-    if (last && last !== "soil") assert.match(html, new RegExp('<footer class="site-footer tone-soil from-' + last + '"'), page + " footer blend");
+    if (last && last !== "abyss") assert.match(html, new RegExp('<footer class="site-footer tone-abyss from-' + last + '"'), page + " footer blend");
   }
   const styles = await css();
-  for (const tone of ["soil", "umber", "earth", "olive", "dusk", "sand", "bone"]) {
+  for (const tone of ["abyss", "navy", "ocean", "umber", "paper", "sand", "mist"]) {
     assert.match(styles, new RegExp("\\.from-" + tone + "\\{--from-c:color-mix\\(in oklab,var\\(--tone-c\\),var\\(--" + tone + "\\)\\)\\}"));
     assert.match(styles, new RegExp("\\.to-" + tone + "\\{--to-c:color-mix\\(in oklab,var\\(--tone-c\\),var\\(--" + tone + "\\)\\)\\}"));
   }
@@ -206,13 +213,18 @@ test("pages stay out of search results until a launch origin is supplied", async
   assert.equal(await exists("sitemap.xml"), false);
 });
 
-test("motion respects Reduce motion and pauses what is offscreen", async () => {
+test("motion respects Reduce motion, pauses what is offscreen and while scrolling, and uses the tokens", async () => {
   const motion = await read("motion.js"), styles = await css();
   assert.match(motion, /reduced\(\)/); assert.match(motion, /spear-line-motion/); assert.match(motion, /is-paused/);
-  assert.match(motion, /fine = matchMedia\("\(hover:hover\) and \(pointer:fine\)"\)/, "pointer effects only for fine pointers");
   assert.match(styles, /html\.motion-reduced \*,html\.motion-reduced \*::before,html\.motion-reduced \*::after\{animation:none!important/);
   assert.match(styles, /@media\(prefers-reduced-motion:reduce\)/);
-  assert.match(styles, /html\.motion-ok \.is-paused img,html\.motion-ok \.is-paused\{animation-play-state:paused\}/);
+  assert.match(styles, /html\.motion-ok \.is-paused img,html\.motion-ok \.is-paused,html\.motion-ok \.is-paused::before\{animation-play-state:paused\}/);
+  assert.match(styles, /html\.is-scrolling \.pan img,html\.is-scrolling \.glow span/, "ambient loops pause while scrolling");
+  // Motion tokens: durations, easings, distances and stagger are defined once and used by the motion layer.
+  for (const token of ["--dur-1", "--dur-2", "--dur-3", "--dur-4", "--dur-5", "--ease-out", "--ease-io", "--dist-2", "--dist-3", "--stagger"]) assert.ok(styles.includes(token + ":"), token + " is defined");
+  // Nothing in a keyframe animates layout: transform, opacity, clip-path, stroke offset and offset-distance only.
+  const keyframes = [...styles.matchAll(/@keyframes [\w-]+\{([\s\S]*?\})\}/g)].map(m => m[1]).join(" ");
+  assert.doesNotMatch(keyframes, /(?:^|[{;\s])(?:width|height|top|left|right|bottom|margin|padding)\s*:/, "no keyframe animates layout");
 });
 
 test("pages inline their first-screen styles and boot script, then load one bundled stylesheet without blocking", async () => {
@@ -235,7 +247,7 @@ test("pages inline their first-screen styles and boot script, then load one bund
   }
   assert.match(boot, /link\.media = "all"/);
   const styles = await css();
-  for (const marker of [".hero-veil", ".bento", ".route-stage", ".process-media", ".waybill", ".preloader", ".bar-card", ".form-card"]) assert.ok(styles.includes(marker), marker);
+  for (const marker of [".hero-panel", ".svc-grid", ".route-steps", ".div-card", ".waybill", ".preloader", ".bar-card", ".form-card"]) assert.ok(styles.includes(marker), marker);
 });
 
 test("the design avoids template tells: accent words, eyebrow labels, dot-joined strings, arrow glyphs and tracked caps", async () => {
@@ -278,4 +290,53 @@ test("V12 six-division model, digital offer and Joh Ayom profile remain grounded
   assert.match(founderPage, /Our idea is simple: anyone with a vehicle to find/);
   assert.match(founderPage, /Field work illustration|Operations in practice \/ illustrative image/);
   assert.doesNotMatch(homePage, /Spear Line in South Sudan/);
+});
+
+test("icons share one stroke system: 48 px grid, 2 px round strokes, and every referenced symbol exists", async () => {
+  const sprite = await read("assets/icons.svg");
+  const symbols = [...sprite.matchAll(/<symbol id="([\w-]+)" viewBox="([^"]+)">([\s\S]*?)<\/symbol>/g)].map(m => ({ id: m[1], box: m[2], body: m[3] }));
+  assert.ok(symbols.length >= 35, "sprite has " + symbols.length + " symbols");
+  const exceptions = new Set(["i-spear", "i-mark", "i-quote", "i-arrow", "i-chevron", "i-search"]); // the solid spear and quote, the 24 px mark, and three UI glyphs drawn 2.2 to 2.6 px for optical size at small sizes
+  for (const s of symbols.filter(s => !exceptions.has(s.id))) {
+    assert.equal(s.box, "0 0 48 48", s.id + " uses the 48 px grid");
+    assert.match(s.body, /stroke-width="2"/, s.id + " uses a 2 px stroke"); if (/<path/.test(s.body)) assert.match(s.body, /stroke-linecap="round"/, s.id); assert.match(s.body, /stroke-linejoin="round"/, s.id);
+    assert.doesNotMatch(s.body, /fill="(?!none)[^"]+"/, s.id + " is a line icon, not filled");
+  }
+  for (const id of ["i-materials", "i-wellness", "i-property", "i-web", "i-brand", "i-booking", "i-video", "i-megaphone", "i-automation", "i-commerce", "i-analytics", "i-ai"]) assert.ok(symbols.some(s => s.id === id), id + " exists");
+  // Every division and every digital capability has a symbol, and none is a handshake or a partnership mark.
+  for (const item of [...content.divisions, ...content.digitalCapabilities]) assert.ok(symbols.some(s => s.id === item.icon), (item.name || item.title) + " has icon " + item.icon);
+  assert.doesNotMatch(sprite, /handshake|partner/i);
+  for (const id of ["i-arrow", "i-chevron", "i-search"]) { const body = symbols.find(s => s.id === id).body; const w = Number(body.match(/stroke-width="([\d.]+)"/)[1]); assert.ok(w >= 2 && w <= 2.6, id + " stroke " + w); }
+});
+
+test("the Line Field hero background is original, small and identical on every build", async () => {
+  const svg = await read("assets/line-field.svg");
+  assert.ok(svg.length < 14000, "contours are " + svg.length + " bytes");
+  assert.ok((svg.match(/<path/g) || []).length >= 10, "contour lines are present");
+  assert.doesNotMatch(svg.replace(/xmlns="[^"]+"/, ""), /href=|<image|<script|https?:/, "no external references");
+  const { spawnSync } = await import("node:child_process"), before = svg;
+  const run = spawnSync(process.execPath, ["scripts/line-field.mjs"], { cwd: resolve(pub, ".."), encoding: "utf8" });
+  assert.equal(run.status, 0, run.stderr); assert.equal(await read("assets/line-field.svg"), before, "regenerating gives the same file");
+  const home = await read("index.html"); assert.match(home, /class="lf" aria-hidden="true"/); assert.match(home, /class="rt" viewBox="0 0 800 600"/);
+});
+
+test("the wordmark is only recoloured and scaled proportionally, never redrawn, cropped or stretched", async () => {
+  const styles = (await css()).replace(/\/\*[\s\S]*?\*\//g, "");
+  for (const rule of styles.split(/(?<=\})/).filter(r => /(^|[\s,.])(brand-logo|footer-logo|pl-logo|wordmark|bar-card-logo)\b/.test(r.split("{")[0]))) {
+    const body = rule.split("{")[1] || "";
+    assert.doesNotMatch(body, /(^|;)height:\d/, "logo height is never fixed independently of its width: " + rule.slice(0, 80));
+    assert.doesNotMatch(body, /object-fit:(cover|fill)|clip-path|transform:[^;]*scale[XY]|-webkit-text-stroke/, "logo is not cropped, stretched or outlined: " + rule.slice(0, 80));
+    if (/filter:/.test(body)) assert.match(body, /filter:brightness\(0\)( invert\(1\))?(;|\})/, "only the black and white conversions are applied: " + rule.slice(0, 80));
+  }
+  const png = await readFile(resolve(pub, "assets", "logo-wordmark-gold.png")); assert.equal(png.readUInt32BE(16), 2172); assert.equal(png.readUInt32BE(20), 724);
+});
+
+test("heroes carry the route, every page uses the Line Field, and the photograph is labelled illustrative", async () => {
+  for (const page of ["index.html", "divisions.html", "digital.html", "contact.html", "vehicles.html", "about.html"]) {
+    const html = await read(page);
+    assert.match(html, /<div class="lf" aria-hidden="true">/, page + " uses the Line Field");
+    assert.match(html, /<figcaption>(Illustrative image|Operations in practice \/ illustrative image)<\/figcaption>/, page + " labels the hero photograph");
+  }
+  assert.match(await read("founder.html"), /Operations in practice \/ illustrative image/);
+  assert.doesNotMatch(await read("founder.html"), /(this is|photo of|pictured:?) Joh/i, "the illustrative image is never claimed to be Joh");
 });

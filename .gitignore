@@ -8,3 +8,4 @@ coverage/
 *.log
 # Local responsive inspection fixtures
 public/qa-responsive.*
+docs/v15/*.partial.json

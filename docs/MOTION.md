@@ -1,48 +1,37 @@
-# Spear Line motion system (V11)
+# Spear Line motion system (V15)
 
-Motion lives in three places: `src/boot.js` (preference and preloader, inlined into every page so it runs before paint), `public/motion.js` (scroll and pointer effects) and `src/styles/70-motion.css` (states and keyframes).
+One language: **a route that traces.** Everything that moves is a version of four patterns, built from the tokens in `00-tokens.css` (durations 120/200/360/600/900 ms, easings `--ease-out/-io/-std/-spring`, distances 8/16/28 px, stagger 60 ms capped at six steps). Motion lives in `src/boot.js` (preference and preloader, inlined into every page), `public/motion.js` (reveals, pausing, timeline, FAQ index) and `src/styles/45-preloader.css` and `70-motion.css`.
+
+## Four patterns
+
+| Pattern | Where | How |
+| --- | --- | --- |
+| **Route trace** | Preloader line, hero route, "How we work" route, section seams, process timeline | A gold line draws (`stroke-dashoffset` or `scaleY`), and the stops appear as it reaches them |
+| **Directional rise** | Copy, cards, CTAs, headings | 28 px rise and fade (`data-reveal`), headings rise word by word out of a mask (`data-split`); first-screen headings are split at build time and animate in CSS from the first paint |
+| **Photo reveal** | Panels, feature images | A clip that opens (`data-reveal="clip"`) while the photograph settles from 1.08 to 1 |
+| **Symbol feedback** | Icons, buttons, cards | Hover, keyboard focus and touch (`:active`) nudge or tilt the icon and lift the card; the arrow disc slides on buttons |
+
+Page transitions use cross-document view transitions where supported (`@view-transition`): 200 ms out, 360 ms in, a 28 px shift that reverses on back (`pagereveal` sets the `back` or `forward` type in boot.js). A service card's photograph grows into that service page's hero. Other browsers navigate normally.
 
 ## Safety model
 
-- Every hidden starting state is guarded by `html.motion-ok`. boot.js adds it before first paint; motion.js confirms with `motion-live`. If motion.js has not confirmed within 4 s, boot.js swaps `motion-ok` for `motion-late` and all content shows. Without JavaScript nothing is ever hidden.
-- `html.motion-reduced` (set from the system preference or the saved site control) and `@media (prefers-reduced-motion: reduce)` both stop every animation and transition, remove parallax and show final states (route drawn, process lit, words lit, glass full).
-- Continuous effects (panning, marquee, glow, backdrops) pause when offscreen via `.is-paused`, and the marquee pauses on hover.
+- **Nothing is hidden at start-up.** A reveal state exists only on an element carrying `.rv-arm`, which motion.js adds after confirming `IntersectionObserver` works, and only to elements below the first screen. `html.rv-on` turns the states on. If scripts or the observer are missing, nothing is ever armed and everything is visible. A safety net lifts anything still hidden on screen after four seconds.
+- `html.motion-reduced` (system preference or the saved site control) and `@media (prefers-reduced-motion: reduce)` stop every animation and transition. The design is complete without motion: routes are drawn, every section is visible.
+- **Only transform, opacity, clip-path, stroke offset and offset-distance animate**; no keyframe touches layout (a unit test enforces it).
+- Ambient loops (image drift, glows, the Bar lamp) pause when offscreen (`.is-paused`), while the page is being scrolled (`html.is-scrolling`) and when the tab is hidden. The reading progress bar and header state are the only scroll-linked work, in one rAF loop that reads first and writes after.
+- No scroll-jacking, no cursor follower, no pointer tilt.
 
-## Effects
+## Preloader
 
-| Effect | Where | How |
+First visit only: once per browser tab, on a fresh navigation, never for reload, back/forward, same-site arrival, Save-Data, 2g connections, a hidden tab or Reduce motion.
+
+| Step | Desktop | Phone |
 | --- | --- | --- |
-| Preloader | First external visit | Logo glyphs rise in sequence, spear travels with real load progress, doors open, logo FLIPs into the header (0.7–2 s on phones, 1–2.4 s on desktop, hard cap +0.4 s); the page is painted underneath the whole time |
-| First-screen headings | Every `h1` (`.title-intro`) | Split into words at build time and animated in CSS from the first paint: words rise from just below their line, starting partly visible so the largest text counts as painted at once. After the preloader they settle in place. Held while a page is prerendered |
-| Split headings | Every `h2[data-split]` | Words rise out of a mask when scrolled into view; widths reserved |
-| Reveals | `data-reveal` up / fade / scale / clip | Intersection Observer adds `.is-in`; clip reveals un-crop the frame and settle the image scale |
-| Stagger | `data-stagger` lists | Children get `--d` delays |
-| Reading reveal | Intro statement | Words brighten as the statement scrolls through the viewport |
-| Image panning | `.pan-a`, `.pan-b` | 26–30 s alternating scale and drift |
-| Parallax | `data-parallax` | CSS scroll-driven animation (`animation-timeline: view()`) on the compositor where supported; elsewhere a script that measures every layer first and writes after. Wide screens only |
-| Tilt | `data-tilt` cards | Pointer-driven rotateX/Y, fine pointers only |
-| Counters | Stats (when filled) | Count up once on entry |
-| Marquee | Tape, partners | 42 s loop, paused offscreen or on hover |
-| Route line | Home | SVG path drawn from scroll, spear positioned with `getPointAtLength`, nodes light |
-| Process | Home, How it works | Sticky image swaps as steps become active |
-| Stamp | Hero waybill | Once, 1.1 s after load (held while the preloader runs) |
-| Bar pour | Bar card | Liquid scales up, ice drops, pick stirs, once |
-| Menu | Phone | Circular clip reveal from the button, links rise in |
-| Header | All | Hides on scroll down, returns on scroll up, glass when scrolled; the reading progress bar is a CSS scroll timeline where supported |
-| Page transitions | Supported browsers | Cross-document view transitions: fade out, lift in; a service card's photograph grows into that service page's hero and shrinks back on the way home |
-| Light beam and dust | Every hero photograph | A diagonal beam of low sun crosses every 15 s; 8 motes drift upward on a 34 s loop (a tiled layer moved by transform). Both fade out while the page is scrolled and settle back |
-| Hero depth | Home hero, fine pointers | Photograph moves up to 16 px and the enquiry note up to 9 px against the pointer, eased by a script (`--hx`, `--hy`) |
-| Topographic drift | Home route section | Contour image scales and drifts over 46 s, paused offscreen and while scrolling |
-| Bar lamp | Bar hero | Warm radial light pulses and flickers on a 6 s loop |
-| Outlined tagline | Closing banner | Stroke-only text slides 50 % of its width as the banner crosses the screen (CSS scroll timeline) |
-| Footer wordmark | Footer | Rises from below and fades in as the footer enters (CSS scroll timeline) |
-| Gallery focus | Home gallery rail | The photograph nearest the middle of the rail is largest; others scale to 88 % and dim (CSS view timeline on the rail) |
-| Heading rules | Section headings | A short gold rule draws in |
-| Spear nudge | Every kicker | The spear icon tilts every 4 s |
-| Route node pulse | Home route | Lit nodes pulse |
-| 404 | Lost page | Spear travels a broken route over a topographic map |
-| Cursor | Fine pointers | Soft ring that grows over interactive elements |
+| Paper panel with the exact wordmark at full contrast (a 160 ms fade at most, never blurred or dimmed) | 0 s | 0 s |
+| The route line draws, the spear motif travels it (SVG animation, locked together), nodes appear, a soft sheen passes over the wordmark | 0 to 0.8 s | 0 to 0.8 s |
+| The panel lifts once the sequence has played and the hero photograph and fonts are ready | from 1.05 s, no later than 1.35 s; lift 0.45 s | from 0.8 s, no later than 0.94 s; lift 0.26 s |
+| The hero route is already drawing in the same place, and the headline rises | continuous | continuous |
 
-## Performance
+Measured with `npm run qa:preloader`: 1.52 s on desktop and 1.08 s on a phone, with the page unlocked even when images and fonts are blocked. There is no progress counter and no delay for effect.
 
-Animations use transform, opacity and clip-path only. Ambient loops (backdrop drift, glows, image panning) pause while the page is being scrolled and when offscreen. Scroll effects read layout first and write after, so a frame never alternates the two. Measured CLS is 0 to 0.001 with all motion running. Observers disconnect after one-shot effects.
+**Fail-safes:** the `finish` timer is registered before any other preloader code; a CSS animation on `.preloader` hides it at 2.4 s even if scripts stop; the page (`main`, header, footer, dock, skip link) is `inert` only while the panel is up.

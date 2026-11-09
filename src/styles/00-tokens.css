@@ -1,9 +1,10 @@
-/* Spear Line design tokens.
+/* Spear Line design tokens (V15).
    Type: MTN Brighter Sans Bold (display and every bold run) and Sky Text (reading text), self-hosted.
    "Spear Text" maps regular weights to Sky Text and bold weights (600+) to MTN Brighter Sans Bold, so emphasis
    always uses a real bold, never a synthesised one. Fallbacks are Arial scaled to each face's measured width and
    vertical metrics (Chromium canvas against Arial), so text does not shift when the fonts arrive.
-   Colour: sampled from the photography (umber, earth, olive, sand) with sun gold for action and river teal for focus. */
+   Colour: deep navy and warm paper, with gold for action. The warm tones are sampled from the photography
+   (container port, aerial road, warehouse, bar), so dark sections pick up the light of the images beside them. */
 @font-face{font-family:"Spear Display";src:url(assets/fonts/mtn-brighter-sans-bold.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
 @font-face{font-family:"Spear Text";src:url(assets/fonts/sky-text-regular.woff2) format("woff2");font-weight:100 500;font-style:normal;font-display:swap}
 @font-face{font-family:"Spear Text";src:url(assets/fonts/mtn-brighter-sans-bold.woff2) format("woff2");font-weight:600 900;font-style:normal;font-display:swap}
@@ -12,14 +13,34 @@
 @font-face{font-family:"Text Fallback";src:local("Arial Bold"),local("Arial-BoldMT"),local("Arial");font-weight:600 900;size-adjust:102.9%;ascent-override:94.9%;descent-override:31.5%;line-gap-override:0%}
 
 :root{
-  /* Tones, darkest to lightest */
-  --soil:#15110C;--umber:#211A13;--earth:#2E241A;--olive:#232A1D;--dusk:#2A1E24;--sand:#E9DFCE;--bone:#F5F0E7;
+  /* Dark tones, deepest first */
+  --abyss:#061F30;--navy:#082F47;--ocean:#0D3F5C;--umber:#2B2016;
+  /* Light tones */
+  --paper:#FBF8F2;--sand:#F0E7D8;--mist:#EDF3F6;
+  /* Image-derived warm tones (average of the 480 px photographs, darkened): port, ground, bar */
+  --tone-port:#44392B;--tone-ground:#493926;--tone-bar:#3B2512;
   /* Text */
-  --ink:#1B1611;--ink-2:#4D4237;--chalk:#F5EFE6;--chalk-2:#CFC3B2;
-  /* Accents */
-  --sun:#F2B65A;--sun-2:#FFD08A;--sun-deep:#8F5308;--river:#6CC0B4;--river-deep:#1E6C64;--danger:#A8251B;
+  --ink:#162C39;--ink-2:#4B6270;--chalk:#fff;--chalk-2:#C9DCE5;
+  /* Accents: gold for action; sky for focus and information */
+  --gold:#EB9122;--gold-2:#F6AD46;--gold-3:#FFD08A;--gold-deep:#A45B0C;
+  --sky:#0B9DCB;--sky-deep:#086E93;--danger:#A8251B;
+  /* Older names, kept as aliases while rules move to the names above */
+  --soil:var(--abyss);--earth:var(--ocean);--olive:var(--ocean);--dusk:var(--umber);--bone:var(--paper);
+  --sun:var(--gold-2);--sun-2:var(--gold-3);--sun-deep:var(--gold-deep);--river:var(--sky);--river-deep:var(--sky-deep);
   /* Lines and surfaces */
-  --line-dark:rgba(245,239,230,.14);--line-light:rgba(27,22,17,.13);
+  --line-dark:rgba(255,255,255,.16);--line-light:rgba(22,44,57,.13);
+  --shadow-1:0 1px 0 rgba(255,255,255,.06) inset,0 18px 40px -24px rgba(3,18,29,.55);
+  --shadow-card:0 1px 2px rgba(10,54,76,.06),0 14px 34px -18px rgba(10,54,76,.22);
+  --shadow-2:0 40px 90px -40px rgba(3,18,29,.65);
+  /* Gradients: depth that guides the eye without muddying text or washing out photographs */
+  --g-navy:linear-gradient(160deg,var(--abyss) 0%,var(--navy) 44%,#0F4766 100%);
+  --g-horizon:radial-gradient(60% 70% at 82% 112%,rgb(235 145 34 / .34),rgb(235 145 34 / 0) 62%),radial-gradient(50% 60% at 6% -8%,rgb(40 150 170 / .24),rgb(40 150 170 / 0) 60%);
+  --g-dawn:linear-gradient(0deg,rgb(235 145 34 / .22),rgb(235 145 34 / 0) 42%),var(--g-navy);
+  --g-umber:linear-gradient(165deg,#1E160F 0%,var(--umber) 46%,#3A2A1C 100%);
+  --g-paper:linear-gradient(180deg,var(--paper) 0%,#F6F0E6 100%);
+  --g-veil-navy:linear-gradient(90deg,rgb(6 31 48 / .94) 0%,rgb(6 31 48 / .72) 46%,rgb(6 31 48 / .1) 100%);
+  --g-veil-up:linear-gradient(0deg,rgb(6 31 48 / .72),rgb(6 31 48 / 0) 55%);
+  --g-gold:linear-gradient(90deg,var(--gold-2),var(--gold-3));
   /* Type */
   --font-display:"Spear Display","Display Fallback",system-ui,sans-serif;
   --font-text:"Spear Text","Text Fallback",system-ui,sans-serif;
@@ -30,16 +51,18 @@
   --t-xl:clamp(1.375rem,1.2rem + .8vw,1.875rem);
   --t-2xl:clamp(1.625rem,1.3rem + 1.5vw,2.5rem);
   --t-3xl:clamp(2rem,1.5rem + 2.4vw,3.5rem);
-  --t-4xl:clamp(2.375rem,1.6rem + 3.6vw,4.75rem);
-  --t-5xl:clamp(2.75rem,1.7rem + 5vw,6.25rem);
-  --t-6xl:clamp(3rem,1.6rem + 6.8vw,8.25rem);
+  --t-4xl:clamp(2.2rem,1.6rem + 3vw,4.4rem);
+  --t-5xl:clamp(2.5rem,1.7rem + 4vw,5.6rem);
+  --t-6xl:clamp(2.75rem,1.6rem + 5.6vw,7rem);
   --measure:62ch;
-  /* Space and shape */
+  /* Space and shape: fluid, so layouts adapt without per-device overrides */
   --gutter:clamp(20px,5vw,72px);--max:1360px;
-  --r-xl:32px;--r-lg:24px;--r-md:16px;--r-sm:10px;
-  --shadow-1:0 1px 0 rgba(255,255,255,.07) inset,0 22px 44px -26px rgba(0,0,0,.6);
-  --shadow-2:0 50px 100px -40px rgba(0,0,0,.72);
-  /* Motion */
-  --ease-out:cubic-bezier(.16,1,.3,1);--ease-io:cubic-bezier(.65,0,.35,1);--ease-spring:cubic-bezier(.34,1.56,.64,1);
-  color-scheme:dark;interpolate-size:allow-keywords
+  --section:clamp(64px,8vw,128px);--blend:clamp(36px,4.2vw,72px);
+  --gap:clamp(16px,2vw,28px);--gap-lg:clamp(32px,5vw,88px);
+  --r-xl:28px;--r-lg:20px;--r-md:14px;--r-sm:10px;
+  /* Motion: one language. Durations, easings, distances and stagger are used by every animation. */
+  --dur-1:120ms;--dur-2:200ms;--dur-3:360ms;--dur-4:600ms;--dur-5:900ms;
+  --ease-out:cubic-bezier(.16,1,.3,1);--ease-io:cubic-bezier(.65,0,.35,1);--ease-std:cubic-bezier(.2,0,0,1);--ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --dist-1:8px;--dist-2:16px;--dist-3:28px;--stagger:60ms;
+  color-scheme:light;interpolate-size:allow-keywords
 }

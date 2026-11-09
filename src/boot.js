@@ -26,79 +26,69 @@
     document.addEventListener("prerenderingchange", function () { root.classList.remove("is-prerendering"); }, { once: true });
   }
 
+  // Cross-document view transitions: tell the browser which way the visitor is travelling, so back and forward
+  // move in opposite directions. Browsers without view transitions never fire this and navigate normally.
+  window.addEventListener("pagereveal", function (event) {
+    try {
+      var activation = window.navigation && navigation.activation;
+      if (!event.viewTransition || !activation) return;
+      var back = activation.navigationType === "traverse" && activation.from && activation.entry.index < activation.from.index;
+      event.viewTransition.types.add(back ? "back" : "forward");
+    } catch (e) { /* The transition still runs without a direction. */ }
+  });
+
   var reduced = false;
   try { reduced = localStorage.getItem("spear-line-motion") === "reduce"; } catch (e) { /* Preferences are optional. */ }
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) reduced = true;
-  if (reduced) root.classList.add("motion-reduced");
-  else {
-    // Reveal states apply from the first paint; if the motion module never confirms, they are lifted.
-    root.classList.add("motion-ok");
-    setTimeout(function () { if (!root.classList.contains("motion-live")) { root.classList.remove("motion-ok"); root.classList.add("motion-late"); } }, 4000);
-  }
+  // motion-ok only says that decorative motion is allowed. Nothing is hidden because of it: reveal states
+  // are armed later, by motion.js, and only on elements below the first screen.
+  root.classList.add(reduced ? "motion-reduced" : "motion-ok");
 
   // The preloader greets a visitor arriving from outside: once per browser tab, on a fresh navigation,
-  // never under Reduce motion, Save-Data, reloads, back/forward or links followed within the site.
+  // never under Reduce motion, Save-Data or a slow connection, reloads, back/forward or links followed within the site.
   var KEY = "spear-line-intro", seen = false;
   try { seen = !!sessionStorage.getItem(KEY); sessionStorage.setItem(KEY, "1"); } catch (e) { seen = true; }
   var nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
   if (nav && nav.type !== "navigate") seen = true;
   if (document.referrer) { try { if (new URL(document.referrer).origin === location.origin) seen = true; } catch (e) { seen = true; } }
-  if (navigator.connection && navigator.connection.saveData) seen = true;
+  var connection = navigator.connection;
+  if (connection && (connection.saveData || /(^|-)2g$/.test(connection.effectiveType || ""))) seen = true;
   if (reduced || seen || document.visibilityState === "hidden") return;
 
-  // pl-ran stays for the whole visit: first-screen headings then open in place instead of rising from hidden.
-  root.classList.add("is-preloading", "pl-run", "pl-ran");
+  root.classList.add("is-preloading");
   var phone = window.matchMedia("(max-width: 599px)").matches;
-  var started = performance.now(), MIN = phone ? 700 : 1000, MAX = phone ? 2000 : 2400, target = 0.08, shown = 0, done = false, frame = 0;
-  var fill, spear, lineWidth = 0;
+  // The route sequence takes MIN. The panel lifts once it has played and the hero photograph and fonts are ready,
+  // and in any case by LIFT, so the whole preloader (lift included) never runs longer than 1.8 s (1.2 s on phones).
+  var MIN = phone ? 800 : 1050, LIFT = phone ? 940 : 1350, EXIT = phone ? 260 : 450, done = false, minPassed = false, ready = false;
 
-  function render() {
-    shown += (target - shown) * 0.14;
-    if (target >= 1 && 1 - shown < 0.004) shown = 1;
-    if (fill) fill.style.transform = "scaleX(" + shown.toFixed(4) + ")";
-    if (spear) spear.style.transform = "translateX(" + (shown * lineWidth).toFixed(1) + "px) rotate(45deg)";
-    var elapsed = performance.now() - started;
-    if ((shown === 1 && elapsed > MIN) || elapsed > MAX) return finish();
-    frame = requestAnimationFrame(render);
-  }
-  function raise(value) { target = Math.max(target, value); }
-
-  function finish() {
-    if (done) return; done = true; cancelAnimationFrame(frame);
-    var logo = document.querySelector(".pl-logo"), brand = document.querySelector(".site-header .brand-logo");
-    if (logo && brand) {
-      var from = logo.getBoundingClientRect(), to = brand.getBoundingClientRect();
-      if (from.width && to.width) {
-        var scale = to.width / from.width;
-        logo.style.transform = "translate(" + (to.left - from.left) + "px," + (to.top - from.top) + "px) scale(" + scale + ")";
-      }
-    }
-    root.classList.add("pl-exit");
-    setTimeout(function () {
-      setInert(false);
-      root.classList.remove("is-preloading", "pl-run", "pl-exit");
-      document.dispatchEvent(new CustomEvent("spear:preloaded"));
-    }, 720);
-  }
-  // Fail safe: whatever happens, the page is revealed.
-  setTimeout(finish, MAX + 400);
-
-  // While the doors are closed, keyboard focus cannot wander into the hidden page.
   function setInert(on) {
     var parts = document.querySelectorAll("main, .site-header, .site-footer, .dock, .skip");
     for (var i = 0; i < parts.length; i++) parts[i].inert = on;
   }
-  function ready() {
-    if (!done) setInert(true);
-    fill = document.querySelector(".pl-fill"); spear = document.querySelector(".pl-spear");
-    var line = document.querySelector(".pl-line"); lineWidth = line ? line.getBoundingClientRect().width : 0;
-    raise(0.3);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { raise(0.62); });
-    var hero = document.querySelector(".hero-media img, .page-hero img, .lost img");
-    if (!hero || hero.complete) raise(hero ? 1 : 0.9);
-    else { hero.addEventListener("load", function () { raise(1); }); hero.addEventListener("error", function () { raise(1); }); }
-    window.addEventListener("load", function () { raise(1); });
-    frame = requestAnimationFrame(render);
+  function finish() {
+    if (done) return; done = true;
+    root.classList.add("pl-exit");
+    setTimeout(function () {
+      setInert(false);
+      root.classList.remove("is-preloading", "pl-exit");
+      document.dispatchEvent(new CustomEvent("spear:preloaded"));
+    }, EXIT + 20);
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", ready); else ready();
+  // Fail-safe, registered before anything that could throw: whatever happens to scripts, images or fonts,
+  // the page is revealed and focus unlocks. (A CSS animation on .preloader hides it too, should scripts stop.)
+  setTimeout(finish, LIFT);
+  setTimeout(function () { minPassed = true; if (ready) finish(); }, MIN);
+
+  function init() {
+    // While the panel covers the page, keyboard focus cannot wander into the hidden content.
+    if (!done) setInert(true);
+    var hero = document.querySelector(".hero-photo img, .hero-media img, .lost img");
+    var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    var photo = new Promise(function (resolve) {
+      if (!hero || hero.complete) return resolve();
+      hero.addEventListener("load", resolve); hero.addEventListener("error", resolve);
+    });
+    Promise.all([fonts, photo]).then(function () { ready = true; if (minPassed) finish(); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

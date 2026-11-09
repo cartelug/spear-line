@@ -1,6 +1,6 @@
 # Spear Line website
 
-A responsive company site for Spear Line's trading, supply and logistics enquiries, six business divisions, proposed digital capability and founder profile. The site uses the approved complete horizontal gold wordmark. Its photography is illustrative and labelled accordingly.
+A responsive company site for Spear Line's trading, supply and logistics enquiries, six business divisions, proposed digital capability and founder profile, built around one idea: a single route line that connects opportunities. See [DESIGN.md](DESIGN.md) and [docs/MOTION.md](docs/MOTION.md). The site uses the approved complete horizontal gold wordmark. Its photography is illustrative and labelled accordingly.
 
 ## Run locally
 
@@ -22,7 +22,9 @@ For browser tests, run `npm ci`, install Playwright Chromium once, then `npm run
 | `content/site.mjs` | Copy, services, divisions and image descriptions |
 | `scripts/build.mjs` | Page templates, metadata, service worker and sitemap generation |
 | `src/styles/*.css` | Layered styles, bundled into `public/site.css` |
-| `src/styles/critical.json` | Rules inlined for the first screen |
+| `src/styles/critical.json` | Rules inlined for the first screen (regenerate with `npm run critical` after style changes) |
+| `scripts/line-field.mjs` | Generates the Line Field contour background (`assets/line-field.svg`) |
+| `scripts/qa/` | Screenshots, responsive audit, preloader timing and lab performance (`npm run qa:shots`, `qa:responsive`, `qa:preloader`, `qa:perf`) |
 | `public/app.js` and `public/validation.js` | Navigation and enquiry behavior |
 | `server.mjs` | Node host with private enquiry storage, notification and security headers |
 | `scripts/render-brand-assets.mjs` | Exact approved wordmark converted into icons and social artwork |

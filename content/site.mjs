@@ -49,24 +49,24 @@ export const images = {
 
 // V12 company map: opportunities are not presented as verified operational facilities.
 export const divisions = [
-  { number: '01', name: 'Building Materials & Equipment', category: 'Construction & sourcing', status: 'Developing', image: 'warehouse', href: 'contact.html', text: 'Explore requirements for building materials, tools and equipment through a considered sourcing conversation.' },
-  { number: '02', name: 'Motors & Automotive', category: 'Vehicles & mobility', status: 'Enquiry-led', image: 'vehicles-suv', href: 'vehicles.html', text: 'Vehicle trading and sourcing conversations shaped around your preferred model, destination and budget.' },
-  { number: '03', name: 'Food & Beverages', category: 'Business supply', status: 'Enquiry-led', image: 'foodstuffs', href: 'supplies.html', text: 'Discuss product lists, quantities, preferred packaging and delivery requirements.' },
-  { number: '04', name: 'Fitness, Health & Wellness', category: 'Nonclinical concepts', status: 'Concept', image: 'sourcing-detail', href: 'contact.html', text: 'An emerging area of the Spear Line vision, focused on fitness and everyday wellbeing opportunities.' },
-  { number: '05', name: 'Real Estate Services', category: 'Property opportunities', status: 'Concept', image: 'aerial-road', href: 'contact.html', text: 'An area of development for property-related services, subject to confirmation of the operating model.' },
-  { number: '06', name: 'Leisure, Entertainment & Hospitality', category: 'Places & experiences', status: 'Developing', image: 'bar-lounge', href: 'bar.html', text: 'Explore the ideas taking shape around hospitality, leisure and the upcoming Spear Line Bar.' }
+  { number: '01', icon: 'i-materials', name: 'Building Materials & Equipment', category: 'Construction & sourcing', status: 'Developing', image: 'warehouse', href: 'contact.html', text: 'Explore requirements for building materials, tools and equipment through a considered sourcing conversation.' },
+  { number: '02', icon: 'i-vehicle', name: 'Motors & Automotive', category: 'Vehicles & mobility', status: 'Enquiry-led', image: 'vehicles-suv', href: 'vehicles.html', text: 'Vehicle trading and sourcing conversations shaped around your preferred model, destination and budget.' },
+  { number: '03', icon: 'i-supplies', name: 'Food & Beverages', category: 'Business supply', status: 'Enquiry-led', image: 'foodstuffs', href: 'supplies.html', text: 'Discuss product lists, quantities, preferred packaging and delivery requirements.' },
+  { number: '04', icon: 'i-wellness', name: 'Fitness, Health & Wellness', category: 'Nonclinical concepts', status: 'Concept', image: 'sourcing-detail', href: 'contact.html', text: 'An emerging area of the Spear Line vision, focused on fitness and everyday wellbeing opportunities.' },
+  { number: '05', icon: 'i-property', name: 'Real Estate Services', category: 'Property opportunities', status: 'Concept', image: 'aerial-road', href: 'contact.html', text: 'An area of development for property-related services, subject to confirmation of the operating model.' },
+  { number: '06', icon: 'i-glass', name: 'Leisure, Entertainment & Hospitality', category: 'Places & experiences', status: 'Developing', image: 'bar-lounge', href: 'bar.html', text: 'Explore the ideas taking shape around hospitality, leisure and the upcoming Spear Line Bar.' }
 ];
 
 export const digitalCapabilities = [
-  { number: '01', title: 'Websites & online presence', text: 'Responsive business websites, landing pages, company profiles and search foundations.' },
-  { number: '02', title: 'Brand identity & creative', text: 'Visual identities, business documents, presentations and campaign design.' },
-  { number: '03', title: 'Booking & business systems', text: 'Scoping for bookings, ticketing, QR check-in, dashboards and customer portals.' },
-  { number: '04', title: 'Content & video production', text: 'Campaign ideas, motion design, promotional edits and social media content.' },
-  { number: '05', title: 'Marketing & advertising', text: 'Professional social profiles, advertising creative and measurable campaign planning.' },
-  { number: '06', title: 'Automation & infrastructure', text: 'Enquiry workflows, reporting, business email, domains, hosting and support by agreement.' },
-  { number: '07', title: 'Commerce & payments', text: 'Online catalogues, ordering flows and payment integration scoped to the business and local providers.' },
-  { number: '08', title: 'Search & analytics', text: 'Search foundations, measurement plans, dashboards and practical improvements based on visitor behavior.' },
-  { number: '09', title: 'AI & customer workflows', text: 'Carefully scoped assistants, information retrieval and customer support workflows with human oversight.' }
+  { number: '01', icon: 'i-web', title: 'Websites & online presence', text: 'Responsive business websites, landing pages, company profiles and search foundations.' },
+  { number: '02', icon: 'i-brand', title: 'Brand identity & creative', text: 'Visual identities, business documents, presentations and campaign design.' },
+  { number: '03', icon: 'i-booking', title: 'Booking & business systems', text: 'Scoping for bookings, ticketing, QR check-in, dashboards and customer portals.' },
+  { number: '04', icon: 'i-video', title: 'Content & video production', text: 'Campaign ideas, motion design, promotional edits and social media content.' },
+  { number: '05', icon: 'i-megaphone', title: 'Marketing & advertising', text: 'Professional social profiles, advertising creative and measurable campaign planning.' },
+  { number: '06', icon: 'i-automation', title: 'Automation & infrastructure', text: 'Enquiry workflows, reporting, business email, domains, hosting and support by agreement.' },
+  { number: '07', icon: 'i-commerce', title: 'Commerce & payments', text: 'Online catalogues, ordering flows and payment integration scoped to the business and local providers.' },
+  { number: '08', icon: 'i-analytics', title: 'Search & analytics', text: 'Search foundations, measurement plans, dashboards and practical improvements based on visitor behavior.' },
+  { number: '09', icon: 'i-ai', title: 'AI & customer workflows', text: 'Carefully scoped assistants, information retrieval and customer support workflows with human oversight.' }
 ];
 
 // Adjacent requests seen in regional trading. These are enquiry topics, not launched divisions or licensed operations.
