@@ -3,9 +3,9 @@
 // Pages: network first, so content is always current, with the cached copy when offline.
 // Versioned scripts, styles, fonts and icons: cache first; their addresses change with every release.
 // Photographs: served from cache while a fresh copy is fetched, capped so the cache stays small.
-const VERSION = "ba80fc2b2d";
+const VERSION = "0c0b9bfe51";
 const CORE = "spear-core-" + VERSION, PAGES = "spear-pages-" + VERSION, MEDIA = "spear-media";
-const PRECACHE = ["index.html","site.css?v=ba80fc2b2d","app.js?v=ba80fc2b2d","motion.js?v=ba80fc2b2d","validation.js?v=ba80fc2b2d","assets/fonts/mtn-brighter-sans-bold.woff2","assets/fonts/sky-text-regular.woff2","assets/icons.svg","assets/logo-wordmark-gold.png","assets/favicon-32.png"];
+const PRECACHE = ["index.html","site.css?v=0c0b9bfe51","app.js?v=0c0b9bfe51","motion.js?v=0c0b9bfe51","validation.js?v=0c0b9bfe51","assets/fonts/mtn-brighter-sans-bold.woff2","assets/fonts/sky-text-regular.woff2","assets/icons.svg","assets/logo-wordmark-gold.png?v=d0f3959ee7","assets/favicon.svg?v=d0f3959ee7","assets/favicon-16.png?v=d0f3959ee7","assets/favicon-32.png?v=d0f3959ee7","assets/favicon-48.png?v=d0f3959ee7","assets/apple-touch-icon.png?v=d0f3959ee7","assets/icon-192.png?v=d0f3959ee7","assets/icon-512.png?v=d0f3959ee7","assets/icon-maskable-512.png?v=d0f3959ee7","assets/og-image.png?v=d0f3959ee7","assets/logo-wordmark-gold-320.webp?v=d0f3959ee7","assets/logo-wordmark-gold-640.webp?v=d0f3959ee7","site.webmanifest?v=d0f3959ee7"];
 const MEDIA_LIMIT = 60;
 
 self.addEventListener("install", event => {

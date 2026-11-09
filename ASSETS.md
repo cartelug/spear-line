@@ -2,12 +2,19 @@
 
 ## Logo
 
-- `assets/logo-wordmark-gold.png`: the approved complete horizontal lowercase gold Spear Line wordmark, with the hunter and antelope details intact and the circle removed. The exact supplied 2172 × 724 artwork is used in the header, footer, preloader and Bar card. Its geometry has not been redrawn or rearranged. The header applies the permitted black production conversion on white; the footer applies the white conversion (the same alpha mask, so the geometry is unchanged). The ochre is 5.8:1 on white but 2.4:1 on navy, so it is not used unconverted on dark grounds.
-- `favicon-32.png`, `favicon-48.png`, `favicon.ico`, `apple-touch-icon.png`, `icon-192.png` and `icon-512.png`: square production exports with the complete wordmark centred on navy.
-- `field-operations.webp` and `field-materials.webp` (1536 × 1024, with 480 and 768 px versions): the two supplied field illustrations used on the founder, home and divisions pages and in the company profile. They are illustrative; the person in them is not claimed to be Joh Ayom.
-- `assets/og-image.png` (1200 × 630): a launch share card pairing the exact wordmark with the current port illustration and headline.
+The approved artwork is retained as two source PNGs in `brand/`: the complete horizontal wordmark and the supplied circular seal. `scripts/trace-brand.mjs` removes transparent colour noise and traces their alpha silhouettes into portable SVG masters within 0.6 source pixels; lettering, hunter and antelope proportions are retained. Production colours are amber `#B8862B`, black `#111111` and white.
 
-Run `node scripts/render-brand-assets.mjs` (needs ImageMagick 7, `magick`) to regenerate the icon and share exports from the approved PNG. The script scales the supplied wordmark proportionally; no isolated figure or alternate lettering is used.
+- `assets/logo-wordmark-{gold,black,white}.{svg,png}`: transparent horizontal artwork. PNG dimensions remain 2172 × 724. The website keeps the full horizontal mark in its header, footer, preloader and Bar card, with responsive lossless WebP exports at 320 and 640 px. Header and footer apply the existing black and white conversions.
+- `assets/logo-seal-{gold,black,white}.{svg,png}`: the complete circular logo for larger square placements, 1254 × 1254 PNG plus scalable SVG.
+- `assets/favicon.svg`, `favicon-{16,32,48,96}.png` and `favicon.ico`: the antelope-headed r detail, isolated from the original wordmark, centred inside an amber ring on black. This compact derivative replaces the unreadable full wordmark at browser-tab sizes. The ICO contains 16, 32 and 48 px frames.
+- `assets/apple-touch-icon.png`, `icon-192.png` and `icon-512.png`: opaque square home-screen exports, allowing each operating system to apply its own mask. `icon-maskable-512.png` uses an additional safe zone for Android masking.
+- `assets/og-image.png` (1200 × 630) and `og-image-square.png` (1200 × 1200), with corresponding SVGs: black-and-amber share cards using the approved wordmark, current tagline, Brighter Sans and Sky. Their lettering is stored as font outlines in `brand/share-type.json` so rendering stays independent of locally installed fonts.
+
+Run `npm ci` and `npm run brand` (ImageMagick required) to regenerate the production exports and rebuild every page. To retrace the supplied originals, first run `node scripts/trace-brand.mjs`. After changing the share-card copy or supplied fonts, run `python3 scripts/brand-type.py` (fonttools and brotli required), then `npm run brand`.
+
+Every page includes absolute Open Graph and Twitter image URLs in its initial HTML, with image type, dimensions and alternative text. Sharing works independently of the search-indexing and enquiry-launch switches. The existing GitHub Pages preview is the default share base; set `SITE_PREVIEW_URL` for another preview URL or `SITE_ORIGIN` for the final deployment. Versioned icon and preview URLs refresh browser and crawler asset caches.
+
+`field-operations.webp` and `field-materials.webp` (1536 × 1024, plus 480 and 768 px versions) remain the supplied field illustrations used on the founder, home and divisions pages and in the company profile. They do not claim to depict Joh Ayom.
 
 ## Founder photographs (AI-generated)
 

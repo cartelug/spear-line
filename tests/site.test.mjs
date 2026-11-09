@@ -42,7 +42,7 @@ test("local links, scripts, styles, images, fonts and fragments resolve, with no
       if (fragment && target.endsWith(".html")) { const other = await read(target); assert.ok(other.includes('id="' + decodeURIComponent(fragment) + '"'), page + " → " + ref); }
     }
     for (const [, frag] of html.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.has(frag), page + " → #" + frag);
-    for (const [, set] of html.matchAll(/(?:srcset|imagesrcset)="([^"]+)"/g)) for (const item of set.split(",")) assert.ok(await exists(item.trim().split(/\s+/)[0]), page + " responsive image → " + item);
+    for (const [, set] of html.matchAll(/(?:srcset|imagesrcset)="([^"]+)"/g)) for (const item of set.split(",")) assert.ok(await exists(item.trim().split(/\s+/)[0].split("?")[0]), page + " responsive image → " + item);
   }
   const styles = await css();
   for (const [, asset] of styles.matchAll(/url\((assets\/[^)]+)\)/g)) assert.ok(await exists(asset), "stylesheet asset " + asset);
@@ -185,7 +185,7 @@ test("icons, favicons, manifest and share image are present and linked", async (
   }
   for (const file of ["favicon.ico", "assets/favicon-32.png", "assets/icon-192.png", "assets/icon-512.png", "assets/og-image.png", "assets/grain.png"]) assert.ok(await exists(file), file);
   const manifest = JSON.parse(await read("site.webmanifest"));
-  for (const icon of manifest.icons) assert.ok(await exists(icon.src), icon.src);
+  for (const icon of manifest.icons) assert.ok(await exists(icon.src.split("?")[0]), icon.src);
 });
 
 test("navigation reaches every page, and contact details are never hard-coded", async () => {

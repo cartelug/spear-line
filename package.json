@@ -23,10 +23,12 @@
     "qa:perf": "node scripts/qa/perf.mjs",
     "qa:preloader": "node scripts/qa/preloader.mjs",
     "qa:shots": "node scripts/qa/capture.mjs",
-    "profile": "node profile/build-profile.mjs"
+    "profile": "node profile/build-profile.mjs",
+    "brand": "node scripts/render-brand-assets.mjs && npm run build"
   },
   "devDependencies": {
     "axe-core": "^4.10.2",
-    "playwright": "^1.63.0"
+    "playwright": "^1.63.0",
+    "sharp": "^0.35.5"
   }
 }
