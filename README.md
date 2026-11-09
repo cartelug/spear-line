@@ -35,4 +35,4 @@ Online submission is currently disabled. The static form prepares a downloadable
 
 The default build is `noindex` and blocks crawlers. A public, indexable build requires `SITE_LAUNCH=1` and passes `npm run launch:check` first; the gate requires a verified HTTPS origin, matching server origin, legal name, monitored email, enabled enquiries, retention period and HTTPS owner notification endpoint. See [docs/DEPLOY.md](docs/DEPLOY.md) for deployment, the real enquiry smoke test, backup and retention steps.
 
-The domain, public contact route and final delivery configuration remain unverified in this repository. Do not turn on the public switch with placeholder values. See [ASSETS.md](ASSETS.md) for brand and imagery provenance and [CONTENT.md](CONTENT.md) for editing content.
+The public phone contacts are configured. The planned spearline.africa mailbox and final enquiry delivery configuration remain unverified. Do not turn on the public switch with placeholder values. See [the business email plan](docs/EMAIL_SETUP.md), [ASSETS.md](ASSETS.md) for brand and imagery provenance, and [CONTENT.md](CONTENT.md) for editing content.

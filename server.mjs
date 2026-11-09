@@ -20,6 +20,7 @@ const config = {
   legalName: process.env.BUSINESS_LEGAL_NAME?.trim() || "",
   email: process.env.PUBLIC_CONTACT_EMAIL?.trim() || "",
   phone: process.env.PUBLIC_CONTACT_PHONE?.trim() || "",
+  phoneSecondary: process.env.PUBLIC_CONTACT_PHONE_SECONDARY?.trim() || "",
   whatsapp: process.env.PUBLIC_WHATSAPP?.trim() || "",
   address: process.env.PUBLIC_ADDRESS?.trim() || "",
   retentionDays

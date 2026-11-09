@@ -189,7 +189,15 @@ test("navigation reaches every page, and contact details are never hard-coded", 
   }
   const contact = await read("contact.html");
   assert.doesNotMatch(contact, /mailto:|tel:|wa\.me|\+\d{6,}|@[a-z0-9-]+\.[a-z]{2,}/i);
-  for (const hook of ["data-contact-email", "data-contact-phone", "data-contact-whatsapp", "data-address", "data-contact-empty"]) assert.ok(contact.includes(hook), hook);
+  for (const hook of ["data-contact-email", "data-contact-phone", "data-contact-phone-secondary", "data-contact-whatsapp", "data-address", "data-contact-empty"]) assert.ok(contact.includes(hook), hook);
+});
+
+test("both confirmed contact lines are configured, while the planned mailbox remains unpublished", async () => {
+  const config = await read("site-config.js");
+  assert.match(config, /phone:"\+256 708 735 878"/);
+  assert.match(config, /phoneSecondary:"\+211 920 998 562"/);
+  assert.match(config, /email:""/);
+  assert.match(await read("contact.html"), /Joh Ayom \/ South Sudan/);
 });
 
 test("pages stay out of search results until a launch origin is supplied", async () => {
