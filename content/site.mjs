@@ -119,7 +119,7 @@ export const services = [
 
 export const home = {
   hero: {
-    kicker: 'South Sudan · Trading, enterprise & opportunity',
+    kicker: 'Trading, supply & logistics',
     title: ['One company.', 'More ways forward.'],
     lede: 'Vehicles, sourcing, business supplies and logistics today. A wider portfolio of ideas and opportunities for tomorrow.',
     primary: 'Start a conversation',
@@ -171,7 +171,7 @@ export const process = [
 export const about = {
   hero: { title: 'One company. More ways forward.', lede: 'Spear Line connects vehicle trading, sourcing, supply and logistics with a developing six-division business vision.' },
   who: {
-    title: 'Business begins with a better understanding.'
+    title: 'Business begins with a better understanding.',
     text: ['Spear Line starts with practical requirements for vehicles, goods and transport, then makes space for opportunities in materials, wellness, real estate and hospitality.', 'Each division has its own maturity and scope. Our approach remains the same: understand the need, clarify the details and agree the next step before making commitments.']
   },
   principles: [

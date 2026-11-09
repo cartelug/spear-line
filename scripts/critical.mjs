@@ -40,7 +40,7 @@ const tests = rules.map(rule => ({ key: rule.key, selectors: [...new Set(splitLi
 const pages = (await readdir(resolve(root, 'public'))).filter(name => name.endsWith('.html') && name !== 'timber-logistics.html').sort();
 const viewports = [[320, 640], [360, 780], [390, 844], [430, 932], [600, 960], [768, 1024], [1024, 768], [1280, 800], [1440, 900], [1920, 1080], [2560, 1440]];
 const result = {};
-const browser = await chromium.launch();
+const browser = await chromium.launch({ executablePath: process.env.E2E_CHROME || undefined, args: ['--no-sandbox'] });
 try {
   for (const page of pages) {
     const keys = new Set();

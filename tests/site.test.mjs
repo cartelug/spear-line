@@ -107,17 +107,15 @@ test("neighbouring sections blend at their seam and the footer picks up the last
   }
 });
 
-test("the preloader assembles the real logo from glyphs that exist, and plays once per tab without Reduce motion", async () => {
-  const logo = await read("assets/logo.svg");
-  const glyphs = new Set([...logo.matchAll(/<g id="(g-[\w-]+)"/g)].map(m => m[1]));
-  assert.equal(glyphs.size, 11, "eleven traced glyphs");
+test("the approved horizontal wordmark appears intact and the preloader plays once per tab", async () => {
+  assert.ok(await exists("assets/logo-wordmark-gold.png"));
   for (const page of pages) {
     const html = await read(page);
-    const used = [...html.matchAll(/class="pl-g pl-(?:top|bottom)" href="assets\/logo\.svg#(g-[\w-]+)"/g)].map(m => m[1]);
-    assert.equal(used.length, 11, page + " preloader glyphs");
-    for (const id of used) assert.ok(glyphs.has(id), page + " → " + id);
     assert.match(html, /<div class="preloader" aria-hidden="true">/, page);
-    assert.match(html, /<use href="assets\/logo\.svg#logo"\/>/, page + " header logo is the vector mark");
+    assert.match(html, /<img class="pl-logo" src="assets\/logo-wordmark-gold\.png" alt="" width="2172" height="724"/, page + " intro wordmark");
+    assert.match(html, /<img class="brand-logo" src="assets\/logo-wordmark-gold\.png" alt="" width="2172" height="724"/, page + " header wordmark");
+    assert.match(html, /<img class="footer-logo" src="assets\/logo-wordmark-gold\.png"/, page + " footer wordmark");
+    assert.doesNotMatch(html, /assets\/logo\.svg/, page + " obsolete stacked logo");
   }
   const boot = await bootSource();
   assert.match(boot, /sessionStorage\.getItem\(KEY\)/); assert.match(boot, /if \(reduced \|\| seen \|\| document\.visibilityState === "hidden"\) return;/);
@@ -176,9 +174,9 @@ test("icons, favicons, manifest and share image are present and linked", async (
   for (const page of pages) {
     const html = await read(page);
     for (const [, id] of html.matchAll(/assets\/icons\.svg#([a-z0-9-]+)/g)) assert.ok(symbols.has(id), page + " → #" + id);
-    for (const ref of ["assets/favicon.svg", "assets/apple-touch-icon.png", "site.webmanifest"]) assert.ok(html.includes(ref), page + " → " + ref);
+    for (const ref of ["assets/favicon-32.png", "assets/apple-touch-icon.png", "site.webmanifest"]) assert.ok(html.includes(ref), page + " → " + ref);
   }
-  for (const file of ["favicon.ico", "assets/favicon-32.png", "assets/icon-192.png", "assets/icon-512.png", "assets/og-image.jpg", "assets/grain.png"]) assert.ok(await exists(file), file);
+  for (const file of ["favicon.ico", "assets/favicon-32.png", "assets/icon-192.png", "assets/icon-512.png", "assets/og-image.png", "assets/grain.png"]) assert.ok(await exists(file), file);
   const manifest = JSON.parse(await read("site.webmanifest"));
   for (const icon of manifest.icons) assert.ok(await exists(icon.src), icon.src);
 });
@@ -269,5 +267,6 @@ test("V12 six-division model, digital offer and Joh Ayom profile remain grounded
   assert.match(digitalPage, /subject to confirmation/);
   assert.match(founderPage, /Joh Ayom/);
   assert.doesNotMatch(founderPage, /Joe Ayom/);
-  assert.match(founderPage, /approved biography/);
+  assert.match(founderPage, /six-division business direction/);
+  assert.doesNotMatch(homePage, /Spear Line in South Sudan/);
 });

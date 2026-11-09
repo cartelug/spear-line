@@ -4,7 +4,7 @@ The site is static pages plus a small Node server that serves them with compress
 
 ## What you need first
 
-A legal business name, a public contact email, a retention period, your HTTPS address, and a place to run a container with a persistent volume. None of these exist in the repository on purpose.
+A verified legal business name, a monitored public contact email, a retention period, the verified HTTPS domain, a working owner notification webhook, and a place to run a container with a persistent volume. These values are intentionally absent from the repository.
 
 ## Run it
 
@@ -13,6 +13,7 @@ docker build -t spear-line .
 docker run -d --name spear-line --restart unless-stopped -p 3000:3000 \
   -v spear-line-data:/data \
   -e PUBLIC_ORIGIN=https://your-domain \
+  -e SITE_ORIGIN=https://your-domain \
   -e ENQUIRIES_ENABLED=true \
   -e BUSINESS_LEGAL_NAME="Your Legal Name" \
   -e PUBLIC_CONTACT_EMAIL=you@your-domain \
@@ -34,10 +35,17 @@ The enquiry details travel to whichever service you choose, so name that service
 ## Go public
 
 ```sh
-SITE_ORIGIN=https://your-domain SITE_LAUNCH=1 npm run render:pages
+export SITE_ORIGIN=https://your-domain PUBLIC_ORIGIN=https://your-domain
+export BUSINESS_LEGAL_NAME="Your verified legal name" PUBLIC_CONTACT_EMAIL=owner@your-domain
+export ENQUIRIES_ENABLED=true RETENTION_DAYS=180
+export NOTIFY_WEBHOOK_URL=https://your-real-notification-endpoint
+npm run launch:check
+SITE_LAUNCH=1 npm run render:pages
 ```
 
-Commit the result. Fill in `site-config.js` only for the static Pages preview; on the Node host the same values come from the environment variables above.
+The example values above show the required keys, not deployable values. The build rejects `SITE_LAUNCH=1` until every key is present. A local build without this switch remains `noindex` with search crawling disallowed. Verify the domain's DNS and HTTPS certificate, send a real enquiry through the hosted form, check its notification and stored record, and test a restore from the persistent volume before turning traffic on. Host the form on the Node deployment: a static GitHub Pages mirror cannot submit enquiries.
+
+Keep `public/site-config.js` in preparation mode on the static Pages preview. The Node host serves the public values from its environment; do not commit private webhook URLs or customer records.
 
 ## Keep it healthy
 

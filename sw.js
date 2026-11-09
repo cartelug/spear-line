@@ -3,9 +3,9 @@
 // Pages: network first, so content is always current, with the cached copy when offline.
 // Versioned scripts, styles, fonts and icons: cache first; their addresses change with every release.
 // Photographs: served from cache while a fresh copy is fetched, capped so the cache stays small.
-const VERSION = "0383041b9c";
+const VERSION = "324b370905";
 const CORE = "spear-core-" + VERSION, PAGES = "spear-pages-" + VERSION, MEDIA = "spear-media";
-const PRECACHE = ["index.html","site.css?v=0383041b9c","app.js?v=0383041b9c","motion.js?v=0383041b9c","validation.js?v=0383041b9c","assets/fonts/mtn-brighter-sans-bold.woff2","assets/fonts/sky-text-regular.woff2","assets/icons.svg","assets/logo.svg","assets/favicon.svg"];
+const PRECACHE = ["index.html","site.css?v=324b370905","app.js?v=324b370905","motion.js?v=324b370905","validation.js?v=324b370905","assets/fonts/mtn-brighter-sans-bold.woff2","assets/fonts/sky-text-regular.woff2","assets/icons.svg","assets/logo-wordmark-gold.png","assets/favicon-32.png"];
 const MEDIA_LIMIT = 60;
 
 self.addEventListener("install", event => {
@@ -59,6 +59,6 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET" || url.origin !== location.origin) return;
   if (url.pathname.endsWith("/site-config.js") || url.pathname.includes("/api/")) return;
   if (request.mode === "navigate") return event.respondWith(page(event));
-  if (url.searchParams.has("v") || /\/assets\/(fonts\/|icons\.svg|logo\.svg|favicon|grain)/.test(url.pathname)) return event.respondWith(asset(request));
+  if (url.searchParams.has("v") || /\/assets\/(fonts\/|icons\.svg|logo-wordmark-gold\.png|favicon|grain)/.test(url.pathname)) return event.respondWith(asset(request));
   if (/\/assets\/(visuals|backdrops)\//.test(url.pathname)) return event.respondWith(media(event));
 });

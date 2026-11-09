@@ -12,7 +12,7 @@
 .page-home .hero-grid{padding-top:clamp(130px,13vw,230px)}
 .v12-direction-layout{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.65fr);gap:clamp(38px,8vw,150px);align-items:start}
 .v12-direction-label{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;min-height:190px}
-.v12-direction-label>span,.v12-eyebrow,.v12-capability-number{font-size:.76rem;letter-spacing:.18em;text-transform:uppercase}
+.v12-direction-label>span,.v12-eyebrow,.v12-capability-number{font-size:.76rem;letter-spacing:.08em}
 .v12-direction-content h2,.v12-direction-layout h2{font-family:"Spear Display",Arial,sans-serif;font-weight:800;font-size:clamp(2.8rem,6.4vw,6.6rem);line-height:.98;letter-spacing:-.064em;max-width:14ch}
 .v12-direction-content>p,.v12-direction-layout>div>p{font-size:clamp(1.07rem,1.4vw,1.32rem);max-width:620px;line-height:1.65;margin-top:30px;opacity:.84}
 .v12-direction-actions{display:flex;flex-wrap:wrap;gap:18px 35px;margin-top:34px}
@@ -30,7 +30,7 @@
 .v12-division-overlay{background:linear-gradient(180deg,rgba(0,0,0,.42),rgba(0,0,0,.08) 37%,rgba(0,0,0,.87) 100%)}
 .v12-division-card:where(:hover,:focus-visible) .v12-division-media img{transform:scale(1.075);filter:saturate(1)}
 .v12-division-top,.v12-division-bottom{position:relative;z-index:1}
-.v12-division-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:start;gap:10px;padding:clamp(19px,2.2vw,30px);font-size:.69rem;letter-spacing:.13em;text-transform:uppercase}
+.v12-division-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:start;gap:10px;padding:clamp(19px,2.2vw,30px);font-size:.69rem;letter-spacing:.08em}
 .v12-status{border:1px solid rgba(255,255,255,.55);border-radius:50px;padding:7px 11px;background:rgba(0,0,0,.2)}
 .v12-division-bottom{padding:clamp(19px,2.4vw,38px) clamp(18px,2.5vw,40px) clamp(22px,3vw,45px)}
 .v12-division-bottom h3{max-width:13ch;font-family:"Spear Display",Arial,sans-serif;letter-spacing:-.045em;line-height:1.02;font-size:clamp(1.6rem,2.45vw,3.3rem)}
@@ -51,7 +51,7 @@
 .v12-digital-visual .pan,.v12-digital-visual picture,.v12-digital-visual img{width:100%;height:100%}
 .v12-digital-visual .pan{position:absolute;inset:0}
 .v12-digital-visual img{display:block;object-fit:cover;filter:sepia(.24) saturate(.65) contrast(1.04)}
-.v12-digital-visual-tag{position:absolute;inset:auto 20px 20px auto;padding:12px 16px;background:#e8d8b9;color:#161910;font-size:.72rem;letter-spacing:.13em;text-transform:uppercase}
+.v12-digital-visual-tag{position:absolute;inset:auto 20px 20px auto;padding:12px 16px;background:#e8d8b9;color:#161910;font-size:.72rem;letter-spacing:.08em}
 .v12-digital-copy h2{font-size:clamp(2.8rem,5.2vw,6.3rem);line-height:.99;letter-spacing:-.065em;font-family:"Spear Display",Arial,sans-serif;max-width:13ch}
 .v12-digital-copy>p{max-width:510px;font-size:1.07rem;line-height:1.72;opacity:.83;margin:26px 0}
 .v12-short-list{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin:32px 0 38px;border-top:1px solid rgba(255,255,255,.3)}
@@ -61,7 +61,7 @@
 .v12-founder-type,.v12-founder-hero-art{position:relative;min-height:clamp(420px,47vw,650px);overflow:hidden;background:#1a201a;color:#c8a876;display:grid;grid-template-columns:1fr 1fr;align-items:center;justify-items:center;padding:24px}
 .v12-founder-type:before,.v12-founder-hero-art:before{content:"";position:absolute;inset:20px;border:1px solid rgba(233,207,160,.4);pointer-events:none}
 .v12-founder-type>span,.v12-founder-hero-art>span{font-family:"Spear Display",Arial,sans-serif;font-weight:800;line-height:.6;font-size:clamp(9rem,19vw,22rem);letter-spacing:-.1em;opacity:.94}
-.v12-founder-type>small{position:absolute;bottom:35px;left:45px;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase}
+.v12-founder-type>small{position:absolute;bottom:35px;left:45px;font-size:.75rem;letter-spacing:.08em}
 .v12-founder-copy h2{font-family:"Spear Display",Arial,sans-serif;font-size:clamp(3.9rem,8vw,9rem);letter-spacing:-.07em;line-height:.98}
 .v12-founder-copy>p:not(.kicker):not(.v12-eyebrow){max-width:500px;font-size:1.13rem;line-height:1.65;margin:24px 0}
 .v12-principles{background:#302b21;color:#f8f3e8}
