@@ -261,12 +261,13 @@ test("V12 six-division model, digital offer and Joh Ayom profile remain grounded
     assert.ok(divisionPage.includes(division.name.replace(/&/g, "&amp;")), division.name + " on divisions");
     assert.ok(["Developing", "Enquiry-led", "Concept"].includes(division.status), division.name + " status");
   }
-  assert.equal(content.digitalCapabilities.length, 6);
+  assert.equal(content.digitalCapabilities.length, 9);
   for (const capability of content.digitalCapabilities) assert.ok(digitalPage.includes(capability.title.replace(/&/g, "&amp;")), capability.title);
   assert.match(digitalPage, /THE 97 World/);
   assert.match(digitalPage, /subject to confirmation/);
   assert.match(founderPage, /Joh Ayom/);
   assert.doesNotMatch(founderPage, /Joe Ayom/);
-  assert.match(founderPage, /six-division business direction/);
+  assert.match(founderPage, /Our idea is simple: anyone with a vehicle to find/);
+  assert.match(founderPage, /Field work illustration|Operations in practice \/ illustrative image/);
   assert.doesNotMatch(homePage, /Spear Line in South Sudan/);
 });

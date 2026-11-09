@@ -63,7 +63,17 @@ export const digitalCapabilities = [
   { number: '03', title: 'Booking & business systems', text: 'Scoping for bookings, ticketing, QR check-in, dashboards and customer portals.' },
   { number: '04', title: 'Content & video production', text: 'Campaign ideas, motion design, promotional edits and social media content.' },
   { number: '05', title: 'Marketing & advertising', text: 'Professional social profiles, advertising creative and measurable campaign planning.' },
-  { number: '06', title: 'Automation & infrastructure', text: 'Enquiry workflows, reporting, business email, domains, hosting and support by agreement.' }
+  { number: '06', title: 'Automation & infrastructure', text: 'Enquiry workflows, reporting, business email, domains, hosting and support by agreement.' },
+  { number: '07', title: 'Commerce & payments', text: 'Online catalogues, ordering flows and payment integration scoped to the business and local providers.' },
+  { number: '08', title: 'Search & analytics', text: 'Search foundations, measurement plans, dashboards and practical improvements based on visitor behavior.' },
+  { number: '09', title: 'AI & customer workflows', text: 'Carefully scoped assistants, information retrieval and customer support workflows with human oversight.' }
+];
+
+// Adjacent requests seen in regional trading. These are enquiry topics, not launched divisions or licensed operations.
+export const sourcingTopics = [
+  'Construction materials and equipment', 'Office furniture and equipment', 'ICT and machinery',
+  'Agricultural inputs', 'Food distribution', 'Last-mile delivery',
+  'Humanitarian procurement', 'Mining supplies', 'Fuel and energy requirements'
 ];
 
 export const services = [
