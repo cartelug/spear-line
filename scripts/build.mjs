@@ -336,7 +336,7 @@ if (LAUNCH) {
   const day = new Date().toISOString().slice(0, 10);
   await writeFile(new URL('../public/sitemap.xml', import.meta.url), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${publicPages.map(name => `  <url><loc>${ORIGIN}/${name === 'index.html' ? '' : name}</loc><lastmod>${day}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 } else {
-  await writeFile(new URL('../public/robots.txt', import.meta.url), 'User-agent: *\nDisallow: /\n');
+  await writeFile(new URL('../public/robots.txt', import.meta.url), 'User-agent: facebookexternalhit\nUser-agent: Twitterbot\nUser-agent: LinkedInBot\nUser-agent: WhatsApp\nAllow: /\n\nUser-agent: *\nDisallow: /\n');
   await rm(new URL('../public/sitemap.xml', import.meta.url), { force: true });
 }
 console.log('Built ' + Object.keys(output).length + ' pages' + (LAUNCH ? ' for launch at ' + ORIGIN : ' (hidden from search; set SITE_ORIGIN and SITE_LAUNCH=1 to publish)') + '.');
