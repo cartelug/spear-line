@@ -288,7 +288,7 @@ test("V12 six-division model, digital offer and Joh Ayom profile remain grounded
   assert.match(founderPage, /Joh Ayom/);
   assert.doesNotMatch(founderPage, /Joe Ayom/);
   assert.match(founderPage, /Our idea is simple: anyone with a vehicle to find/);
-  assert.match(founderPage, /Field work illustration|Operations in practice \/ illustrative image/);
+  assert.match(founderPage, /Joh Ayom, AI-generated image/);
   assert.doesNotMatch(homePage, /Spear Line in South Sudan/);
 });
 
@@ -332,11 +332,17 @@ test("the wordmark is only recoloured and scaled proportionally, never redrawn, 
 });
 
 test("heroes carry the route, every page uses the Line Field, and the photograph is labelled illustrative", async () => {
-  for (const page of ["index.html", "divisions.html", "digital.html", "contact.html", "vehicles.html", "about.html"]) {
+  for (const page of ["divisions.html", "digital.html", "contact.html", "vehicles.html", "about.html"]) {
     const html = await read(page);
     assert.match(html, /<div class="lf" aria-hidden="true">/, page + " uses the Line Field");
-    assert.match(html, /<figcaption>(Illustrative image|Operations in practice \/ illustrative image)<\/figcaption>/, page + " labels the hero photograph");
+    assert.match(html, /<figcaption>Illustrative image<\/figcaption>/, page + " labels the hero photograph");
   }
-  assert.match(await read("founder.html"), /Operations in practice \/ illustrative image/);
-  assert.doesNotMatch(await read("founder.html"), /(this is|photo of|pictured:?) Joh/i, "the illustrative image is never claimed to be Joh");
+  // Photographs of Joh Ayom are AI-generated from his own photos: every one is captioned as such, and the page says so.
+  for (const page of ["founder.html", "index.html"]) {
+    const html = await read(page), shots = [...html.matchAll(/<figure[^>]*>((?:(?!<\/figure>)[\s\S])*?assets\/joh\/[\s\S]*?)<\/figure>/g)].map(m => m[1]);
+    assert.ok(shots.length >= 1, page + " shows Joh");
+    for (const shot of shots) assert.match(shot, /<figcaption>(Joh Ayom, AI-generated image|Logistics|Supplies|Materials|Vehicles|Planning|Between Uganda and South Sudan)<\/figcaption>/, page + " captions each photo");
+  }
+  const founder = await read("founder.html");
+  assert.match(founder, /Joh Ayom, AI-generated image/); assert.match(founder, /AI-generated images of Joh Ayom, created from his own photographs/);
 });

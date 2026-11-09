@@ -17,5 +17,5 @@ export const profile = {
     { label: 'Joh Ayom / South Sudan', number: '+211 920 998 562' }
   ],
   emailNote: 'Business email on spearline.africa is planned and will be published once the mailbox is active.',
-  imageNote: 'Photographs are illustrative and do not show Spear Line staff, stock, facilities or vehicles.'
+  imageNote: 'Images of Joh Ayom are AI-generated from his own photographs. They illustrate the work and are not records of specific places, stock, facilities or projects.'
 };

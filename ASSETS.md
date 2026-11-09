@@ -9,6 +9,10 @@
 
 Run `node scripts/render-brand-assets.mjs` (needs ImageMagick 7, `magick`) to regenerate the icon and share exports from the approved PNG. The script scales the supplied wordmark proportionally; no isolated figure or alternate lettering is used.
 
+## Founder photographs (AI-generated)
+
+`assets/joh/*.webp`: ten AI-generated photographs of Joh Ayom, made on 9 November 2026 from his own reference photos (prompt and reference pack kept outside the repository), each at 480 and 800 px and full size (1024–1280 px). They are used on the founder page (hero portrait and the "On the ground" gallery), the home page founder section and the company profile, always captioned "Joh Ayom, AI-generated image" with a note that they illustrate the work and are not records of specific places, stock or projects. Joh should approve the set before public launch.
+
 ## Photography
 
 Twelve illustrative scenes plus a portrait phone hero were generated with the built-in image tool on 24 October 2026. Ten more (stems 14 to 23) were generated on 26 October 2026 with GPT Image 1.5 through the Zapier ChatGPT (OpenAI) action "Generate An Image", at 1536 × 1024 and high quality, using the owner's OpenAI account. Every prompt is recorded in visual-prompts.json; they share one style brief (cinematic golden-hour East African light, amber, umber and olive palette, shallow depth of field, clear space for headlines, and a strict ban on text, logos, brand marks and licence plates). They are not documentary photographs of Spear Line staff, stock, facilities or vehicles, and the footer says so. Each master is a 1536 px WebP in `assets/visuals/`. `scripts/images.py` derives AVIF at 480, 768, 1080 and 1536 px and WebP at 480, 768 and 1080 px; pages serve AVIF first with WebP as the fallback, choosing the width from the layout. The phone hero master is `13-mobile-hero-1024.webp`, with 480 and 768 px variants. All AVIF files together are 2.3 MB on disk; a phone typically downloads 20–60 KB per photograph.
