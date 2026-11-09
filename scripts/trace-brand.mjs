@@ -50,13 +50,21 @@ const wordmark=shape(0,0,W,H);
 for(const [name,color] of [['gold','#B8862B'],['black','#111111'],['white','#FFFFFF']]) {
   await writeFile(resolve(root,`public/assets/logo-wordmark-${name}.svg`),`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Spear Line"><path fill="${color}" fill-rule="evenodd" d="${wordmark}"/></svg>\n`);
 }
-// At small sizes the antelope-headed r is recognizable where the full name is not.
-const detail=shape(1165,169,207,336);
-await writeFile(resolve(root,'brand/antelope-detail.svg'),`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 207 336"><path fill="#B8862B" fill-rule="evenodd" d="${detail}"/></svg>\n`);
 W=1254;H=1254;
 alpha=execFileSync('magick',[resolve(root,'brand/source-seal.png'),'-alpha','extract','-threshold','50%','-depth','8','gray:-'],{maxBuffer:W*H*2});
 const seal=shape(0,0,W,H);
 for(const [name,color] of [['gold','#B8862B'],['black','#111111'],['white','#FFFFFF']]) {
   await writeFile(resolve(root,`public/assets/logo-seal-${name}.svg`),`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Spear Line circular logo"><path fill="${color}" fill-rule="evenodd" d="${seal}"/></svg>\n`);
 }
-console.log('Traced approved wordmark, circular seal and compact antelope detail.');
+if (process.argv.includes('--favicon')) {
+  const hunterSource=resolve(root,'brand/source-hunter.png');
+  const dimensions=execFileSync('magick',[hunterSource,'-format','%w %h','info:']).toString().trim().split(' ').map(Number);
+  [W,H]=dimensions;
+  alpha=execFileSync('magick',[hunterSource,'-colorspace','Gray','-threshold','50%','-depth','8','gray:-'],{maxBuffer:W*H*2});
+  // Bound the solid white foreground, removing only the black presentation canvas.
+  let left=W,top=H,right=0,bottom=0;
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(filled(x,y)){left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);}
+  const w=right-left+1,h=bottom-top+1,hunter=shape(left,top,w,h);
+  await writeFile(resolve(root,'brand/hunter-detail.svg'),`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="Spear Line hunter and spear monogram"><path fill="#FFFFFF" fill-rule="evenodd" d="${hunter}"/></svg>\n`);
+}
+console.log('Traced approved wordmark and circular seal'+(process.argv.includes('--favicon')?' with the selected hunter favicon.':'.'));

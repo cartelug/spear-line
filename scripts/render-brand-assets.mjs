@@ -13,20 +13,25 @@ for(const color of ['gold','black','white']) {
   for(const type of ['wordmark','seal']) await sharp(asset(`logo-${type}-${color}.svg`)).png().toFile(asset(`logo-${type}-${color}.png`));
   for(const width of [320,640]) await sharp(asset(`logo-wordmark-${color}.svg`)).resize(width).webp({lossless:true}).toFile(asset(`logo-wordmark-${color}-${width}.webp`));
 }
-const detail=await readFile(resolve(root,'brand/antelope-detail.svg'),'utf8');
-const path=detail.match(/<path[^>]+\/>/)[0];
-const icon=(maskable=false)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><rect width="512" height="512" ${maskable?'':'rx="106"'} fill="#111111"/>${maskable?'':'<circle cx="256" cy="256" r="218" fill="none" stroke="#B8862B" stroke-width="10"/>'}<g transform="translate(${maskable?'165 108':'151 86'}) scale(${maskable?'.88':'1.02'})">${path}</g></svg>\n`;
+const detail=await readFile(resolve(root,'brand/hunter-detail.svg'),'utf8');
+const icon=(mode='favicon')=>{
+  const width=mode==='maskable'?310:mode==='mobile'?384:440, left=(512-width)/2;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><rect width="512" height="512" fill="#000000"/>${detail.replace('<svg ',`<svg x="${left}" y="${left}" width="${width}" height="${width}" `)}</svg>\n`;
+};
 const symbol=icon();
 await writeFile(asset('favicon.svg'),symbol);
+await writeFile(asset('logo-hunter-white.svg'),detail);
+await sharp(Buffer.from(detail)).resize(2048,2048,{fit:'inside'}).png().toFile(asset('logo-hunter-white.png'));
+await sharp(Buffer.from(symbol)).resize(1024).png().toFile(asset('favicon-master.png'));
 for(const size of [16,32,48,96]) await sharp(Buffer.from(symbol)).resize(size).png().toFile(asset(`favicon-${size}.png`));
 for(const [name,size] of [['apple-touch-icon.png',180],['icon-192.png',192],['icon-512.png',512]]) {
-  // Mobile operating systems apply their own mask: use an opaque square background.
-  await sharp(Buffer.from(symbol.replace('rx="106"',''))).resize(size).png().toFile(asset(name));
+  // Opaque background and extra margins protect the hunter under operating-system masks.
+  await sharp(Buffer.from(icon('mobile'))).resize(size).png().toFile(asset(name));
 }
-await sharp(Buffer.from(icon(true))).png().toFile(asset('icon-maskable-512.png'));
+await sharp(Buffer.from(icon('maskable'))).png().toFile(asset('icon-maskable-512.png'));
 await run([asset('favicon-16.png'),asset('favicon-32.png'),asset('favicon-48.png'),resolve(root,'public/favicon.ico')]);
 const iconVersion=createHash('sha256').update(symbol).digest('hex').slice(0,10);
-await writeFile(resolve(root,'public/site.webmanifest'),JSON.stringify({id:'./',name:'Spear Line Global Limited',short_name:'Spear Line',description:brand.description,start_url:'./',scope:'./',display:'standalone',background_color:'#111111',theme_color:'#111111',icons:[{src:`assets/icon-192.png?v=${iconVersion}`,sizes:'192x192',type:'image/png',purpose:'any'},{src:`assets/icon-512.png?v=${iconVersion}`,sizes:'512x512',type:'image/png',purpose:'any'},{src:`assets/icon-maskable-512.png?v=${iconVersion}`,sizes:'512x512',type:'image/png',purpose:'maskable'}]},null,2)+'\n');
+await writeFile(resolve(root,'public/site.webmanifest'),JSON.stringify({id:'./',name:'Spear Line Global Limited',short_name:'Spear Line',description:brand.description,start_url:'./',scope:'./',display:'standalone',background_color:'#000000',theme_color:'#000000',icons:[{src:`assets/icon-192.png?v=${iconVersion}`,sizes:'192x192',type:'image/png',purpose:'any'},{src:`assets/icon-512.png?v=${iconVersion}`,sizes:'512x512',type:'image/png',purpose:'any'},{src:`assets/icon-maskable-512.png?v=${iconVersion}`,sizes:'512x512',type:'image/png',purpose:'maskable'}]},null,2)+'\n');
 
 // Font outlines keep the exact supplied Brighter Sans and Sky appearance in every renderer.
 // Regenerate brand/share-type.json with scripts/brand-type.py after copy or font changes.
