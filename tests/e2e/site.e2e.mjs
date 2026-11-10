@@ -138,7 +138,7 @@ test("menu, tabs, FAQ and timeline behave, and Reduce motion is honoured", { tim
   }
 });
 
-test("the logo preloader plays once per tab, unlocks the page, and is skipped under Reduce motion", { timeout: 60000 }, async () => {
+test("the logo preloader plays on arrival and on each page change with that page's name, unlocks the page, and is skipped under Reduce motion", { timeout: 60000 }, async () => {
   const context = await browser.newContext({ viewport: { width: 1440, height: 900 } }); const page = await context.newPage();
   await page.goto(base + "/index.html");
   assert.ok(await page.evaluate(() => document.documentElement.classList.contains("is-preloading")), "preloader runs on the first view");
@@ -146,8 +146,13 @@ test("the logo preloader plays once per tab, unlocks the page, and is skipped un
   await page.waitForFunction(() => !document.documentElement.classList.contains("is-preloading"), null, { timeout: 6000 });
   assert.equal(await page.evaluate(() => document.querySelector("main").inert), false, "page is interactive afterwards");
   assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector(".preloader")).display), "none");
-  await page.goto(base + "/faq.html");
-  assert.equal(await page.evaluate(() => document.documentElement.classList.contains("is-preloading")), false, "not replayed in the same tab");
+  assert.equal(await page.evaluate(() => document.querySelector(".pl-caption").textContent), "Trade. Supply. Logistics.", "home chip");
+  await page.evaluate(() => { location.href = "faq.html"; });
+  await page.waitForURL("**/faq.html", { waitUntil: "commit" });
+  await page.waitForSelector("html.is-preloading.pl-quick", { state: "attached", timeout: 3000 });
+  assert.equal(await page.evaluate(() => document.querySelector(".pl-caption").textContent), "Questions answered", "the page change shows the new page's chip");
+  await page.waitForFunction(() => !document.documentElement.classList.contains("is-preloading"), null, { timeout: 6000 });
+  assert.equal(await page.evaluate(() => document.querySelector("main").inert), false, "page is interactive after a page change");
   await context.close();
   const calm = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" }); const quiet = await calm.newPage();
   await quiet.goto(base + "/index.html");
@@ -191,7 +196,7 @@ test("the preloader never holds the page past 1.8 s (1.2 s on phones), and unloc
   }
 });
 
-test("the preloader is skipped for Save-Data, 2g, reloads, back and forward, and same-site arrivals", { timeout: 90000 }, async () => {
+test("the preloader plays on reloads and links within the site, and is skipped for Save-Data, 2g, and back and forward", { timeout: 90000 }, async () => {
   const ran = async (setup, go = page => page.goto(base + "/index.html")) => {
     const context = await browser.newContext({ viewport: { width: 1280, height: 800 } }); if (setup) await context.addInitScript(setup);
     const page = await context.newPage(); await go(page);
@@ -201,9 +206,9 @@ test("the preloader is skipped for Save-Data, 2g, reloads, back and forward, and
   assert.equal(await ran(), true, "plays on a fresh visit");
   assert.equal(await ran(() => Object.defineProperty(navigator, "connection", { value: { saveData: true } })), false, "Save-Data");
   assert.equal(await ran(() => Object.defineProperty(navigator, "connection", { value: { effectiveType: "2g" } })), false, "2g connection");
-  assert.equal(await ran(null, async page => { await page.goto(base + "/index.html"); await page.waitForFunction(() => !document.documentElement.classList.contains("is-preloading")); await page.reload(); }), false, "reload");
+  assert.equal(await ran(null, async page => { await page.goto(base + "/index.html"); await page.waitForFunction(() => !document.documentElement.classList.contains("is-preloading")); await page.reload(); }), true, "reload");
   assert.equal(await ran(null, async page => { await page.goto(base + "/faq.html"); await page.evaluate(() => sessionStorage.clear()); await page.goto(base + "/index.html"); await page.goBack(); await page.goForward(); }), false, "back and forward");
-  assert.equal(await ran(null, async page => { await page.goto(base + "/faq.html"); await page.evaluate(() => sessionStorage.clear()); await page.click("a[href='index.html']"); }), false, "link followed within the site");
+  assert.equal(await ran(null, async page => { await page.goto(base + "/faq.html"); await page.evaluate(() => sessionStorage.clear()); await page.waitForFunction(() => !document.documentElement.classList.contains("is-preloading")); await page.click("a[href='index.html']"); await page.waitForURL("**/index.html", { waitUntil: "commit" }); }), true, "link followed within the site");
 });
 
 test("Reduce motion shows a complete static design: nothing hidden, nothing animating, the route drawn", { timeout: 90000 }, async () => {

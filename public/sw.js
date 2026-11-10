@@ -3,9 +3,9 @@
 // Pages: network first, so content is always current, with the cached copy when offline.
 // Versioned scripts, styles, fonts and icons: cache first; their addresses change with every release.
 // Photographs: served from cache while a fresh copy is fetched, capped so the cache stays small.
-const VERSION = "3120f196ec";
+const VERSION = "8b197ace5d";
 const CORE = "spear-core-" + VERSION, PAGES = "spear-pages-" + VERSION, MEDIA = "spear-media";
-const PRECACHE = ["index.html","site.css?v=3120f196ec","app.js?v=3120f196ec","motion.js?v=3120f196ec","validation.js?v=3120f196ec","assets/fonts/mtn-brighter-sans-bold.woff2","assets/fonts/sky-text-regular.woff2","assets/icons.svg","assets/logo-wordmark-gold.png?v=0a5f16fb22","assets/favicon.svg?v=0a5f16fb22","assets/favicon-16.png?v=0a5f16fb22","assets/favicon-32.png?v=0a5f16fb22","assets/favicon-48.png?v=0a5f16fb22","assets/apple-touch-icon.png?v=0a5f16fb22","assets/icon-192.png?v=0a5f16fb22","assets/icon-512.png?v=0a5f16fb22","assets/icon-maskable-512.png?v=0a5f16fb22","assets/og-image.png?v=0a5f16fb22","assets/logo-wordmark-gold-320.webp?v=0a5f16fb22","assets/logo-wordmark-gold-640.webp?v=0a5f16fb22","site.webmanifest?v=0a5f16fb22"];
+const PRECACHE = ["index.html","site.css?v=8b197ace5d","app.js?v=8b197ace5d","motion.js?v=8b197ace5d","validation.js?v=8b197ace5d","assets/fonts/mtn-brighter-sans-bold.woff2","assets/fonts/sky-text-regular.woff2","assets/icons.svg","assets/logo-wordmark-gold.png?v=0a5f16fb22","assets/favicon.svg?v=0a5f16fb22","assets/favicon-16.png?v=0a5f16fb22","assets/favicon-32.png?v=0a5f16fb22","assets/favicon-48.png?v=0a5f16fb22","assets/apple-touch-icon.png?v=0a5f16fb22","assets/icon-192.png?v=0a5f16fb22","assets/icon-512.png?v=0a5f16fb22","assets/icon-maskable-512.png?v=0a5f16fb22","assets/og-image.png?v=0a5f16fb22","assets/logo-wordmark-gold-320.webp?v=0a5f16fb22","assets/logo-wordmark-gold-640.webp?v=0a5f16fb22","site.webmanifest?v=0a5f16fb22"];
 const MEDIA_LIMIT = 60;
 
 self.addEventListener("install", event => {

@@ -114,18 +114,25 @@ test("neighbouring sections blend at their seam and the footer picks up the last
   }
 });
 
-test("the approved horizontal wordmark appears intact and the preloader plays once per tab", async () => {
+test("the approved horizontal wordmark appears intact and every page's preloader names that page", async () => {
   assert.ok(await exists("assets/logo-wordmark-gold.png"));
+  const chips = new Set();
   for (const page of pages) {
     const html = await read(page);
     assert.match(html, /<div class="preloader" aria-hidden="true">/, page);
+    const chip = html.match(/<p class="pl-caption"><span class="pl-badge"><svg[^>]*><use href="assets\/icons\.svg#(i-[a-z0-9-]+)"\/><\/svg><\/span><span>([^<]+)<\/span><\/p>/);
+    assert.ok(chip, page + " preloader chip");
+    chips.add(chip[2]);
     assert.match(html, /<img class="pl-logo" src="assets\/logo-wordmark-gold\.png" alt="" width="2172" height="724"/, page + " intro wordmark");
     assert.match(html, /<img class="brand-logo" src="assets\/logo-wordmark-gold\.png" alt="" width="2172" height="724"/, page + " header wordmark");
     assert.match(html, /<img class="footer-logo" src="assets\/logo-wordmark-gold\.png"/, page + " footer wordmark");
     assert.doesNotMatch(html, /assets\/logo\.svg/, page + " obsolete stacked logo");
   }
   const boot = await bootSource();
-  assert.match(boot, /sessionStorage\.getItem\(KEY\)/); assert.match(boot, /if \(reduced \|\| seen \|\| document\.visibilityState === "hidden"\) return;/);
+  assert.ok(chips.size >= 14, "pages carry their own preloader chip, found " + chips.size + " distinct");
+  assert.match(boot, /sessionStorage\.getItem\(KEY\)/); assert.match(boot, /if \(reduced \|\| off\) return;/); assert.match(boot, /if \(document\.visibilityState === "hidden"\) return;/);
+  assert.match(boot, /type === "back_forward"\) off = true/, "back and forward restore the page without the preloader");
+  assert.match(boot, /prerenderingchange", start/, "a prerendered page plays its preloader on arrival");
   assert.match(boot, /parts\[i\]\.inert = on/, "focus cannot reach the hidden page while the doors are closed");
 });
 

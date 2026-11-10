@@ -23,12 +23,14 @@ Page transitions use cross-document view transitions where supported (`@view-tra
 
 ## Preloader
 
-First visit only: once per browser tab, on a fresh navigation, never for reload, back/forward, same-site arrival, Save-Data, 2g connections, a hidden tab or Reduce motion.
+Every arrival: when the site is opened, when a page is refreshed, and (a shorter sequence) when a link is followed within the site. Each page shows its own icon and name in a chip under the route, set in `PL_PAGES` in `scripts/build.mjs`. Never for back/forward, Save-Data, 2g connections, a hidden tab or Reduce motion. A page prerendered from a touched link plays its preloader when the visitor arrives, and the cross-document view transition is skipped whenever the preloader runs.
+
+Moving between pages: the wordmark is smaller, the page chip leads, and the panel lifts from 0.52 s on phones (0.6 s on desktop), no later than 0.68 s (0.8 s); lift 0.26 s. The table below is the full sequence for an open or a refresh.
 
 | Step | Desktop | Phone |
 | --- | --- | --- |
 | Paper panel with the exact wordmark at full contrast (a 160 ms fade at most, never blurred or dimmed) | 0 s | 0 s |
-| The route line draws, the spear motif travels it (SVG animation, locked together), nodes appear, a soft sheen passes over the wordmark | 0 to 0.8 s | 0 to 0.8 s |
+| The route line draws, the spear motif travels it (SVG animation, locked together), nodes appear, a soft sheen passes over the wordmark | 0 to 0.6 s | 0 to 0.6 s |
 | The panel lifts once the sequence has played and the hero photograph and fonts are ready | from 1.05 s, no later than 1.35 s; lift 0.45 s | from 0.8 s, no later than 0.94 s; lift 0.26 s |
 | The hero route is already drawing in the same place, and the headline rises | continuous | continuous |
 

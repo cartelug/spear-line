@@ -1,5 +1,5 @@
 /* Preloader: one route line draws across a paper ground, the spear motif travels it, and the exact wordmark sits
-   above it at full contrast from the first frame. boot.js decides when the panel lifts; the line, nodes and spear
+   above it at full contrast from the first frame; a chip underneath names the page being opened. boot.js decides when the panel lifts; the line, nodes and spear
    are animated by SVG (SMIL) so they stay locked together. No counter, no delay for effect. */
 .preloader{position:fixed;inset:0;z-index:1000;display:none;pointer-events:none}
 html.is-preloading .preloader{display:block;pointer-events:auto;animation:pl-failsafe 1ms linear 2.4s forwards}
@@ -14,15 +14,22 @@ html.is-preloading .preloader{display:block;pointer-events:auto;animation:pl-fai
 .pl-draw{fill:none;stroke:var(--gold);stroke-width:3;stroke-linecap:round}
 .pl-node{fill:var(--paper);stroke:var(--navy);stroke-width:2}
 .pl-spear{color:var(--navy)}
-.pl-caption{margin:0;font:700 var(--t-xs)/1 var(--font-display);color:var(--ink-2);opacity:0;animation:pl-fade var(--dur-3) var(--ease-out) .55s both}
+.pl-caption{display:inline-flex;align-items:center;gap:10px;margin:4px 0 0;padding:6px 18px 6px 6px;border-radius:999px;background:var(--navy);color:var(--chalk);font:700 var(--t-sm)/1 var(--font-display);box-shadow:0 14px 26px -16px rgb(8 47 71 / .7);animation:pl-chip var(--dur-3) var(--ease-spring) .32s both}
+.pl-badge{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:50%;background:var(--gold-2);color:var(--abyss)}
+.pl-badge .ico{width:19px;height:19px}
+/* Moving between pages: the wordmark steps back and the page's own name leads. */
+html.pl-quick{--pl-exit:.26s}
+html.pl-quick .pl-mark{width:52%}
+html.pl-quick .pl-mark::after{display:none}
+html.pl-quick .pl-caption{font-size:var(--t-base);animation-delay:.1s}
 html.pl-exit .pl-panel{transform:translateY(-101%);transition:transform var(--pl-exit,.45s) var(--ease-io)}
 html.pl-exit .pl-stage{opacity:0;transition:opacity .2s}
 @media(max-width:599px){
   :root{--pl-exit:.26s}
   .pl-stage{width:min(80vw,360px)}
-  .pl-caption,.pl-node{display:none}
+  .pl-node{display:none}
 }
 @keyframes pl-logo-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes pl-sheen{from{background-position:160% 0}to{background-position:-60% 0}}
-@keyframes pl-fade{to{opacity:1}}
+@keyframes pl-chip{from{opacity:0;transform:translateY(8px) scale(.92)}}
 @keyframes pl-failsafe{to{visibility:hidden;pointer-events:none}}

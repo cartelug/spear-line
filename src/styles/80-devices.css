@@ -12,6 +12,7 @@ h1,h2,h3{overflow-wrap:break-word}
   .hero-title,.page-hero .hero-title,.display{font-size:clamp(1.85rem,10.5vw,2.3rem)}
   h2,.sec-head h2,.sf-copy h2,.cross-layout h2,.route-copy h2{font-size:clamp(1.6rem,9vw,2rem)}
   .waybill-choices{grid-template-columns:1fr}
+  .dock>a,.dock-call{font-size:11.5px}
   .btn{max-width:100%;gap:10px;padding-left:18px}
   .btn-label{white-space:normal;line-height:1.2}
   .timeline-step{grid-template-columns:36px 1fr;gap:14px}
@@ -31,9 +32,10 @@ h1,h2,h3{overflow-wrap:break-word}
   .hero-title,.page-hero .hero-title,.hero--founder .hero-title,.display{font-size:clamp(1.9rem,9vh,3rem)}
   .hero-panel,.page-hero .hero-panel{max-height:60vh}
   .enquiry-hero,.bar-hero{padding-top:84px}
-  .dock{width:auto;grid-template-columns:repeat(4,58px);bottom:calc(8px + env(safe-area-inset-bottom))}
-  .dock a{padding:12px 4px}
-  .dock span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .dock{width:auto;grid-auto-columns:58px;bottom:calc(8px + env(safe-area-inset-bottom))}
+  .dock>a,.dock-call{padding:12px 4px}
+  .dock-sheet{left:50%;right:auto;width:min(calc(100vw - 24px),360px);transform:translateX(-50%);animation:none}
+  .dock>a>span,.dock-call>span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 }
 
 /* Forced colours (Windows high contrast): keep edges and the route visible without the decorative layers. */

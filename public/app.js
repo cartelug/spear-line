@@ -1,4 +1,4 @@
-import { validateEnquiry } from "./validation.js?v=3120f196ec";
+import { validateEnquiry } from "./validation.js?v=8b197ace5d";
 const config = window.SPEAR_CONFIG || {};
 const preview = window.SPEAR_PREVIEW === true;
 const canSubmit = config.enquiriesEnabled === true && !preview;
@@ -169,7 +169,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || new URLSe
 
 /* Motion layer: loaded separately so a failure never affects navigation or the enquiry form. */
 // It measures the layout, so it starts once the full stylesheet applies (window.spearCss, from the inline boot script).
-Promise.all([import("./motion.js?v=3120f196ec"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
+Promise.all([import("./motion.js?v=8b197ace5d"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
   root.classList.remove("motion-ok");
   $$("[data-motion-toggle]").forEach(button => { button.hidden = true; });
 });
@@ -191,6 +191,16 @@ if (config.address) $$("[data-address]").forEach(el => { el.hidden = false; el.t
 const contactCards = $$("[data-contact-card]");
 contactCards.forEach(card => { card.hidden = !card.querySelector("[data-contact-email]:not([hidden]),[data-contact-phone]:not([hidden]),[data-contact-phone-secondary]:not([hidden]),[data-contact-whatsapp]:not([hidden]),[data-address]:not([hidden])"); });
 $$("[data-contact-empty]").forEach(el => { el.hidden = contactCards.some(card => !card.hidden); });
+
+/* Phone dock: the Call button opens both phone lines above the dock. It appears only when a number is configured. */
+const callButton = $(".dock-call"), callSheet = $("#dock-calls");
+if (callButton && callSheet?.querySelector("a")) {
+  callButton.hidden = false;
+  const setCalls = open => { callButton.setAttribute("aria-expanded", String(open)); callSheet.hidden = !open; };
+  callButton.addEventListener("click", () => setCalls(callSheet.hidden));
+  document.addEventListener("click", event => { if (!callSheet.hidden && !event.target.closest(".dock-call, #dock-calls")) setCalls(false); });
+  document.addEventListener("keydown", event => { if (event.key === "Escape" && !callSheet.hidden) { setCalls(false); callButton.focus(); } });
+}
 if (config.legalName) $$("[data-legal-identity]").forEach(el => { el.textContent = "The operator is " + config.legalName + "."; });
 if (emailOK) {
   addContact("[data-privacy-contact]", "mailto:" + config.email, "Contact: " + config.email);
