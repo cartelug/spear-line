@@ -1,0 +1,82 @@
+[
+  {
+    "profile": "phone slow-4G",
+    "page": "index",
+    "fcp": 544,
+    "lcp": 792,
+    "cls": 0,
+    "tbt": 90,
+    "kb": 132.220703125,
+    "requests": 14
+  },
+  {
+    "profile": "phone slow-4G",
+    "page": "index (first visit, preloader)",
+    "fcp": 560,
+    "lcp": 804,
+    "cls": 0,
+    "tbt": 124,
+    "kb": 166.357421875,
+    "requests": 15
+  },
+  {
+    "profile": "phone slow-4G",
+    "page": "divisions",
+    "fcp": 560,
+    "lcp": 1176,
+    "cls": 0,
+    "tbt": 72,
+    "kb": 153.7568359375,
+    "requests": 16
+  },
+  {
+    "profile": "phone slow-4G",
+    "page": "contact",
+    "fcp": 488,
+    "lcp": 900,
+    "cls": 0,
+    "tbt": 63,
+    "kb": 123.82421875,
+    "requests": 14
+  },
+  {
+    "profile": "desktop",
+    "page": "index",
+    "fcp": 160,
+    "lcp": 160,
+    "cls": 0,
+    "tbt": 0,
+    "kb": 306.2705078125,
+    "requests": 27
+  },
+  {
+    "profile": "desktop",
+    "page": "index (first visit, preloader)",
+    "fcp": 160,
+    "lcp": 160,
+    "cls": 0,
+    "tbt": 0,
+    "kb": 340.4072265625,
+    "requests": 28
+  },
+  {
+    "profile": "desktop",
+    "page": "divisions",
+    "fcp": 140,
+    "lcp": 160,
+    "cls": 0,
+    "tbt": 0,
+    "kb": 348.8466796875,
+    "requests": 27
+  },
+  {
+    "profile": "desktop",
+    "page": "contact",
+    "fcp": 124,
+    "lcp": 160,
+    "cls": 0,
+    "tbt": 0,
+    "kb": 251.8759765625,
+    "requests": 15
+  }
+]
