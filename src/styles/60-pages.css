@@ -242,3 +242,23 @@
   .bar-note{flex-direction:column;align-items:flex-start}
   .enquiry-grid{margin-top:calc(-1 * clamp(80px,22vw,120px))}
 }
+
+/* How it works: each step carries the photograph that matches it. */
+.timeline-card{overflow:hidden}
+.timeline-body{display:grid;gap:10px;align-content:start;min-width:0}
+.timeline-media{position:relative;margin:0;aspect-ratio:16/9;border-radius:var(--r-md,14px);overflow:hidden;background:var(--ocean)}
+.timeline-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgb(6 31 48 / .38));pointer-events:none}
+.timeline-media picture,.timeline-media img{display:block;width:100%;height:100%}
+.timeline-media img{object-fit:cover}
+@media (min-width:760px){
+  .timeline-card:has(.timeline-media){grid-template-columns:minmax(0,1fr) minmax(0,.62fr);align-items:center;gap:clamp(20px,3vw,32px)}
+  .timeline-media{aspect-ratio:4/3}
+}
+
+/* FAQ: a symbol per topic in the index and the group headings. */
+.faq-index a{display:flex;align-items:center;gap:10px}
+.faq-index a .ico{flex:none;width:20px;height:20px;opacity:.8}
+.faq-group h2{display:flex;align-items:center;gap:14px}
+.faq-icon{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--ink);color:var(--gold-2)}
+.faq-icon .ico{width:24px;height:24px}
+@media (max-width:480px){.faq-icon{width:38px;height:38px;border-radius:12px}.faq-icon .ico{width:20px;height:20px}}
