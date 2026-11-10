@@ -52,6 +52,29 @@ Twelve illustrative scenes plus a portrait phone hero were generated with the bu
 
 The two Bar images show amber drinks over ice. The Bar's menu, and whether it serves alcohol, are still undecided (see docs/ROADMAP.md), so replace 15-bar-lounge and 23-bar-glass if the Bar will not serve drinks like these.
 
+Eighteen more scenes (stems 24 to 41) were supplied by the site owner on 10 November 2026, selected from a 50-image set he generated through his own ChatGPT account in early November 2026; the prompts and the full-resolution originals (including portrait phone variants) are kept outside the repository. They follow the same style brief — golden-hour East African light, people at work, no text, logos, brand marks or licence plates — and the same rules: they are illustrative, not documentary photographs of Spear Line staff, stock, facilities or vehicles. Masters were resized to 1536 px WebP and run through `scripts/images.py` like the rest.
+
+| Stem | Use |
+| --- | --- |
+| 24-site-materials | Building Materials division card |
+| 25-track-sunrise | Fitness & Wellness division card |
+| 26-rooftop-social | Hospitality division card |
+| 27-property-visit | Real Estate division card |
+| 28-river-landing | Logistics trade-coordination feature |
+| 29-warehouse-crew | Supplies business-requirements feature |
+| 30-forklift-bay | Logistics cargo-movement feature |
+| 31-van-loading | Vehicles business-vehicles feature |
+| 32-cargo-strapping | Logistics brief moment |
+| 33-road-freight | Logistics page backdrop |
+| 34-shop-delivery | Logistics delivery-planning feature |
+| 35-delivery-confirm | How-it-works step 3 |
+| 36-market-vendor | Supplies foodstuffs feature |
+| 37-crates-loading | Supplies beverages feature |
+| 38-mist-route | Default closing banner, every page |
+| 39-city-dusk | Contact hero |
+| 40-night-haul | Logistics closing banner |
+| 41-dusk-loading | Home hero |
+
 ## Backdrops and texture
 
 - `assets/backdrops/*.webp`: 480 px wide, low-quality versions of each photograph (1.5–2 KB each, 56 KB total) used as blurred, drifting section backgrounds so each section's colour comes from a real image.

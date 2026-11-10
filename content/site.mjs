@@ -44,17 +44,36 @@ export const images = {
   'desk-contact': { file: '20-desk-contact', alt: 'A desk lamp, an open notebook and pen, a phone and a cup of coffee by a window at dusk', ratio: [1536, 1024] },
   'team-yard': { file: '21-team-yard', alt: 'Three people seen from behind walking past a row of trucks and SUVs in a yard at golden hour', ratio: [1536, 1024] },
   'wheel-detail': { file: '22-wheel-detail', alt: 'A dusty SUV wheel on a red-earth road with green hills behind it', ratio: [1536, 1024] },
-  'bar-glass': { file: '23-bar-glass', alt: 'A crystal tumbler with an amber drink, a large ice cube and an orange peel', ratio: [1536, 1024] }
+  'bar-glass': { file: '23-bar-glass', alt: 'A crystal tumbler with an amber drink, a large ice cube and an orange peel', ratio: [1536, 1024] },
+  // Stems 24-41: the November 2026 "on the line" set. People at work, one golden-hour grade.
+  'site-materials': { file: '24-site-materials', alt: 'Workers carrying steel bars and loading aggregate at a building site', ratio: [1536, 1024] },
+  'track-sunrise': { file: '25-track-sunrise', alt: 'Runners training on a red athletics track at sunrise', ratio: [1536, 1024] },
+  'rooftop-social': { file: '26-rooftop-social', alt: 'Friends sharing bottled soft drinks around a rooftop table at dusk', ratio: [1536, 1024] },
+  'property-visit': { file: '27-property-visit', alt: 'Two visitors met at the gate of a new apartment building', ratio: [1536, 1024] },
+  'river-landing': { file: '28-river-landing', alt: 'A crew passing white sacks from a wooden boat to the riverbank', ratio: [1536, 864] },
+  'warehouse-crew': { file: '29-warehouse-crew', alt: 'Workers stacking grain sacks from a ladder inside a warehouse', ratio: [1536, 864] },
+  'forklift-bay': { file: '30-forklift-bay', alt: 'A forklift carrying shrink-wrapped pallets through a warehouse', ratio: [1536, 1024] },
+  'van-loading': { file: '31-van-loading', alt: 'Two men loading large cartons into a delivery van', ratio: [1536, 1024] },
+  'cargo-strapping': { file: '32-cargo-strapping', alt: 'A worker pulling a ratchet strap tight over a loaded flatbed truck', ratio: [1536, 1024] },
+  'road-freight': { file: '33-road-freight', alt: 'A covered freight truck passing a goat herder on a rural highway', ratio: [1536, 864] },
+  'shop-delivery': { file: '34-shop-delivery', alt: 'A carton carried to a shop doorway in warm evening light', ratio: [1536, 1024] },
+  'delivery-confirm': { file: '35-delivery-confirm', alt: 'A delivery note being signed on the vehicle while a carton is carried past', ratio: [1536, 1024] },
+  'market-vendor': { file: '36-market-vendor', alt: 'A vendor arranging ripe tomatoes on a market stall', ratio: [1536, 1024] },
+  'crates-loading': { file: '37-crates-loading', alt: 'A worker lifting a crate of bottled drinks from a stack', ratio: [1536, 1024] },
+  'mist-route': { file: '38-mist-route', alt: 'A truck on a red-earth road winding through misty green hills at dawn', ratio: [1536, 864] },
+  'city-dusk': { file: '39-city-dusk', alt: 'A city skyline at dusk seen from a hillside of warm rooftops', ratio: [1536, 864] },
+  'night-haul': { file: '40-night-haul', alt: 'Truck lights streaking along a highway at night', ratio: [1536, 864] },
+  'dusk-loading': { file: '41-dusk-loading', alt: 'A crew loading palletised cargo into a container in golden light', ratio: [1536, 1024] }
 };
 
 // V12 company map: opportunities are not presented as verified operational facilities.
 export const divisions = [
-  { number: '01', icon: 'i-materials', name: 'Building Materials & Equipment', category: 'Construction & sourcing', status: 'Developing', image: 'warehouse', href: 'contact.html', text: 'Explore requirements for building materials, tools and equipment through a considered sourcing conversation.' },
+  { number: '01', icon: 'i-materials', name: 'Building Materials & Equipment', category: 'Construction & sourcing', status: 'Developing', image: 'site-materials', href: 'contact.html', text: 'Explore requirements for building materials, tools and equipment through a considered sourcing conversation.' },
   { number: '02', icon: 'i-vehicle', name: 'Motors & Automotive', category: 'Vehicles & mobility', status: 'Enquiry-led', image: 'vehicles-suv', href: 'vehicles.html', text: 'Vehicle trading and sourcing conversations shaped around your preferred model, destination and budget.' },
   { number: '03', icon: 'i-supplies', name: 'Food & Beverages', category: 'Business supply', status: 'Enquiry-led', image: 'foodstuffs', href: 'supplies.html', text: 'Discuss product lists, quantities, preferred packaging and delivery requirements.' },
-  { number: '04', icon: 'i-wellness', name: 'Fitness, Health & Wellness', category: 'Nonclinical concepts', status: 'Concept', image: 'sourcing-detail', href: 'contact.html', text: 'An emerging area of the Spear Line vision, focused on fitness and everyday wellbeing opportunities.' },
-  { number: '05', icon: 'i-property', name: 'Real Estate Services', category: 'Property opportunities', status: 'Concept', image: 'aerial-road', href: 'contact.html', text: 'An area of development for property-related services, subject to confirmation of the operating model.' },
-  { number: '06', icon: 'i-glass', name: 'Leisure, Entertainment & Hospitality', category: 'Places & experiences', status: 'Developing', image: 'bar-lounge', href: 'bar.html', text: 'Explore the ideas taking shape around hospitality, leisure and the upcoming Spear Line Bar.' }
+  { number: '04', icon: 'i-wellness', name: 'Fitness, Health & Wellness', category: 'Nonclinical concepts', status: 'Concept', image: 'track-sunrise', href: 'contact.html', text: 'An emerging area of the Spear Line vision, focused on fitness and everyday wellbeing opportunities.' },
+  { number: '05', icon: 'i-property', name: 'Real Estate Services', category: 'Property opportunities', status: 'Concept', image: 'property-visit', href: 'contact.html', text: 'An area of development for property-related services, subject to confirmation of the operating model.' },
+  { number: '06', icon: 'i-glass', name: 'Leisure, Entertainment & Hospitality', category: 'Places & experiences', status: 'Developing', image: 'rooftop-social', href: 'bar.html', text: 'Explore the ideas taking shape around hospitality, leisure and the upcoming Spear Line Bar.' }
 ];
 
 export const digitalCapabilities = [
@@ -86,7 +105,7 @@ export const services = [
     items: [
       { title: 'SUVs & 4×4s', text: 'Space, capability and comfort. Share your preferred model, year range and the journeys you want it for.', image: 'vehicles-suv', type: 'SUV or 4x4' },
       { title: 'Pickups', text: 'For work and everyday use. Tell us your cab preference, intended use and the capacity you need.', image: 'vehicles-pickup', type: 'Pickup' },
-      { title: 'Business vehicles', text: 'Your vehicle should suit the job. Start with passenger or cargo needs, destination and budget.', image: 'last-mile-van', type: 'Business vehicle' }
+      { title: 'Business vehicles', text: 'Your vehicle should suit the job. Start with passenger or cargo needs, destination and budget.', image: 'van-loading', type: 'Business vehicle' }
     ],
     include: ['The vehicle model or type you have in mind', 'Your budget and currency (optional)', 'Where the vehicle needs to go'],
     briefTitle: 'Make the first conversation count.',
@@ -100,9 +119,9 @@ export const services = [
     tags: ['Foodstuffs', 'Beverages', 'Business supply'],
     hero: { title: 'The essentials, handled with purpose.', lede: 'From foodstuffs to beverages, a useful supply conversation begins with the products, quantities and destination. Tell us what your business needs.' },
     items: [
-      { title: 'Foodstuffs', text: 'Share your product list, preferred grades or specifications, packaging and quantities.', image: 'foodstuffs' },
-      { title: 'Beverages', text: 'Tell us the beverage types, pack sizes, preferred brands and quantities for your order.', image: 'beverages' },
-      { title: 'Business requirements', text: 'For a one-off order or a recurring requirement, specify the delivery location and your preferred schedule.', image: 'warehouse' }
+      { title: 'Foodstuffs', text: 'Share your product list, preferred grades or specifications, packaging and quantities.', image: 'market-vendor' },
+      { title: 'Beverages', text: 'Tell us the beverage types, pack sizes, preferred brands and quantities for your order.', image: 'crates-loading' },
+      { title: 'Business requirements', text: 'For a one-off order or a recurring requirement, specify the delivery location and your preferred schedule.', image: 'warehouse-crew' }
     ],
     include: ['Products and specifications', 'Quantities and packaging', 'Delivery destination', 'Preferred timing'],
     briefTitle: 'Your product list is the best place to start.',
@@ -111,14 +130,14 @@ export const services = [
   },
   {
     id: 'logistics', slug: 'logistics', name: 'Logistics', label: 'Transport & coordination', icon: 'i-logistics',
-    image: 'logistics-truck', backdrop: 'highland-road', moment: 'loading-bay', closing: 'container-port',
+    image: 'logistics-truck', backdrop: 'road-freight', moment: 'cargo-strapping', closing: 'night-haul',
     card: 'A clear brief makes a better journey. Share the cargo, pickup point, destination and timing to discuss the right transport arrangements.',
     tags: ['Cargo movement', 'Delivery planning', 'Route coordination'],
     hero: { title: 'Every load, a clear way forward.', lede: 'Cargo, location, access and timing all shape a transport requirement. Start with the full picture so the route and arrangements can be discussed.' },
     items: [
-      { title: 'Cargo movement', text: 'What are you moving? Tell us the cargo type, estimated weight or volume, packaging and any handling requirements.', image: 'logistics-truck' },
-      { title: 'Delivery planning', text: 'Where does it need to go? Share pickup and delivery locations, access details and your preferred timing.', image: 'last-mile-van' },
-      { title: 'Trade coordination', text: 'For a journey involving several stages, include the origin, destination and any documentation or handover requirements to discuss.', image: 'container-port' }
+      { title: 'Cargo movement', text: 'What are you moving? Tell us the cargo type, estimated weight or volume, packaging and any handling requirements.', image: 'forklift-bay' },
+      { title: 'Delivery planning', text: 'Where does it need to go? Share pickup and delivery locations, access details and your preferred timing.', image: 'shop-delivery' },
+      { title: 'Trade coordination', text: 'For a journey involving several stages, include the origin, destination and any documentation or handover requirements to discuss.', image: 'river-landing' }
     ],
     include: ['Pickup location', 'Delivery destination', 'Cargo and estimated load', 'Preferred timing'],
     briefTitle: 'A better brief makes a clearer journey.',
@@ -174,7 +193,7 @@ export const home = {
 export const process = [
   { icon: 'i-brief', title: 'Tell us what you need', text: 'Choose vehicles, supplies or logistics. Share the essentials: the requirement, destination, timing and the best way to reach you.', image: 'desk-contact' },
   { icon: 'i-route', title: 'Work through the details', text: 'Product specifications, quantities, vehicle preferences or cargo details help define the scope.', image: 'market-produce' },
-  { icon: 'i-clock', title: 'Discuss availability and arrangements', text: 'Availability and arrangements are discussed for your enquiry, using the contact details you provided.', image: 'dispatch-team' },
+  { icon: 'i-clock', title: 'Discuss availability and arrangements', text: 'Availability and arrangements are discussed for your enquiry, using the contact details you provided.', image: 'delivery-confirm' },
   { icon: 'i-check', title: 'Agree the next move', text: 'Confirm the scope, pricing and arrangements in writing before making a commitment.', image: 'keys-handover' }
 ];
 
