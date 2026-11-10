@@ -110,6 +110,52 @@ export function createMotion({ root = document.documentElement, preference = mat
     for (const id of links.keys()) { const el = document.getElementById(id); if (el) spy.observe(el); }
   }
 
+  /* Scroll-driven depth. Browsers with CSS scroll timelines do this on the compositor (70-motion.css); every
+     other phone gets the same drift from this loop, which reads first and writes after like the tasks above. */
+  const nativeTimelines = typeof CSS !== "undefined" && CSS.supports?.("animation-timeline: view()");
+  if (!nativeTimelines) {
+    root.classList.add("sd-js");
+    const frames = $$(".strip-shot, .div-media, .svc-media");
+    const hero = $(".hero-photo");
+    scrollTasks.push(() => {
+      if (reduced()) return null;
+      const h = innerHeight;
+      const reads = frames.map(el => { const b = el.getBoundingClientRect(); return b.bottom < -80 || b.top > h + 80 ? null : clamp((h - b.top) / (h + b.height)) * 8 - 4; });
+      const hy = hero ? clamp(scrollY / (h * 0.9)) * 8 : 0;
+      return () => { frames.forEach((el, i) => { if (reads[i] !== null) el.style.setProperty("--py", reads[i].toFixed(2)); }); hero?.style.setProperty("--hy", hy.toFixed(2)); };
+    });
+  }
+
+  /* Photo galleries on phones: a progress bar under the swipe row, and (without CSS timelines) the centred photo
+     is marked so neighbours recede. The row is a labelled, focusable scroll region so keyboards can use it. */
+  $$(".strip").forEach(strip => {
+    const bar = document.createElement("span"); bar.className = "strip-bar"; bar.setAttribute("aria-hidden", "true");
+    const fill = document.createElement("i"); bar.append(fill); strip.after(bar);
+    let ticking = 0;
+    const update = () => { ticking = 0; const max = strip.scrollWidth - strip.clientWidth; fill.style.setProperty("--sp", max > 0 ? (0.14 + 0.86 * clamp(strip.scrollLeft / max)).toFixed(3) : 1); };
+    strip.addEventListener("scroll", () => { if (!ticking) ticking = requestAnimationFrame(update); }, { passive: true });
+    update();
+    if (!nativeTimelines && "IntersectionObserver" in window) {
+      const focus = new IntersectionObserver(entries => { for (const entry of entries) entry.target.classList.toggle("is-focus", entry.isIntersecting); }, { root: strip, threshold: 0.6 });
+      [...strip.children].forEach(item => focus.observe(item));
+    }
+  });
+
+  /* Touch feedback: a gold ripple from the finger on buttons, cards and dock links, and a very light tap on
+     devices that support it. Pointer events only; nothing runs for mouse hover or keyboard. */
+  document.addEventListener("pointerdown", event => {
+    if (reduced() || event.pointerType === "mouse") return;
+    const host = event.target.closest?.(".btn, .div-card, .svc-card, .dock a, .strip-shot");
+    if (!host) return;
+    if (getComputedStyle(host).position === "static") host.style.position = "relative";
+    host.classList.add("ripple-host");
+    const box = host.getBoundingClientRect(), size = Math.min(Math.max(box.width, box.height) * 1.2, 360);
+    const dot = document.createElement("span"); dot.className = "tap-ripple";
+    dot.style.setProperty("--s", size.toFixed(0) + "px"); dot.style.left = (event.clientX - box.left) + "px"; dot.style.top = (event.clientY - box.top) + "px";
+    host.append(dot); dot.addEventListener("animationend", () => dot.remove(), { once: true }); setTimeout(() => dot.remove(), 900);
+    if (host.matches(".btn, .dock a")) navigator.vibrate?.(8);
+  }, { passive: true });
+
   /* One scroll loop for everything scroll-linked: every task measures first, then all of them write,
      so a frame never alternates layout reads and style writes. */
   function schedule() {

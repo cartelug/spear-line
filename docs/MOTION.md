@@ -35,3 +35,19 @@ First visit only: once per browser tab, on a fresh navigation, never for reload,
 Measured with `npm run qa:preloader`: 1.52 s on desktop and 1.08 s on a phone, with the page unlocked even when images and fonts are blocked. There is no progress counter and no delay for effect.
 
 **Fail-safes:** the `finish` timer is registered before any other preloader code; a CSS animation on `.preloader` hides it at 2.4 s even if scripts stop; the page (`main`, header, footer, dock, skip link) is `inert` only while the panel is up.
+
+## V16 mobile motion upgrade
+
+Researched against current guidance (WebKit's scroll-driven animations guide, Chrome's motion guidance): animate only compositor properties (`transform`, `opacity` and the individual `translate`/`scale`), keep parallax small because wide-field motion causes discomfort, feature-detect scroll timelines, and handle reduced motion case by case.
+
+| Upgrade | How | Fallback |
+| --- | --- | --- |
+| Hero sequence | Breadcrumb, kicker, lede and buttons rise in order after the headline; the photo settles in. `backwards` fill, so nothing is ever left hidden | none needed |
+| Hero depth | The photo drifts 8% and the copy softens as you scroll away (`animation-timeline: scroll(root)`) | `motion.js` sets `--hy` in the shared rAF loop (`html.sd-js`) |
+| Photo depth | Strip, division and service photographs counter-drift 4% inside their frames (`view()` timeline) | `--py` from `motion.js` |
+| Seam | The gold seam line draws from the centre and its node pops as the section enters | seam is simply drawn |
+| Swipe galleries | Under 560 px each photo strip is a snap-scrolling row: the centred photo is full size, neighbours recede (`view(inline)`), a gold progress bar tracks the swipe; the row is a labelled, focusable scroll region | `IntersectionObserver` marks the centred photo |
+| Touch feedback | Cards and buttons press in (`:active`, 90 ms) and a gold ripple spreads from the finger; Android buttons and dock links give an 8 ms haptic tap | none for mouse or keyboard |
+| Dock | Springs up after the preloader; the current tab's icon pops | none needed |
+
+All of it is behind `html.motion-ok`: Reduce motion (system or the site control) shows the finished design, and `motion.js` stops the ripple and fallback loop.

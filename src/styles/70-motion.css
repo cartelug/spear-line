@@ -105,3 +105,70 @@ html.motion-reduced::view-transition-old(root),html.motion-reduced::view-transit
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 @media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}html.motion-reduced{scroll-behavior:auto}}
+
+/* ---------- Mobile motion upgrade (V16) ----------
+   Everything below animates transform, opacity or the individual translate/scale properties only, and sits
+   behind html.motion-ok. Scroll-driven timelines run on the compositor where the browser supports them
+   (@supports); other phones get the same motion from motion.js (html.sd-js), so nothing is Chrome-only. */
+
+/* Hero copy rises in sequence after the headline; 'backwards' fill means nothing is ever left hidden or held. */
+html.motion-ok .hero-copy>.crumbs{animation:rise-s var(--dur-4) var(--ease-out) .05s backwards}
+html.motion-ok .hero-copy>.kicker{animation:rise-s var(--dur-4) var(--ease-out) .12s backwards}
+html.motion-ok .hero-copy>.lede{animation:rise-s var(--dur-5) var(--ease-out) .42s backwards}
+html.motion-ok .hero-copy>.actions{animation:rise-s var(--dur-5) var(--ease-out) .58s backwards}
+html.motion-ok .hero-panel{animation:panel-in 1.1s var(--ease-out) .15s backwards}
+html.is-preloading .hero-copy>*,html.is-preloading .hero-panel,html.is-prerendering .hero-copy>*,html.is-prerendering .hero-panel,html.is-preloading .dock{animation-play-state:paused}
+html.motion-ok .dock{animation:dock-in var(--dur-5) var(--ease-spring) .7s backwards}
+html.motion-ok .dock a[aria-current=page] .ico{animation:pop-soft var(--dur-5) var(--ease-spring) 1.1s backwards}
+
+/* Touch: pressing a card or button answers at once; a gold ripple spreads from the finger (motion.js). */
+a,button{-webkit-tap-highlight-color:transparent}
+.div-card,.svc-card,.strip-shot,.btn,.dock a{transition-property:transform,scale,background-color,color,box-shadow,opacity}
+@media(hover:none){
+  html.motion-ok .div-card:active,html.motion-ok .svc-card:active,html.motion-ok .strip-shot:active{scale:.982;transition:scale 90ms var(--ease-out)}
+  html.motion-ok .btn:active{scale:.965;transition:scale 90ms var(--ease-out)}
+}
+.ripple-host{position:relative;overflow:hidden}
+.tap-ripple{position:absolute;z-index:5;width:var(--s,160px);height:var(--s,160px);margin:calc(var(--s,160px) / -2) 0 0 calc(var(--s,160px) / -2);border-radius:50%;background:radial-gradient(circle,rgb(246 173 70 / .55),rgb(246 173 70 / 0) 68%);pointer-events:none;animation:ripple 620ms var(--ease-out) both}
+
+/* Scroll-linked photograph depth: a slow counter-drift inside the frame (individual translate/scale, so it
+   composes with the reveal and drift transforms). Large, wide-field motion is avoided on purpose: 3% travel. */
+@supports (animation-timeline:view()){
+  html.motion-ok .strip-shot img,html.motion-ok .div-media img,html.motion-ok .svc-media img{scale:1.1;animation:depth linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+  html.motion-ok .hero-photo img{animation:hero-depth linear both;animation-timeline:scroll(root);animation-range:0 90vh}
+  html.motion-ok .hero-copy{animation:hero-fade linear both;animation-timeline:scroll(root);animation-range:0 70vh}
+  html.motion-ok .seam::before{animation:seam-draw linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
+  html.motion-ok .seam::after{animation:pop linear both;animation-timeline:view();animation-range:entry 30% entry 90%}
+  html.motion-ok .strip-shot{animation:card-in linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+}
+html.motion-ok.sd-js .strip-shot img,html.motion-ok.sd-js .div-media img,html.motion-ok.sd-js .svc-media img{scale:1.1;translate:0 calc(var(--py,0) * 1%)}
+html.motion-ok.sd-js .hero-photo img{translate:0 calc(var(--hy,0) * 1%);scale:calc(1 + var(--hy,0) * .0075)}
+
+/* Phones: a gallery becomes a swipeable, snapping row; the centred photograph is full size, its neighbours recede. */
+@media(max-width:560px){
+  .strip{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);margin-inline:calc(-1 * var(--gutter));padding:4px var(--gutter) 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .strip::-webkit-scrollbar{display:none}
+  .strip:focus-visible{outline:3px solid var(--gold-2);outline-offset:-3px;border-radius:var(--r-lg)}
+  .strip-shot{flex:0 0 82%;scroll-snap-align:center;aspect-ratio:4/5}
+  .strip-shot img{object-position:var(--focus,50% 50%)}
+  .strip+.strip-bar{height:3px;margin:6px 0 0}
+  @supports (animation-timeline:view(inline)){
+    html.motion-ok .strip-shot{animation:snap-focus linear both;animation-timeline:view(inline);animation-range:cover 0% cover 100%}
+  }
+  html.motion-ok.sd-js .strip-shot{scale:.92;opacity:.65;transition:scale var(--dur-4) var(--ease-out),opacity var(--dur-4) var(--ease-out)}
+  html.motion-ok.sd-js .strip-shot.is-focus{scale:1;opacity:1}
+}
+.strip-bar{display:block;height:0;margin:0;border-radius:3px;background:rgb(255 255 255 / .16);overflow:hidden}
+.strip-bar i{display:block;height:100%;border-radius:3px;background:var(--gold-2);transform-origin:left;transform:scaleX(var(--sp,.2));transition:transform 120ms linear}
+
+@keyframes rise-s{from{opacity:.001;transform:translate3d(0,18px,0)}}
+@keyframes panel-in{from{transform:translate3d(0,22px,0) scale(.97)}}
+@keyframes dock-in{from{transform:translate3d(-50%,140%,0);opacity:0}}
+@keyframes pop-soft{from{transform:scale(.5) rotate(-12deg)}}
+@keyframes ripple{from{transform:scale(.2);opacity:1}to{transform:scale(2.4);opacity:0}}
+@keyframes depth{from{translate:0 -4%}to{translate:0 4%}}
+@keyframes hero-depth{to{translate:0 8%;scale:1.08}}
+@keyframes hero-fade{to{opacity:.35;transform:translate3d(0,-18px,0)}}
+@keyframes seam-draw{from{transform:scaleX(0)}}
+@keyframes card-in{from{scale:.94;opacity:.6}}
+@keyframes snap-focus{0%,100%{scale:.9;opacity:.6}50%{scale:1;opacity:1}}
