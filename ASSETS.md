@@ -76,3 +76,10 @@ Supplied by the site owner, downloaded from OnlineWebFonts.com, and used on the 
 Both were converted to WOFF2 from the supplied TrueType files with all glyphs and layout features kept. `License-OnlineWebFonts.txt` is the notice that came with the download, and every page footer carries the credit it asks for, plus the icon credit line the owner requested. Note that these are corporate typefaces of MTN and Sky; keep the licence on file, and if it does not cover web embedding, swap them for open-licence fonts (two `@font-face` blocks in `src/styles/00-tokens.css`).
 
 Earlier fonts (Hubot Sans, Mona Sans; before them Big Shoulders Display and Atkinson Hyperlegible) were removed.
+
+## Integration pass (10 November 2026)
+
+- How it works: each of the four steps now shows its photograph (`process[].image`: desk-contact… sourcing-detail, market-produce, dispatch-team, keys-handover), AVIF with WebP fallback, 4:3 beside the text from 760 px and 16:9 above it on phones.
+- Closing banners are matched to their page: home 01-hero-road, founder and how it works 09-highland-road, FAQ 08-dispatch-team.
+- FAQ topics carry symbols (i-route, i-shield, i-mark) in the index and headings.
+- Not used by design: i-star and i-quote (no reviews or testimonials exist), 13-mobile-hero, and the Joh photographs office-exit and phone-call (the founder gallery layout is full). The 84-image set referenced in the brief is not on any branch; no new images were generated.
