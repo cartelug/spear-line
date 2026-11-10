@@ -126,9 +126,9 @@ export function createMotion({ root = document.documentElement, preference = mat
     });
   }
 
-  /* Photo galleries on phones: a progress bar under the swipe row, and (without CSS timelines) the centred photo
+  /* Photo galleries and home card rails on phones: a progress bar under the swipe row, and (without CSS timelines) the centred photo
      is marked so neighbours recede. The row is a labelled, focusable scroll region so keyboards can use it. */
-  $$(".strip").forEach(strip => {
+  $$(".strip, .rail").forEach(strip => {
     const bar = document.createElement("span"); bar.className = "strip-bar"; bar.setAttribute("aria-hidden", "true");
     const fill = document.createElement("i"); bar.append(fill); strip.after(bar);
     let ticking = 0;
