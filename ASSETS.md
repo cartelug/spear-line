@@ -75,6 +75,8 @@ Eighteen more scenes (stems 24 to 41) were supplied by the site owner on 10 Nove
 | 40-night-haul | Logistics closing banner |
 | 41-dusk-loading | Home hero |
 
+The remaining 26 photographs of that set (stems 42 to 67) are shown as photo strips ("strips" in `content/site.mjs`): vehicles (42–46, 66), supplies (47, 48, 50, 62, 65, 67), logistics (49, 63, 64), digital (52–56, 59), about (57, 58, 61) and divisions (51, 60). Portrait originals were cropped to 3:2. The six gold-on-navy emblems supplied with the set are 160 px WebP files in `assets/emblems/emblem-45..50.webp`, used as the division card icons (01 trowel and bricks, 02 SUV, 03 grain and bottle, 04 runner, 05 house and key, 06 glass and lamp). Every strip carries the "illustrative AI-generated" note.
+
 ## Backdrops and texture
 
 - `assets/backdrops/*.webp`: 480 px wide, low-quality versions of each photograph (1.5–2 KB each, 56 KB total) used as blurred, drifting section backgrounds so each section's colour comes from a real image.

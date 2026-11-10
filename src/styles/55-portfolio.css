@@ -67,3 +67,16 @@
   .joh-grid .joh-shot{aspect-ratio:3/2}
   .joh-grid .joh-5,.joh-grid .joh-6{grid-row:auto;aspect-ratio:4/5}
 }
+
+/* Photo strips: short illustrative galleries grouped under a heading */
+.strip{list-style:none;margin:0;padding:0;display:grid;gap:var(--gap);grid-template-columns:repeat(3,1fr)}
+.strip-2{grid-template-columns:repeat(2,1fr)}
+.strip-shot{position:relative;margin:0;border-radius:var(--r-lg);overflow:hidden;background:var(--ocean);box-shadow:var(--shadow-2);aspect-ratio:3/2}
+.strip-shot picture,.strip-shot img{display:block;width:100%;height:100%}
+.strip-shot img{object-fit:cover}
+.strip-shot::after{content:"";position:absolute;inset:0;background:var(--g-veil-up);opacity:.55;pointer-events:none}
+.v-strip .fine{margin-top:var(--gap);color:var(--chalk-2)}
+.div-emblem{overflow:hidden;width:48px;height:48px;padding:0;background:#02304a}
+.div-emblem img{width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:900px){.strip,.strip-3,.strip-6{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.strip,.strip-2,.strip-3,.strip-6{grid-template-columns:1fr}}

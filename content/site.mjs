@@ -63,7 +63,33 @@ export const images = {
   'mist-route': { file: '38-mist-route', alt: 'A truck on a red-earth road winding through misty green hills at dawn', ratio: [1536, 864] },
   'city-dusk': { file: '39-city-dusk', alt: 'A city skyline at dusk seen from a hillside of warm rooftops', ratio: [1536, 864] },
   'night-haul': { file: '40-night-haul', alt: 'Truck lights streaking along a highway at night', ratio: [1536, 864] },
-  'dusk-loading': { file: '41-dusk-loading', alt: 'A crew loading palletised cargo into a container in golden light', ratio: [1536, 1024] }
+  'dusk-loading': { file: '41-dusk-loading', alt: 'A crew loading palletised cargo into a container in golden light', ratio: [1536, 1024] },
+  'street-suv': { file: '42-street-suv', alt: 'A silver SUV pulling out of a city-centre bank forecourt', ratio: [1536, 864] },
+  'dust-pickup': { file: '43-dust-pickup', alt: 'A pickup raising red dust on a rural dirt road', ratio: [1536, 1024] },
+  'ignition': { file: '44-ignition', alt: 'A driver checking the ignition and dashboard before a handover', ratio: [1536, 1024] },
+  'landcruiser-repair': { file: '45-landcruiser-repair', alt: 'A mechanic kneeling at the wheel of a white utility vehicle in a workshop yard', ratio: [1536, 1024] },
+  'river-crossing': { file: '46-river-crossing', alt: 'A 4x4 splashing through a flooded red-earth track', ratio: [1536, 864] },
+  'packing-slip': { file: '47-packing-slip', alt: 'Three people checking a delivery note beside stacked cartons', ratio: [1536, 1024] },
+  'shelf-stock': { file: '48-shelf-stock', alt: 'A shopkeeper reaching for sacks and cooking oil on a stock shelf', ratio: [1536, 1024] },
+  'port-sunset': { file: '49-port-sunset', alt: 'A container crane and stacked containers seen through a fence at sunset', ratio: [1536, 864] },
+  'hardware-shop': { file: '50-hardware-shop', alt: 'Two men checking pipes and fittings in a hardware store', ratio: [1536, 1024] },
+  'scaffold-build': { file: '51-scaffold-build', alt: 'Builders working on timber scaffolding at a block building site', ratio: [1536, 1024] },
+  'design-table': { file: '52-design-table', alt: 'A designer sketching beside a laptop, fabric swatches and a colour palette', ratio: [1536, 1024] },
+  'office-review': { file: '53-office-review', alt: 'A small team reviewing a screen together in a sunlit office', ratio: [1536, 1024] },
+  'phone-street': { file: '54-phone-street', alt: 'A man holding a smartphone on a busy street', ratio: [1536, 1024] },
+  'studio-setup': { file: '55-studio-setup', alt: 'A videographer setting up a camera, tripod and ring light', ratio: [1536, 1024] },
+  'planning-wall': { file: '56-planning-wall', alt: 'A hand placing sticky notes on a planning wall during a workshop', ratio: [1536, 1024] },
+  'office-dusk': { file: '57-office-dusk', alt: 'A quiet office desk with a notebook and phone by a window at sunset', ratio: [1536, 1024] },
+  'yard-paperwork': { file: '58-yard-paperwork', alt: 'Two colleagues working through paperwork in a warehouse office', ratio: [1536, 1024] },
+  'city-call': { file: '59-city-call', alt: 'A man on a phone call on a balcony above a city skyline', ratio: [1536, 1024] },
+  'market-laugh': { file: '60-market-laugh', alt: 'A woman laughing in a busy open-air market', ratio: [1536, 1024] },
+  'team-meeting': { file: '61-team-meeting', alt: 'A manager leading a planning meeting around a table', ratio: [1536, 1024] },
+  'records-desk': { file: '62-records-desk', alt: 'An older trader writing records among sacks of produce', ratio: [1536, 1024] },
+  'river-sunset': { file: '63-river-sunset', alt: 'A small boat on a misty river at sunrise', ratio: [1536, 864] },
+  'mud-tracks': { file: '64-mud-tracks', alt: 'Tyre tracks in wet red earth after rain', ratio: [1536, 1024] },
+  'timber-stack': { file: '65-timber-stack', alt: 'Stacked sawn timber with sawdust in warm light', ratio: [1536, 1024] },
+  'traffic-van': { file: '66-traffic-van', alt: 'A white delivery van moving through heavy city traffic', ratio: [1536, 1024] },
+  'cola-bottle': { file: '67-cola-bottle', alt: 'A glass soft-drink bottle on a wooden table in a bustling market bar', ratio: [1536, 1024] }
 };
 
 // V12 company map: opportunities are not presented as verified operational facilities.
@@ -289,4 +315,14 @@ export const johPhotos = {
   reading: { file: 'office-reading', w: 1024, h: 1536, alt: 'Joh Ayom sitting on the edge of a desk, reading a document' },
   meeting: { file: 'meeting', w: 1536, h: 1024, alt: 'Joh Ayom explaining a point across a meeting table' },
   river: { file: 'riverside', w: 1024, h: 1536, alt: 'Joh Ayom walking along a riverbank in a white T-shirt' }
+};
+
+// Photo strips: one per page, a few illustrative scenes grouped under a short heading.
+export const strips = {
+  vehicle: { k: 'On the road', title: 'From city forecourts to red-earth tracks.', text: 'Vehicles are chosen for the road they will actually travel.', keys: ['street-suv', 'dust-pickup', 'ignition', 'landcruiser-repair', 'river-crossing', 'traffic-van'] },
+  supplies: { k: 'At the counter', title: 'Stock, paperwork and people who know the shelves.', text: 'Every supply enquiry starts with what is needed, where, and by when.', keys: ['packing-slip', 'shelf-stock', 'hardware-shop', 'records-desk', 'timber-stack', 'cola-bottle'] },
+  logistics: { k: 'On the line', title: 'Ports, rivers and the roads between.', text: 'Routes are planned around the real ground the cargo will cross.', keys: ['port-sunset', 'river-sunset', 'mud-tracks'] },
+  digital: { k: 'Behind the screen', title: 'Digital work that starts with real people.', text: 'Websites, content and systems built around how the business actually works.', keys: ['design-table', 'office-review', 'phone-street', 'studio-setup', 'planning-wall', 'city-call'] },
+  about: { k: 'How we work', title: 'Plain conversations, careful paperwork.', text: 'Clear requirements, clear records and a clear next step.', keys: ['office-dusk', 'yard-paperwork', 'team-meeting'] },
+  divisions: { k: 'Across the portfolio', title: 'Building, trading and the people between.', text: 'Six directions, one habit: start where the work happens.', keys: ['scaffold-build', 'market-laugh'] }
 };
