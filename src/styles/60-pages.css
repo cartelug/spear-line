@@ -183,11 +183,12 @@
 .form-message.success{background:#E9F5EE;color:#174A2C}
 .download-link{display:inline-flex;margin-top:12px;padding:10px 18px;border-radius:999px;background:var(--ink);color:var(--sun);font-weight:650}
 .enquiry-aside{position:sticky;top:110px}
-.aside-card{display:grid;gap:16px;padding:14px 14px 24px;border-radius:var(--r-xl)}
+.aside-card{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;padding:14px 14px 24px;border-radius:var(--r-xl)}
 .aside-media{aspect-ratio:16/11;border-radius:calc(var(--r-xl) - 12px);overflow:hidden}
 .aside-media .pan{height:100%}
 .aside-media img{width:100%;height:100%;object-fit:cover}
 .aside-card h2,.aside-card p,.aside-note,.aside-contacts{padding-inline:12px}
+.aside-contacts a{white-space:normal;overflow-wrap:anywhere}
 .aside-card h2{font-size:var(--t-2xl)}
 .aside-card p{color:var(--ink-2)}
 .aside-note{display:flex;gap:14px;align-items:flex-start}
@@ -223,7 +224,7 @@
 .lost-links .ico{width:20px;height:20px}
 
 @media(max-width:1099px){
-  .feature,.brief-grid,.bar-hero-grid,.enquiry-grid{grid-template-columns:1fr}
+  .feature,.brief-grid,.bar-hero-grid,.enquiry-grid{grid-template-columns:minmax(0,1fr)}
   .feature-flip .feature-media{order:0}
   .bring-grid,.principles,.bar-share-grid{grid-template-columns:1fr}
   .faq-layout,.text-layout{grid-template-columns:1fr}

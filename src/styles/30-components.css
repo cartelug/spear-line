@@ -105,7 +105,7 @@ details[open]::details-content{block-size:auto}
 .call-icon .ico{width:22px;height:22px}
 .call-text{display:grid;gap:1px}
 .call-label{display:block;font-size:.72rem;line-height:1.2;color:var(--chalk-2)}
-.call-row li>span:not(.call-label){display:block}
+.call-text>span:not(.call-label){display:block}
 .call-row a,.call-list a{display:inline-flex;align-items:center;min-height:44px;font:700 var(--t-base)/1.2 var(--font-display);color:var(--chalk);letter-spacing:.01em;white-space:nowrap}
 .call-row a:hover{color:var(--gold-3)}
 .call-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15.5rem),1fr));gap:var(--gap)}

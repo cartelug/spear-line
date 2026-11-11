@@ -17,8 +17,8 @@
 .to-abyss{--to-c:color-mix(in oklab,var(--tone-c),var(--abyss))}.to-navy{--to-c:color-mix(in oklab,var(--tone-c),var(--navy))}.to-ocean{--to-c:color-mix(in oklab,var(--tone-c),var(--ocean))}.to-umber{--to-c:color-mix(in oklab,var(--tone-c),var(--umber))}.to-paper{--to-c:color-mix(in oklab,var(--tone-c),var(--paper))}.to-sand{--to-c:color-mix(in oklab,var(--tone-c),var(--sand))}.to-mist{--to-c:color-mix(in oklab,var(--tone-c),var(--mist))}
 
 /* Route seam: a gold line and one node where light meets dark */
-.seam::before{content:"";position:absolute;z-index:2;left:var(--gutter);right:var(--gutter);top:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-2) 20%,var(--gold-3) 50%,var(--gold-2) 80%,transparent);opacity:.75}
-.seam::after{content:"";position:absolute;z-index:2;left:50%;top:-5px;width:11px;height:11px;margin-left:-5.5px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgb(235 145 34 / .2)}
+.seam::before{content:"";position:absolute;z-index:0;left:var(--gutter);right:var(--gutter);top:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-2) 20%,var(--gold-3) 50%,var(--gold-2) 80%,transparent);opacity:.75}
+.seam::after{content:"";position:absolute;z-index:0;left:50%;top:-5px;width:11px;height:11px;margin-left:-5.5px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgb(235 145 34 / .2)}
 .hero+.seam::before,.hero+.seam::after{display:none}
 
 /* Line Field: the layered background of heroes and closing sections */
