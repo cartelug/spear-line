@@ -3849,7 +3849,6 @@
   "[data-split] .w,.title-intro .w",
   "[data-split] .w::after,.title-intro .w::after",
   "[data-split] .wi",
-  "html.rv-on [data-split].rv-arm:not(.is-in) .wi",
   ".title-intro .wi",
   ".title-intro .w:nth-child(2)",
   ".title-intro .w:nth-child(3)",
