@@ -3,6 +3,7 @@
 /* Background photograph and veil for the Bar, enquiry and 404 pages */
 .hero-media{position:absolute;inset:0;z-index:-2;overflow:hidden}
 .hero-media img{width:100%;height:100%;object-fit:cover}
+.hero-media .pan{height:100%}
 .hero-veil{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgb(6 31 48 / .92) 0%,rgb(6 31 48 / .62) 55%,rgb(6 31 48 / .25) 100%),linear-gradient(0deg,rgb(6 31 48 / .6),transparent 50%)}
 .pan{overflow:hidden}
 
