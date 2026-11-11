@@ -23,7 +23,7 @@ let server, base, dataDir, browser;
 test.before(async () => {
   const port = await freePort(); base = "http://127.0.0.1:" + port;
   dataDir = await mkdtemp(resolve(tmpdir(), "spear-line-e2e-"));
-  server = spawn(process.execPath, ["server.mjs"], { cwd: root, env: { ...process.env, HOST: "127.0.0.1", PORT: String(port), PUBLIC_ORIGIN: base, DATA_DIR: dataDir, ENQUIRIES_ENABLED: "false", NODE_ENV: "test", PUBLIC_CONTACT_PHONE: "+256 708 735 878", PUBLIC_CONTACT_PHONE_SECONDARY: "+211 920 998 562", NOTIFY_WEBHOOK_URL: "" }, stdio: ["ignore", "pipe", "pipe"] });
+  server = spawn(process.execPath, ["server.mjs"], { cwd: root, env: { ...process.env, HOST: "127.0.0.1", PORT: String(port), PUBLIC_ORIGIN: base, DATA_DIR: dataDir, ENQUIRIES_ENABLED: "false", NODE_ENV: "test", PUBLIC_CONTACT_EMAIL: "enquiries@spearline.africa", PUBLIC_CONTACT_PHONE: "+256 708 735 878", PUBLIC_CONTACT_PHONE_SECONDARY: "+211 920 998 562", NOTIFY_WEBHOOK_URL: "" }, stdio: ["ignore", "pipe", "pipe"] });
   await new Promise((done, fail) => { const timer = setTimeout(() => fail(new Error("Server did not start")), 10000); server.stdout.on("data", chunk => { if (String(chunk).includes("listening")) { clearTimeout(timer); done(); } }); server.once("exit", code => fail(new Error("Server exited " + code))); });
   browser = await chromium.launch({ executablePath: process.env.E2E_CHROME || undefined, args: ["--no-sandbox"] });
 });
@@ -248,17 +248,15 @@ test("reveals arm only below the first screen and lift as they scroll into view"
   await context.close();
 });
 
-test("both phone lines are exact call links and no email link is published", { timeout: 60000 }, async () => {
+test("both phone lines are exact call links and the business mailbox is published", { timeout: 60000 }, async () => {
   for (const path of ["/contact.html", "/index.html", "/divisions.html"]) {
     const { page, context } = await open(path);
     const hrefs = await page.evaluate(() => [...document.querySelectorAll("a[href^='tel:']")].map(a => a.getAttribute("href")));
     for (const wanted of ["tel:+256708735878", "tel:+211920998562"]) assert.ok(hrefs.includes(wanted), path + " links to " + wanted);
-    assert.equal(await page.locator("a[href^='mailto:']").count(), 0, path + " has no mailto link");
-    assert.doesNotMatch(await page.content(), /enquiries@spearline\.africa/, path + " does not print the unactivated mailbox");
+    assert.ok(await page.locator("a[href='mailto:enquiries@spearline.africa']").count() >= 1, path + " links to the business mailbox");
     await context.close();
   }
   const { page, context } = await open("/contact.html");
-  assert.match(await page.textContent(".v-contact .fine"), /Business email on spearline\.africa is planned/);
   assert.match(await page.textContent(".call-cards"), /Uganda enquiries[\s\S]*\+256 708 735 878[\s\S]*Joh Ayom \/ South Sudan[\s\S]*\+211 920 998 562/);
   await context.close();
 });

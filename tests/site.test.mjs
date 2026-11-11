@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import * as content from "../content/site.mjs";
 
 const pub = resolve(dirname(fileURLToPath(import.meta.url)), "..", "public");
-const pages = ["divisions.html", "digital.html", "founder.html", "index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
+const pages = ["divisions.html", "digital.html", "founder.html", "index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "terms.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
 const read = name => readFile(resolve(pub, name), "utf8");
 const exists = async name => access(resolve(pub, name)).then(() => true, () => false);
 const visibleText = html => html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "").replace(/<[^>]+>/g, " ");
@@ -198,7 +198,7 @@ test("icons, favicons, manifest and share image are present and linked", async (
 test("navigation reaches every page, and contact details are never hard-coded", async () => {
   for (const page of pages) {
     const html = await read(page);
-    for (const target of ["divisions.html", "digital.html", "founder.html", "vehicles.html", "supplies.html", "logistics.html", "how-it-works.html", "faq.html", "contact.html", "about.html", "enquire.html", "privacy.html"]) assert.ok(html.includes('href="' + target + '"'), page + " → " + target);
+    for (const target of ["divisions.html", "digital.html", "founder.html", "vehicles.html", "supplies.html", "logistics.html", "how-it-works.html", "faq.html", "contact.html", "about.html", "enquire.html", "privacy.html", "terms.html"]) assert.ok(html.includes('href="' + target + '"'), page + " → " + target);
     assert.match(html, /aria-controls="site-menu"/, page + " menu toggle");
   }
   const contact = await read("contact.html");
@@ -206,11 +206,11 @@ test("navigation reaches every page, and contact details are never hard-coded", 
   for (const hook of ["data-contact-email", "data-contact-phone", "data-contact-phone-secondary", "data-contact-whatsapp", "data-address", "data-contact-empty"]) assert.ok(contact.includes(hook), hook);
 });
 
-test("both confirmed contact lines are configured, while the planned mailbox remains unpublished", async () => {
+test("both confirmed contact lines and the business mailbox are configured", async () => {
   const config = await read("site-config.js");
   assert.match(config, /phone:"\+256 708 735 878"/);
   assert.match(config, /phoneSecondary:"\+211 920 998 562"/);
-  assert.match(config, /email:""/);
+  assert.match(config, /email:"enquiries@spearline\.africa"/);
   assert.match(await read("contact.html"), /Joh Ayom \/ South Sudan/);
 });
 

@@ -273,7 +273,7 @@ export const bar = {
 export const contactPage = {
   hero: { title: 'The next move starts with a message.', lede: 'A short enquiry gets you a better first conversation than a general message.' },
   emptyTitle: 'Contact details are being confirmed.',
-  emptyText: 'Call Spear Line directly, or prepare an enquiry draft. Business email on spearline.africa will be published after the mailbox is active.'
+  emptyText: 'Call or email Spear Line directly, or prepare an enquiry draft.'
 };
 
 // ---------------------------------------------------------------------------------------------

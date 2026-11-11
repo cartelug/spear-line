@@ -244,3 +244,9 @@
   .bar-note{flex-direction:column;align-items:flex-start}
   .enquiry-grid{margin-top:calc(-1 * clamp(80px,22vw,120px))}
 }
+
+/* Phones: the policy contents become wrapping chips, so the first section is reached without a screen of links. */
+@media(max-width:899px){
+  .toc ul{display:flex;flex-wrap:wrap;gap:8px}
+  .toc a{display:inline-flex;padding:6px 14px;border:1px solid var(--line-light);border-radius:999px;background:#fff;font-size:var(--t-sm);line-height:1.2}
+}

@@ -74,7 +74,7 @@
 @media(max-width:899px){
   .dock{display:grid;transition:transform var(--dur-3) var(--ease-out),opacity var(--dur-3)}
   .is-editing .dock,.menu-open .dock{transform:translate(-50%,140%);opacity:0}
-  .site-footer{padding-bottom:110px}
+  body .site-footer{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
 }
 
 /* Footer */
