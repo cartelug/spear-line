@@ -1,6 +1,6 @@
 # Spear Line business email plan
 
-The intended domain is `spearline.africa`. This is a plan, not an active email address: do not publish a `mailto:` link until the domain is controlled, the mailbox is provisioned, and messages are verified in both directions.
+The business domain is `spearline.africa`. On 11 November 2026 the owner chose to publish `enquiries@spearline.africa` on the website ahead of setup, so the steps below must be completed for that address to receive mail. Step-by-step: section 4 of `docs/FINISHING-MANUAL.md`.
 
 1. Confirm ownership of `spearline.africa` and the DNS provider. Verify the exact spelling; a double dot in a domain is invalid.
 2. Choose a mailbox provider and create `enquiries@spearline.africa` as the monitored public inbox. Add `joh@spearline.africa` only if Joh wants a direct address. Decide who can access the shared inbox and who receives after-hours alerts.

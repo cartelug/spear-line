@@ -1,86 +1,107 @@
-# Spear Line roadmap to launch and beyond
+# Spear Line: plan to finish the website
 
-Replaces the early analysis in `FINISH-PLAN.md`. Everything under "Measured" was run on 26 October 2026 against the real pages; everything under "Needs you" cannot be completed by anyone but the owner.
+Updated 11 November 2026. This replaces the October roadmap (still in git history). The step-by-step instructions for every item are in [FINISHING-MANUAL.md](FINISHING-MANUAL.md).
 
-## 1. Where the site stands (measured)
+Legend: **Done**, **Next** (can start now), **Needs you** (needs the owner's input, accounts or money), **Later** (after launch).
 
-| Area | Result | How |
+## 1. Where the site stands
+
+| Area | State |
+| --- | --- |
+| Pages | 17 pages: home, divisions, digital, founder, vehicles, supplies, logistics (plus a duplicate `timber-logistics`), how it works, FAQ, contact, about, Bar, enquire, privacy policy, terms of use, 404 |
+| Design and motion | Finished design system, per-page preloader, phone dock with Call button, swipe rails on phones |
+| Phones | Responsive audit clean on every page at 15 sizes; iPhone fixes for clipped cards, call icons and seam lines are in |
+| Contact | Both phone lines live; `enquiries@spearline.africa` published (the mailbox itself still has to be set up, see item 3) |
+| Enquiries | The form only prepares a downloadable draft; nothing is sent yet |
+| Search | Hidden from search engines on purpose until launch |
+| Imagery | All AI-generated, including Joh Ayom; footer and FAQ disclose this |
+| Tests | 41 unit and server tests and 18 browser tests pass |
+
+## 2. The plan
+
+### Phase 1. Content depth (Next; uses the ChatGPT prompt)
+
+| # | Item | Notes |
 | --- | --- | --- |
-| Accessibility | axe-core: 0 violations on 12 pages × phone and desktop, with and without Reduce motion. Lighthouse accessibility 100 | WCAG 2.0–2.2 A/AA and best-practice rule sets |
-| Performance (phone, throttled) | 97–100 on all 12 pages, CLS 0 | Lighthouse against the Node server, V11 |
-| Performance (desktop) | 99–100 | Lighthouse |
-| Best practices | 100 | Lighthouse |
-| SEO | 63–66 by default only because pages are deliberately `noindex`; launch mode adds canonical, share tags, structured data and sitemap | Lighthouse |
-| Layout | No overflow or clipped text at 23 sizes from 280 to 3440 px, landscape phones and touch tablets included | Playwright sweep |
-| Security | Security review of the branch: no high-confidence findings | Static review of build, client scripts and server |
-| Tests | 32 unit and server tests plus 7 browser tests pass | `npm test`, `npm run test:e2e` |
+| 1.1 | Run `docs/CHATGPT-PROMPT-LISTINGS.md` for every division | Gives listing cards, packages, prices (indicative) and image prompts |
+| 1.2 | Vehicles page: listing cards with filters (type, budget, fuel, drive) | Data in `content/listings/motors.json` |
+| 1.3 | Supplies page: food and beverage product cards, pack sizes, minimum orders | `content/listings/food.json` |
+| 1.4 | **New page** `materials.html` for Building Materials & Equipment | Division card currently links to Contact |
+| 1.5 | Logistics page: route and service cards (Mombasa, Kampala, Juba lanes), what affects price | `content/listings/logistics.json` |
+| 1.6 | **New page** `fitness.html`: membership packages, comparison table, class timetable, facilities | Division card currently links to Contact |
+| 1.7 | **New page** `real-estate.html`: rent, sale and land cards by area; property services | Division card currently links to Contact |
+| 1.8 | Bar page: concept menu, events and hire packages; replace "To be announced" when decided | Needs you for location and licensing |
+| 1.9 | Digital page: priced packages (starter site, business site, shop, branding, social, content) | |
+| 1.10 | Each listing card gets an "Ask about this" button that opens the enquiry pre-filled with that item | |
+| 1.11 | Every page ends with a short FAQ for that division | |
+| 1.12 | Turn `timber-logistics.html` into a redirect to `logistics.html` | Avoids duplicate content in search |
 
-V11 added ten new photographs (generated with GPT Image 1.5 through Zapier) and more motion. V9 (the golden-hour redesign) replaced the V8 visual language; V10 made it fast (inlined first-screen styles, AVIF, 40 KB of fonts, prerendered links, offline support) and switched to the owner's fonts. See `DESIGN.md`, `CONTENT.md` and `VALIDATION.md`.
+### Phase 2. Images (Next / Needs you)
 
-## 2. What only the owner can unblock
+| # | Item | Notes |
+| --- | --- | --- |
+| 2.1 | Real portrait of Joh Ayom, plus 2 to 4 real working photos | Needs you. Replaces the AI hero on the founder page and home |
+| 2.2 | Hero image for each new page (materials, fitness, real estate) | Generate (spec in the manual, section 2.5) |
+| 2.3 | One image per listing card (about 80 to 100 in total) | Generate from the ChatGPT image prompts |
+| 2.4 | Real photos of stock, yard, warehouse, vehicles and team, as they become available | Needs you. Replace AI images one at a time |
+| 2.5 | Record where every image came from in `ASSETS.md` | Needed for licensing and honesty |
 
-| # | Decision or input | Unblocks | Default if you say nothing |
-| --- | --- | --- | --- |
-| 1 | Legal business name, public email, phone, WhatsApp, address or service area | Contact page, footer, privacy page, structured data | Contact page shows an honest empty state |
-| 2 | Production domain | Canonical links, sitemap, share cards | Site stays `noindex` |
-| 3 | Enquiry hosting: a small managed Node host with a persistent volume (recommended) or a form service | Real enquiries, owner notification | Form prepares a downloadable draft only |
-| 4 | Real photographs of vehicles, stock, team and premises | Replacing illustrative AI imagery | AI imagery stays, disclosed in the footer |
-| 5 | What the Bar will be: location, opening details, menu, whether it serves alcohol, local licensing | Replacing the three "To be announced" cards | Page stays a teaser |
-| 6 | Which vehicle makes, supply categories and routes can be named truthfully | Specific service copy and richer SEO | Copy stays general |
-| 7 | Legal and compliance review: import, food safety, alcohol licensing, privacy by market | Final privacy and FAQ text | Current copy makes no regulated claims |
+### Phase 3. Email, domain and hosting (Needs you)
 
-## 3. Phased plan
+| # | Item | Notes |
+| --- | --- | --- |
+| 3.1 | Register or confirm `spearline.africa`; choose a mailbox provider | |
+| 3.2 | Create `enquiries@spearline.africa` (and `joh@spearline.africa` if wanted); add MX, SPF, DKIM, DMARC | Test send and receive both ways |
+| 3.3 | Point the domain at the website host (GitHub Pages for the static site, or the Node host for live enquiries) | |
+| 3.4 | Turn on live enquiries: deploy `server.mjs`, set the environment, owner notification webhook, daily purge job, backups | |
+| 3.5 | Optional: WhatsApp Business number, office address, opening hours | Fill `site-config.js` and `.env` |
 
-Each phase leaves the site shippable. Items marked ✅ are already done.
+### Phase 4. Legal and compliance (Needs you)
 
-### Phase A — Foundations ✅
-Symbol, icon sprite, favicon and share assets; new type system; V9 redesign with one content file (`content/site.mjs`) and empty slots for inventory, stats, testimonials, partners and team; How it works, FAQ, Contact, Bar pages; motion layer with Reduce motion; launch switch; shared file manifest; CSS bundle; compression; accessibility, performance and security passes; documentation and tests.
+| # | Item | Notes |
+| --- | --- | --- |
+| 4.1 | **Done:** Terms of use and full Privacy policy pages | |
+| 4.2 | Lawyer review of the terms, privacy policy and any listing wording | Before launch |
+| 4.3 | Register with Uganda's Personal Data Protection Office (PDPO) as a data controller | Required under the Data Protection and Privacy Act 2019 and its 2021 regulations |
+| 4.4 | Confirm the font licence (MTN Brighter Sans, Sky Text) for web use, or swap fonts | Legal risk until confirmed |
+| 4.5 | Trade licences as needed: vehicle dealing, food handling, alcohol (the Bar), real estate agency, in Uganda and South Sudan | Before advertising those services |
+| 4.6 | Model releases for any real people photographed | |
 
-### Phase B — Make it receive business (needs #1 and #3)
-Built and tested without your details: the owner-notification webhook (`NOTIFY_WEBHOOK_URL`), `/healthz`, the Dockerfile and `docs/DEPLOY.md`. Still needed: your business details, the host, and a real end-to-end enquiry on that host.
-1. Deploy `server.mjs` on a Node host; set `ENQUIRIES_ENABLED`, `PUBLIC_ORIGIN` (HTTPS), `BUSINESS_LEGAL_NAME`, `PUBLIC_CONTACT_EMAIL`, `RETENTION_DAYS`, `DATA_DIR` on a private volume.
-2. Add an owner notification when an enquiry is stored (email or webhook), and show the reference to the visitor.
-3. Schedule `scripts/purge-enquiries.mjs` daily; document backup and restore; test both.
-4. Fill `site-config.js`; confirm the Contact page cards, footer and privacy text switch on.
-5. Add an end-to-end test: submit against a local server, check the stored file and notification.
-Exit test: a real enquiry arrives in the owner's inbox within minutes.
+### Phase 5. Go public (after Phases 3 and 4)
 
-### Phase C — Go public (needs #2)
-1. `SITE_ORIGIN=https://… SITE_LAUNCH=1 npm run build`; deploy.
-2. Submit `sitemap.xml` in Search Console; verify the property.
-3. Re-run Lighthouse and axe on production; keep scores at or above Section 1.
-4. Add privacy-respecting uptime monitoring. Add analytics only if wanted, and update the privacy page first.
-Exit test: Lighthouse SEO 100 and a canonical, indexable page set on the live domain.
+| # | Item |
+| --- | --- |
+| 5.1 | Launch build: `SITE_ORIGIN=https://spearline.africa SITE_LAUNCH=1 npm run launch:check` then build and deploy |
+| 5.2 | Google Search Console and Bing Webmaster Tools: verify, submit `sitemap.xml` |
+| 5.3 | Google Business Profile for Kampala (and Juba if eligible) |
+| 5.4 | Social profiles linked from the footer (Facebook, Instagram, LinkedIn, TikTok, as used) |
 
-### Phase D — Credibility (needs #4, #6, #7)
-1. Replace generic copy with specifics the owner confirms: makes, categories, minimums, routes, typical response time.
-2. Real photography with alt text; keep the AI-imagery note on any page that still uses illustrations.
-3. About page: who runs Spear Line and where, using verifiable facts only. No invented testimonials, counts or client logos.
-4. Local-business structured data once an address exists.
+### Phase 6. Quality before launch (Next)
 
-### Phase E — The Bar (needs #5)
-1. Replace "To be announced" cards with real details as each is decided.
-2. If interest capture is wanted, add a `bar` interest form on the validated endpoint with its own consent text; otherwise leave it as a teaser.
-3. Confirm licensing and age-gating wording with a professional before promoting any drinks.
+| # | Item |
+| --- | --- |
+| 6.1 | Test on real phones: iPhone Safari, Android Chrome, Samsung Internet; also Firefox and desktop Safari |
+| 6.2 | Screen-reader pass: VoiceOver and TalkBack on home, a listing page and the enquiry form |
+| 6.3 | Re-measure speed (Lighthouse) after listings and images are added; budget: phone performance 90+ |
+| 6.4 | Add the Lighthouse budget to the automated checks |
+| 6.5 | Listings filter and search on pages with many cards |
 
-### Phase F — Quality gates in CI
-Done: a `browser` CI job runs Playwright tests with axe (12 pages × phone and desktop, with and without Reduce motion), overflow checks at four widths, the hero note, the draft flow, menu, FAQ, timeline and Reduce motion. Still open: a Lighthouse budget job, real devices, Safari and Firefox, and screen-reader passes.
-1. Add Playwright browser tests to `check.yml` (menu, tabs, FAQ, form, Reduce motion, no overflow at four widths).
-2. Add axe and a Lighthouse budget (performance ≥ 90 on phone, accessibility 100, no regressions) as a CI job.
-3. Test on real iPhone and Android devices, Safari and Firefox; fix any divergences.
-4. Add a screen-reader pass (VoiceOver and TalkBack) of home, FAQ and the enquiry form.
+### Phase 7. After launch (Later)
 
-### Phase G — Growth (after launch)
-Targeted landing pages per service and market, backed by real keywords and content; case studies once real; analytics-driven copy changes; email follow-up for enquiries; localisation if serving several languages.
+| # | Item |
+| --- | --- |
+| 7.1 | Uptime monitoring and enquiry backups |
+| 7.2 | Privacy-friendly analytics (update the privacy policy first) |
+| 7.3 | Real case studies and testimonials, only with permission |
+| 7.4 | News or updates section |
+| 7.5 | Arabic or other languages for South Sudan, if wanted |
+| 7.6 | Online payments or bookings (fitness memberships, Bar events), if wanted |
 
-## 4. Skills and tools
+## 3. Decisions only the owner can make
 
-Already used here: axe-core, Lighthouse, Playwright, the security-review skill. Offered for install: `frontend-design`, `rampstack-seo` (technical and on-page SEO), `design-skills` (UX writing, critique, journey mapping), Website Copywriting & Positioning, `brand-studio`, and Anthropic's Marketing plugin. Recommended order once installed: copywriting for Phase D, SEO for Phase C, brand-studio before any Bar launch, design-skills for Phase F user testing. Third-party connectors that would send the site or analytics to outside services were deliberately not offered.
-
-## 5. Risks to watch
-
-- **Invented claims.** Every new sentence must restate something the owner has confirmed. Tests already block stock, price, testimonial and opening-hours wording.
-- **Illustrative imagery.** AI images must never be presented as real stock, staff or premises.
-- **Motion.** Keep continuous effects paused offscreen and every effect behind Reduce motion; keep CLS near zero by animating transform, opacity and reserved-width font-stretch only.
-- **Hosting split.** GitHub Pages cannot run the enquiry server; do not enable submission on a static-only deployment.
-- **Privacy.** Enquiries must stay outside `public/`; retention must be set before enabling submission.
+1. Real photos: when and who takes them (Joh first).
+2. Domain registrar, mailbox provider and host (see the manual for options).
+3. Which listings and prices you will stand behind once ChatGPT's indicative figures are checked.
+4. Whether fitness and real estate are live services or still "coming soon".
+5. The Bar: location, opening date, menu, licensing.
+6. Budget for a lawyer review and for licensed fonts if needed.
