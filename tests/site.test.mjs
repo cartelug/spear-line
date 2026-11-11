@@ -161,7 +161,7 @@ test("optional real-content blocks stay invisible until they have entries", asyn
   if (content.inventory.length === 0) assert.match(await read("vehicles.html"), /Looking for something specific\?/, "vehicles page invites an enquiry instead of listing stock");
 });
 
-test("no invented claims, and illustrative imagery is labelled on every page", async () => {
+test("no invented claims, and the footer states on every page that imagery is AI-generated", async () => {
   for (const page of pages) {
     const html = await read(page);
     assert.match(html, /AI-generated imagery illustrates our service areas/, page);
@@ -295,7 +295,7 @@ test("V12 six-division model, digital offer and Joh Ayom profile remain grounded
   assert.match(founderPage, /Joh Ayom/);
   assert.doesNotMatch(founderPage, /Joe Ayom/);
   assert.match(founderPage, /Our idea is simple: anyone with a vehicle to find/);
-  assert.match(founderPage, /Joh Ayom, AI-generated image/);
+  assert.doesNotMatch(founderPage, /<figcaption>Joh Ayom/);
   assert.doesNotMatch(homePage, /Spear Line in South Sudan/);
 });
 
@@ -338,18 +338,18 @@ test("the wordmark is only recoloured and scaled proportionally, never redrawn, 
   const png = await readFile(resolve(pub, "assets", "logo-wordmark-gold.png")); assert.equal(png.readUInt32BE(16), 2172); assert.equal(png.readUInt32BE(20), 724);
 });
 
-test("heroes carry the route, every page uses the Line Field, and the photograph is labelled illustrative", async () => {
+test("heroes carry the route, every page uses the Line Field, and photographs are plain, with no caption chips", async () => {
   for (const page of ["divisions.html", "digital.html", "contact.html", "vehicles.html", "about.html"]) {
     const html = await read(page);
     assert.match(html, /<div class="lf" aria-hidden="true">/, page + " uses the Line Field");
-    assert.match(html, /<figcaption>Illustrative image<\/figcaption>/, page + " labels the hero photograph");
+    assert.doesNotMatch(html, /<figcaption>Illustrative image/, page + " has no caption chip on the hero photograph");
   }
-  // Photographs of Joh Ayom are AI-generated from his own photos: every one is captioned as such, and the page says so.
+  // Photographs of Joh Ayom carry no caption chips; the footer and FAQ state that the imagery is AI-generated.
   for (const page of ["founder.html", "index.html"]) {
     const html = await read(page), shots = [...html.matchAll(/<figure[^>]*>((?:(?!<\/figure>)[\s\S])*?assets\/joh\/[\s\S]*?)<\/figure>/g)].map(m => m[1]);
     assert.ok(shots.length >= 1, page + " shows Joh");
-    for (const shot of shots) assert.match(shot, /<figcaption>(Joh Ayom, AI-generated image|Logistics|Supplies|Materials|Vehicles|Planning|Between Uganda and South Sudan)<\/figcaption>/, page + " captions each photo");
+    for (const shot of shots) assert.doesNotMatch(shot, /<figcaption/, page + " shows each photo plain");
   }
   const founder = await read("founder.html");
-  assert.match(founder, /Joh Ayom, AI-generated image/); assert.match(founder, /AI-generated images of Joh Ayom, created from his own photographs/);
+  assert.doesNotMatch(founder, /AI-generated image<\/figcaption>/);
 });
