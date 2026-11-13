@@ -1,6 +1,6 @@
 # Editing Spear Line content
 
-All words, images and optional real-world material live in one file: `content/site.mjs`. After any edit:
+Website copy, images and optional real-world material live in `content/site.mjs`. Researched import vehicle prices live in `content/vehicle-prices.mjs`; see `docs/VEHICLE-PRICES.md`. After any edit:
 
 ```sh
 npm run build   # writes the pages to public/, bundles CSS, mirrors to the repository root
@@ -39,6 +39,8 @@ Section backdrops (the soft colour behind dark sections) are the small 480 px We
 If you change styles or the layout of a page's first screen, run `npm run critical` so the inlined first-screen styles stay in step (a test fails when they drift).
 
 ## Optional collections
+
+The import price guide is a separate collection of external exporter examples. Each entry retains its source link, reference, USD price and research date. It does not populate `inventory` or claim Spear Line stock. Keep the research date accurate when refreshing prices, and preserve the vehicle-only cost explanation.
 
 These are empty by default and appear on the site automatically once they have entries.
 

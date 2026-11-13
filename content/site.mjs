@@ -127,7 +127,7 @@ export const services = [
     image: 'vehicles-suv', backdrop: 'vehicles-suv', moment: 'keys-handover', closing: 'wheel-detail',
     card: 'From everyday journeys to the demands of business. Tell us the vehicle you have in mind, your budget and where you need it.',
     tags: ['SUVs & 4×4s', 'Pickups', 'Business vehicles'],
-    hero: { title: 'A vehicle for your next chapter.', lede: 'Your daily route, your business and your budget all shape the right choice. Bring us your requirements and start a focused vehicle conversation.' },
+    hero: { title: 'A vehicle for your next chapter.', lede: 'Compare researched import vehicle prices in USD, then share your preferred model, budget and destination for a focused vehicle conversation.' },
     items: [
       { title: 'SUVs & 4×4s', text: 'Space, capability and comfort. Share your preferred model, year range and the journeys you want it for.', image: 'vehicles-suv', type: 'SUV or 4x4' },
       { title: 'Pickups', text: 'For work and everyday use. Tell us your cab preference, intended use and the capacity you need.', image: 'vehicles-pickup', type: 'Pickup' },
@@ -248,8 +248,8 @@ export const faq = [
     { q: 'How is my information used?', a: 'To review and respond to your request. The privacy page explains what is collected, how long it is kept when online enquiries are enabled, and how to ask about your information.' }
   ] },
   { group: 'About this website', items: [
-    { q: 'Are the images real photographs?', a: 'No. The imagery on this website is AI-generated and illustrates our service areas. It does not show Spear Line staff, stock, facilities or vehicles, and is not a claim of completed work.' },
-    { q: 'Do you list stock or prices here?', a: 'Not yet. When verified vehicle listings are published they will appear on the vehicles page. Until then, share what you need and the details are confirmed for your enquiry.' },
+    { q: 'Are the images real photographs?', a: 'Most service imagery is AI-generated and illustrates our service areas. Joh Ayom’s main portrait was supplied by the owner. Images do not confirm vehicle stock, facilities or completed projects.' },
+    { q: 'Do you list stock or prices here?', a: 'The vehicles page includes researched external exporter listings with vehicle-only import prices in USD, a research date and a source link for each example. Freight, insurance, taxes and local charges are additional. These examples are not confirmed Spear Line stock; availability and a destination-specific quote are confirmed for your enquiry.' },
     { q: 'What is Spear Line Bar?', a: 'The next chapter of Spear Line. It is coming soon, and the location, opening details and menu will be announced on its page. Nothing is open or bookable yet.' }
   ] }
 ];

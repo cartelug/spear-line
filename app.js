@@ -1,4 +1,4 @@
-import { validateEnquiry } from "./validation.js?v=a6c4e502a4";
+import { validateEnquiry } from "./validation.js?v=781d776483";
 const config = window.SPEAR_CONFIG || {};
 const preview = window.SPEAR_PREVIEW === true;
 const canSubmit = config.enquiriesEnabled === true && !preview;
@@ -58,6 +58,50 @@ window.addEventListener("scroll", () => {
 }, { passive: true });
 document.addEventListener("focusin", event => { if (header?.contains(event.target)) header.classList.remove("is-hidden"); });
 onScroll();
+
+/* Researched import listings: filter and sort locally; exporter links remain the price source. */
+const carCatalogue = $("[data-car-catalogue]");
+if (carCatalogue) {
+  const controls = $("[data-car-controls]", carCatalogue), grid = $("[data-car-grid]", carCatalogue);
+  const search = $("[data-car-search]", controls), make = $("[data-car-make]", controls);
+  const budget = $("[data-car-budget]", controls), year = $("[data-car-year]", controls), sort = $("[data-car-sort]", controls);
+  const count = $("[data-car-count]", controls), empty = $("[data-car-empty]", carCatalogue), more = $("[data-car-more]", carCatalogue);
+  const normalise = text => text.normalize("NFKD").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const cars = $$("[data-car]", grid).map(el => ({ el, make: el.dataset.carMakeValue, price: Number(el.dataset.carPrice), year: Number(el.dataset.carModelYear), mileage: Number(el.dataset.carMileage), search: normalise(el.dataset.carKeywords) }));
+  const pageSize = 24;
+  let limit = pageSize, matches = [];
+  function renderCars() {
+    const terms = search.value.trim().split(/\s+/).map(normalise).filter(Boolean);
+    const maximum = budget.value === "" ? Infinity : Math.max(0, Number(budget.value));
+    matches = cars.filter(car => (!make.value || car.make === make.value) && car.price <= maximum && car.year >= Number(year.value) && terms.every(term => car.search.includes(term)));
+    const compare = {
+      "price-asc": (a, b) => a.price - b.price || b.year - a.year,
+      "price-desc": (a, b) => b.price - a.price || b.year - a.year,
+      "year-desc": (a, b) => b.year - a.year || a.price - b.price,
+      "mileage-asc": (a, b) => a.mileage - b.mileage || a.price - b.price,
+    }[sort.value];
+    matches.sort(compare);
+    cars.forEach(car => { car.el.hidden = true; });
+    grid.append(...matches.map(car => car.el));
+    matches.slice(0, limit).forEach(car => { car.el.hidden = false; });
+    count.textContent = matches.length ? `Showing ${Math.min(limit, matches.length)} of ${matches.length} cars` : "No matching cars";
+    empty.hidden = matches.length !== 0;
+    more.hidden = limit >= matches.length;
+    more.textContent = `Show ${Math.min(pageSize, Math.max(0, matches.length - limit))} more cars`;
+  }
+  function filterCars() { limit = pageSize; renderCars(); }
+  controls.addEventListener("submit", event => event.preventDefault());
+  controls.addEventListener("input", event => { if (event.target.matches("input")) filterCars(); });
+  controls.addEventListener("change", event => { if (event.target.matches("select")) filterCars(); });
+  controls.addEventListener("reset", () => { setTimeout(filterCars, 0); });
+  more.addEventListener("click", () => {
+    const firstNew = limit;
+    limit += pageSize; renderCars();
+    matches[firstNew]?.el.querySelector("h3")?.focus();
+  });
+  renderCars();
+  controls.hidden = false;
+}
 
 /* Gallery rail: buttons, keyboard, drag to scroll and a position readout. */
 const rail = $("#image-rail"), previous = $("[data-rail-prev]"), next = $("[data-rail-next]");
@@ -169,7 +213,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || new URLSe
 
 /* Motion layer: loaded separately so a failure never affects navigation or the enquiry form. */
 // It measures the layout, so it starts once the full stylesheet applies (window.spearCss, from the inline boot script).
-Promise.all([import("./motion.js?v=a6c4e502a4"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
+Promise.all([import("./motion.js?v=781d776483"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
   root.classList.remove("motion-ok");
   $$("[data-motion-toggle]").forEach(button => { button.hidden = true; });
 });

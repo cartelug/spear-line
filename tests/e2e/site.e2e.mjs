@@ -10,6 +10,7 @@ import { createRequire } from "node:module";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
+import { vehiclePriceGuide } from "../../content/vehicle-prices.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const axeSource = await readFile(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
@@ -41,6 +42,50 @@ async function open(path, { width = 1363, height = 800, reduced = false, saved =
   await page.goto(base + path, { waitUntil: "networkidle" });
   return { page, context, problems };
 }
+
+test("the import guide filters, sorts, expands and carries a sourced model into an enquiry", { timeout: 90000 }, async () => {
+  for (const width of [390, 1363]) {
+    const { page, context, problems } = await open("/vehicles.html", { width, touch: width < 600 });
+    await page.locator("[data-car-controls]").waitFor({ state: "visible" });
+    const visible = page.locator("[data-car]:visible");
+    assert.equal(await visible.count(), 24, "first page of researched cars");
+    await page.click("[data-car-more]");
+    assert.equal(await visible.count(), 48, "show more adds the next page");
+    await page.selectOption("[data-car-make]", "Toyota");
+    await page.fill("[data-car-search]", "RAV4");
+    await page.fill("[data-car-budget]", "20000");
+    await page.selectOption("[data-car-year]", "2015");
+    assert.ok(await visible.count() > 0, "filtered Toyota examples remain");
+    for (const car of await visible.all()) {
+      const title = await car.locator("h3").textContent();
+      const price = Number((await car.locator(".car-price").textContent()).match(/USD ([\d,]+)/)[1].replace(/,/g, ""));
+      assert.match(title, /Toyota RAV4/);
+      assert.ok(Number(title.slice(0, 4)) >= 2015);
+      assert.ok(price <= 20000);
+    }
+    await page.selectOption("[data-car-sort]", "year-desc");
+    const years = await visible.locator("h3").allTextContents();
+    assert.deepEqual(years.map(x => Number(x.slice(0, 4))), years.map(x => Number(x.slice(0, 4))).sort((a, b) => b - a));
+    await page.fill("[data-car-search]", "a model that does not exist");
+    assert.equal(await visible.count(), 0);
+    assert.ok(await page.isVisible("[data-car-empty]"));
+    await page.click(".car-reset");
+    await page.waitForFunction(() => document.querySelector("[data-car-count]").textContent.startsWith("Showing 24 of "));
+    assert.equal(await visible.count(), 24);
+    await page.selectOption("[data-car-sort]", "price-desc");
+    const first = visible.first();
+    const sourceRef = (await first.locator(".car-source-ref").textContent()).split(" ").at(-1);
+    await Promise.all([page.waitForURL(/enquire\.html/), first.locator(".link").click()]);
+    assert.ok((await page.inputValue("[name=model]")).includes(sourceRef), "enquiry retains the source reference");
+    assert.deepEqual(problems, []);
+    await context.close();
+  }
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(base + "/vehicles.html", { waitUntil: "networkidle" });
+  assert.equal(await page.locator("[data-car]:visible").count(), vehiclePriceGuide.vehicles.length, "all researched prices remain readable without scripts");
+  await context.close();
+});
 
 test("every page loads cleanly with no horizontal overflow at four widths", { timeout: 240000 }, async () => {
   for (const width of [320, 390, 768, 1363]) {
