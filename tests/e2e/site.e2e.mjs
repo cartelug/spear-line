@@ -14,7 +14,7 @@ import { vehiclePriceGuide } from "../../content/vehicle-prices.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const axeSource = await readFile(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
-const pages = ["divisions", "digital", "founder", "index", "vehicles", "supplies", "logistics", "how-it-works", "faq", "contact", "about", "bar", "enquire", "privacy", "404"];
+const pages = ["materials", "fitness", "real-estate", "divisions", "digital", "founder", "index", "vehicles", "supplies", "logistics", "how-it-works", "faq", "contact", "about", "bar", "enquire", "privacy", "404"];
 
 async function freePort() {
   const probe = net.createServer(); probe.listen(0, "127.0.0.1"); await once(probe, "listening");
@@ -42,6 +42,32 @@ async function open(path, { width = 1363, height = 800, reduced = false, saved =
   await page.goto(base + path, { waitUntil: "networkidle" });
   return { page, context, problems };
 }
+
+test("reference galleries support navigation and division guides create a usable brief", { timeout: 90000 }, async () => {
+ const {page,context,problems}=await open('/vehicles.html',{width:390,touch:true});
+ await page.waitForFunction(()=>!document.querySelector('main').inert);
+ await page.fill('[data-car-search]','CF275562');
+ const opener=page.locator('[data-car-open]:visible').first();
+ await opener.click();
+ assert.ok(await page.locator('[data-car-lightbox]').isVisible());
+ const first=await page.locator('[data-gallery-image]').getAttribute('src');
+ await page.click('[data-gallery-next]');
+ assert.notEqual(await page.locator('[data-gallery-image]').getAttribute('src'),first);
+ await page.keyboard.press('ArrowLeft');
+ assert.equal(await page.locator('[data-gallery-image]').getAttribute('src'),first);
+ await page.keyboard.press('Escape');
+ assert.equal(await page.locator('[data-car-lightbox]').isVisible(),false);
+ await page.selectOption('[data-car-category-filter]','SUV');
+ assert.ok(await page.locator('[data-car]:visible').count()>0);
+ assert.deepEqual(problems,[]);await context.close();
+ const guide=await open('/materials.html',{width:390,touch:true});
+ await guide.page.waitForFunction(()=>!document.querySelector('main').inert);
+ await guide.page.locator('[data-brief-add]').first().click();
+ assert.equal(await guide.page.locator('[data-brief-add]').first().getAttribute('aria-pressed'),'true');
+ const [download]=await Promise.all([guide.page.waitForEvent('download'),guide.page.click('[data-brief-download]')]);
+ assert.equal(download.suggestedFilename(),'spear-line-project-brief.txt');
+ assert.deepEqual(guide.problems,[]);await guide.context.close();
+});
 
 test("the import guide filters, sorts, expands and carries a sourced model into an enquiry", { timeout: 90000 }, async () => {
   for (const width of [390, 1363]) {
