@@ -4,6 +4,7 @@ import { readFile, access } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as content from "../content/site.mjs";
+import { vehiclePriceGuide } from "../content/vehicle-prices.mjs";
 
 const pub = resolve(dirname(fileURLToPath(import.meta.url)), "..", "public");
 const pages = ["divisions.html", "digital.html", "founder.html", "index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "terms.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
@@ -29,13 +30,20 @@ test("every page has one h1, unique ids, described and sized images, and no inli
   }
 });
 
-test("local links, scripts, styles, images, fonts and fragments resolve, with no third-party hosts", async () => {
+test("local resources resolve and only declared research and credit links leave the site", async () => {
+  const researchLinks = new Set([vehiclePriceGuide.termsUrl, ...vehiclePriceGuide.vehicles.map(car => car.sourceUrl)]);
   for (const page of pages) {
     const html = await read(page), ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]));
-    for (const [, ref] of html.matchAll(/(?:href|src)="([^"#?][^"]*)"/g)) {
+    for (const [, attribute, ref] of html.matchAll(/(href|src)="([^"#?][^"]*)"/g)) {
       if (/^(mailto:|tel:)/.test(ref)) continue;
       // The only outbound links are the font and icon credits the licence asks for; nothing external is loaded.
       if (/^https:\/\/www\.onlinewebfonts\.com(\/icon)?$/.test(ref)) { assert.ok(html.includes(`<a href="${ref}">`), page + " credit is a plain link"); continue; }
+      if (researchLinks.has(ref.replace(/&amp;/g, "&"))) {
+        assert.equal(page, "vehicles.html", "research links belong to the vehicle guide");
+        assert.equal(attribute, "href", "exporter resources are linked, never loaded");
+        assert.ok(html.includes('data-price-source href="' + ref + '" target="_blank" rel="noopener noreferrer"'), "source link is labelled and opens safely");
+        continue;
+      }
       assert.doesNotMatch(ref, /^https?:/, page + " loads an external resource: " + ref);
       const [file, fragment] = ref.split("#"), target = file.split("?")[0];
       assert.ok(await exists(target), page + " → " + ref);
@@ -161,15 +169,43 @@ test("optional real-content blocks stay invisible until they have entries", asyn
   if (content.inventory.length === 0) assert.match(await read("vehicles.html"), /Looking for something specific\?/, "vehicles page invites an enquiry instead of listing stock");
 });
 
-test("no invented claims, and the footer states on every page that imagery is AI-generated", async () => {
+test("no invented stock claims or unsourced prices, and every footer discloses illustrative imagery", async () => {
   for (const page of pages) {
     const html = await read(page);
     assert.match(html, /AI-generated imagery illustrates our service areas/, page);
-    assert.doesNotMatch(visibleText(html), /in stock|available now|fleet of|guaranteed|testimonial|years of experience|\bUSD \d|\$\s?\d|award-winning|trusted by/i, page);
+    assert.doesNotMatch(visibleText(html), /in stock|available now|fleet of|guaranteed|testimonial|years of experience|award-winning|trusted by/i, page);
+    const outsideGuide = html.replace(/<section\b[^>]*\bid="car-catalogue"[\s\S]*?<\/section>/, "");
+    assert.doesNotMatch(visibleText(outsideGuide), /\bUSD \d|\$\s?\d/i, page + " prices only appear in the sourced research guide");
   }
   assert.match(await read("enquire.html"), /Online submission is not currently open/);
   assert.match(await read("app.js"), /Nothing has been sent to Spear Line/);
   assert.equal(await read("timber-logistics.html"), await read("logistics.html"));
+});
+
+test("import price examples retain their exporter reference, date, currency and vehicle-only basis", async () => {
+  const guide = vehiclePriceGuide, cars = guide.vehicles;
+  assert.equal(guide.currency, "USD");
+  assert.equal(guide.priceBasis, "FOB vehicle price");
+  assert.match(guide.checkedOn, /^\d{4}-\d{2}-\d{2}$/);
+  assert.equal(new Set(cars.map(car => car.id)).size, cars.length, "no duplicate source listings");
+  const html = await read("vehicles.html");
+  assert.equal((html.match(/<article class="car-card" data-car /g) || []).length, cars.length);
+  assert.match(html, /external listing examples, not confirmed Spear Line stock/);
+  assert.match(html, /Freight, insurance, taxes, clearing and delivery are additional/);
+  assert.match(html, new RegExp('datetime="' + guide.checkedOn + '"'));
+  for (const car of cars) {
+    assert.equal(car.checkedOn, guide.checkedOn, car.id + " research date");
+    assert.ok(Number.isInteger(car.priceUsd) && car.priceUsd > 0, car.id + " numeric USD price");
+    assert.equal(Number(car.sourcePriceText.replace(/[$,]/g, "")), car.priceUsd, car.id + " matches the extracted source price");
+    assert.equal(car.id, car.sourceRef.toLowerCase());
+    assert.match(car.sourceUrl, /^https:\/\/www\.beforward\.jp\//);
+    assert.ok(new URL(car.sourceUrl).pathname.includes('/' + car.id + '/'), car.id + " links to its own listing");
+    assert.ok(car.year >= 2014 && car.year <= Number(guide.checkedOn.slice(0, 4)), car.id + " source year");
+    assert.equal(car.steering, "Right");
+    assert.ok(["Japan", "Thailand"].includes(car.country));
+    assert.ok(html.includes('data-price="' + car.priceUsd + '"'), car.id + " rendered price");
+    assert.ok(html.includes(car.sourceRef), car.id + " reference is visible");
+  }
 });
 
 test("the Bar is reachable everywhere and clearly remains coming soon", async () => {

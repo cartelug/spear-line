@@ -20,6 +20,7 @@ For browser tests, run `npm ci`, install Playwright Chromium once, then `npm run
 | Path | Purpose |
 | --- | --- |
 | `content/site.mjs` | Copy, services, divisions and image descriptions |
+| `content/vehicle-prices.mjs` | Dated external exporter examples, USD vehicle prices and source references |
 | `scripts/build.mjs` | Page templates, metadata, service worker and sitemap generation |
 | `src/styles/*.css` | Layered styles, bundled into `public/site.css` |
 | `src/styles/critical.json` | Rules inlined for the first screen (regenerate with `npm run critical` after style changes) |
