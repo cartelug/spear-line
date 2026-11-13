@@ -48,9 +48,14 @@ test("reference galleries support navigation and division guides create a usable
  await page.waitForFunction(()=>!document.querySelector('main').inert);
  await page.fill('[data-car-search]','CF275562');
  const opener=page.locator('[data-car-open]:visible').first();
+ const cover=await opener.locator('img').getAttribute('src');
+ assert.match(cover,/assets\/car-covers\/cf275562.webp$/);
+ assert.equal(await opener.locator('.car-cover-label').innerText(),'AI-styled cover');
  await opener.click();
  assert.ok(await page.locator('[data-car-lightbox]').isVisible());
  const first=await page.locator('[data-gallery-image]').getAttribute('src');
+ assert.notEqual(first,cover);
+ assert.match(first,/assets\/cars\/cf275562\//);
  await page.click('[data-gallery-next]');
  assert.notEqual(await page.locator('[data-gallery-image]').getAttribute('src'),first);
  await page.keyboard.press('ArrowLeft');
