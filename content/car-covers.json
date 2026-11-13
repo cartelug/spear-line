@@ -1,0 +1,1866 @@
+{
+  "cf447007": {
+    "src": "assets/car-covers/cf447007.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 AUDI A3 4WD in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-c9e8fc3e-aae5-450a-93a1-2108c7ca1611.png",
+    "reference": "assets/cars/cf447007/g01.webp"
+  },
+  "cf346993": {
+    "src": "assets/car-covers/cf346993.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 AUDI A3 SB 1.4 TFSI (ATTRACTION) in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-1a170bcc-b2ac-4200-9f1d-c6d8ab52ba2a.png",
+    "reference": "assets/cars/cf346993/g01.webp"
+  },
+  "ca878037": {
+    "src": "assets/car-covers/ca878037.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 AUDI Q3 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-13ff326f-fed0-444c-91c5-09bbbfaba1cc.png",
+    "reference": "assets/cars/ca878037/01.webp"
+  },
+  "ce944768": {
+    "src": "assets/car-covers/ce944768.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 AUDI A4 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-d27eddc2-ecd3-4914-a11b-048a118736ee.png",
+    "reference": "assets/cars/ce944768/g01.webp"
+  },
+  "cf085132": {
+    "src": "assets/car-covers/cf085132.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 AUDI Q3 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-104d90eb-ae8e-4f7d-8866-dd4138b6e0e6.png",
+    "reference": "assets/cars/cf085132/g01.webp"
+  },
+  "ce704221": {
+    "src": "assets/car-covers/ce704221.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 AUDI Q5 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-17e4ae5c-d82f-4d15-8c6d-6b6af74b2a3f.png",
+    "reference": "assets/cars/ce704221/g01.webp"
+  },
+  "cf195236": {
+    "src": "assets/car-covers/cf195236.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 AUDI Q5 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-fa96de17-4464-4626-baa7-a1b479404636.png",
+    "reference": "assets/cars/cf195236/g01.webp"
+  },
+  "cf360388": {
+    "src": "assets/car-covers/cf360388.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 AUDI A4 TFSI S LINE PACKAGE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-a0bc06ed-cf06-4b72-9769-4fa3e557c261.png",
+    "reference": "assets/cars/cf360388/g01.webp"
+  },
+  "cf458092": {
+    "src": "assets/car-covers/cf458092.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 BMW 3 SERIES in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-cfd7f252-964a-4d4a-8889-aeb8278e4d75.png",
+    "reference": "assets/cars/cf458092/g01.webp"
+  },
+  "cf158445": {
+    "src": "assets/car-covers/cf158445.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 AUDI Q5 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-e15dd326-6280-44a9-8672-cb6733971497.png",
+    "reference": "assets/cars/cf158445/g01.webp"
+  },
+  "cf434054": {
+    "src": "assets/car-covers/cf434054.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 BMW 5 SERIES in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-980aacd9-64f5-48d4-a575-9e24fcb206e0.png",
+    "reference": "assets/cars/cf434054/g01.webp"
+  },
+  "cf252756": {
+    "src": "assets/car-covers/cf252756.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 BMW X1 S DRIVE 18I X LINE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-693016e2-8f8b-4a56-bf7f-739759ea064b.png",
+    "reference": "assets/cars/cf252756/g01.webp"
+  },
+  "cf276230": {
+    "src": "assets/car-covers/cf276230.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 BMW X1 S DRIVE 20I in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-97296b13-b1ad-4a0c-99e9-6ae099a9154e.png",
+    "reference": "assets/cars/cf276230/g01.webp"
+  },
+  "cf045395": {
+    "src": "assets/car-covers/cf045395.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 BMW X3 X DRIVE 20I in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-a0a9f65c-1dcd-46b6-9fce-08548b80e865.png",
+    "reference": "assets/cars/cf045395/g01.webp"
+  },
+  "cf435890": {
+    "src": "assets/car-covers/cf435890.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 BMW X3 X DRIVE 20D in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-1106082a-a04f-4db8-b37a-a5970ade2b33.png",
+    "reference": "assets/cars/cf435890/g01.webp"
+  },
+  "cf336850": {
+    "src": "assets/car-covers/cf336850.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 BMW X3 X DRIVE 20D M SPORTS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-39490a8c-6c69-4146-a99c-d029ecdc02f5.png",
+    "reference": "assets/cars/cf336850/g01.webp"
+  },
+  "cf146562": {
+    "src": "assets/car-covers/cf146562.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 BMW X5 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-c2a6396b-70a9-4b3c-b0f8-ebd68cd8dad4.png",
+    "reference": "assets/cars/cf146562/g01.webp"
+  },
+  "cf453633": {
+    "src": "assets/car-covers/cf453633.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2018 BMW X5 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-506402a4-7248-4b2a-b46e-6a36fa697e08.png",
+    "reference": "assets/cars/cf453633/g01.webp"
+  },
+  "ce765503": {
+    "src": "assets/car-covers/ce765503.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 BMW X5 X DRIVE 35D M SPORT AIRSUS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-9f45b328-166b-42d1-b577-72d98efcf041.png",
+    "reference": "assets/cars/ce765503/g01.webp"
+  },
+  "cf335568": {
+    "src": "assets/car-covers/cf335568.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 DAIHATSU BOON CL in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-4472a7e1-b247-478b-a65a-fdf04a0e39b0.png",
+    "reference": "assets/cars/cf335568/g01.webp"
+  },
+  "ce243238": {
+    "src": "assets/car-covers/ce243238.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 DAIHATSU BOON in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-2145733f-96f4-4afa-930d-5ec5072f0c8c.png",
+    "reference": "assets/cars/ce243238/01.webp"
+  },
+  "cf320909": {
+    "src": "assets/car-covers/cf320909.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 DAIHATSU MIRA COCOA X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-952bf1b7-9e0d-4ae7-a470-22456aa2e8a7.png",
+    "reference": "assets/cars/cf320909/g01.webp"
+  },
+  "cf459877": {
+    "src": "assets/car-covers/cf459877.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 DAIHATSU MIRA in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-873eab85-33b8-40a6-a67e-89fc86528a4d.png",
+    "reference": "assets/cars/cf459877/g01.webp"
+  },
+  "by400924": {
+    "src": "assets/car-covers/by400924.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 FORD ECOSPORTS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f26acbc7-7358-4f63-8bd7-0eb481591ed5.png",
+    "reference": "assets/cars/by400924/01.webp"
+  },
+  "cf146291": {
+    "src": "assets/car-covers/cf146291.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 FORD ECOSPORTS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-caf72cdb-7e79-4ddf-b7fa-4577e1f0894d.png",
+    "reference": "assets/cars/cf146291/g01.webp"
+  },
+  "cf401184": {
+    "src": "assets/car-covers/cf401184.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 FORD RANGER 2.2 FORD XLS SMART CAB in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-6436c862-4494-4f78-a24f-7f75495b4bea.png",
+    "reference": "assets/cars/cf401184/g01.webp"
+  },
+  "cf389375": {
+    "src": "assets/car-covers/cf389375.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2018 FORD RANGER 2.2 FORD XL SMART CAB in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-8abcc510-35b3-443e-a607-3dd13797ecf4.png",
+    "reference": "assets/cars/cf389375/g01.webp"
+  },
+  "cf458442": {
+    "src": "assets/car-covers/cf458442.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 HONDA ACCORD HYBRID in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-52a14688-e529-4e33-92b3-d0a221fbc4a9.png",
+    "reference": "assets/cars/cf458442/g01.webp"
+  },
+  "cf497825": {
+    "src": "assets/car-covers/cf497825.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 HONDA ACCORD HYBRID in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-9af89c18-c3db-470b-8697-93042d3f671f.png",
+    "reference": "assets/cars/cf497825/g01.webp"
+  },
+  "cf489772": {
+    "src": "assets/car-covers/cf489772.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 HONDA CR-V 20G in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-e8cfd7f3-3126-468d-aa15-ff9d724b3276.png",
+    "reference": "assets/cars/cf489772/g01.webp"
+  },
+  "cf160206": {
+    "src": "assets/car-covers/cf160206.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 HONDA CR-V in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-d5cdc964-ea32-4ce4-a313-18527b5a7c10.png",
+    "reference": "assets/cars/cf160206/g01.webp"
+  },
+  "cf232248": {
+    "src": "assets/car-covers/cf232248.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 HONDA FREED HYBRID in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-fbc03f90-74fb-4814-a60d-ab6b19af1c18.png",
+    "reference": "assets/cars/cf232248/g01.webp"
+  },
+  "cf256948": {
+    "src": "assets/car-covers/cf256948.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 HONDA CR-V E:HEV EX BLACK EDITION in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-cdafb388-942b-48a5-b158-42469b948e5e.png",
+    "reference": "assets/cars/cf256948/g01.webp"
+  },
+  "ce350780": {
+    "src": "assets/car-covers/ce350780.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 HONDA ACCORD in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-3ef33a1c-78d5-4f25-a935-434a1982903a.png",
+    "reference": "assets/cars/ce350780/g01.webp"
+  },
+  "cf488555": {
+    "src": "assets/car-covers/cf488555.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 HONDA FIT in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-91542836-9c11-449d-b4f2-51b9d06d5272.png",
+    "reference": "assets/cars/cf488555/g01.webp"
+  },
+  "ce694579": {
+    "src": "assets/car-covers/ce694579.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 HONDA FREED HYBRID in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-c9354ca4-e676-4908-9cc1-4bf3b33a9fc5.png",
+    "reference": "assets/cars/ce694579/g01.webp"
+  },
+  "cf284067": {
+    "src": "assets/car-covers/cf284067.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 HONDA FIT HYBRID F PACKAGE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-6a53ffac-5df7-4cfd-834b-5f6347dfd2e4.png",
+    "reference": "assets/cars/cf284067/g01.webp"
+  },
+  "cf510957": {
+    "src": "assets/car-covers/cf510957.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 HONDA FREED G in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-b44c70c1-0aed-4df7-86ec-6fa9ca78ffc0.png",
+    "reference": "assets/cars/cf510957/g01.webp"
+  },
+  "cf176645": {
+    "src": "assets/car-covers/cf176645.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 HONDA INSIGHT HYBRID G in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-8cb580bc-025c-4b6f-930a-f3226d853e14.png",
+    "reference": "assets/cars/cf176645/g01.webp"
+  },
+  "cf404109": {
+    "src": "assets/car-covers/cf404109.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 HONDA SHUTTLE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f43cd27f-035b-472c-8ac9-d93b18fa9b49.png",
+    "reference": "assets/cars/cf404109/g01.webp"
+  },
+  "ce930581": {
+    "src": "assets/car-covers/ce930581.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 HONDA FIT SHUTTLE 15X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-93966f25-ec7a-422b-a396-8edef3d0f0c4.png",
+    "reference": "assets/cars/ce930581/g01.webp"
+  },
+  "cf456018": {
+    "src": "assets/car-covers/cf456018.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 HONDA SHUTTLE X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-d7868e60-746a-4342-8b8c-a04e24c091d2.png",
+    "reference": "assets/cars/cf456018/g01.webp"
+  },
+  "cf357503": {
+    "src": "assets/car-covers/cf357503.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 HONDA VEZEL X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-1e747f1c-06ca-45bd-9bb0-2ecb780b31eb.png",
+    "reference": "assets/cars/cf357503/g01.webp"
+  },
+  "ce312732": {
+    "src": "assets/car-covers/ce312732.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2019 HONDA INSIGHT in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-6590cdf1-4101-494b-b160-922235515154.png",
+    "reference": "assets/cars/ce312732/g01.webp"
+  },
+  "cf108670": {
+    "src": "assets/car-covers/cf108670.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 HONDA VEZEL HYBRID in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-6ef1a11b-9a55-4ee5-8f40-aeb2ad772751.png",
+    "reference": "assets/cars/cf108670/g01.webp"
+  },
+  "ce681969": {
+    "src": "assets/car-covers/ce681969.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 HONDA STEP WGN in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-db91e7af-b31f-4c15-9e7d-ab409e08d6d2.png",
+    "reference": "assets/cars/ce681969/g01.webp"
+  },
+  "cf297057": {
+    "src": "assets/car-covers/cf297057.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 HONDA STEP WGN G in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-782bc597-47b0-4ccb-8d70-b0f2bf7b1c93.png",
+    "reference": "assets/cars/cf297057/g01.webp"
+  },
+  "cf108956": {
+    "src": "assets/car-covers/cf108956.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 HONDA VEZEL HYBRID X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f53fc9b1-1672-4462-b4d3-cf5b52db6cf6.png",
+    "reference": "assets/cars/cf108956/g01.webp"
+  },
+  "cf491120": {
+    "src": "assets/car-covers/cf491120.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2019 ISUZU D-MAX 1.9 CAB in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-054c91e0-ae2c-4ad8-91e7-28e004a877cb.png",
+    "reference": "assets/cars/cf491120/g01.webp"
+  },
+  "cf347953": {
+    "src": "assets/car-covers/cf347953.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 ISUZU D-MAX 1.9 HI-LANDER DOUBLE CAB in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-6c5b118e-2ed3-4d7f-83f4-c14b9b14c83a.png",
+    "reference": "assets/cars/cf347953/g01.webp"
+  },
+  "ce329932": {
+    "src": "assets/car-covers/ce329932.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 ISUZU MU-X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f60f3d01-1302-4e73-9870-a25ea0e67f8e.png",
+    "reference": "assets/cars/ce329932/g01.webp"
+  },
+  "ce648827": {
+    "src": "assets/car-covers/ce648827.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2019 ISUZU MU-X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-8b9064e0-60c7-4158-96ac-21bbc78a991d.png",
+    "reference": "assets/cars/ce648827/g01.webp"
+  },
+  "ce422957": {
+    "src": "assets/car-covers/ce422957.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 LAND ROVER DEFENDER in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-8754866d-d540-4b0e-a5f9-0ebbefee5b65.png",
+    "reference": "assets/cars/ce422957/g01.webp"
+  },
+  "ce552966": {
+    "src": "assets/car-covers/ce552966.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 LAND ROVER DEFENDER in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-7024a9fb-63d8-45f5-b2d8-60e9fb3babda.png",
+    "reference": "assets/cars/ce552966/g01.webp"
+  },
+  "cf404265": {
+    "src": "assets/car-covers/cf404265.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 LAND ROVER DISCOVERY SPORT SE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-e41889bd-d7d0-4459-99c1-4614094928c8.png",
+    "reference": "assets/cars/cf404265/g01.webp"
+  },
+  "cd023501": {
+    "src": "assets/car-covers/cd023501.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 LAND ROVER DISCOVERY SPORT in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-37af14f0-e96c-4f67-b01e-4ef3368a537e.png",
+    "reference": "assets/cars/cd023501/01.webp"
+  },
+  "cf266659": {
+    "src": "assets/car-covers/cf266659.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 LAND ROVER DISCOVERY SPORT in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-06b703ce-e957-4e61-89ba-f4d63aaf8f22.png",
+    "reference": "assets/cars/cf266659/g01.webp"
+  },
+  "cf368893": {
+    "src": "assets/car-covers/cf368893.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 LAND ROVER RANGE ROVER EVOQUE PRESTIGE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-1c6b4ba0-fcc4-4393-821a-789d65c0ace7.png",
+    "reference": "assets/cars/cf368893/g01.webp"
+  },
+  "ce258137": {
+    "src": "assets/car-covers/ce258137.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 LAND ROVER RANGE ROVER EVOQUE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-c112b275-565b-4f50-8ebd-9d04d8dab581.png",
+    "reference": "assets/cars/ce258137/01.webp"
+  },
+  "cf447637": {
+    "src": "assets/car-covers/cf447637.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 LAND ROVER RANGE ROVER EVOQUE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-8b8ddbc3-81e7-45b1-9c3e-bec6bf4ae017.png",
+    "reference": "assets/cars/cf447637/g01.webp"
+  },
+  "cf315651": {
+    "src": "assets/car-covers/cf315651.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 LEXUS CT CT200HL in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-0851d2e0-afcc-4b35-9143-dfa21fd8371c.png",
+    "reference": "assets/cars/cf315651/g01.webp"
+  },
+  "cf499422": {
+    "src": "assets/car-covers/cf499422.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 LEXUS CT CT200H in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-0dac02a3-9568-4bab-b0a3-f8d58d65ac1b.png",
+    "reference": "assets/cars/cf499422/g01.webp"
+  },
+  "ce801419": {
+    "src": "assets/car-covers/ce801419.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 LEXUS ES in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-bf285964-dba2-421d-aad7-eddbf19c47e8.png",
+    "reference": "assets/cars/ce801419/g01.webp"
+  },
+  "cf433326": {
+    "src": "assets/car-covers/cf433326.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2022 LEXUS ES in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-5ec1cb5c-4fb8-4f1e-801d-6e97fb483fdb.png",
+    "reference": "assets/cars/cf433326/g01.webp"
+  },
+  "cc375884": {
+    "src": "assets/car-covers/cc375884.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 LEXUS IS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-5fb9aaab-29f5-4aa2-97f1-9816a740b014.png",
+    "reference": "assets/cars/cc375884/01.webp"
+  },
+  "cf167145": {
+    "src": "assets/car-covers/cf167145.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 LEXUS IS VER.L in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-2e8d62bf-76c2-4eb3-b4d2-03a2bc358384.png",
+    "reference": "assets/cars/cf167145/g01.webp"
+  },
+  "cf185462": {
+    "src": "assets/car-covers/cf185462.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 LEXUS LX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-b5976798-6ea1-401c-8312-7796e3485c0e.png",
+    "reference": "assets/cars/cf185462/g01.webp"
+  },
+  "cf113766": {
+    "src": "assets/car-covers/cf113766.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 LEXUS LX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-81798dcf-8736-4414-b4fd-0973b7abce7a.png",
+    "reference": "assets/cars/cf113766/g01.webp"
+  },
+  "cf441541": {
+    "src": "assets/car-covers/cf441541.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 LEXUS LX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f3a31a25-f7be-43d3-8f59-b280e300e412.png",
+    "reference": "assets/cars/cf441541/g01.webp"
+  },
+  "cf242187": {
+    "src": "assets/car-covers/cf242187.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 LEXUS NX NX200TL in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-d42218dc-5239-48cc-b945-db9d6cb095a0.png",
+    "reference": "assets/cars/cf242187/g01.webp"
+  },
+  "cf126227": {
+    "src": "assets/car-covers/cf126227.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 LEXUS NX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-a43ae491-097a-40b7-af9a-d5d2e3a1a648.png",
+    "reference": "assets/cars/cf126227/g01.webp"
+  },
+  "ce474258": {
+    "src": "assets/car-covers/ce474258.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 LEXUS RX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-371dcc86-2c94-40d6-9de4-e9644746846b.png",
+    "reference": "assets/cars/ce474258/g01.webp"
+  },
+  "cf366000": {
+    "src": "assets/car-covers/cf366000.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 LEXUS RX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-53bfe575-1f91-4a40-9ca6-acafbebabff9.png",
+    "reference": "assets/cars/cf366000/g01.webp"
+  },
+  "cf419725": {
+    "src": "assets/car-covers/cf419725.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 LEXUS RX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-750fc2dd-55a4-4b2b-8aa8-6e0ff414bf12.png",
+    "reference": "assets/cars/cf419725/g01.webp"
+  },
+  "cf126357": {
+    "src": "assets/car-covers/cf126357.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 MAZDA ATENZA XD L PACKAGE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-787eae30-5d70-4531-a5fb-abf416bfacfe.png",
+    "reference": "assets/cars/cf126357/g01.webp"
+  },
+  "cf108669": {
+    "src": "assets/car-covers/cf108669.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 MAZDA ATENZA WAGON XD PROACTIVE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-46e85efb-c5fe-4038-8221-0dcc75daa5f3.png",
+    "reference": "assets/cars/cf108669/g01.webp"
+  },
+  "ce865065": {
+    "src": "assets/car-covers/ce865065.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 MAZDA AXELA in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-bb56b1a0-0c8c-46ed-ae4b-942e63685af7.png",
+    "reference": "assets/cars/ce865065/g01.webp"
+  },
+  "cf276317": {
+    "src": "assets/car-covers/cf276317.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 MAZDA AXELA in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-946c67a8-695a-4e9b-a159-8cbfca877a11.png",
+    "reference": "assets/cars/cf276317/g01.webp"
+  },
+  "cf474352": {
+    "src": "assets/car-covers/cf474352.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 MAZDA CX-3 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-389c98fc-4fd4-4ed7-9591-49439a8e9f37.png",
+    "reference": "assets/cars/cf474352/g01.webp"
+  },
+  "cf511048": {
+    "src": "assets/car-covers/cf511048.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 MAZDA CX-3 4WDXDL in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-b45f5ba6-e6f1-4163-ac35-85d5e0a6b6a4.png",
+    "reference": "assets/cars/cf511048/g01.webp"
+  },
+  "cf263551": {
+    "src": "assets/car-covers/cf263551.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 MAZDA CX-5 XD L PACKAGE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-74142b91-606f-4b49-ae44-74158b87ee34.png",
+    "reference": "assets/cars/cf263551/g01.webp"
+  },
+  "cf419890": {
+    "src": "assets/car-covers/cf419890.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 MAZDA CX-5 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-8fa80cda-a3b1-4858-abc7-646528c41496.png",
+    "reference": "assets/cars/cf419890/g01.webp"
+  },
+  "ce849255": {
+    "src": "assets/car-covers/ce849255.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 MAZDA CX-5 XD in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-e482f507-e4b2-40a0-930e-bbab0e88c2ab.png",
+    "reference": "assets/cars/ce849255/g01.webp"
+  },
+  "ce705441": {
+    "src": "assets/car-covers/ce705441.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2018 MAZDA CX-8 XD in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-a9324cf5-8d5e-42f0-8625-c22b9fea2bc0.png",
+    "reference": "assets/cars/ce705441/g01.webp"
+  },
+  "cf252217": {
+    "src": "assets/car-covers/cf252217.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2019 MAZDA CX-8 XD PROACTIVE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-13bdd609-86d7-4cb7-b5f1-9c1a7d1a708e.png",
+    "reference": "assets/cars/cf252217/g01.webp"
+  },
+  "cf231891": {
+    "src": "assets/car-covers/cf231891.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 MAZDA CX-8 XD SMART EDITION in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-752e5964-f5d3-42ee-a6c4-4ac50ac25494.png",
+    "reference": "assets/cars/cf231891/g01.webp"
+  },
+  "cf434307": {
+    "src": "assets/car-covers/cf434307.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 MAZDA DEMIO in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-746dc603-1f55-4edd-ae38-7878cab08c76.png",
+    "reference": "assets/cars/cf434307/g01.webp"
+  },
+  "cf171517": {
+    "src": "assets/car-covers/cf171517.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 MAZDA DEMIO XD TOURING in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-0cb96e70-ebd9-4304-99f6-5e07643854cb.png",
+    "reference": "assets/cars/cf171517/g01.webp"
+  },
+  "ce862202": {
+    "src": "assets/car-covers/ce862202.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 MAZDA PREMACY in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-04099410-71a0-4be4-8a4d-58978195489d.png",
+    "reference": "assets/cars/ce862202/g01.webp"
+  },
+  "cf458985": {
+    "src": "assets/car-covers/cf458985.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 MAZDA PREMACY in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-608a79fe-9c97-40ef-a506-74bb7eee2bfa.png",
+    "reference": "assets/cars/cf458985/g01.webp"
+  },
+  "cf474801": {
+    "src": "assets/car-covers/cf474801.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 MERCEDES-BENZ B-CLASS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-e4a31f14-6ef6-411d-a85c-6c00d5615b1b.png",
+    "reference": "assets/cars/cf474801/g01.webp"
+  },
+  "ce905728": {
+    "src": "assets/car-covers/ce905728.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 MERCEDES-BENZ B-CLASS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-d4238c97-6656-4b79-97a4-ffe9a7016076.png",
+    "reference": "assets/cars/ce905728/g01.webp"
+  },
+  "cf474335": {
+    "src": "assets/car-covers/cf474335.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 MERCEDES-BENZ C-CLASS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-fd12eb0f-30e1-4411-a227-851fdcef444d.png",
+    "reference": "assets/cars/cf474335/g01.webp"
+  },
+  "ce763133": {
+    "src": "assets/car-covers/ce763133.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 MERCEDES-BENZ C-CLASS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-cb3fe634-cc61-4bf8-a1bc-04b2b80a25a8.png",
+    "reference": "assets/cars/ce763133/g01.webp"
+  },
+  "cf267946": {
+    "src": "assets/car-covers/cf267946.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 MERCEDES-BENZ C-CLASS C200 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-8f41b406-ee3c-487b-9b4e-456b261d8bec.png",
+    "reference": "assets/cars/cf267946/g01.webp"
+  },
+  "cf487843": {
+    "src": "assets/car-covers/cf487843.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 MERCEDES-BENZ E-CLASS E250AMGPKG in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-192d7325-7fc9-4811-a1b6-6771b2f4c320.png",
+    "reference": "assets/cars/cf487843/g01.webp"
+  },
+  "cf027285": {
+    "src": "assets/car-covers/cf027285.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 MERCEDES-BENZ E-CLASS E220 BLUE TEC AVANTGARDE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-24a2ac32-9ddb-44e6-b959-caaa8b1f1acb.png",
+    "reference": "assets/cars/cf027285/g01.webp"
+  },
+  "cf496804": {
+    "src": "assets/car-covers/cf496804.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 MERCEDES-BENZ E-CLASS E220D in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-3fda0b2b-ce72-459c-af7f-0d306f928f25.png",
+    "reference": "assets/cars/cf496804/g01.webp"
+  },
+  "ce930383": {
+    "src": "assets/car-covers/ce930383.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 MERCEDES-BENZ GLC-CLASS GLC250 4MATIC SPORTS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-082528ca-197c-4498-8bb8-ed6cabe8fc17.png",
+    "reference": "assets/cars/ce930383/g01.webp"
+  },
+  "cc605683": {
+    "src": "assets/car-covers/cc605683.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 MERCEDES-BENZ GLC-CLASS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-97787bc5-fa84-4b0f-a081-692b366bf2a1.png",
+    "reference": "assets/cars/cc605683/01.webp"
+  },
+  "ce653160": {
+    "src": "assets/car-covers/ce653160.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 MERCEDES-BENZ GLC-CLASS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-10c4d9cf-d1d7-4542-9f1a-2cf4efcd85f3.png",
+    "reference": "assets/cars/ce653160/g01.webp"
+  },
+  "cf435872": {
+    "src": "assets/car-covers/cf435872.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 MERCEDES-BENZ GLE-CLASS GLE350D 4MATIC SPORTS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-58a11912-1104-4ff0-ba9b-4993f199888e.png",
+    "reference": "assets/cars/cf435872/g01.webp"
+  },
+  "cf368888": {
+    "src": "assets/car-covers/cf368888.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 MERCEDES-BENZ GLE-CLASS GLE350D 4MATIC SPORTS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-c67f7a4e-bf28-41ae-a8bd-565d695937a7.png",
+    "reference": "assets/cars/cf368888/g01.webp"
+  },
+  "cf296543": {
+    "src": "assets/car-covers/cf296543.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 MERCEDES-BENZ GLE-CLASS GLE300D 4MATIC AMG LINE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-937b8c05-8fac-4836-90dd-847f7cc7cce5.png",
+    "reference": "assets/cars/cf296543/g01.webp"
+  },
+  "ce839826": {
+    "src": "assets/car-covers/ce839826.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 MITSUBISHI DELICA D5 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-0e369bde-1d63-49f9-bb41-9c17bca76b54.png",
+    "reference": "assets/cars/ce839826/g01.webp"
+  },
+  "cb483144": {
+    "src": "assets/car-covers/cb483144.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 MITSUBISHI DELICA D5 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-22884961-3514-4dad-a86a-53b530b3f1e5.png",
+    "reference": "assets/cars/cb483144/01.webp"
+  },
+  "ce763515": {
+    "src": "assets/car-covers/ce763515.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 MITSUBISHI OUTLANDER PHEV in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-904ee61c-c712-492f-b486-db05a4b4dff5.png",
+    "reference": "assets/cars/ce763515/g01.webp"
+  },
+  "cf360418": {
+    "src": "assets/car-covers/cf360418.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 MITSUBISHI OUTLANDER 24G SAFETY PACKAGE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-cbe4bf49-1b70-4262-a26c-3652c0613ebd.png",
+    "reference": "assets/cars/cf360418/g01.webp"
+  },
+  "ce442626": {
+    "src": "assets/car-covers/ce442626.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 MITSUBISHI OUTLANDER PHEVG in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-2a6dd82a-67da-4568-973c-3aa9347802e8.png",
+    "reference": "assets/cars/ce442626/g01.webp"
+  },
+  "cf068416": {
+    "src": "assets/car-covers/cf068416.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 MITSUBISHI PAJERO 3.24WD in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-e89ca074-ae6e-47ee-8190-b536b2021053.png",
+    "reference": "assets/cars/cf068416/g01.webp"
+  },
+  "cf243021": {
+    "src": "assets/car-covers/cf243021.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 MITSUBISHI PAJERO VR- in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-b4670bc7-6f78-4a65-baa6-553a6bbf7ca4.png",
+    "reference": "assets/cars/cf243021/g01.webp"
+  },
+  "cf412271": {
+    "src": "assets/car-covers/cf412271.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 MITSUBISHI RVR G in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-a5ab50c2-f3e6-4736-9040-ed13cff4ad19.png",
+    "reference": "assets/cars/cf412271/g01.webp"
+  },
+  "ce496110": {
+    "src": "assets/car-covers/ce496110.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 MITSUBISHI RVR in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-0b86393a-9272-4b52-b37f-a23704b54f46.png",
+    "reference": "assets/cars/ce496110/g01.webp"
+  },
+  "cf296769": {
+    "src": "assets/car-covers/cf296769.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 NISSAN JUKE 15RX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-7c9f7bd8-aae6-448c-ba6f-512612b2162c.png",
+    "reference": "assets/cars/cf296769/g01.webp"
+  },
+  "cf263624": {
+    "src": "assets/car-covers/cf263624.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 NISSAN JUKE 16GT FOUR in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-3c318710-af1c-4bfe-8dcd-15687782099b.png",
+    "reference": "assets/cars/cf263624/g01.webp"
+  },
+  "ce024999": {
+    "src": "assets/car-covers/ce024999.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 NISSAN MARCH 1.2S in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-aa45aeac-ce02-4173-be38-c01fb25cca31.png",
+    "reference": "assets/cars/ce024999/01.webp"
+  },
+  "cf213767": {
+    "src": "assets/car-covers/cf213767.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 NISSAN MARCH in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-c8c60d6f-374d-4dff-87f3-e9057bf89756.png",
+    "reference": "assets/cars/cf213767/g01.webp"
+  },
+  "cf487065": {
+    "src": "assets/car-covers/cf487065.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 NISSAN NV200VANETTE WAGON DX55 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f2dfba9b-0ff9-4645-bb00-26886389d1a9.png",
+    "reference": "assets/cars/cf487065/g01.webp"
+  },
+  "cf481890": {
+    "src": "assets/car-covers/cf481890.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 NISSAN NV200VANETTE WAGON in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-520efced-49c1-484e-99c5-11e218c3215c.png",
+    "reference": "assets/cars/cf481890/g01.webp"
+  },
+  "cf449125": {
+    "src": "assets/car-covers/cf449125.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 NISSAN NAVARA 2.5 E SMART CAB in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-40647484-1c46-4049-af90-19b515074b93.png",
+    "reference": "assets/cars/cf449125/g01.webp"
+  },
+  "cf440751": {
+    "src": "assets/car-covers/cf440751.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2019 NISSAN NAVARA 2.5 NAVARA SMART CAB in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-741127a3-2d5d-4788-8357-cca5334ee7fb.png",
+    "reference": "assets/cars/cf440751/g01.webp"
+  },
+  "ce900912": {
+    "src": "assets/car-covers/ce900912.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 NISSAN NOTE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-2adc0fd8-e098-400c-9284-b457b5b1ce00.png",
+    "reference": "assets/cars/ce900912/g01.webp"
+  },
+  "ce743440": {
+    "src": "assets/car-covers/ce743440.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 NISSAN NOTE XDIG-S in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-fd25be02-8e85-4c30-86b0-97271917b7df.png",
+    "reference": "assets/cars/ce743440/g01.webp"
+  },
+  "cf176610": {
+    "src": "assets/car-covers/cf176610.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 NISSAN NOTE X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-92875b83-c1e8-4bf4-bf21-09de7d1982ee.png",
+    "reference": "assets/cars/cf176610/g01.webp"
+  },
+  "cf498020": {
+    "src": "assets/car-covers/cf498020.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 NISSAN SERENA in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-1472198c-b72c-4fc2-bcee-025f40ba4180.png",
+    "reference": "assets/cars/cf498020/g01.webp"
+  },
+  "cf338045": {
+    "src": "assets/car-covers/cf338045.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 NISSAN SERENA in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-c255793d-d45f-4eae-b848-20d882777043.png",
+    "reference": "assets/cars/cf338045/g01.webp"
+  },
+  "cf422530": {
+    "src": "assets/car-covers/cf422530.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 NISSAN SERENA HYBRID X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-3512c1df-6994-4237-b109-0124cf7bd7b0.png",
+    "reference": "assets/cars/cf422530/g01.webp"
+  },
+  "ce935943": {
+    "src": "assets/car-covers/ce935943.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 NISSAN SYLPHY X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-2a12cfab-24c7-4338-82b8-b9c45ea04b7b.png",
+    "reference": "assets/cars/ce935943/g01.webp"
+  },
+  "cf036225": {
+    "src": "assets/car-covers/cf036225.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 NISSAN SYLPHY X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-6b62c4c6-ff57-438d-bd5a-e6c5c38e9e79.png",
+    "reference": "assets/cars/cf036225/g01.webp"
+  },
+  "cf446759": {
+    "src": "assets/car-covers/cf446759.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 NISSAN TEANA XL in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-246f31d3-d356-4b66-8946-cbd6a03ad0df.png",
+    "reference": "assets/cars/cf446759/g01.webp"
+  },
+  "cf010189": {
+    "src": "assets/car-covers/cf010189.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 NISSAN TEANA 2.5XL in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-145989a7-93c5-4a97-bbf7-1f3e76643717.png",
+    "reference": "assets/cars/cf010189/g01.webp"
+  },
+  "cf445588": {
+    "src": "assets/car-covers/cf445588.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 NISSAN X-TRAIL in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-202d316b-8db9-4da4-8cec-0d7b6518731f.png",
+    "reference": "assets/cars/cf445588/g01.webp"
+  },
+  "cf126410": {
+    "src": "assets/car-covers/cf126410.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 NISSAN X-TRAIL 20X EMERGENCY BRAKE PACKAGE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-bf7d72ee-cdcd-44cf-ba7b-937231e10a5c.png",
+    "reference": "assets/cars/cf126410/g01.webp"
+  },
+  "cf476390": {
+    "src": "assets/car-covers/cf476390.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 NISSAN X-TRAIL in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-7cfcd2fc-dfca-4435-ba3a-1f7e460981c7.png",
+    "reference": "assets/cars/cf476390/g01.webp"
+  },
+  "cf497880": {
+    "src": "assets/car-covers/cf497880.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 SUBARU FORESTER in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-d88ee5ce-8834-430e-98c1-fafbcd52fdd9.png",
+    "reference": "assets/cars/cf497880/g01.webp"
+  },
+  "cf200053": {
+    "src": "assets/car-covers/cf200053.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 SUBARU FORESTER 2.0I-L EYESIGHT in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-2ca7d145-0ac7-42cd-9b60-7b5ae21c5bec.png",
+    "reference": "assets/cars/cf200053/g01.webp"
+  },
+  "bt596861": {
+    "src": "assets/car-covers/bt596861.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2023 SUBARU FORESTER in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-3b8c0842-5fc8-4481-bd05-5170fc88b3d6.png",
+    "reference": "assets/cars/bt596861/01.webp"
+  },
+  "cf093425": {
+    "src": "assets/car-covers/cf093425.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 SUBARU IMPREZA SPORTS 2.0I in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f296e7b8-7e55-433f-ac97-3609bc4823e7.png",
+    "reference": "assets/cars/cf093425/g01.webp"
+  },
+  "cf297075": {
+    "src": "assets/car-covers/cf297075.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 SUBARU IMPREZA SPORTS 1.6I-L PROUD EDITION in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-d35a2ff4-c5e0-46be-b05d-92b7f302ee1a.png",
+    "reference": "assets/cars/cf297075/g01.webp"
+  },
+  "cf145441": {
+    "src": "assets/car-covers/cf145441.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 SUBARU LEGACY B4 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-0ab502e2-4229-401a-a23a-7dce44bcdd0c.png",
+    "reference": "assets/cars/cf145441/g01.webp"
+  },
+  "cf228542": {
+    "src": "assets/car-covers/cf228542.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 SUBARU LEGACY B4 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-12d8c932-04f6-466b-a097-64bf3e27bdaf.png",
+    "reference": "assets/cars/cf228542/g01.webp"
+  },
+  "cf177035": {
+    "src": "assets/car-covers/cf177035.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 SUBARU OUTBACK in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-859aa4af-1bff-4b11-9035-fd2e97bb1e56.png",
+    "reference": "assets/cars/cf177035/g01.webp"
+  },
+  "cf251418": {
+    "src": "assets/car-covers/cf251418.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 SUBARU OUTBACK LIMITED in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-112e0bd8-6e68-4558-a53d-b6691fe0b85d.png",
+    "reference": "assets/cars/cf251418/g01.webp"
+  },
+  "cf377391": {
+    "src": "assets/car-covers/cf377391.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 SUBARU OUTBACK in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-bec6b853-427b-4db3-a6f7-781e8b1da3d5.png",
+    "reference": "assets/cars/cf377391/g01.webp"
+  },
+  "ce935085": {
+    "src": "assets/car-covers/ce935085.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 SUBARU XV HYBRID 2.0I-L EYESIGHT in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-d9f63539-2a74-4431-87bc-9ffb561a374b.png",
+    "reference": "assets/cars/ce935085/g01.webp"
+  },
+  "cf252657": {
+    "src": "assets/car-covers/cf252657.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 SUBARU XV 2.0I-L in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-c0ccd3e6-32e7-416d-9a88-61f72420994f.png",
+    "reference": "assets/cars/cf252657/g01.webp"
+  },
+  "cf405473": {
+    "src": "assets/car-covers/cf405473.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 SUBARU XV in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-847107ac-4cad-4f1b-bb27-ffbd93dfdee6.png",
+    "reference": "assets/cars/cf405473/g01.webp"
+  },
+  "cf377234": {
+    "src": "assets/car-covers/cf377234.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 SUZUKI ALTO in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-4f47d4a7-1df9-4bbd-b306-98e7b29c34ee.png",
+    "reference": "assets/cars/cf377234/g01.webp"
+  },
+  "ce850252": {
+    "src": "assets/car-covers/ce850252.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 SUZUKI ALTO in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-b2a26009-71b6-42cb-ace1-5338ec251363.png",
+    "reference": "assets/cars/ce850252/g01.webp"
+  },
+  "ce161259": {
+    "src": "assets/car-covers/ce161259.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 SUZUKI ESCUDO 2.4LANDBREEZE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-41fb8f39-4062-456f-b82e-d8a6985eb723.png",
+    "reference": "assets/cars/ce161259/01.webp"
+  },
+  "cf306629": {
+    "src": "assets/car-covers/cf306629.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 SUZUKI ESCUDO in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-d15eaaa7-dab3-47f3-addc-a6e8efdaf318.png",
+    "reference": "assets/cars/cf306629/g01.webp"
+  },
+  "cf176406": {
+    "src": "assets/car-covers/cf176406.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 SUZUKI JIMNY in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-7395d231-16f0-44b1-919b-7183b535de7d.png",
+    "reference": "assets/cars/cf176406/g01.webp"
+  },
+  "ce147371": {
+    "src": "assets/car-covers/ce147371.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 SUZUKI JIMNY in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-e016d309-ca87-4906-8ac9-8169989723b8.png",
+    "reference": "assets/cars/ce147371/01.webp"
+  },
+  "cf251978": {
+    "src": "assets/car-covers/cf251978.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2026 SUZUKI JIMNY 4WD-TB in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-76a71f67-50a7-4644-ba43-49c9d5b7626c.png",
+    "reference": "assets/cars/cf251978/g01.webp"
+  },
+  "ce695822": {
+    "src": "assets/car-covers/ce695822.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 SUZUKI SOLIO in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-afb464ad-77db-42c4-bb57-8e2a8286badd.png",
+    "reference": "assets/cars/ce695822/g01.webp"
+  },
+  "cf454248": {
+    "src": "assets/car-covers/cf454248.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 SUZUKI SOLIO in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-2f11f3c1-95a3-4b41-9994-06c5702e2df8.png",
+    "reference": "assets/cars/cf454248/g01.webp"
+  },
+  "cc796794": {
+    "src": "assets/car-covers/cc796794.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 SUZUKI SWIFT in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-fa3eefcb-711e-453d-aea2-81471602578e.png",
+    "reference": "assets/cars/cc796794/01.webp"
+  },
+  "cb805733": {
+    "src": "assets/car-covers/cb805733.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 SUZUKI SWIFT in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-3dec11b9-ac8c-4880-aaa3-af19b2767641.png",
+    "reference": "assets/cars/cb805733/01.webp"
+  },
+  "cf421718": {
+    "src": "assets/car-covers/cf421718.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 SUZUKI SWIFT HYBRID MG in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-0cc0aaa4-2a24-4add-b236-c34cc44d81e4.png",
+    "reference": "assets/cars/cf421718/g01.webp"
+  },
+  "cf474348": {
+    "src": "assets/car-covers/cf474348.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 SUZUKI WAGON R in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f1cd9e18-6db9-4278-bb3c-2a9f59449550.png",
+    "reference": "assets/cars/cf474348/g01.webp"
+  },
+  "ce946371": {
+    "src": "assets/car-covers/ce946371.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 SUZUKI WAGON R in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-5fe1e613-1567-4f05-9f19-cf93f3e8c627.png",
+    "reference": "assets/cars/ce946371/g01.webp"
+  },
+  "cf275504": {
+    "src": "assets/car-covers/cf275504.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA ALLION A18 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-2c1a024b-7bc0-4b71-b539-6f7a4d05d7e8.png",
+    "reference": "assets/cars/cf275504/g01.webp"
+  },
+  "cf186565": {
+    "src": "assets/car-covers/cf186565.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2019 TOYOTA ALLION A18 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-96ae2288-ab74-4a05-84f2-63fa66f68718.png",
+    "reference": "assets/cars/cf186565/g01.webp"
+  },
+  "cf252365": {
+    "src": "assets/car-covers/cf252365.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA ALPHARD 240S TYPE GOLD 2 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-636b67fc-4c9e-4d4a-9ed0-1d4cb0a5b28d.png",
+    "reference": "assets/cars/cf252365/g01.webp"
+  },
+  "cf367044": {
+    "src": "assets/car-covers/cf367044.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA ALPHARD in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-6ba95e1f-6c57-4963-8a17-cb955379c6ac.png",
+    "reference": "assets/cars/cf367044/g01.webp"
+  },
+  "cf381407": {
+    "src": "assets/car-covers/cf381407.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 TOYOTA ALPHARD in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-7fa0c937-944c-4dee-ab44-3288aceaf6d6.png",
+    "reference": "assets/cars/cf381407/g01.webp"
+  },
+  "cf212483": {
+    "src": "assets/car-covers/cf212483.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA AQUA S in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-27ee31ee-ec18-41b1-a84f-8d88256dd4e9.png",
+    "reference": "assets/cars/cf212483/g01.webp"
+  },
+  "cd231414": {
+    "src": "assets/car-covers/cd231414.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA AQUA in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-cd485df1-3c9d-42a2-886a-617f9bc222d4.png",
+    "reference": "assets/cars/cd231414/01.webp"
+  },
+  "ce384157": {
+    "src": "assets/car-covers/ce384157.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA CAMRY HYBRID in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-00c86844-8989-4c6e-9222-4b00f66176ce.png",
+    "reference": "assets/cars/ce384157/g01.webp"
+  },
+  "cf378498": {
+    "src": "assets/car-covers/cf378498.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA CAMRY HVGPKG in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-05c9f0da-9c6e-4565-bad9-e63a7d714d5d.png",
+    "reference": "assets/cars/cf378498/g01.webp"
+  },
+  "ce007500": {
+    "src": "assets/car-covers/ce007500.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 TOYOTA CAMRY in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-886bbbf5-ab52-4165-ac99-fbe06675c482.png",
+    "reference": "assets/cars/ce007500/01.webp"
+  },
+  "bp763786": {
+    "src": "assets/car-covers/bp763786.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA COROLLA AXIO in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-86bccdc0-b558-4975-b0b2-46070cd9efb8.png",
+    "reference": "assets/cars/bp763786/01.webp"
+  },
+  "cf145069": {
+    "src": "assets/car-covers/cf145069.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 TOYOTA COROLLA AXIO 1.5X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-27367ae3-6644-4971-bcc5-a41b574aef2b.png",
+    "reference": "assets/cars/cf145069/g01.webp"
+  },
+  "cf079950": {
+    "src": "assets/car-covers/cf079950.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA COROLLA FIELDER HYBRID G in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-42a875b2-3359-43fb-95e8-bcd9f2184f74.png",
+    "reference": "assets/cars/cf079950/g01.webp"
+  },
+  "cf263806": {
+    "src": "assets/car-covers/cf263806.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA COROLLA FIELDER HYBRID in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-b31ec426-379b-4967-be4d-aa936f9e3ea1.png",
+    "reference": "assets/cars/cf263806/g01.webp"
+  },
+  "ce490822": {
+    "src": "assets/car-covers/ce490822.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA CROWN HYBRID in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-9f746459-bc5d-47f5-b20c-5ebd3e37250a.png",
+    "reference": "assets/cars/ce490822/g01.webp"
+  },
+  "cf377150": {
+    "src": "assets/car-covers/cf377150.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA CROWN HYBRID in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-ea00b6ab-7531-4c27-a2f4-a681582c16f0.png",
+    "reference": "assets/cars/cf377150/g01.webp"
+  },
+  "cf295378": {
+    "src": "assets/car-covers/cf295378.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 TOYOTA FORTUNER 2.8 V SUV in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-31db3b9d-51a0-4428-948f-8bbeb950a53a.png",
+    "reference": "assets/cars/cf295378/g01.webp"
+  },
+  "cf363357": {
+    "src": "assets/car-covers/cf363357.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA HARRIER in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-748fa4a0-5667-4c2e-ad7b-6eb46081e25b.png",
+    "reference": "assets/cars/cf363357/g01.webp"
+  },
+  "ce714868": {
+    "src": "assets/car-covers/ce714868.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2023 TOYOTA HARRIER in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-d291305a-9bc1-4d93-a2ba-2dc81f132376.png",
+    "reference": "assets/cars/ce714868/g01.webp"
+  },
+  "cf353379": {
+    "src": "assets/car-covers/cf353379.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA HIACE VAN in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-d3b817ab-af83-4497-b993-3dbc28aeec88.png",
+    "reference": "assets/cars/cf353379/g01.webp"
+  },
+  "cf352863": {
+    "src": "assets/car-covers/cf352863.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 TOYOTA HIACE VAN LONG DX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-e2c02d6c-7874-479f-acad-87347357018f.png",
+    "reference": "assets/cars/cf352863/g01.webp"
+  },
+  "cf186474": {
+    "src": "assets/car-covers/cf186474.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 TOYOTA HIACE VAN DX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f217695e-750a-49a9-ae6f-42ecfc3bb9b6.png",
+    "reference": "assets/cars/cf186474/g01.webp"
+  },
+  "cf479269": {
+    "src": "assets/car-covers/cf479269.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 TOYOTA HILUX 2.4 J REVO SINGLE CAB in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f36fc3fe-063d-4aad-a812-ced957520e39.png",
+    "reference": "assets/cars/cf479269/g01.webp"
+  },
+  "cf332834": {
+    "src": "assets/car-covers/cf332834.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 TOYOTA HILUX 2.4 E REVO SMART CAB in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f0805580-5232-4747-9174-827f753202bd.png",
+    "reference": "assets/cars/cf332834/g01.webp"
+  },
+  "cf209383": {
+    "src": "assets/car-covers/cf209383.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2018 TOYOTA HILUX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-526d871c-2266-4576-8c3d-a4c942d959d9.png",
+    "reference": "assets/cars/cf209383/g01.webp"
+  },
+  "cf507961": {
+    "src": "assets/car-covers/cf507961.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2019 TOYOTA HILUX 2.4Z4WD in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-0680d8ef-f4b7-467e-bbb7-ff01d4bcebcd.png",
+    "reference": "assets/cars/cf507961/g01.webp"
+  },
+  "cf450656": {
+    "src": "assets/car-covers/cf450656.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 TOYOTA HILUX in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-e49c9f18-0bfd-4223-9964-b16adaeca178.png",
+    "reference": "assets/cars/cf450656/g01.webp"
+  },
+  "cf275562": {
+    "src": "assets/car-covers/cf275562.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA LAND CRUISER PRADO TZ-G in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-35abb1fb-84ab-42ff-8c5e-125dec39a4ef.png",
+    "reference": "assets/cars/cf275562/g01.webp"
+  },
+  "cf509106": {
+    "src": "assets/car-covers/cf509106.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 TOYOTA LAND CRUISER PRADO in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-7ca32bd4-dac7-44ef-930f-322ab27ccf3d.png",
+    "reference": "assets/cars/cf509106/g01.webp"
+  },
+  "cd919867": {
+    "src": "assets/car-covers/cd919867.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 TOYOTA LAND CRUISER PRADO 2.7TX5 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-69ca2bf0-e394-4ddb-a6e1-da5182f8cfe3.png",
+    "reference": "assets/cars/cd919867/01.webp"
+  },
+  "cf369855": {
+    "src": "assets/car-covers/cf369855.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA MARK X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-8ade73e1-25f5-4575-bbd5-5b5e84429c0e.png",
+    "reference": "assets/cars/cf369855/g01.webp"
+  },
+  "cf420394": {
+    "src": "assets/car-covers/cf420394.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 TOYOTA MARK X 250GF in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-21feecfc-c942-47df-a0ee-b74003ec484c.png",
+    "reference": "assets/cars/cf420394/g01.webp"
+  },
+  "cf252277": {
+    "src": "assets/car-covers/cf252277.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA NOAH G in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-dc2cc64d-f7fb-4812-a193-0e78f20aad52.png",
+    "reference": "assets/cars/cf252277/g01.webp"
+  },
+  "ce241422": {
+    "src": "assets/car-covers/ce241422.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA NOAH HYBRID G in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-9edf393c-490c-46f6-a9fc-b455b31281f8.png",
+    "reference": "assets/cars/ce241422/g01.webp"
+  },
+  "cd402024": {
+    "src": "assets/car-covers/cd402024.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 TOYOTA NOAH in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-2a13f393-a2e7-4f3c-96ea-ff32df14da00.png",
+    "reference": "assets/cars/cd402024/01.webp"
+  },
+  "cf297322": {
+    "src": "assets/car-covers/cf297322.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA PASSO PLUS HANA G PACKAGE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-ad81d71f-d104-4ebd-9dff-1b16b41b225b.png",
+    "reference": "assets/cars/cf297322/g01.webp"
+  },
+  "cf497395": {
+    "src": "assets/car-covers/cf497395.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA PASSO in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-77e6bc04-1c73-470b-8e3c-d919e10de5ed.png",
+    "reference": "assets/cars/cf497395/g01.webp"
+  },
+  "cb868091": {
+    "src": "assets/car-covers/cb868091.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA PREMIO 1.8X_L in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-c655f770-5cc7-47fc-83cc-0c875778e1fb.png",
+    "reference": "assets/cars/cb868091/01.webp"
+  },
+  "ce850746": {
+    "src": "assets/car-covers/ce850746.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 TOYOTA PREMIO 2.0G EX PACKAGE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-38a3579c-0f16-4896-8b8d-e4ad109c08f9.png",
+    "reference": "assets/cars/ce850746/g01.webp"
+  },
+  "cf419862": {
+    "src": "assets/car-covers/cf419862.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA PRIUS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-e18bcdaf-1cc5-435c-bcc8-7d6e68f57617.png",
+    "reference": "assets/cars/cf419862/g01.webp"
+  },
+  "cf474418": {
+    "src": "assets/car-covers/cf474418.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA PRIUS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f21d020d-3f97-47bb-acd4-a375fbcf6c0d.png",
+    "reference": "assets/cars/cf474418/g01.webp"
+  },
+  "cf412329": {
+    "src": "assets/car-covers/cf412329.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA PROBOX VAN DX COMFORT in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-3daf989d-c919-433d-a63b-0f7e24b35994.png",
+    "reference": "assets/cars/cf412329/g01.webp"
+  },
+  "ce524784": {
+    "src": "assets/car-covers/ce524784.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 TOYOTA PRIUS in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-3efba2ef-b9ec-49e3-a459-d9cc97dea284.png",
+    "reference": "assets/cars/ce524784/g01.webp"
+  },
+  "cf263888": {
+    "src": "assets/car-covers/cf263888.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA PROBOX VAN GL in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-37bf4517-08a6-457c-bb08-0fbf958eef24.png",
+    "reference": "assets/cars/cf263888/g01.webp"
+  },
+  "cf169277": {
+    "src": "assets/car-covers/cf169277.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA RAV4 STYLE 4WD in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f0d71354-7de1-427e-829d-7c19f0841cf5.png",
+    "reference": "assets/cars/cf169277/g01.webp"
+  },
+  "ce283216": {
+    "src": "assets/car-covers/ce283216.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2019 TOYOTA RAV4 GZ in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-0f4676ec-8496-4429-899e-8e25e4aebe17.png",
+    "reference": "assets/cars/ce283216/g01.webp"
+  },
+  "ce945310": {
+    "src": "assets/car-covers/ce945310.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 TOYOTA RAV4 HYBRID G in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-1d39e1ec-4945-4dc7-8eb0-83f662e4c842.png",
+    "reference": "assets/cars/ce945310/g01.webp"
+  },
+  "ce908477": {
+    "src": "assets/car-covers/ce908477.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2019 TOYOTA RAIZE G in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-76dc5676-3950-4086-aaa4-0005fa8e711d.png",
+    "reference": "assets/cars/ce908477/g01.webp"
+  },
+  "cf372891": {
+    "src": "assets/car-covers/cf372891.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 TOYOTA RAIZE X S in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-ef7fc3bc-b141-41e8-89b4-e63c3b6742f9.png",
+    "reference": "assets/cars/cf372891/g01.webp"
+  },
+  "cf149427": {
+    "src": "assets/car-covers/cf149427.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 TOYOTA RAIZE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-fc0088e9-15c1-445c-a915-76d4f038aa09.png",
+    "reference": "assets/cars/cf149427/g01.webp"
+  },
+  "cf275559": {
+    "src": "assets/car-covers/cf275559.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA RUSH G L PACKAGE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f609ea70-90cd-409f-81f3-e24510cc99ae.png",
+    "reference": "assets/cars/cf275559/g01.webp"
+  },
+  "ce945379": {
+    "src": "assets/car-covers/ce945379.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA SIENTA X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-c5aa5853-6f2b-4dfd-ac4d-7cae148bbd88.png",
+    "reference": "assets/cars/ce945379/g01.webp"
+  },
+  "cf263433": {
+    "src": "assets/car-covers/cf263433.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA SIENTA HYBRID X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-ddccfd13-cecf-466c-b654-098e94c1477e.png",
+    "reference": "assets/cars/cf263433/g01.webp"
+  },
+  "cf336818": {
+    "src": "assets/car-covers/cf336818.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA SUCCEED VAN UL in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-1e9a05d3-3318-40cb-8ff1-ff8155aee488.png",
+    "reference": "assets/cars/cf336818/g01.webp"
+  },
+  "cf186459": {
+    "src": "assets/car-covers/cf186459.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 TOYOTA SUCCEED UL-X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-f2c6ccc8-19ef-44f6-ab70-69415c3dace2.png",
+    "reference": "assets/cars/cf186459/g01.webp"
+  },
+  "cf263824": {
+    "src": "assets/car-covers/cf263824.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA VANGUARD 240S S PACKAGE in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-81fc76ff-4baa-4fd9-8c1c-c4e47494c145.png",
+    "reference": "assets/cars/cf263824/g01.webp"
+  },
+  "cf508625": {
+    "src": "assets/car-covers/cf508625.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA VITZ in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-4ca5027b-5ab9-4dc1-bffb-f9804510b7b0.png",
+    "reference": "assets/cars/cf508625/g01.webp"
+  },
+  "cf275674": {
+    "src": "assets/car-covers/cf275674.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 TOYOTA VITZ F in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-62e17f57-de3b-4b81-8c9b-b6037e31f563.png",
+    "reference": "assets/cars/cf275674/g01.webp"
+  },
+  "cf342255": {
+    "src": "assets/car-covers/cf342255.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 TOYOTA VOXY X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-5af4b027-e335-4484-803d-e463ce9e30ff.png",
+    "reference": "assets/cars/cf342255/g01.webp"
+  },
+  "cf373303": {
+    "src": "assets/car-covers/cf373303.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 TOYOTA VOXY in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-1a6c47a6-e72f-4cee-a8f3-13737659043c.png",
+    "reference": "assets/cars/cf373303/g01.webp"
+  },
+  "cf460924": {
+    "src": "assets/car-covers/cf460924.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 TOYOTA VOXY 2.0ZSII in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-2302bee4-4438-4ccf-abc3-5e5d5e01dc51.png",
+    "reference": "assets/cars/cf460924/g01.webp"
+  },
+  "cf374440": {
+    "src": "assets/car-covers/cf374440.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 TOYOTA WISH 18001.8X5DCVT2 in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-1c535b84-d178-42b1-b7f2-f77b5f0f356b.png",
+    "reference": "assets/cars/cf374440/g01.webp"
+  },
+  "cf063987": {
+    "src": "assets/car-covers/cf063987.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2017 TOYOTA WISH 1.8X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-eb51b1cd-8f7a-442e-9748-7cb212a0fdc6.png",
+    "reference": "assets/cars/cf063987/g01.webp"
+  },
+  "cf251730": {
+    "src": "assets/car-covers/cf251730.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2021 TOYOTA YARIS X in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-9d8e1d0a-496b-40be-856d-884182d235e1.png",
+    "reference": "assets/cars/cf251730/g01.webp"
+  },
+  "cd431217": {
+    "src": "assets/car-covers/cd431217.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 VOLKSWAGEN GOLF TSIL in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-0ee3b0e9-7555-45a8-9f76-573ed8aa965a.png",
+    "reference": "assets/cars/cd431217/01.webp"
+  },
+  "cf139432": {
+    "src": "assets/car-covers/cf139432.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 VOLKSWAGEN GOLF TSIBMT in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-ebdd7196-29b9-47b3-8680-171d485b4907.png",
+    "reference": "assets/cars/cf139432/g01.webp"
+  },
+  "cf508457": {
+    "src": "assets/car-covers/cf508457.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 VOLKSWAGEN GOLF in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-7ef8bd89-ce63-44dd-a3b4-ed619d445384.png",
+    "reference": "assets/cars/cf508457/g01.webp"
+  },
+  "ce787039": {
+    "src": "assets/car-covers/ce787039.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 VOLKSWAGEN POLO in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-ed84243d-4b1a-46c4-899c-396797204e78.png",
+    "reference": "assets/cars/ce787039/g01.webp"
+  },
+  "cf474209": {
+    "src": "assets/car-covers/cf474209.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2015 VOLKSWAGEN POLO in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-3ea323ae-02ee-4c96-9302-a321b787e234.png",
+    "reference": "assets/cars/cf474209/g01.webp"
+  },
+  "cf478078": {
+    "src": "assets/car-covers/cf478078.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2014 VOLKSWAGEN TIGUAN in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-62af4b5d-a1e4-423d-b44e-379294151dc9.png",
+    "reference": "assets/cars/cf478078/g01.webp"
+  },
+  "cf230651": {
+    "src": "assets/car-covers/cf230651.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2016 VOLKSWAGEN TIGUAN in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-b285cdcc-2456-4614-91a3-26c74ea1ba96.png",
+    "reference": "assets/cars/cf230651/g01.webp"
+  },
+  "cf290536": {
+    "src": "assets/car-covers/cf290536.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "2020 VOLKSWAGEN TIGUAN in an AI-styled Spear Line showroom scene",
+    "master": "/workspace/generated_images/exec-2b0d944c-21b3-474b-b053-84ac3b053fed.png",
+    "reference": "assets/cars/cf290536/g01.webp"
+  }
+}

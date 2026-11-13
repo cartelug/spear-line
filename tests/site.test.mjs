@@ -408,3 +408,23 @@ test("each researched vehicle has correctly attributed local reference photograp
   }
  }
 });
+
+test("every vehicle uses a generated cover and retains its original reference gallery", async () => {
+ const covers=JSON.parse(await readFile(resolve(pub,'../content/car-covers.json'),'utf8'));
+ assert.equal(Object.keys(covers).length,vehiclePriceGuide.vehicles.length);
+ const html=await read('vehicles.html');
+ assert.equal((html.match(/class="car-cover-label">AI-styled cover/g)||[]).length,vehiclePriceGuide.vehicles.length);
+ for(const car of vehiclePriceGuide.vehicles){
+  const cover=covers[car.id], gallery=vehicleGalleries[car.id];
+  assert.equal(cover.src,'assets/car-covers/'+car.id+'.webp');
+  assert.equal(cover.reference,gallery.images[0].src);
+  assert.ok(await exists(cover.src),car.id+' cover exists');
+  assert.match(cover.alt,/AI-styled/);
+  assert.ok(cover.width>0&&cover.height>0);
+  assert.ok(html.includes('src="'+cover.src+'"'));
+  for(const photo of gallery.images) assert.ok(html.includes(photo.src),car.id+' original remains accessible');
+ }
+ const styles=await css();
+ assert.doesNotMatch(styles,/\.car-media::before/,'no pasted logo overlay');
+ assert.doesNotMatch(styles,/url\(assets\/branded\/showroom.webp\)/,'no fake scene behind original photos');
+});

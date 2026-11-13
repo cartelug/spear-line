@@ -1,4 +1,4 @@
-import { validateEnquiry } from "./validation.js?v=f28b6fe74e";
+import { validateEnquiry } from "./validation.js?v=697a4cde4b";
 const config = window.SPEAR_CONFIG || {};
 const preview = window.SPEAR_PREVIEW === true;
 const canSubmit = config.enquiriesEnabled === true && !preview;
@@ -259,7 +259,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || new URLSe
 
 /* Motion layer: loaded separately so a failure never affects navigation or the enquiry form. */
 // It measures the layout, so it starts once the full stylesheet applies (window.spearCss, from the inline boot script).
-Promise.all([import("./motion.js?v=f28b6fe74e"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
+Promise.all([import("./motion.js?v=697a4cde4b"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
   root.classList.remove("motion-ok");
   $$("[data-motion-toggle]").forEach(button => { button.hidden = true; });
 });
