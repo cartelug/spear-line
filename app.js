@@ -1,4 +1,4 @@
-import { validateEnquiry } from "./validation.js?v=d94d25eb23";
+import { validateEnquiry } from "./validation.js?v=781d776483";
 const config = window.SPEAR_CONFIG || {};
 const preview = window.SPEAR_PREVIEW === true;
 const canSubmit = config.enquiriesEnabled === true && !preview;
@@ -67,7 +67,7 @@ if (carCatalogue) {
   const budget = $("[data-car-budget]", controls), year = $("[data-car-year]", controls), sort = $("[data-car-sort]", controls);
   const count = $("[data-car-count]", controls), empty = $("[data-car-empty]", carCatalogue), more = $("[data-car-more]", carCatalogue);
   const normalise = text => text.normalize("NFKD").toLowerCase().replace(/[^a-z0-9]/g, "");
-  const cars = $$("[data-car]", grid).map(el => ({ el, make: el.dataset.make, price: Number(el.dataset.price), year: Number(el.dataset.year), mileage: Number(el.dataset.mileage), search: normalise(el.dataset.search) }));
+  const cars = $$("[data-car]", grid).map(el => ({ el, make: el.dataset.carMakeValue, price: Number(el.dataset.carPrice), year: Number(el.dataset.carModelYear), mileage: Number(el.dataset.carMileage), search: normalise(el.dataset.carKeywords) }));
   const pageSize = 24;
   let limit = pageSize, matches = [];
   function renderCars() {
@@ -213,7 +213,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || new URLSe
 
 /* Motion layer: loaded separately so a failure never affects navigation or the enquiry form. */
 // It measures the layout, so it starts once the full stylesheet applies (window.spearCss, from the inline boot script).
-Promise.all([import("./motion.js?v=d94d25eb23"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
+Promise.all([import("./motion.js?v=781d776483"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
   root.classList.remove("motion-ok");
   $$("[data-motion-toggle]").forEach(button => { button.hidden = true; });
 });

@@ -190,6 +190,9 @@ test("import price examples retain their exporter reference, date, currency and 
   assert.equal(new Set(cars.map(car => car.id)).size, cars.length, "no duplicate source listings");
   const html = await read("vehicles.html");
   assert.equal((html.match(/<article class="car-card" data-car /g) || []).length, cars.length);
+  for (const card of html.match(/<article class="car-card"[\s\S]*?<\/article>/g) || []) {
+    assert.doesNotMatch(card, /\sdata-year(?:=|\s|>)/, "a vehicle must not use the copyright updater's data-year hook");
+  }
   assert.match(html, /external listing examples, not confirmed Spear Line stock/);
   assert.match(html, /Freight, insurance, taxes, clearing and delivery are additional/);
   assert.match(html, new RegExp('datetime="' + guide.checkedOn + '"'));
@@ -203,7 +206,7 @@ test("import price examples retain their exporter reference, date, currency and 
     assert.ok(car.year >= 2014 && car.year <= Number(guide.checkedOn.slice(0, 4)), car.id + " source year");
     assert.equal(car.steering, "Right");
     assert.ok(["Japan", "Thailand"].includes(car.country));
-    assert.ok(html.includes('data-price="' + car.priceUsd + '"'), car.id + " rendered price");
+    assert.ok(html.includes('data-car-price="' + car.priceUsd + '"'), car.id + " rendered price");
     assert.ok(html.includes(car.sourceRef), car.id + " reference is visible");
   }
 });
