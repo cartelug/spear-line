@@ -94,12 +94,66 @@ export const images = {
 
 // V12 company map: opportunities are not presented as verified operational facilities.
 export const divisions = [
-  { number: '01', icon: 'i-materials', name: 'Building Materials & Equipment', category: 'Construction & sourcing', status: 'Developing', image: 'site-materials', href: 'materials.html', text: 'Explore requirements for building materials, tools and equipment through a considered sourcing conversation.' },
-  { number: '02', icon: 'i-vehicle', name: 'Motors & Automotive', category: 'Vehicles & mobility', status: 'Enquiry-led', image: 'vehicles-suv', href: 'vehicles.html', text: 'Vehicle trading and sourcing conversations shaped around your preferred model, destination and budget.' },
-  { number: '03', icon: 'i-supplies', name: 'Food & Beverages', category: 'Business supply', status: 'Enquiry-led', image: 'foodstuffs', href: 'supplies.html', text: 'Discuss product lists, quantities, preferred packaging and delivery requirements.' },
-  { number: '04', icon: 'i-wellness', name: 'Fitness, Health & Wellness', category: 'Nonclinical concepts', status: 'Concept', image: 'track-sunrise', href: 'fitness.html', text: 'An emerging area of the Spear Line vision, focused on fitness and everyday wellbeing opportunities.' },
-  { number: '05', icon: 'i-property', name: 'Real Estate Services', category: 'Property opportunities', status: 'Concept', image: 'property-visit', href: 'real-estate.html', text: 'An area of development for property-related services, subject to confirmation of the operating model.' },
-  { number: '06', icon: 'i-glass', name: 'Leisure, Entertainment & Hospitality', category: 'Places & experiences', status: 'Developing', image: 'rooftop-social', href: 'bar.html', text: 'Explore the ideas taking shape around hospitality, leisure and the upcoming Spear Line Bar.' }
+  {
+    "number": "01",
+    "icon": "i-materials",
+    "name": "Building Materials & Equipment",
+    "category": "Construction & sourcing",
+    "status": "Enquiry-led",
+    "image": "site-materials",
+    "href": "materials.html",
+    "text": "Explore requirements for building materials, tools and equipment through a considered sourcing conversation."
+  },
+  {
+    "number": "02",
+    "icon": "i-vehicle",
+    "name": "Motors & Automotive",
+    "category": "Vehicles & mobility",
+    "status": "Enquiry-led",
+    "image": "vehicles-suv",
+    "href": "vehicles.html",
+    "text": "Vehicle trading and sourcing conversations shaped around your preferred model, destination and budget."
+  },
+  {
+    "number": "03",
+    "icon": "i-supplies",
+    "name": "Food & Beverages",
+    "category": "Business supply",
+    "status": "Enquiry-led",
+    "image": "foodstuffs",
+    "href": "supplies.html",
+    "text": "Discuss product lists, quantities, preferred packaging and delivery requirements."
+  },
+  {
+    "number": "04",
+    "icon": "i-wellness",
+    "name": "Fitness, Health & Wellness",
+    "category": "Fitness & everyday wellbeing",
+    "status": "Enquiry-led",
+    "image": "track-sunrise",
+    "href": "fitness.html",
+    "text": "Fitness access, personal sessions, group activity and workplace wellbeing, arranged around your needs."
+  },
+  {
+    "number": "05",
+    "icon": "i-property",
+    "name": "Real Estate Services",
+    "category": "Property opportunities",
+    "status": "Enquiry-led",
+    "image": "property-visit",
+    "href": "real-estate.html",
+    "text": "Property search and owner enquiries for homes, business space and land, with scope agreed for each requirement."
+  },
+  {
+    "number": "06",
+    "icon": "i-glass",
+    "name": "Leisure, Entertainment & Hospitality",
+    "category": "Places & experiences",
+    "status": "Opening 2027",
+    "image": "rooftop-social",
+    "href": "bar.html",
+    "text": "Explore the ideas taking shape around hospitality, leisure and the upcoming Spear Line Bar."
+  }
 ];
 
 export const digitalCapabilities = [
@@ -173,47 +227,126 @@ export const services = [
 ];
 
 export const home = {
-  hero: {
-    kicker: 'Trading, supply & logistics',
-    title: ['One company.', 'More ways forward.'],
-    lede: 'Vehicles, sourcing, business supplies and logistics today. A wider portfolio of ideas and opportunities for tomorrow.',
-    primary: 'Start a conversation',
-    secondary: 'Explore our divisions'
+  "hero": {
+    "kicker": "Trading, supply & logistics",
+    "title": [
+      "One company.",
+      "More ways forward."
+    ],
+    "lede": "Vehicles, materials, food and beverages, logistics, fitness, property and digital work. One clear conversation to connect your requirement with the next step.",
+    "primary": "Start a conversation",
+    "secondary": "Explore our divisions"
   },
-  marquee: ['Vehicle sales & trading', 'Foodstuffs & beverages', 'Transport & coordination', 'One line. More possibilities.'],
-  intro: {
-    statement: ['The right vehicle.', 'The supplies you need.', 'A clear way to get there.'],
-    text: 'Spear Line brings vehicle sales, foodstuffs and beverages, and logistics into one practical conversation. Wherever your requirement starts, we start by listening.'
-  },
-  servicesTitle: 'Where the work begins.',
-  servicesText: 'Start with the practical needs: a vehicle, goods for your business or a load to move. Every request starts with a clear brief.',
-  route: {
-    title: 'Three stops. One line.',
-    text: 'Wherever your requirement starts, it joins the same line: a clear brief, the right details, a confirmed next move.'
-  },
-  approach: {
-    title: 'More than the next transaction.',
-    lede: 'It’s understanding the job behind it.',
-    text: ['The right vehicle has a purpose. Every supply order has a destination. Every delivery has details that matter.', 'We bring those details into focus, so the conversation starts in the right place and the next step is clear.']
-  },
-  pillars: [
-    { icon: 'i-brief', title: 'Start with your brief', text: 'Share the requirement, destination, timing and the best way to reach you.' },
-    { icon: 'i-chat', title: 'One practical conversation', text: 'Vehicles, supplies and logistics begin from the same simple enquiry.' },
-    { icon: 'i-pin', title: 'Details that matter', text: 'Specifications, quantities, cargo and destination help define the scope.' },
-    { icon: 'i-shield', title: 'Confirmed in writing', text: 'Scope, pricing and arrangements are confirmed in writing before you commit.' }
+  "marquee": [
+    "Vehicle sales & trading",
+    "Foodstuffs & beverages",
+    "Transport & coordination",
+    "One line. More possibilities."
   ],
-  gallery: [
-    { image: 'vehicles-pickup', label: 'Vehicles', title: 'Built for your kind of work.', href: 'vehicles.html' },
-    { image: 'keys-handover', label: 'Vehicles', title: 'Ready for the handover.', href: 'vehicles.html' },
-    { image: 'market-produce', label: 'Supplies', title: 'Staples, shaped to your list.', href: 'supplies.html' },
-    { image: 'beverages', label: 'Supplies', title: 'Keep the essentials flowing.', href: 'supplies.html' },
-    { image: 'loading-bay', label: 'Logistics', title: 'From the bay to the road.', href: 'logistics.html' },
-    { image: 'last-mile-van', label: 'Logistics', title: 'Every destination matters.', href: 'logistics.html' },
-    { image: 'wheel-detail', label: 'Vehicles', title: 'Made for the road ahead.', href: 'vehicles.html' },
-    { image: 'container-port', label: 'Logistics', title: 'Think beyond the pickup.', href: 'logistics.html' },
-    { image: 'sourcing-detail', label: 'Your enquiry', title: 'Your brief brings it together.', href: 'enquire.html' }
+  "intro": {
+    "statement": [
+      "The right vehicle.",
+      "The supplies you need.",
+      "A clear way to get there."
+    ],
+    "text": "Spear Line brings vehicle sales, foodstuffs and beverages, and logistics into one practical conversation. Wherever your requirement starts, we start by listening."
+  },
+  "servicesTitle": "Where the work begins.",
+  "servicesText": "Start with the practical needs: a vehicle, goods for your business or a load to move. Every request starts with a clear brief.",
+  "route": {
+    "title": "Three stops. One line.",
+    "text": "Wherever your requirement starts, it joins the same line: a clear brief, the right details, a confirmed next move."
+  },
+  "approach": {
+    "title": "More than the next transaction.",
+    "lede": "It’s understanding the job behind it.",
+    "text": [
+      "The right vehicle has a purpose. Every supply order has a destination. Every delivery has details that matter.",
+      "We bring those details into focus, so the conversation starts in the right place and the next step is clear."
+    ]
+  },
+  "pillars": [
+    {
+      "icon": "i-brief",
+      "title": "Start with your brief",
+      "text": "Share the requirement, destination, timing and the best way to reach you."
+    },
+    {
+      "icon": "i-chat",
+      "title": "One practical conversation",
+      "text": "Vehicles, supplies and logistics begin from the same simple enquiry."
+    },
+    {
+      "icon": "i-pin",
+      "title": "Details that matter",
+      "text": "Specifications, quantities, cargo and destination help define the scope."
+    },
+    {
+      "icon": "i-shield",
+      "title": "Confirmed in writing",
+      "text": "Scope, pricing and arrangements are confirmed in writing before you commit."
+    }
   ],
-  closing: { title: 'Let’s move something forward.', text: 'A vehicle, a business requirement, an opportunity worth discussing.' }
+  "gallery": [
+    {
+      "image": "vehicles-pickup",
+      "label": "Vehicles",
+      "title": "Built for your kind of work.",
+      "href": "vehicles.html"
+    },
+    {
+      "image": "keys-handover",
+      "label": "Vehicles",
+      "title": "Ready for the handover.",
+      "href": "vehicles.html"
+    },
+    {
+      "image": "market-produce",
+      "label": "Supplies",
+      "title": "Staples, shaped to your list.",
+      "href": "supplies.html"
+    },
+    {
+      "image": "beverages",
+      "label": "Supplies",
+      "title": "Keep the essentials flowing.",
+      "href": "supplies.html"
+    },
+    {
+      "image": "loading-bay",
+      "label": "Logistics",
+      "title": "From the bay to the road.",
+      "href": "logistics.html"
+    },
+    {
+      "image": "last-mile-van",
+      "label": "Logistics",
+      "title": "Every destination matters.",
+      "href": "logistics.html"
+    },
+    {
+      "image": "wheel-detail",
+      "label": "Vehicles",
+      "title": "Made for the road ahead.",
+      "href": "vehicles.html"
+    },
+    {
+      "image": "container-port",
+      "label": "Logistics",
+      "title": "Think beyond the pickup.",
+      "href": "logistics.html"
+    },
+    {
+      "image": "sourcing-detail",
+      "label": "Your enquiry",
+      "title": "Your brief brings it together.",
+      "href": "enquire.html"
+    }
+  ],
+  "closing": {
+    "title": "Let’s move something forward.",
+    "text": "A vehicle, a business requirement, an opportunity worth discussing."
+  }
 };
 
 export const process = [
@@ -224,34 +357,92 @@ export const process = [
 ];
 
 export const about = {
-  hero: { title: 'One company. More ways forward.', lede: 'Spear Line connects vehicle trading, sourcing, supply and logistics with a developing six-division business vision.' },
-  who: {
-    title: 'Business begins with a better understanding.',
-    text: ['Spear Line starts with practical requirements for vehicles, goods and transport, then makes space for opportunities in materials, wellness, real estate and hospitality.', 'Each division has its own maturity and scope. Our approach remains the same: understand the need, clarify the details and agree the next step before making commitments.']
+  "hero": {
+    "title": "One company. More ways forward.",
+    "lede": "Spear Line connects vehicle trading, sourcing, supply, logistics, fitness, property and digital services. Spear Line Bar opens in 2027."
   },
-  principles: [
-    { icon: 'i-chat', title: 'Listen first.', text: 'The requirement comes before the recommendation. Your priorities, destination and timing set the direction.' },
-    { icon: 'i-brief', title: 'Make the details matter.', text: 'Specifications, quantities and arrangements deserve a proper conversation before the next step.' },
-    { icon: 'i-shield', title: 'Keep it clear.', text: 'Scope, pricing and commitments should be understood and confirmed in writing.' }
+  "who": {
+    "title": "Business begins with a better understanding.",
+    "text": [
+      "Spear Line Global Limited brings business requirements together across Uganda and South Sudan, from vehicles and materials to goods, transport and service projects.",
+      "Start with the job you need done. We clarify specifications, destination, timing and budget, then agree the scope, responsibilities and price before a commitment. Hospitality enquiries look ahead to the Spear Line Bar opening in 2027."
+    ]
+  },
+  "principles": [
+    {
+      "icon": "i-chat",
+      "title": "Listen first.",
+      "text": "The requirement comes before the recommendation. Your priorities, destination and timing set the direction."
+    },
+    {
+      "icon": "i-brief",
+      "title": "Make the details matter.",
+      "text": "Specifications, quantities and arrangements deserve a proper conversation before the next step."
+    },
+    {
+      "icon": "i-shield",
+      "title": "Keep it clear.",
+      "text": "Scope, pricing and commitments should be understood and confirmed in writing."
+    }
   ]
 };
 
 export const faq = [
-  { group: 'Getting started', items: [
-    { q: 'What does Spear Line do?', a: 'Spear Line is developing a six-division portfolio across materials and equipment, motors and automotive, food and beverages, fitness and wellness, real estate, and leisure and hospitality. Vehicle trading, supplies and transport coordination remain practical areas for enquiries. Planned activities are labelled as such.' },
-    { q: 'What should I include in an enquiry?', a: 'Your name and how to reach you, then the details for your service. Vehicles: the model or type, a budget if you wish, and the destination. Supplies: products, quantities, delivery destination and timing. Logistics: pickup, destination, cargo and timing.' },
-    { q: 'Is an enquiry a booking or a purchase?', a: 'No. An enquiry starts a conversation. Availability, specifications, price and arrangements are confirmed for each enquiry, and in writing, before you make any commitment.' }
-  ] },
-  { group: 'Enquiries and privacy', items: [
-    { q: 'Can I send an enquiry online?', a: null },
-    { q: 'What should I leave out of an enquiry?', a: 'Identity documents, card details, bank details and other sensitive information. You can add anything further once you are in conversation.' },
-    { q: 'How is my information used?', a: 'To review and respond to your request. The privacy page explains what is collected, how long it is kept when online enquiries are enabled, and how to ask about your information.' }
-  ] },
-  { group: 'About this website', items: [
-    { q: 'Are the images real photographs?', a: 'Most service imagery is AI-generated and illustrates our service areas. Joh Ayom’s main portrait was supplied by the owner. Images do not confirm vehicle stock, facilities or completed projects.' },
-    { q: 'Do you list stock or prices here?', a: 'The vehicles page includes researched external exporter listings with vehicle-only import prices in USD, a research date and a source link for each example. Displayed Spear Line estimates include an 8% sourcing margin. Freight, insurance, taxes and local charges are additional. These examples are not confirmed Spear Line stock; availability and a destination-specific quote are confirmed for your enquiry.' },
-    { q: 'What is Spear Line Bar?', a: 'The next chapter of Spear Line. It is coming soon, and the location, opening details and menu will be announced on its page. Nothing is open or bookable yet.' }
-  ] }
+  {
+    "group": "Getting started",
+    "items": [
+      {
+        "q": "What does Spear Line do?",
+        "a": "Spear Line handles materials and equipment, vehicles, food and beverages, fitness and wellbeing, property, logistics and digital enquiries. Spear Line Bar opens in 2027. Each requirement receives a defined scope, availability check and quotation."
+      },
+      {
+        "q": "What should I include in an enquiry?",
+        "a": "Your name and how to reach you, then the details for your service. Vehicles: the model or type, a budget if you wish, and the destination. Supplies: products, quantities, delivery destination and timing. Logistics: pickup, destination, cargo and timing."
+      },
+      {
+        "q": "Is an enquiry a booking or a purchase?",
+        "a": "No. An enquiry starts a conversation. Availability, specifications, price and arrangements are confirmed for each enquiry, and in writing, before you make any commitment."
+      }
+    ]
+  },
+  {
+    "group": "Enquiries and privacy",
+    "items": [
+      {
+        "q": "Can I send an enquiry online?",
+        "a": null
+      },
+      {
+        "q": "What should I leave out of an enquiry?",
+        "a": "Identity documents, card details, bank details and other sensitive information. You can add anything further once you are in conversation."
+      },
+      {
+        "q": "How is my information used?",
+        "a": "To review and respond to your request. The privacy page explains what is collected, how long it is kept when online enquiries are enabled, and how to ask about your information."
+      }
+    ]
+  },
+  {
+    "group": "About this website",
+    "items": [
+      {
+        "q": "Are the images real photographs?",
+        "a": "Most service imagery is AI-generated and illustrates our service areas. Joh Ayom’s main portrait was supplied by the owner. Images do not confirm vehicle stock, facilities or completed projects."
+      },
+      {
+        "q": "Do you list stock or prices here?",
+        "a": "The vehicles page includes researched external exporter listings with vehicle-only import prices in USD, a research date and a source link for each example. Displayed Spear Line estimates include an 8% sourcing margin. Freight, insurance, taxes and local charges are additional. These examples are not confirmed Spear Line stock; availability and a destination-specific quote are confirmed for your enquiry."
+      },
+      {
+        "q": "Are the market guide prices final Spear Line prices?",
+        "a": "No. The dated guide prices are external market references or clearly labelled planning bands. Your written Spear Line quotation confirms the actual specification, availability, currency, taxes, fees and delivery. Juba requirements are quoted separately."
+      },
+      {
+        "q": "What is Spear Line Bar?",
+        "a": "Spear Line Bar is opening in 2027. The exact opening date, venue, menu and booking arrangements will be announced on its page. You can share an expression of interest; reservations are not open yet."
+      }
+    ]
+  }
 ];
 // Shown for the "Can I send an enquiry online?" answer, switched automatically by site configuration.
 export const onlineAnswer = {
@@ -260,13 +451,31 @@ export const onlineAnswer = {
 };
 
 export const bar = {
-  hero: { title: 'Spear Line Bar.', tagline: 'A new chapter. Pull up a seat.', text: 'Something new is taking shape. We’re getting ready to introduce Spear Line Bar.' },
-  note: 'Bar details and opening updates will be announced here.',
-  // Replace each 'To be announced' with real details when they are decided.
-  share: [
-    { icon: 'i-pin', title: 'A place to connect', text: 'A hospitality concept built around comfortable social space and thoughtful hosting.', status: 'Concept planning' },
-    { icon: 'i-clock', title: 'Occasions with purpose', text: 'Explore the event and gathering ideas below, from private celebrations to business meetups.', status: 'Developing' },
-    { icon: 'i-glass', title: 'An experience in detail', text: 'Food, refreshments, service and venue arrangements belong in one clearly agreed plan.', status: 'Scope to be confirmed' }
+  "hero": {
+    "title": "Spear Line Bar.",
+    "tagline": "A new chapter. Pull up a seat.",
+    "text": "Spear Line Bar opens in 2027. Explore the plans for social time, gatherings and thoughtful hospitality, and share the occasion you have in mind."
+  },
+  "note": "Opening in 2027. The exact date, location, operating hours, menu and reservation details will be announced here.",
+  "share": [
+    {
+      "icon": "i-pin",
+      "title": "A place to connect",
+      "text": "A hospitality concept built around comfortable social space and thoughtful hosting.",
+      "status": "Opening 2027"
+    },
+    {
+      "icon": "i-clock",
+      "title": "Occasions with purpose",
+      "text": "Explore the event and gathering ideas below, from private celebrations to business meetups.",
+      "status": "Opening 2027"
+    },
+    {
+      "icon": "i-glass",
+      "title": "An experience in detail",
+      "text": "Food, refreshments, service and venue arrangements belong in one clearly agreed plan.",
+      "status": "Opening 2027"
+    }
   ]
 };
 

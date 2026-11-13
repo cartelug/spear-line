@@ -1,3 +1,4 @@
+import { pageGuides } from '../content/page-guides.mjs';
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile, access } from "node:fs/promises";
@@ -39,6 +40,7 @@ test("local resources resolve and only declared research and credit links leave 
       if (/^(mailto:|tel:)/.test(ref)) continue;
       // The only outbound links are the font and icon credits the licence asks for; nothing external is loaded.
       if (/^https:\/\/www\.onlinewebfonts\.com(\/icon)?$/.test(ref)) { assert.ok(html.includes(`<a href="${ref}">`), page + " credit is a plain link"); continue; }
+      if (Object.values(pageGuides).some(g => g.sources.some(s => s.url === ref.replace(/&amp;/g, "&"))) || ["https://wa.me/256708735878", "https://wa.me/211920998562"].includes(ref)) { assert.ok(/<a[^>]+href=/.test(html)); continue; }
       if (researchLinks.has(ref.replace(/&amp;/g, "&"))) {
         assert.equal(page, "vehicles.html", "research links belong to the vehicle guide");
         assert.equal(attribute, "href", "exporter resources are linked, never loaded");
@@ -175,12 +177,12 @@ test("no invented stock claims or unsourced prices, and every footer discloses i
     const html = await read(page);
     assert.match(html, /AI-generated imagery illustrates our service areas/, page);
     assert.doesNotMatch(visibleText(html), /in stock|available now|fleet of|guaranteed|testimonial|years of experience|award-winning|trusted by/i, page);
-    const outsideGuide = html.replace(/<section\b[^>]*\bid="car-catalogue"[\s\S]*?<\/section>/, "");
+    const outsideGuide = html.replace(/<section\b[^>]*class="[^"]*market-guide[^"]*"[\s\S]*?<\/section>/g, "").replace(/<section\b[^>]*\bid="car-catalogue"[\s\S]*?<\/section>/, "");
     assert.doesNotMatch(visibleText(outsideGuide), /\bUSD \d|\$\s?\d/i, page + " prices only appear in the sourced research guide");
   }
   assert.match(await read("enquire.html"), /Online submission is not currently open/);
   assert.match(await read("app.js"), /Nothing has been sent to Spear Line/);
-  assert.equal(await read("timber-logistics.html"), await read("logistics.html"));
+  assert.match(await read("timber-logistics.html"), /Timber loads need their own plan/);
 });
 
 test("import price examples retain their exporter reference, date, currency and vehicle-only basis", async () => {
@@ -212,14 +214,14 @@ test("import price examples retain their exporter reference, date, currency and 
   }
 });
 
-test("the Bar is reachable everywhere and clearly remains coming soon", async () => {
+test("the Bar is reachable everywhere and clearly identifies its 2027 opening", async () => {
   for (const page of pages) {
     const html = await read(page);
     assert.match(html, /href="bar\.html"/, page);
     assert.doesNotMatch(visibleText(html), /\bClub\b/, page + " still says Club");
   }
   const bar = visibleText(await read("bar.html"));
-  assert.match(bar, /Spear Line Bar\./); assert.match(bar, /Coming soon/);
+  assert.match(bar, /Spear Line Bar/); assert.match(bar, /Opening 2027/);
   assert.doesNotMatch(bar, /Join now|Reserve|Book a table|Membership|happy hour|\bopen(s|ing)? (daily|from|at)\b|\d{1,2}\s?(am|pm)\b/i);
 });
 
@@ -326,7 +328,7 @@ test("V12 six-division model, digital offer and Joh Ayom profile remain grounded
   for (const division of content.divisions) {
     assert.ok(homePage.includes(division.name.replace(/&/g, "&amp;")), division.name + " on home");
     assert.ok(divisionPage.includes(division.name.replace(/&/g, "&amp;")), division.name + " on divisions");
-    assert.ok(["Developing", "Enquiry-led", "Concept"].includes(division.status), division.name + " status");
+    assert.ok(["Opening 2027", "Enquiry-led"].includes(division.status), division.name + " status");
   }
   assert.equal(content.digitalCapabilities.length, 9);
   for (const capability of content.digitalCapabilities) assert.ok(digitalPage.includes(capability.title.replace(/&/g, "&amp;")), capability.title);

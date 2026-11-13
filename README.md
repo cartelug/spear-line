@@ -1,6 +1,6 @@
 # Spear Line website
 
-A responsive company site for Spear Line's trading, supply and logistics enquiries, six business divisions, proposed digital capability and founder profile, built around one idea: a single route line that connects opportunities. See [DESIGN.md](DESIGN.md) and [docs/MOTION.md](docs/MOTION.md). The site uses the approved complete horizontal gold wordmark. Its photography is illustrative and labelled accordingly.
+A responsive company site for Spear Line's trading, supply and logistics enquiries, six business divisions, digital services and founder profile, built around one idea: a single route line that connects opportunities. See [DESIGN.md](DESIGN.md) and [docs/MOTION.md](docs/MOTION.md). The site uses the approved complete horizontal gold wordmark. Its photography is illustrative and labelled accordingly.
 
 ## Run locally
 
@@ -43,3 +43,7 @@ The public phone contacts and `enquiries@spearline.africa` are published; the ma
 ## Brand assets and link previews
 
 `npm run brand` regenerates SVG/PNG/WebP production exports and rebuilds the site (run `npm ci` first; ImageMagick is required). See [ASSETS.md](ASSETS.md) for masters and font-outline regeneration. Every page includes the current preview card even before the enquiry/search launch switches are enabled. `SITE_PREVIEW_URL` optionally sets a preview base URL; otherwise `SITE_ORIGIN` or the existing GitHub Pages preview is used. Keep any deployment subdirectory, such as `/spear-line`, in that URL.
+
+## Market references and service status
+
+Service details and dated market examples are maintained in `content/page-guides.mjs`. They distinguish outside advertised prices, inferred planning budgets and requirement-specific quotations. See [the research record](docs/MARKET_PRICES.md). The owner confirmed active service divisions and a 2027 opening for Spear Line Bar. Enquiry hours are Monday–Saturday, 9 am–6 pm EAT; the fitness page publishes standard hours with phone confirmation before attending.
