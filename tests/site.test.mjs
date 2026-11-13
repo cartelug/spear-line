@@ -4,10 +4,11 @@ import { readFile, access } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as content from "../content/site.mjs";
+import { vehicleGalleries } from "../content/vehicle-galleries.mjs";
 import { vehiclePriceGuide } from "../content/vehicle-prices.mjs";
 
 const pub = resolve(dirname(fileURLToPath(import.meta.url)), "..", "public");
-const pages = ["divisions.html", "digital.html", "founder.html", "index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "terms.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
+const pages = ["divisions.html", "digital.html", "materials.html", "fitness.html", "real-estate.html", "founder.html", "index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "terms.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
 const read = name => readFile(resolve(pub, name), "utf8");
 const exists = async name => access(resolve(pub, name)).then(() => true, () => false);
 const visibleText = html => html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "").replace(/<[^>]+>/g, " ");
@@ -156,7 +157,7 @@ test("services, FAQ and Bar copy come from the content layer", async () => {
   const questions = content.faq.flatMap(group => group.items);
   assert.equal((faq.match(/<details/g) || []).length, questions.length);
   const bar = await read("bar.html");
-  assert.equal((bar.match(/To be announced/g) || []).length, content.bar.share.length);
+  for (const item of content.bar.share) assert.ok(bar.includes(item.title));
 });
 
 test("optional real-content blocks stay invisible until they have entries", async () => {
@@ -206,7 +207,7 @@ test("import price examples retain their exporter reference, date, currency and 
     assert.ok(car.year >= 2014 && car.year <= Number(guide.checkedOn.slice(0, 4)), car.id + " source year");
     assert.equal(car.steering, "Right");
     assert.ok(["Japan", "Thailand"].includes(car.country));
-    assert.ok(html.includes('data-car-price="' + car.priceUsd + '"'), car.id + " rendered price");
+    assert.ok(html.includes('data-car-price="' + Math.round(car.priceUsd * 1.08) + '"'), car.id + " rendered price");
     assert.ok(html.includes(car.sourceRef), car.id + " reference is visible");
   }
 });
@@ -391,4 +392,19 @@ test("heroes carry the route, every page uses the Line Field, and photographs ar
   }
   const founder = await read("founder.html");
   assert.doesNotMatch(founder, /AI-generated image<\/figcaption>/);
+});
+
+
+test("each researched vehicle has correctly attributed local reference photographs", async () => {
+ for (const car of vehiclePriceGuide.vehicles) {
+  const gallery=vehicleGalleries[car.id];
+  assert.ok(gallery?.images.length,car.sourceRef+' has a gallery');
+  assert.equal(gallery.sourceUrl,car.sourceUrl);
+  for(const photo of gallery.images){
+   assert.ok(photo.src.startsWith('assets/cars/'+car.id+'/'));
+   assert.ok(await exists(photo.src),photo.src+' exists');
+   assert.ok(photo.width>0&&photo.height>0);
+   assert.ok(photo.sourceUrl.toLowerCase().includes(car.id),photo.src+' identifies the original reference');
+  }
+ }
 });

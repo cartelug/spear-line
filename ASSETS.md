@@ -103,3 +103,9 @@ Supplied by the site owner, downloaded from OnlineWebFonts.com, and used on the 
 Both were converted to WOFF2 from the supplied TrueType files with all glyphs and layout features kept. `License-OnlineWebFonts.txt` is the notice that came with the download, and every page footer carries the credit it asks for, plus the icon credit line the owner requested. Note that these are corporate typefaces of MTN and Sky; keep the licence on file, and if it does not cover web embedding, swap them for open-licence fonts (two `@font-face` blocks in `src/styles/00-tokens.css`).
 
 Earlier fonts (Hubot Sans, Mona Sans; before them Big Shoulders Display and Atkinson Hyperlegible) were removed.
+
+## Branded editorial scenes and reference galleries — 13 November 2026
+
+`assets/branded/` contains five imagegen-created editorial assets: the warm Spear Line showroom environment, a reference-guided Audi Q3 scene, and materials, fitness and residential concept scenes. The supplied logo was used as the reference for softly faded architectural signage. These are illustrations; they do not document Spear Line premises, property ownership, vehicle condition or an operating gym. Generation masters remain in the task's generated-images directory.
+
+`assets/cars/<reference>/` contains original exporter reference photographs downloaded from the exact BE FORWARD listing associated with that catalogue entry, resized and encoded as WebP. Original dealer marks are retained. `content/vehicle-galleries.mjs` records each original image URL, listing URL, dimensions and the selected frames. Spear Line branding is placed in the surrounding website frame; it does not replace the source's marks. Source photographs remain reference evidence, with availability and condition subject to confirmation.

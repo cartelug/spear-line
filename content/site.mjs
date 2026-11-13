@@ -18,7 +18,7 @@ export const brand = {
   tagline: 'One line. More possibilities.',
   summary: 'Trading, vehicles, supply, logistics and an expanding portfolio of business opportunities.',
   description: 'Spear Line connects trading, automotive, supply and logistics needs with a broader vision for enterprise and opportunity.',
-  imageNote: 'AI-generated imagery illustrates our service areas.'
+  imageNote: 'AI-generated imagery illustrates our service areas. Vehicle galleries contain credited exporter reference photographs.'
 };
 
 // Alt text lives with the image so every use stays consistent.
@@ -94,11 +94,11 @@ export const images = {
 
 // V12 company map: opportunities are not presented as verified operational facilities.
 export const divisions = [
-  { number: '01', icon: 'i-materials', name: 'Building Materials & Equipment', category: 'Construction & sourcing', status: 'Developing', image: 'site-materials', href: 'contact.html', text: 'Explore requirements for building materials, tools and equipment through a considered sourcing conversation.' },
+  { number: '01', icon: 'i-materials', name: 'Building Materials & Equipment', category: 'Construction & sourcing', status: 'Developing', image: 'site-materials', href: 'materials.html', text: 'Explore requirements for building materials, tools and equipment through a considered sourcing conversation.' },
   { number: '02', icon: 'i-vehicle', name: 'Motors & Automotive', category: 'Vehicles & mobility', status: 'Enquiry-led', image: 'vehicles-suv', href: 'vehicles.html', text: 'Vehicle trading and sourcing conversations shaped around your preferred model, destination and budget.' },
   { number: '03', icon: 'i-supplies', name: 'Food & Beverages', category: 'Business supply', status: 'Enquiry-led', image: 'foodstuffs', href: 'supplies.html', text: 'Discuss product lists, quantities, preferred packaging and delivery requirements.' },
-  { number: '04', icon: 'i-wellness', name: 'Fitness, Health & Wellness', category: 'Nonclinical concepts', status: 'Concept', image: 'track-sunrise', href: 'contact.html', text: 'An emerging area of the Spear Line vision, focused on fitness and everyday wellbeing opportunities.' },
-  { number: '05', icon: 'i-property', name: 'Real Estate Services', category: 'Property opportunities', status: 'Concept', image: 'property-visit', href: 'contact.html', text: 'An area of development for property-related services, subject to confirmation of the operating model.' },
+  { number: '04', icon: 'i-wellness', name: 'Fitness, Health & Wellness', category: 'Nonclinical concepts', status: 'Concept', image: 'track-sunrise', href: 'fitness.html', text: 'An emerging area of the Spear Line vision, focused on fitness and everyday wellbeing opportunities.' },
+  { number: '05', icon: 'i-property', name: 'Real Estate Services', category: 'Property opportunities', status: 'Concept', image: 'property-visit', href: 'real-estate.html', text: 'An area of development for property-related services, subject to confirmation of the operating model.' },
   { number: '06', icon: 'i-glass', name: 'Leisure, Entertainment & Hospitality', category: 'Places & experiences', status: 'Developing', image: 'rooftop-social', href: 'bar.html', text: 'Explore the ideas taking shape around hospitality, leisure and the upcoming Spear Line Bar.' }
 ];
 
@@ -249,7 +249,7 @@ export const faq = [
   ] },
   { group: 'About this website', items: [
     { q: 'Are the images real photographs?', a: 'Most service imagery is AI-generated and illustrates our service areas. Joh Ayom’s main portrait was supplied by the owner. Images do not confirm vehicle stock, facilities or completed projects.' },
-    { q: 'Do you list stock or prices here?', a: 'The vehicles page includes researched external exporter listings with vehicle-only import prices in USD, a research date and a source link for each example. Freight, insurance, taxes and local charges are additional. These examples are not confirmed Spear Line stock; availability and a destination-specific quote are confirmed for your enquiry.' },
+    { q: 'Do you list stock or prices here?', a: 'The vehicles page includes researched external exporter listings with vehicle-only import prices in USD, a research date and a source link for each example. Displayed Spear Line estimates include an 8% sourcing margin. Freight, insurance, taxes and local charges are additional. These examples are not confirmed Spear Line stock; availability and a destination-specific quote are confirmed for your enquiry.' },
     { q: 'What is Spear Line Bar?', a: 'The next chapter of Spear Line. It is coming soon, and the location, opening details and menu will be announced on its page. Nothing is open or bookable yet.' }
   ] }
 ];
@@ -264,9 +264,9 @@ export const bar = {
   note: 'Bar details and opening updates will be announced here.',
   // Replace each 'To be announced' with real details when they are decided.
   share: [
-    { icon: 'i-pin', title: 'Where', text: 'The location', status: 'To be announced' },
-    { icon: 'i-clock', title: 'When', text: 'Opening details', status: 'To be announced' },
-    { icon: 'i-glass', title: 'What’s pouring', text: 'The menu', status: 'To be announced' }
+    { icon: 'i-pin', title: 'A place to connect', text: 'A hospitality concept built around comfortable social space and thoughtful hosting.', status: 'Concept planning' },
+    { icon: 'i-clock', title: 'Occasions with purpose', text: 'Explore the event and gathering ideas below, from private celebrations to business meetups.', status: 'Developing' },
+    { icon: 'i-glass', title: 'An experience in detail', text: 'Food, refreshments, service and venue arrangements belong in one clearly agreed plan.', status: 'Scope to be confirmed' }
   ]
 };
 

@@ -1,4 +1,4 @@
-import { validateEnquiry } from "./validation.js?v=781d776483";
+import { validateEnquiry } from "./validation.js?v=f28b6fe74e";
 const config = window.SPEAR_CONFIG || {};
 const preview = window.SPEAR_PREVIEW === true;
 const canSubmit = config.enquiriesEnabled === true && !preview;
@@ -65,15 +65,16 @@ if (carCatalogue) {
   const controls = $("[data-car-controls]", carCatalogue), grid = $("[data-car-grid]", carCatalogue);
   const search = $("[data-car-search]", controls), make = $("[data-car-make]", controls);
   const budget = $("[data-car-budget]", controls), year = $("[data-car-year]", controls), sort = $("[data-car-sort]", controls);
+  const category = $("[data-car-category-filter]", controls);
   const count = $("[data-car-count]", controls), empty = $("[data-car-empty]", carCatalogue), more = $("[data-car-more]", carCatalogue);
   const normalise = text => text.normalize("NFKD").toLowerCase().replace(/[^a-z0-9]/g, "");
-  const cars = $$("[data-car]", grid).map(el => ({ el, make: el.dataset.carMakeValue, price: Number(el.dataset.carPrice), year: Number(el.dataset.carModelYear), mileage: Number(el.dataset.carMileage), search: normalise(el.dataset.carKeywords) }));
+  const cars = $$("[data-car]", grid).map(el => ({ el, category: el.dataset.carCategory, make: el.dataset.carMakeValue, price: Number(el.dataset.carPrice), year: Number(el.dataset.carModelYear), mileage: Number(el.dataset.carMileage), search: normalise(el.dataset.carKeywords) }));
   const pageSize = 24;
   let limit = pageSize, matches = [];
   function renderCars() {
     const terms = search.value.trim().split(/\s+/).map(normalise).filter(Boolean);
     const maximum = budget.value === "" ? Infinity : Math.max(0, Number(budget.value));
-    matches = cars.filter(car => (!make.value || car.make === make.value) && car.price <= maximum && car.year >= Number(year.value) && terms.every(term => car.search.includes(term)));
+    matches = cars.filter(car => (!category.value || car.category === category.value) && (!make.value || car.make === make.value) && car.price <= maximum && car.year >= Number(year.value) && terms.every(term => car.search.includes(term)));
     const compare = {
       "price-asc": (a, b) => a.price - b.price || b.year - a.year,
       "price-desc": (a, b) => b.price - a.price || b.year - a.year,
@@ -101,6 +102,51 @@ if (carCatalogue) {
   });
   renderCars();
   controls.hidden = false;
+}
+
+/* Reference-photo viewer. Original source pixels remain separate from generated brand scenes. */
+const lightbox = $('[data-car-lightbox]');
+if (lightbox) {
+ let photos=[], index=0, opener;
+ const photo=$('[data-gallery-image]',lightbox), count=$('[data-gallery-count]',lightbox), title=$('#car-dialog-title',lightbox), thumbs=$('[data-gallery-thumbs]',lightbox);
+ function showPhoto(n) {
+  index=(n+photos.length)%photos.length;
+  photo.src=photos[index]; photo.alt=title.textContent+', reference photograph '+(index+1);
+  count.textContent='Photograph '+(index+1)+' of '+photos.length;
+  $$('[data-thumb]',thumbs).forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));
+ }
+ document.addEventListener('click',event=>{
+  const button=event.target.closest('[data-car-open]'); if(!button)return;
+  photos=JSON.parse(button.dataset.gallery); if(!photos.length)return;
+  opener=button;title.textContent=button.dataset.galleryTitle;thumbs.replaceChildren();
+  photos.forEach((src,i)=>{const b=document.createElement('button');b.type='button';b.dataset.thumb='';b.setAttribute('aria-label','View photograph '+(i+1));const im=document.createElement('img');im.src=src;im.alt='';im.loading='lazy';b.append(im);b.addEventListener('click',()=>showPhoto(i));thumbs.append(b);});
+  showPhoto(0);lightbox.showModal();
+ });
+ $('[data-gallery-close]',lightbox).addEventListener('click',()=>lightbox.close());
+ $('[data-gallery-prev]',lightbox).addEventListener('click',()=>showPhoto(index-1));
+ $('[data-gallery-next]',lightbox).addEventListener('click',()=>showPhoto(index+1));
+ lightbox.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'){event.preventDefault();showPhoto(index-1);}if(event.key==='ArrowRight'){event.preventDefault();showPhoto(index+1);}});
+ lightbox.addEventListener('close',()=>opener?.focus());
+ let startX=0;
+ photo.draggable=false;photo.addEventListener('pointerdown',event=>{startX=event.clientX;photo.setPointerCapture?.(event.pointerId);});
+ photo.addEventListener('pointerup',event=>{if(Math.abs(event.clientX-startX)>50)showPhoto(index+(event.clientX<startX?1:-1));});
+}
+/* Cross-page project brief: choices only, with an explicit local download. */
+const briefButtons=$$('[data-brief-add]');
+if(briefButtons.length){
+ let chosen=[];try{const saved=JSON.parse(localStorage.getItem('spear-brief')||'[]');if(Array.isArray(saved))chosen=saved.filter(x=>typeof x==='string');}catch{}
+ function updateBrief(){
+  briefButtons.forEach(b=>{const active=chosen.includes(b.dataset.briefAdd);b.setAttribute('aria-pressed',String(active));b.textContent=active?'Added to brief':'Add to my brief';});
+  $$('[data-brief-list]').forEach(list=>{list.replaceChildren();chosen.forEach(value=>{const li=document.createElement('li');li.textContent=value;list.append(li);});});
+  try{localStorage.setItem('spear-brief',JSON.stringify(chosen));}catch{}
+ }
+ $$('[data-brief-builder]').forEach(el=>{el.hidden=false;});briefButtons.forEach(el=>{el.hidden=false;});
+ briefButtons.forEach(b=>b.addEventListener('click',()=>{const value=b.dataset.briefAdd;chosen=chosen.includes(value)?chosen.filter(x=>x!==value):[...chosen,value];updateBrief();}));
+ $$('[data-brief-download]').forEach(b=>b.addEventListener('click',()=>{
+  const status=$('[data-brief-status]');if(!chosen.length){status.textContent='Select at least one option to build your brief.';return;}
+  const text='Spear Line project brief\n\n'+chosen.map(x=>'- '+x).join('\n')+'\n\nDestination / area: \nQuantities / specifications: \nBudget and currency: \nPreferred timing: \nQuestions to confirm: \n\nThis file is a planning checklist. Nothing has been submitted or booked.';
+  const url=URL.createObjectURL(new Blob([text],{type:'text/plain'}));const a=document.createElement('a');a.href=url;a.download='spear-line-project-brief.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);status.textContent='Your brief is downloaded. Add your details and discuss it with Spear Line.';
+ }));updateBrief();
 }
 
 /* Gallery rail: buttons, keyboard, drag to scroll and a position readout. */
@@ -213,7 +259,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || new URLSe
 
 /* Motion layer: loaded separately so a failure never affects navigation or the enquiry form. */
 // It measures the layout, so it starts once the full stylesheet applies (window.spearCss, from the inline boot script).
-Promise.all([import("./motion.js?v=781d776483"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
+Promise.all([import("./motion.js?v=f28b6fe74e"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
   root.classList.remove("motion-ok");
   $$("[data-motion-toggle]").forEach(button => { button.hidden = true; });
 });
@@ -262,6 +308,7 @@ if (canSubmit && Number.isInteger(config.retentionDays)) $$("[data-retention]").
 /* Enquiry form */
 const form = $("#enquiry-form");
 if (form) {
+  try { const choices=JSON.parse(localStorage.getItem('spear-brief')||'[]');if(Array.isArray(choices)&&choices.length&&form.elements.notes&&!form.elements.notes.value)form.elements.notes.value='Project brief: '+choices.filter(x=>typeof x==='string').join('; '); } catch {}
   const mode = $("#form-mode"), message = $("#form-message"), submit = $("#submit-enquiry"), label = $("[data-submit-label]");
   const params = new URLSearchParams(preview ? (window.SPEAR_PREVIEW_QUERY || "") : location.search);
   const query = params.get("service");

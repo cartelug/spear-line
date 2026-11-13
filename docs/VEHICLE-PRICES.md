@@ -16,3 +16,5 @@ To refresh the guide:
 4. Run `npm run build`, `npm run check`, `npm test` and the browser checks before publishing.
 
 Search, make, maximum vehicle price, minimum year, sorting and progressive display run locally. The initial HTML includes every example so the guide remains readable without JavaScript. Prices are a dated snapshot and are not refreshed automatically while the site is closed.
+
+The retail presentation adds an owner-delegated 8% sourcing margin to the researched vehicle price and rounds to whole USD. The original `priceUsd` and `sourcePriceText` remain unchanged for auditability. These are indicative Spear Line vehicle estimates, before freight, insurance, tax, clearing and delivery. They are not a claim about competitors' actual margins or a confirmed sale price.
