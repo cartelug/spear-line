@@ -413,7 +413,7 @@ test("every vehicle uses a generated cover and retains its original reference ga
  const covers=JSON.parse(await readFile(resolve(pub,'../content/car-covers.json'),'utf8'));
  assert.equal(Object.keys(covers).length,vehiclePriceGuide.vehicles.length);
  const html=await read('vehicles.html');
- assert.equal((html.match(/class="car-cover-label">AI-styled cover/g)||[]).length,vehiclePriceGuide.vehicles.length);
+ assert.doesNotMatch(html, /class="car-cover-label"/, "vehicle covers have no caption badge");
  for(const car of vehiclePriceGuide.vehicles){
   const cover=covers[car.id], gallery=vehicleGalleries[car.id];
   assert.equal(cover.src,'assets/car-covers/'+car.id+'.webp');

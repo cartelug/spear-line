@@ -242,7 +242,7 @@ function carCatalogue() {
     const photos = gallery?.images || [];
     const cover = carCovers[car.id];
     if (!cover) throw new Error('Missing generated vehicle cover: ' + car.id);
-    const media = `<button type="button" class="car-media" data-car-open data-gallery="${esc(JSON.stringify(photos.map(photo => photo.src)))}" data-gallery-title="${esc(title)}" aria-label="View ${photos.length} original reference photographs of ${esc(title)}"><img class="car-thumb" src="${esc(cover.src)}" alt="${esc(cover.alt)}" width="${cover.width}" height="${cover.height}" loading="lazy"><span class="car-cover-label">AI-styled cover</span><span class="car-photo-count">View ${photos.length} original photos</span></button>`;
+    const media = `<button type="button" class="car-media" data-car-open data-gallery="${esc(JSON.stringify(photos.map(photo => photo.src)))}" data-gallery-title="${esc(title)}" aria-label="View ${photos.length} original reference photographs of ${esc(title)}"><img class="car-thumb" src="${esc(cover.src)}" alt="${esc(cover.alt)}" width="${cover.width}" height="${cover.height}" loading="lazy"><span class="car-photo-count">View ${photos.length} original photos</span></button>`;
     const enquiry = 'enquire.html?service=vehicle&type=' + encodeURIComponent(title + ' (BE FORWARD ' + car.sourceRef + ')');
     const specs = [
       ['Mileage', number(car.mileageKm) + ' km'],
