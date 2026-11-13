@@ -16,7 +16,7 @@
 .hero-panel{position:relative;margin:0;aspect-ratio:1/1;max-height:620px;border-radius:var(--r-xl) var(--r-xl) var(--r-xl) 96px;overflow:hidden;background:var(--ocean);box-shadow:var(--shadow-2);isolation:isolate}
 .page-hero .hero-panel{max-height:520px}
 .hero--founder .hero-panel{aspect-ratio:1/1}
-.hero--founder .hero-photo img{object-position:50% 30%}
+.hero--founder .hero-photo img{object-position:50% 10%}
 /* Keep the supplied portrait's head in frame in the wider home-page panel. */
 .v-founder .panel-photo img{object-position:50% 10%}
 .hero-photo{position:absolute;inset:0}
