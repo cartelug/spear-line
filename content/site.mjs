@@ -301,11 +301,11 @@ export const partners = [];
 // { name: 'Name', role: 'Role', image: 'dispatch-team' }
 export const team = [];
 
-// AI-generated photographs of the founder, made from his own reference photos for the company profile and website.
-// They must be labelled as AI-generated wherever they appear. Files: public/assets/joh/<file>-<width>.webp
+// Owner-supplied founder portrait plus AI-generated scenes made from his own reference photos.
+// Files: public/assets/joh/<file>-<width>.webp. The site-wide image note discloses illustrative imagery.
 export const johNote = 'AI-generated images of Joh Ayom, created from his own photographs. They illustrate the work and are not records of specific places, stock or projects.';
 export const johPhotos = {
-  portrait: { file: 'portrait', w: 1254, h: 1254, alt: 'Joh Ayom in a navy suit, smiling slightly, against a warm wall' },
+  portrait: { file: 'portrait-terrace', w: 1122, h: 1402, alt: 'Joh Ayom in a dark suit and white shirt on a terrace in warm evening light' },
   officeExit: { file: 'office-exit', w: 1024, h: 1536, alt: 'Joh Ayom walking out of an office building, looking at his phone' },
   phoneCall: { file: 'phone-call', w: 1024, h: 1536, alt: 'Joh Ayom in a navy suit on a phone call in a car park' },
   vehicle: { file: 'beside-4x4', w: 1536, h: 1024, alt: 'Joh Ayom laughing as he leans on a white four-by-four' },

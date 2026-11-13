@@ -16,9 +16,11 @@ Every page includes absolute Open Graph and Twitter image URLs in its initial HT
 
 `field-operations.webp` and `field-materials.webp` (1536 × 1024, plus 480 and 768 px versions) remain the supplied field illustrations used on the founder, home and divisions pages and in the company profile. They do not claim to depict Joh Ayom.
 
-## Founder photographs (AI-generated)
+## Founder photographs
 
-`assets/joh/*.webp`: ten AI-generated photographs of Joh Ayom, made on 9 November 2026 from his own reference photos (prompt and reference pack kept outside the repository), each at 480 and 800 px and full size (1024–1280 px). They are used on the founder page (hero portrait and the "On the ground" gallery), the home page founder section and the company profile, always captioned "Joh Ayom, AI-generated image" with a note that they illustrate the work and are not records of specific places, stock or projects. Joh should approve the set before public launch.
+`assets/joh/portrait-terrace-*.webp`: the portrait selected and supplied by the owner on 13 November 2026 as `WhatsApp Image 2026-11-09 at 16.00.35.jpeg` (1122 × 1402). It shows Joh Ayom in a dark suit on a terrace and is used on the home page and in the founder-page hero. Responsive WebP copies at 480, 800 and 1122 px preserve the supplied image's composition and aspect ratio. Its generation provenance was not supplied.
+
+The other ten `assets/joh/*.webp` photographs were AI-generated on 9 November 2026 from Joh's own reference photos (prompt and reference pack kept outside the repository), each at 480 and 800 px and full size (1024–1280 px). The generated scenes remain in the founder page's "On the ground" gallery and company profile. The website footer discloses illustrative imagery, and the company profile captions these images as AI-generated. They illustrate the work and are not records of specific places, stock or projects. Joh should approve the generated set before public launch.
 
 ## Photography
 
