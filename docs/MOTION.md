@@ -13,6 +13,23 @@ One language: **a route that traces.** Everything that moves is a version of fou
 
 Page transitions use cross-document view transitions where supported (`@view-transition`): 200 ms out, 360 ms in, a 28 px shift that reverses on back (`pagereveal` sets the `back` or `forward` type in boot.js). A service card's photograph grows into that service page's hero. Other browsers navigate normally.
 
+## Coordinated scenes (V17)
+
+`public/scenes.js` adds a small set of scroll scenes on top of the patterns above, using GSAP 3 and ScrollTrigger (vendored at `public/vendor/gsap/<version>/`, loaded same-origin, once, after the page is usable and only on pages that have a scene hook). They are decoration over a complete static layout: with the runtime blocked, late, unsupported, a constrained network (`saveData`, 2g) or reduced motion, nothing is hidden and nothing is requested.
+
+| Scene | Hook | What it owns | Notes |
+| --- | --- | --- | --- |
+| Hero | `.hero--home` | `.hero-photo img` translate (up to 28 px wide / 8 px phone), `.hero-seam` scaleY, `.gs-owned` | Progress p runs 0–1 from page top until the hero's bottom reaches the top. Photo 0–0.6, seam segment 0.45–0.85. The hero copy never fades or moves. |
+| Services | `[data-scene=services]` | `.is-staged`, `.svc-stage-item.is-active`, `.svc-card.is-current`, `--stage-i` | Only at ≥1100 px wide, ≥720 px tall, stage ≥320 px high and chapters ≥320 px wide. The chapter nearest 45% of the usable viewport picks the photograph (36 px hysteresis); focus on a chapter syncs it; the image swaps only once decoded and only if still current. Crossfade is a 220 ms CSS transition. Otherwise chapters stay stacked with their own photographs. |
+| Process | `[data-scene=process]` | `--rp`, `.is-current`, `.gs-owned` | Fill runs from the first to the last node against the 62% reading band. All four steps stay visible. |
+| Digital | `[data-scene=digital]` | `--dl`, `.ico` transform, `.dg-arm` | One 0.6 s line + two-group icon sequence on entry, only when the list starts below the first screen. |
+
+Property ownership: where a scene owns a property, the native CSS timeline / JS fallback for that element stands down (`.gs-owned`). Scenes are created inside `gsap.matchMedia()` (wide-and-tall vs everything else) and reverted as a unit; `createMotion()` returns `{ scenes, refreshLayout, destroy }`. Layout changes (`spear:layout` events from the catalogue and FAQ, fonts, bfcache restore) coalesce into one ScrollTrigger refresh.
+
+Without GSAP: division cards enter in adjacent pairs, the founder rule and closing rule complete on entry (CSS), catalogue filters give at most six cancellable 200 ms feedback animations on newly visible cards, and the photo viewer swaps images only when ready and only for the newest selection.
+
+Extra budget notes: the optional runtime plus `scenes.js` is about 51 KB gzip (core 28.4, ScrollTrigger 18.0, scenes.js 4.5), under the 60 KB budget.
+
 ## Safety model
 
 - **Nothing is hidden at start-up.** A reveal state exists only on an element carrying `.rv-arm`, which motion.js adds after confirming `IntersectionObserver` works, and only to elements below the first screen. `html.rv-on` turns the states on. If scripts or the observer are missing, nothing is ever armed and everything is visible. A safety net lifts anything still hidden on screen after four seconds.

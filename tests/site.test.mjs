@@ -431,3 +431,32 @@ test("every vehicle uses a generated cover and retains its original reference ga
  assert.doesNotMatch(styles,/\.car-media::before/,'no pasted logo overlay');
  assert.doesNotMatch(styles,/url\(assets\/branded\/showroom.webp\)/,'no fake scene behind original photos');
 });
+
+test("the optional animation runtime is vendored at one pinned path and every module carries the same release", async () => {
+  const { version } = JSON.parse(await readFile(resolve(pub, "..", "node_modules/gsap/package.json"), "utf8"));
+  const lock = JSON.parse(await readFile(resolve(pub, "..", "package-lock.json"), "utf8"));
+  assert.equal(lock.packages["node_modules/gsap"].version, version, "package-lock pins the version that is vendored");
+  const scenes = await read("scenes.js");
+  assert.match(scenes, new RegExp(`const GSAP_VERSION = "${version.replace(/\./g, "\\.")}";`), "scenes.js loads the vendored version");
+  assert.doesNotMatch(scenes, /cdn|unpkg|jsdelivr|latest/i, "no remote or unpinned runtime");
+  for (const file of ["gsap.min.js", "ScrollTrigger.min.js", "NOTICE.txt"]) assert.ok((await read(`vendor/gsap/${version}/${file}`)).length > 100, file + " is shipped");
+  assert.match(await read(`vendor/gsap/${version}/NOTICE.txt`), /standard-license/);
+  const worker = await read("sw.js"), release = /spear-core-|const VERSION = "(\w+)"/.exec(worker)?.[1];
+  assert.ok(release, "service worker has a release");
+  for (const name of ["app.js", "motion.js"]) for (const [, stamp] of (await read(name)).matchAll(/\?v=(\w+)"/g)) assert.equal(stamp, release, name + " imports carry the release version");
+  const ledger = JSON.parse(await readFile(resolve(pub, "..", "scripts/pages-files.json"), "utf8"));
+  for (const file of ["scenes.js", `vendor/gsap/${version}/gsap.min.js`, `vendor/gsap/${version}/ScrollTrigger.min.js`]) assert.ok(ledger.includes(file), file + " is in the Pages mirror inventory");
+  // Optional bytes are cached at runtime (versioned address), never blocking install.
+  assert.doesNotMatch(worker, /vendor\/gsap|scenes\.js/, "the optional runtime is not in the install precache");
+});
+
+test("scenes.js never hides content: every hook has a complete static layout", async () => {
+  const scenes = await read("scenes.js"), styles = (await css()).replace(/\/\*[\s\S]*?\*\//g, "");
+  // Scene code only toggles classes and custom properties; it never sets display/visibility/opacity:0 on content.
+  assert.doesNotMatch(scenes, /style\.(display|visibility)\s*=/);
+  assert.doesNotMatch(scenes, /\.hero-copy|\.hero-title|\.actions/, "headline and actions are never touched");
+  assert.match(styles, /\.svc-stage\{display:none\}/, "the stage exists only when scenes.js stages the layout");
+  assert.match(styles, /\.route-steps::after\{[^}]*transform:scaleY\(var\(--rp,1\)\)/, "the process route is complete by default");
+  assert.match(styles, /transform:scaleX\(var\(--dl,1\)\)/, "the Digital line is complete by default");
+  assert.doesNotMatch(styles, /hero-fade/, "hero copy is never faded");
+});

@@ -12,6 +12,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      # The build and checks verify the vendored animation runtime (GSAP) against node_modules.
+      - run: npm ci
       - run: npm run check
       - run: npm test
   browser:

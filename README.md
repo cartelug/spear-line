@@ -4,10 +4,10 @@ A responsive company site for Spear Line's trading, supply and logistics enquiri
 
 ## Run locally
 
-Node 22.21 or newer is required. The build and unit tests have no installation step.
+Node 22.21 or newer is required. Run `npm ci` first in a fresh checkout: the build copies the optional animation runtime (GSAP, pinned in `package-lock.json`) from `node_modules` into `public/vendor/gsap/<version>/` (`npm run vendor`).
 
 ```sh
-npm run build       # Generate 16 pages, stylesheet and service worker; mirror public/ to root
+npm run build       # Vendor GSAP, generate the pages, stylesheet and service worker; mirror public/ to root
 npm run dev         # Serve the site at http://localhost:3000
 npm run check       # Syntax and generated-file consistency
 npm test            # Content, accessibility structure, validation and server behavior

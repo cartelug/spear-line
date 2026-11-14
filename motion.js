@@ -14,6 +14,7 @@ export function createMotion({ root = document.documentElement, preference = mat
   const scrollTasks = [];
   let frame = 0;
   let scenes = null; // optional GSAP scenes (scenes.js); null until, and unless, they load
+  let startScenesLater = () => {}; // set once the page is ready; lets turning motion back on start scenes that were skipped
 
   /* Split headings into masked words. Text stays in the heading, so screen readers read it normally. */
   function split(el) {
@@ -84,6 +85,7 @@ export function createMotion({ root = document.documentElement, preference = mat
     });
     if (reduced()) { root.classList.remove("rv-on"); targets.forEach(el => el.classList.add("is-in")); }
     scenes?.setPreference();
+    if (!reduced()) startScenesLater();
     schedule();
   }
   $$("[data-motion-toggle]").forEach(button => button.addEventListener("click", () => {
@@ -187,16 +189,20 @@ export function createMotion({ root = document.documentElement, preference = mat
   /* Optional coordinated scenes. They load after the page is usable and only where a scene exists; the page
      is complete without them, so a blocked, late or failed load changes nothing the visitor can see. */
   const wantsScenes = $("[data-scene],.hero--home") && !navigator.connection?.saveData && !/(^|slow-)2g/.test(navigator.connection?.effectiveType || "");
-  let disposed = false;
-  if (wantsScenes) {
+  let disposed = false, starting = false;
+  function startScenes() {
+    if (!wantsScenes || scenes || starting || disposed || reduced()) return;
+    starting = true;
     const idle = callback => ("requestIdleCallback" in window ? requestIdleCallback(callback, { timeout: 2500 }) : setTimeout(callback, 300));
-    const start = () => import("./scenes.js?v=fee96aca5d").then(module => {
+    const start = () => import("./scenes.js?v=53c29305b0").then(module => {
       if (disposed) return;
       scenes = module.createScenes({ root, reduced });
       return scenes.start();
-    }).catch(() => { scenes = null; });
+    }).catch(() => { scenes = null; }).finally(() => { starting = false; });
     if (document.readyState === "complete") idle(start); else addEventListener("load", () => idle(start), { once: true });
   }
+  startScenes();
+  startScenesLater = startScenes;
   return {
     get disabled() { return reduced(); },
     get scenes() { return scenes; },
