@@ -81,7 +81,8 @@ test("typography is MTN Brighter Sans Bold for display and bold runs and Sky Tex
 
 test("content is never hidden unless a script owns the exit", async () => {
   const styles = (await css()).replace(/\/\*[\s\S]*?\*\//g, "");
-  const guard = /html\.(rv-on|is-preloading|pl-exit|menu-open|is-scrolling)|\.rv-arm|\.hero\+\.seam|^\.lf,\.hero-panel::before$|\.pl-|\.preloader|^\s*\[hidden\]|\.skip|\.honey|input|\.site-nav|\.nl::after|\.w::after|\.marquee ul\+ul|\.cursor|\[data-tilt\]::after|\.process-frame|\.bar-card::after|\.is-editing|\.form-message:empty|\.faq-list details\.is-filtered/;
+  // .svc-stage is an aria-hidden duplicate of the chapter photographs, shown only once scenes.js has staged the layout; every chapter keeps its own copy.
+  const guard = /html\.(rv-on|is-preloading|pl-exit|menu-open|is-scrolling)|\.rv-arm|\.hero\+\.seam|^\.lf,\.hero-panel::before$|\.pl-|\.preloader|^\s*\[hidden\]|\.skip|\.honey|input|\.site-nav|\.nl::after|\.w::after|\.marquee ul\+ul|\.cursor|\[data-tilt\]::after|\.process-frame|\.bar-card::after|\.is-editing|\.form-message:empty|\.faq-list details\.is-filtered|\.svc-stage|\.svc-layout\.is-staged\s/;
   for (const rule of styles.split(/(?<=\})/).map(r => r.trim()).filter(Boolean)) {
     const [selector, body = ""] = rule.split("{");
     if (!/opacity:0[;}]|visibility:hidden|display:none/.test(body)) continue;
@@ -96,7 +97,7 @@ test("content is never hidden unless a script owns the exit", async () => {
   assert.match(styles, /html\.rv-on \[data-reveal\]\.rv-arm:not\(\.is-in\)\{opacity:0/);
   assert.doesNotMatch(styles, /html\.motion-ok \[data-reveal\]/, "reveals are not hidden by the motion flag alone");
   assert.match(motion, /"IntersectionObserver" in window/); assert.match(motion, /classList\.add\("rv-arm"\)/); assert.match(motion, /getBoundingClientRect\(\)\.top > innerHeight/, "only elements below the first screen are armed");
-  assert.match(motion, /root\.classList\.add\("rv-on"\)/); assert.match(motion, /setTimeout\(sweep, 4000\)/, "a safety net lifts anything still hidden on screen");
+  assert.match(motion, /root\.classList\.add\("rv-on"\)/); assert.match(motion, /setTimeout\(sweep, 1200\)/, "a safety net lifts anything still hidden on screen"); assert.doesNotMatch(motion, /setTimeout\(sweep, [2-9]\d{3}\)/, "no multi-second wait before on-screen content is shown");
   assert.match(boot, /setTimeout\(finish, LIFT\)/, "the preloader has a fail-safe");
   assert.ok(boot.indexOf("setTimeout(finish, LIFT)") < boot.indexOf("function init()"), "the fail-safe is registered before anything that could throw");
   assert.match(styles, /pl-failsafe 1ms linear 2\.4s forwards/, "a CSS timer hides the preloader even if scripts stop");

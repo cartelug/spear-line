@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 // One list of publishable files, shared by the Node server and the GitHub Pages mirror.
 const rootExtensions = new Set([".html",".css",".js",".txt",".xml",".webmanifest",".svg",".ico",".png"]);
 const assetExtensions = new Set([".png",".webp",".avif",".woff2",".svg",".txt",".ico",".jpg"]);
+const vendorExtensions = new Set([".js",".txt"]);
 const safeName = /^[a-z0-9][a-z0-9._-]*$/i;
 const extension = name => name.slice(name.lastIndexOf(".")).toLowerCase();
 
@@ -22,5 +23,7 @@ export async function publicFiles(publicRoot) {
     if (entry.isFile() && safeName.test(entry.name) && !entry.name.startsWith("_") && rootExtensions.has(extension(entry.name))) found.push(entry.name);
   }
   await walk(publicRoot,"assets",assetExtensions,found);
+  // Optional vendored runtime (see scripts/vendor-motion.mjs); absent in a checkout that has not run it.
+  await walk(publicRoot,"vendor",vendorExtensions,found).catch(() => {});
   return found.sort();
 }

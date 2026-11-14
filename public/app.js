@@ -1,4 +1,4 @@
-import { validateEnquiry } from "./validation.js?v=08ea026657";
+import { validateEnquiry } from "./validation.js?v=fee96aca5d";
 const config = window.SPEAR_CONFIG || {};
 const preview = window.SPEAR_PREVIEW === true;
 const canSubmit = config.enquiriesEnabled === true && !preview;
@@ -70,8 +70,19 @@ if (carCatalogue) {
   const normalise = text => text.normalize("NFKD").toLowerCase().replace(/[^a-z0-9]/g, "");
   const cars = $$("[data-car]", grid).map(el => ({ el, category: el.dataset.carCategory, make: el.dataset.carMakeValue, price: Number(el.dataset.carPrice), year: Number(el.dataset.carModelYear), mileage: Number(el.dataset.carMileage), search: normalise(el.dataset.carKeywords) }));
   const pageSize = 24;
-  let limit = pageSize, matches = [];
-  function renderCars() {
+  let limit = pageSize, matches = [], feedback = [];
+  const calm = () => document.documentElement.classList.contains("motion-reduced") || matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Decoration only: cards that became visible and are already on screen (at most six) rise in briefly. Every call
+  // cancels the previous feedback first, so the newest state always wins and nothing is queued for older queries.
+  function announceChange(newlyVisible) {
+    feedback.forEach(animation => animation.cancel()); feedback = [];
+    if (calm() || !newlyVisible.length || typeof Element.prototype.animate !== "function") return;
+    newlyVisible.filter(el => { const box = el.getBoundingClientRect(); return box.bottom > 0 && box.top < innerHeight; }).slice(0, 6).forEach((el, i) => {
+      feedback.push(el.animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 200, delay: i * 14, easing: "cubic-bezier(.16,1,.3,1)", fill: "backwards" }));
+    });
+  }
+  function renderCars(animate = true) {
+    const before = new Set(cars.filter(car => !car.el.hidden));
     const terms = search.value.trim().split(/\s+/).map(normalise).filter(Boolean);
     const maximum = budget.value === "" ? Infinity : Math.max(0, Number(budget.value));
     matches = cars.filter(car => (!category.value || car.category === category.value) && (!make.value || car.make === make.value) && car.price <= maximum && car.year >= Number(year.value) && terms.every(term => car.search.includes(term)));
@@ -85,10 +96,12 @@ if (carCatalogue) {
     cars.forEach(car => { car.el.hidden = true; });
     grid.append(...matches.map(car => car.el));
     matches.slice(0, limit).forEach(car => { car.el.hidden = false; });
+    if (animate) announceChange(matches.slice(0, limit).filter(car => !before.has(car)).map(car => car.el));
     count.textContent = matches.length ? `Showing ${Math.min(limit, matches.length)} of ${matches.length} cars` : "No matching cars";
     empty.hidden = matches.length !== 0;
     more.hidden = limit >= matches.length;
     more.textContent = `Show ${Math.min(pageSize, Math.max(0, matches.length - limit))} more cars`;
+    document.dispatchEvent(new CustomEvent("spear:layout", { detail: { reason: "catalogue" } }));
   }
   function filterCars() { limit = pageSize; renderCars(); }
   controls.addEventListener("submit", event => event.preventDefault());
@@ -98,9 +111,11 @@ if (carCatalogue) {
   more.addEventListener("click", () => {
     const firstNew = limit;
     limit += pageSize; renderCars();
-    matches[firstNew]?.el.querySelector("h3")?.focus();
+    // The button stays the visitor's reference point. Only when it disappears after the last batch does focus
+    // move, to the first new result, so it is never lost.
+    if (more.hidden) matches[firstNew]?.el.querySelector("h3")?.focus();
   });
-  renderCars();
+  renderCars(false);
   controls.hidden = false;
 }
 
@@ -109,18 +124,35 @@ const lightbox = $('[data-car-lightbox]');
 if (lightbox) {
  let photos=[], index=0, opener;
  const photo=$('[data-gallery-image]',lightbox), count=$('[data-gallery-count]',lightbox), title=$('#car-dialog-title',lightbox), thumbs=$('[data-gallery-thumbs]',lightbox);
- function showPhoto(n) {
+ let request=0;
+ function showPhoto(n,immediate=false) {
   index=(n+photos.length)%photos.length;
-  photo.src=photos[index]; photo.alt=title.textContent+', reference photograph '+(index+1);
+  const mine=++request, src=photos[index], label=title.textContent+', reference photograph '+(index+1);
+  // Title, count and thumbnail state change at once; the picture swaps when it is ready, and only if this is still the newest selection.
   count.textContent='Photograph '+(index+1)+' of '+photos.length;
   $$('[data-thumb]',thumbs).forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));
+  // Opening a vehicle never shows the previous vehicle's photograph, so its first picture is set at once.
+  if(immediate){photo.src=src;photo.alt=label;photo.removeAttribute('data-failed');photo.onerror=()=>{if(mine===request){count.textContent='Photograph '+(index+1)+' of '+photos.length+' could not be loaded. Try another photograph.';photo.setAttribute('data-failed','');}};return;}
+  const probe=new Image();
+  probe.onload=()=>{
+   if(mine!==request)return;
+   photo.src=src;photo.alt=label;photo.removeAttribute('data-failed');
+   photo.getAnimations?.().forEach(a=>a.cancel());
+   if(!document.documentElement.classList.contains('motion-reduced')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)photo.animate?.([{opacity:0},{opacity:1}],{duration:150,easing:'ease-out'});
+  };
+  probe.onerror=()=>{
+   if(mine!==request)return;
+   count.textContent='Photograph '+(index+1)+' of '+photos.length+' could not be loaded. Try another photograph.';
+   photo.alt='';photo.setAttribute('data-failed','');
+  };
+  probe.src=src;
  }
  document.addEventListener('click',event=>{
   const button=event.target.closest('[data-car-open]'); if(!button)return;
   photos=JSON.parse(button.dataset.gallery); if(!photos.length)return;
   opener=button;title.textContent=button.dataset.galleryTitle;thumbs.replaceChildren();
   photos.forEach((src,i)=>{const b=document.createElement('button');b.type='button';b.dataset.thumb='';b.setAttribute('aria-label','View photograph '+(i+1));const im=document.createElement('img');im.src=src;im.alt='';im.loading='lazy';b.append(im);b.addEventListener('click',()=>showPhoto(i));thumbs.append(b);});
-  showPhoto(0);lightbox.showModal();
+  showPhoto(0,true);lightbox.showModal();
  });
  $('[data-gallery-close]',lightbox).addEventListener('click',()=>lightbox.close());
  $('[data-gallery-prev]',lightbox).addEventListener('click',()=>showPhoto(index-1));
@@ -131,6 +163,8 @@ if (lightbox) {
  photo.draggable=false;photo.addEventListener('pointerdown',event=>{startX=event.clientX;photo.setPointerCapture?.(event.pointerId);});
  photo.addEventListener('pointerup',event=>{if(Math.abs(event.clientX-startX)>50)showPhoto(index+(event.clientX<startX?1:-1));});
 }
+/* Disclosures change the page height; scenes refresh their geometry once. */
+document.addEventListener("toggle", event => { if (event.target.matches?.("details")) document.dispatchEvent(new CustomEvent("spear:layout", { detail: { reason: "faq" } })); }, true);
 /* Cross-page project brief: choices only, with an explicit local download. */
 const briefButtons=$$('[data-brief-add]');
 if(briefButtons.length){
@@ -259,7 +293,7 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || new URLSe
 
 /* Motion layer: loaded separately so a failure never affects navigation or the enquiry form. */
 // It measures the layout, so it starts once the full stylesheet applies (window.spearCss, from the inline boot script).
-Promise.all([import("./motion.js?v=08ea026657"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
+Promise.all([import("./motion.js?v=fee96aca5d"), window.spearCss]).then(([{ createMotion }]) => createMotion({ root, preference: motionPreference })).catch(() => {
   root.classList.remove("motion-ok");
   $$("[data-motion-toggle]").forEach(button => { button.hidden = true; });
 });

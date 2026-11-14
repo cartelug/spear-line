@@ -136,7 +136,6 @@ a,button{-webkit-tap-highlight-color:transparent}
 @supports (animation-timeline:view()){
   html.motion-ok .strip-shot img,html.motion-ok .div-media img,html.motion-ok .svc-media img{scale:1.1;animation:depth linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
   html.motion-ok .hero-photo img{animation:hero-depth linear both;animation-timeline:scroll(root);animation-range:0 90vh}
-  html.motion-ok .hero-copy{animation:hero-fade linear both;animation-timeline:scroll(root);animation-range:0 70vh}
   html.motion-ok .seam::before{animation:seam-draw linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
   html.motion-ok .seam::after{animation:pop linear both;animation-timeline:view();animation-range:entry 30% entry 90%}
   html.motion-ok .strip-shot{animation:card-in linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
@@ -168,7 +167,18 @@ html.motion-ok.sd-js .hero-photo img{translate:0 calc(var(--hy,0) * 1%);scale:ca
 @keyframes ripple{from{transform:scale(.2);opacity:1}to{transform:scale(2.4);opacity:0}}
 @keyframes depth{from{translate:0 -4%}to{translate:0 4%}}
 @keyframes hero-depth{to{translate:0 8%;scale:1.08}}
-@keyframes hero-fade{to{opacity:.35;transform:translate3d(0,-18px,0)}}
 @keyframes seam-draw{from{transform:scaleX(0)}}
 @keyframes card-in{from{scale:.94;opacity:.6}}
 @keyframes snap-focus{0%,100%{scale:.9;opacity:.6}50%{scale:1;opacity:1}}
+
+/* ---------- V17: one owner per property ----------
+   Hero: when scenes.js owns the photograph's drift (.gs-owned) the native scroll timeline and the JS fallback
+   stand down, and the image gets overscan so its travel never shows an edge. The hero copy never fades. */
+.hero--home.gs-owned .hero-photo img{animation:none!important;translate:none!important;scale:none!important;position:absolute;left:0;top:calc(var(--hero-d,0px) * -1);width:100%;height:calc(100% + var(--hero-d,0px))}
+/* Armed only after the runtime exists and only below the first screen. */
+html.rv-on .v-founder .sf-copy.rv-arm:not(.is-in) h2::after,html.rv-on .closing-inner.rv-arm:not(.is-in) .actions::before{transform:scaleX(0)}
+@media(hover:hover) and (pointer:fine){
+  .div-card:hover,.div-card:focus-visible{transform:translateY(-3px)}
+  .div-card:hover .div-media img{transform:scale(1.015)}
+}
+html.motion-reduced .svc-stage-item,html.motion-reduced .svc-stage-item img,html.motion-reduced .svc-stage-route i{transition:none}

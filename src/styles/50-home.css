@@ -168,3 +168,46 @@
 /* The at-a-glance card overlaps the hero above it, so this section must not clip: iOS Safari treats overflow-x:clip as
    clipping both axes and cut the top half of the card off at the section edge. The rail inside scrolls on its own. */
 .section.v-services,.section.enquiry-section{overflow:visible}
+
+/* ---------- Coordinated scenes (V17). Every rule below describes a complete static layout; scenes.js only ever
+   adds a class or a custom property. Properties scenes.js owns are listed at the top of that file. ---------- */
+
+/* Hero: a short route segment continues from the photograph's column into the at-a-glance strip. */
+.hero--home{position:relative}
+.hero-seam{position:absolute;z-index:1;left:calc((100% - min(100% - 2 * var(--gutter), var(--max))) / 2 + 35px);bottom:56px;width:2px;height:clamp(32px,4vw,48px);margin-left:-1px;border-radius:2px;background:linear-gradient(180deg,rgb(246 173 70 / 0),var(--gold-2));transform-origin:top;pointer-events:none}
+.hero-seam::after{content:"";position:absolute;left:50%;bottom:-4px;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgb(235 145 34 / .22)}
+@media(min-width:900px){.hero-seam{left:calc((100% - min(100% - 2 * var(--gutter), var(--max))) / 2 + 47px)}}
+
+/* Services: a photograph window beside three chapters, only where there is room (scenes.js adds .is-staged). */
+.svc-stage{display:none}
+.svc-layout.is-staged{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,4vw,64px);align-items:start}
+.svc-layout.is-staged .svc-stage{display:block;position:sticky;top:calc(var(--header-h) + 24px);height:min(560px,calc(100svh - var(--header-h) - 64px));border-radius:var(--r-xl);overflow:hidden;background:var(--ocean);box-shadow:var(--shadow-2);isolation:isolate}
+.svc-stage-item{position:absolute;inset:0;opacity:0;transition:opacity 220ms var(--ease-io)}
+.svc-stage-item.is-active{opacity:1}
+.svc-stage-item img{width:100%;height:100%;object-fit:cover;transform:scale(1.02);transition:transform 360ms var(--ease-out)}
+.svc-stage-item.is-active img{transform:none}
+.svc-stage-route{position:absolute;z-index:2;left:22px;top:22px;bottom:22px;width:2px;border-radius:2px;background:rgb(255 255 255 / .35)}
+.svc-stage-route i{display:block;width:100%;height:100%;border-radius:inherit;background:var(--gold-2);transform-origin:top;transform:scaleY(calc((var(--stage-i,0) + 1) / var(--stage-n,3)));transition:transform 220ms var(--ease-out)}
+.svc-layout.is-staged .svc-grid{grid-template-columns:minmax(0,1fr);gap:clamp(18px,2vw,28px)}
+.svc-layout.is-staged .svc-media{position:static;aspect-ratio:auto;height:auto;padding:24px 28px 0;background:none}
+.svc-layout.is-staged .svc-media picture{display:none}
+.svc-layout.is-staged .svc-icon{position:static;width:48px;height:48px;border:0;box-shadow:none}
+.svc-layout.is-staged .svc-body{padding:14px 28px 26px}
+.svc-layout.is-staged .svc-card{transition:border-color var(--dur-2) var(--ease-out),box-shadow var(--dur-3) var(--ease-out),transform var(--dur-3) var(--ease-out)}
+.svc-layout.is-staged .svc-card.is-current{border-color:var(--gold-deep);box-shadow:0 0 0 1px var(--gold-deep),var(--shadow-card)}
+
+/* Process: the route fill follows the reading band; the node last passed is emphasised by border and weight. */
+.route-steps::after{content:"";position:absolute;left:27px;top:28px;bottom:28px;width:2px;background:var(--gold-2);transform-origin:top;transform:scaleY(var(--rp,1));pointer-events:none}
+.route-steps.gs-owned::before{background:rgb(246 173 70 / .22)}
+.route-step.is-current .route-num{background:var(--gold);color:var(--abyss);box-shadow:0 0 0 5px rgb(246 173 70 / .22)}
+.route-step.is-current .route-text{color:#fff}
+
+/* Digital: the capability list gets one short line across its top. */
+.icon-list[data-scene]{position:relative}
+.icon-list[data-scene]::before{content:"";position:absolute;left:0;top:0;width:100%;height:1px;background:var(--gold-2);transform-origin:left;transform:scaleX(var(--dl,1));pointer-events:none}
+
+/* Founder: an editorial rule completes under the name; closing: a rule meets the action. Plain transitions. */
+.v-founder .sf-copy h2::after{content:"";display:block;width:56px;height:2px;margin-top:16px;border-radius:2px;background:var(--gold-deep);transform-origin:left;transition:transform var(--dur-4) var(--ease-out) .3s}
+.closing-inner .actions{position:relative}
+.closing-inner .actions::before{content:"";position:absolute;left:0;top:-14px;width:min(100%,220px);height:2px;border-radius:2px;background:var(--gold-2);transform-origin:left;transition:transform var(--dur-3) var(--ease-out) .25s}
+.closing-inner:focus-within .actions::before{transition-duration:.01ms;transition-delay:0s}

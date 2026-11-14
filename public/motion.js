@@ -13,6 +13,7 @@ export function createMotion({ root = document.documentElement, preference = mat
   const reduced = () => preference.matches || saved;
   const scrollTasks = [];
   let frame = 0;
+  let scenes = null; // optional GSAP scenes (scenes.js); null until, and unless, they load
 
   /* Split headings into masked words. Text stays in the heading, so screen readers read it normally. */
   function split(el) {
@@ -41,6 +42,9 @@ export function createMotion({ root = document.documentElement, preference = mat
     child.style.setProperty("--d", (Math.min(i, 5) * 0.06).toFixed(2) + "s");
   }));
 
+  /* Portfolio rhythm: cards enter in adjacent pairs, never one long domino chain. */
+  $$(".div-grid > .div-card").forEach((card, i) => card.style.setProperty("--d", ((i % 2) * 0.07).toFixed(2) + "s"));
+
   /* Reveal on scroll */
   const targets = $$("[data-reveal],[data-split],[data-route]");
   let observer = null;
@@ -48,13 +52,23 @@ export function createMotion({ root = document.documentElement, preference = mat
   function arm() {
     if (reduced() || !("IntersectionObserver" in window)) return;
     try {
-      observer = new IntersectionObserver(entries => { for (const entry of entries) if (entry.isIntersecting) lift(entry.target); }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+      // A very tall target can never show 12% of itself on a small screen, so a target also lifts once a
+      // slice of it (a tenth of the viewport) is on screen.
+      observer = new IntersectionObserver(entries => { for (const entry of entries) if (entry.isIntersecting && (entry.intersectionRatio >= 0.12 || entry.intersectionRect.height >= innerHeight * 0.1)) lift(entry.target); }, { rootMargin: "0px 0px -8% 0px", threshold: [0, 0.12] });
       const below = targets.filter(el => el.getBoundingClientRect().top > innerHeight * 0.92);
       below.forEach(el => { el.classList.add("rv-arm"); observer.observe(el); });
       root.classList.add("rv-on");
       // Safety net: anything still hidden once the page has settled and is on screen is shown.
       const sweep = () => below.forEach(el => { const box = el.getBoundingClientRect(); if (!el.classList.contains("is-in") && box.top < innerHeight && box.bottom > 0) lift(el); });
-      setTimeout(sweep, 4000); addEventListener("pageshow", sweep);
+      // Fast scrolls, anchors and focus never wait on an observer callback: settle what is on screen when
+      // scrolling pauses, shortly after load, and on return from the back/forward cache.
+      let rest = 0; addEventListener("scroll", () => { clearTimeout(rest); rest = setTimeout(sweep, 140); }, { passive: true });
+      setTimeout(sweep, 1200); addEventListener("pageshow", sweep);
+      // Keyboard focus or a deep link inside an unrevealed section shows it first.
+      const settleFrom = node => { for (let el = node; el && el !== document.body; el = el.parentElement) if (el.classList?.contains("rv-arm") && !el.classList.contains("is-in")) lift(el); };
+      document.addEventListener("focusin", event => settleFrom(event.target));
+      const hash = () => { if (location.hash.length > 1) { const el = document.getElementById(decodeURIComponent(location.hash.slice(1))); if (el) settleFrom(el); } };
+      addEventListener("hashchange", hash); hash();
     } catch { targets.forEach(el => el.classList.remove("rv-arm")); root.classList.remove("rv-on"); }
   }
 
@@ -69,6 +83,7 @@ export function createMotion({ root = document.documentElement, preference = mat
       button.textContent = preference.matches ? "Motion reduced by your device" : reduced() ? "Motion reduced" : "Reduce motion";
     });
     if (reduced()) { root.classList.remove("rv-on"); targets.forEach(el => el.classList.add("is-in")); }
+    scenes?.setPreference();
     schedule();
   }
   $$("[data-motion-toggle]").forEach(button => button.addEventListener("click", () => {
@@ -168,5 +183,24 @@ export function createMotion({ root = document.documentElement, preference = mat
   applyPreference();
   root.classList.add("motion-live");
   arm();
-  return { get disabled() { return reduced(); } };
+
+  /* Optional coordinated scenes. They load after the page is usable and only where a scene exists; the page
+     is complete without them, so a blocked, late or failed load changes nothing the visitor can see. */
+  const wantsScenes = $("[data-scene],.hero--home") && !navigator.connection?.saveData && !/(^|slow-)2g/.test(navigator.connection?.effectiveType || "");
+  let disposed = false;
+  if (wantsScenes) {
+    const idle = callback => ("requestIdleCallback" in window ? requestIdleCallback(callback, { timeout: 2500 }) : setTimeout(callback, 300));
+    const start = () => import("./scenes.js?v=fee96aca5d").then(module => {
+      if (disposed) return;
+      scenes = module.createScenes({ root, reduced });
+      return scenes.start();
+    }).catch(() => { scenes = null; });
+    if (document.readyState === "complete") idle(start); else addEventListener("load", () => idle(start), { once: true });
+  }
+  return {
+    get disabled() { return reduced(); },
+    get scenes() { return scenes; },
+    refreshLayout(reason = "layout") { scenes?.refresh(reason); },
+    destroy() { disposed = true; scenes?.destroy(); scenes = null; }
+  };
 }

@@ -57,7 +57,7 @@
   --measure:62ch;
   /* Space and shape: fluid, so layouts adapt without per-device overrides */
   --gutter:clamp(20px,5vw,72px);--max:1360px;
-  --section:clamp(64px,8vw,128px);--blend:clamp(36px,4.2vw,72px);
+  --section:clamp(64px,8vw,128px);--blend:clamp(28px,3.2vw,48px);
   --gap:clamp(16px,2vw,28px);--gap-lg:clamp(32px,5vw,88px);
   --r-xl:28px;--r-lg:20px;--r-md:14px;--r-sm:10px;
   /* Motion: one language. Durations, easings, distances and stagger are used by every animation. */

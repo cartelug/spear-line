@@ -56,10 +56,11 @@ test("reference galleries support navigation and division guides create a usable
  const first=await page.locator('[data-gallery-image]').getAttribute('src');
  assert.notEqual(first,cover);
  assert.match(first,/assets\/cars\/cf275562\//);
+ // The picture swaps once the selected photograph has loaded, so the check waits for it.
  await page.click('[data-gallery-next]');
- assert.notEqual(await page.locator('[data-gallery-image]').getAttribute('src'),first);
+ await page.waitForFunction(was=>document.querySelector('[data-gallery-image]').getAttribute('src')!==was,first);
  await page.keyboard.press('ArrowLeft');
- assert.equal(await page.locator('[data-gallery-image]').getAttribute('src'),first);
+ await page.waitForFunction(was=>document.querySelector('[data-gallery-image]').getAttribute('src')===was,first);
  await page.keyboard.press('Escape');
  assert.equal(await page.locator('[data-car-lightbox]').isVisible(),false);
  await page.selectOption('[data-car-category-filter]','SUV');
