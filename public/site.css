@@ -325,6 +325,11 @@ body .site-footer{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
 .footer-wordmark .wordmark{display:block;width:100%;height:auto;margin-top:-7.8%;object-fit:contain;filter:brightness(0) invert(1)}
 .footer-bottom{display:flex;flex-wrap:wrap;align-items:center;gap:8px 28px;padding-top:22px;border-top:1px solid var(--line-dark);font-size:var(--t-xs);color:var(--chalk-2)}
 .footer-bottom a:hover,.motion-toggle:hover{color:var(--gold-3)}
+.footer-designer{padding-top:14px;font-size:var(--t-xs);color:var(--chalk-2)}
+.designer-credit,.footer-designer a{display:inline-flex;align-items:center;gap:10px;color:var(--chalk-2)}
+.footer-designer a:hover{color:var(--gold-3)}
+.designer-logo{display:block;width:auto;height:30px;flex:none}
+.designer-name{color:var(--chalk);font-weight:600;letter-spacing:.02em}
 .footer-credits{display:flex;flex-wrap:wrap;gap:4px 24px;padding-top:12px;font-size:var(--t-xs);color:var(--chalk-2)}
 .footer-credits a{text-decoration:underline;text-underline-offset:3px;color:var(--chalk)}
 .footer-credits a:hover{color:var(--gold-3)}

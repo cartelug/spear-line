@@ -18,7 +18,9 @@ export const brand = {
   tagline: 'One line. More possibilities.',
   summary: 'Trading, vehicles, supply, logistics and an expanding portfolio of business opportunities.',
   description: 'Spear Line connects trading, automotive, supply and logistics needs with a broader vision for enterprise and opportunity.',
-  imageNote: 'AI-generated imagery illustrates our service areas. Vehicle galleries contain credited exporter reference photographs.'
+  imageNote: 'AI-generated imagery illustrates our service areas. Vehicle galleries contain credited exporter reference photographs.',
+  // Website design credit shown in the footer. Add `url` (an https address) to make it a link.
+  designCredit: { label: 'Designed by', name: '97 Design', logo: 'logo-97-design-white', url: '' }
 };
 
 // Alt text lives with the image so every use stays consistent.
