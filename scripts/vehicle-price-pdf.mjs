@@ -16,16 +16,17 @@ await mkdir(out, { recursive: true });
 const A = p => '../../public/assets/' + p; // relative to docs/price-list/
 
 // ---- Pricing rules shown to the owner (change here, rebuild) --------------------------------
-const MARKUP = 0.08;                 // current website margin on the exporter FOB price
-const MIN_MARGIN = 350;              // Option B: the greater of 8% or this many USD
+const CURRENT = 0.08;                // what the website adds today to the exporter FOB price
+const RATE = 0.10;                   // PROPOSED markup rate
+const MIN_MARGIN = 400;              // PROPOSED minimum markup per car, USD
 const FREIGHT_PLACEHOLDER = 1300;    // USD, sea freight Japan to Mombasa: PLACEHOLDER, to confirm
 const INSURANCE_RATE = 0.015;        // placeholder, to confirm
 const UG = { duty: 0.25, vat: 0.18, wht: 0.06, infra: 0.015 }; // from a URA 2023/24 document: to confirm
 
 const n = v => new Intl.NumberFormat('en-US').format(Math.round(v));
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const priceA = fob => Math.round(fob * (1 + MARKUP));
-const priceB = fob => Math.round(fob + Math.max(fob * MARKUP, MIN_MARGIN));
+const priceNow = fob => Math.round(fob * (1 + CURRENT));
+const priceNew = fob => Math.round(fob + Math.max(fob * RATE, MIN_MARGIN));
 const trans = v => ({ AT: 'Auto', MT: 'Manual', CVT: 'CVT' }[v] || v);
 const fuel = v => ({ 'Hybrid(Petrol)': 'Petrol hybrid', 'Hybrid(Diesel)': 'Diesel hybrid' }[v] || v);
 
@@ -37,7 +38,7 @@ const prepared = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long
 
 // ---- Worked Uganda examples (draft arithmetic on the stated placeholder assumptions) --------
 function example(car) {
-  const fob = car.priceUsd, margin = priceA(fob) - fob, freight = FREIGHT_PLACEHOLDER;
+  const fob = car.priceUsd, margin = priceNew(fob) - fob, freight = FREIGHT_PLACEHOLDER;
   const insurance = Math.round((fob + freight) * INSURANCE_RATE), cif = fob + freight + insurance;
   const duty = cif * UG.duty, vat = (cif + duty) * UG.vat, wht = cif * UG.wht, infra = cif * UG.infra;
   const taxes = duty + vat + wht + infra;
@@ -49,13 +50,13 @@ const examples = [pick('Toyota', 'Vitz', 'low'), pick('Toyota', 'RAV4', 'low'), 
 // ---- Pages -----------------------------------------------------------------------------------
 const rows = cars.map((c, i) => {
   const first = i === 0 || cars[i - 1].make !== c.make;
-  return `<tr${first ? ' class="new-make"' : ''}><td class="num">${i + 1}</td><td class="ref">${esc(c.sourceRef)}</td><td>${c.year}</td><td class="name"><b>${esc(c.make)}</b> ${esc(c.model)}</td><td>${esc(vehicleCategories[c.id] || '')}</td><td class="r">${n(c.mileageKm)}</td><td class="r">${n(c.engineCc)}</td><td>${esc(trans(c.transmission))}</td><td>${esc(fuel(c.fuel))}</td><td>${esc(c.country)}</td><td class="r">${n(c.priceUsd)}</td><td class="r">${n(priceA(c.priceUsd) - c.priceUsd)}</td><td class="r strong">${n(priceA(c.priceUsd))}</td><td class="r opt">${n(priceB(c.priceUsd))}</td></tr>`;
+  return `<tr${first ? ' class="new-make"' : ''}><td class="num">${i + 1}</td><td class="ref">${esc(c.sourceRef)}</td><td>${c.year}</td><td class="name"><b>${esc(c.make)}</b> ${esc(c.model)}</td><td>${esc(vehicleCategories[c.id] || '')}</td><td class="r">${n(c.mileageKm)}</td><td class="r">${n(c.engineCc)}</td><td>${esc(trans(c.transmission))}</td><td>${esc(fuel(c.fuel))}</td><td>${esc(c.country)}</td><td class="r">${n(c.priceUsd)}</td><td class="r opt">${n(priceNow(c.priceUsd))}</td><td class="r">${n(priceNew(c.priceUsd) - c.priceUsd)}</td><td class="r strong">${n(priceNew(c.priceUsd))}</td></tr>`;
 }).join('');
 
 const exampleTable = `<table class="calc"><thead><tr><th>USD</th>${examples.map(e => `<th class="r">${e.car.year} ${esc(e.car.make)} ${esc(e.car.model)}<small>ref ${esc(e.car.sourceRef)}</small></th>`).join('')}<th>Basis</th></tr></thead><tbody>
 <tr><td>Exporter vehicle price (FOB)</td>${examples.map(e => `<td class="r">${n(e.fob)}</td>`).join('')}<td>Researched ${esc(checked)}</td></tr>
-<tr><td>Spear Line markup, 8%</td>${examples.map(e => `<td class="r">${n(e.margin)}</td>`).join('')}<td>Current website margin; outside the tax base here</td></tr>
-<tr class="sub"><td>Spear Line vehicle price</td>${examples.map(e => `<td class="r">${n(e.fob + e.margin)}</td>`).join('')}<td>What the website shows today</td></tr>
+<tr><td>Spear Line markup, proposed</td>${examples.map(e => `<td class="r">${n(e.margin)}</td>`).join('')}<td>Greater of 10% or USD ${MIN_MARGIN}; outside the tax base here</td></tr>
+<tr class="sub"><td>Spear Line vehicle price</td>${examples.map(e => `<td class="r">${n(e.fob + e.margin)}</td>`).join('')}<td>Proposed price; the website still shows 8% until confirmed</td></tr>
 <tr class="ph"><td>Sea freight Japan to Mombasa</td>${examples.map(e => `<td class="r">${n(e.freight)}</td>`).join('')}<td>PLACEHOLDER: shipping agent to confirm</td></tr>
 <tr class="ph"><td>Marine insurance, 1.5%</td>${examples.map(e => `<td class="r">${n(e.insurance)}</td>`).join('')}<td>PLACEHOLDER: to confirm</td></tr>
 <tr class="sub"><td>CIF value (tax base)</td>${examples.map(e => `<td class="r">${n(e.cif)}</td>`).join('')}<td>FOB + freight + insurance. URA actually values used cars from its own database, so the real base can be higher or lower</td></tr>
@@ -70,8 +71,9 @@ const exampleTable = `<table class="calc"><thead><tr><th>USD</th>${examples.map(
 <tr class="total"><td>Estimated total so far</td>${examples.map(e => `<td class="r">${n(e.total)}</td>`).join('')}<td>Before the open lines above. DRAFT arithmetic, not a quote</td></tr></tbody></table>`;
 
 const markupExamples = [pick('Toyota', 'Vitz', 'low'), pick('Toyota', 'RAV4', 'low'), pick('Toyota', 'Land Cruiser Prado', 'low')];
-const markupTable = `<table class="calc"><thead><tr><th>Example (USD)</th><th class="r">Exporter FOB</th><th class="r">A. 8% (now): markup</th><th class="r">A. price</th><th class="r">B. greater of 8% or USD ${MIN_MARGIN}: markup</th><th class="r">B. price</th></tr></thead><tbody>${markupExamples.map(c => `<tr><td>${c.year} ${esc(c.make)} ${esc(c.model)}</td><td class="r">${n(c.priceUsd)}</td><td class="r">${n(priceA(c.priceUsd) - c.priceUsd)}</td><td class="r">${n(priceA(c.priceUsd))}</td><td class="r">${n(priceB(c.priceUsd) - c.priceUsd)}</td><td class="r">${n(priceB(c.priceUsd))}</td></tr>`).join('')}</tbody></table>`;
-const cheapCount = cars.filter(c => c.priceUsd * MARKUP < MIN_MARGIN).length;
+const markupTable = `<table class="calc"><thead><tr><th>Example (USD)</th><th class="r">Exporter FOB</th><th class="r">Now: 8% markup</th><th class="r">Now: price</th><th class="r">Proposed: markup</th><th class="r">Proposed: price</th><th class="r">Change</th></tr></thead><tbody>${markupExamples.map(c => `<tr><td>${c.year} ${esc(c.make)} ${esc(c.model)}</td><td class="r">${n(c.priceUsd)}</td><td class="r">${n(priceNow(c.priceUsd) - c.priceUsd)}</td><td class="r">${n(priceNow(c.priceUsd))}</td><td class="r">${n(priceNew(c.priceUsd) - c.priceUsd)}</td><td class="r">${n(priceNew(c.priceUsd))}</td><td class="r">+${n(priceNew(c.priceUsd) - priceNow(c.priceUsd))}</td></tr>`).join('')}</tbody></table>`;
+const cheapCount = cars.filter(c => c.priceUsd * RATE < MIN_MARGIN).length;
+const avgNow = cars.reduce((t, c) => t + priceNow(c.priceUsd) - c.priceUsd, 0) / cars.length, avgNew = cars.reduce((t, c) => t + priceNew(c.priceUsd) - c.priceUsd, 0) / cars.length;
 
 const taxCountries = [
   ['Uganda', 'Import duty 25%, VAT 18%, withholding tax 6%, infrastructure levy 1.5%; environmental levy 50% on older vehicles', 'URA 2023/24 valuation document. One dealer guide says 15% duty. 2026/27 changes (13-year age limit, levy) were proposals in the sources found. URA values from its own vehicle database, not the invoice'],
@@ -80,6 +82,17 @@ const taxCountries = [
   ['DR Congo', 'Duty about 8% to 46%; VAT 8% to 13%; age tiers disputed; left-hand drive only per exporter guides', 'Exporter sources only. All 233 cars in this list are right-hand drive, so none can be offered here as listed']
 ];
 
+const competitors = [
+  ['BE FORWARD', 'Exporter, Japan', 'The source of every price in this list. Sells direct to buyers worldwide. The FOB price is the vehicle only; freight, tax and clearing are separate.', 'FOB prices public. Total price depends on destination.'],
+  ['SBI Motor Japan', 'Exporter, Japan', 'Has Uganda and South Sudan pages. Can deliver from Mombasa or the Sudan port; delivery cities include Kampala and Nimule.', 'FOB public; total shows "ASK" until a port is chosen.'],
+  ['SAT Japan', 'Exporter, Japan', 'Uganda service; lists Juba as a delivery point from Mombasa.', 'No all-in price found.'],
+  ['EVERY Co Ltd', 'Exporter with Uganda office', 'Inspects and prepares vehicles for inland delivery from Mombasa or Dar es Salaam to Kampala; says it has served South Sudan since 2007.', 'No all-in price found.'],
+  ['MHH Japanese Cars', 'Importer', 'Japan to Uganda, either CIF Uganda or cleared and registered in Uganda; says about 65 days from deposit to delivery.', 'Quote on request.'],
+  ['Tokyo Carz, JGLOGI, CarFromJapan, Car Imports Auction', 'Exporters, Japan', 'Publish Uganda and Kenya import guides and sell to East African buyers.', 'FOB; guides give rate ranges only.'],
+  ['carimports.co.ke', 'Importer, Kenya', 'Shows a CIF Mombasa price and an estimated delivered price for each car. The closest to what Spear Line plans.', 'Public per car, for Kenya.'],
+  ['Autochek Uganda, usedcars.co.ug, local dealers', 'Kampala sellers', 'Cars already in Uganda. What a buyer compares our landed price against.', 'Asking prices public; some "duty not paid".'],
+  ['Light Heart General Trading, LTA-Juba', 'Juba traders', 'Import and sell vehicles, parts and Toyota supply in Juba. Showrooms and social media, not price lists.', 'None found.']
+];
 const logoGold = A('logo-wordmark-gold.png'), logoWhite = A('logo-wordmark-white-640.webp');
 const head = title => `<header class="ph-head"><img src="${logoGold}" alt="Spear Line"><span class="draft">DRAFT · TO BE UPDATED</span></header><p class="kicker">${esc(title.k)}</p><h2>${esc(title.h)}</h2>`;
 
@@ -140,18 +153,25 @@ table{border-collapse:collapse;width:100%}
 
 <section class="sec">${head({ k: 'Read this first', h: 'What this document is, and what is still open.' })}
 <div class="grid"><div><strong>${n(cars.length)}</strong><span>vehicles listed</span></div><div><strong>${makes.size} makes · ${models.size} models</strong><span>Japan ${cars.filter(c => c.country === 'Japan').length}, Thailand ${cars.filter(c => c.country === 'Thailand').length}</span></div><div><strong>USD ${n(prices[0])} to ${n(prices.at(-1))}</strong><span>exporter prices (FOB)</span></div><div><strong>${esc(checked)}</strong><span>date prices were researched</span></div></div>
-<div class="two"><div><h3>What is in it</h3><ul><li><b>The full vehicle list</b> as it is on the website today, with year, mileage, engine, fuel, exporter reference and price.</li><li><b>Markup.</b> The website adds 8% to the exporter's price. A second option (the greater of 8% or USD ${MIN_MARGIN}) is shown beside it so the cheap cars still earn a fair margin.</li><li><b>Tax and landing costs.</b> Draft rates by country and a worked Uganda example, with every unconfirmed figure marked.</li><li><b>A confirmation sheet</b> listing the decisions needed.</li></ul></div>
-<div><h3>How to read the prices</h3><ul><li>Prices are USD. They are <b>exporter listings, not Spear Line stock</b>. They were checked on ${esc(checked)} and can be sold or changed at any time.</li><li>"Exporter FOB" is the vehicle itself. Freight, insurance, taxes, clearing, transport and registration are <b>not</b> included in the list prices.</li><li>"Spear Line price" is FOB plus the markup. It is what the website shows today, before import costs.</li><li>Everything marked <span class="tag">TO CONFIRM</span> or <span class="tag">PLACEHOLDER</span> is a draft figure that must be confirmed before it is shown to a customer.</li></ul></div></div>
+<div class="two"><div><h3>What is in it</h3><ul><li><b>The full vehicle list</b> as it is on the website today, with year, mileage, engine, fuel, exporter reference and price.</li><li><b>Markup and competitors.</b> The website adds 8% to the exporter's price today. This draft proposes the greater of ${RATE * 100}% or USD ${MIN_MARGIN}, with the competitor evidence behind it.</li><li><b>Tax and landing costs.</b> Draft rates by country and a worked Uganda example, with every unconfirmed figure marked.</li><li><b>A confirmation sheet</b> listing the decisions needed.</li></ul></div>
+<div><h3>How to read the prices</h3><ul><li>Prices are USD. They are <b>exporter listings, not Spear Line stock</b>. They were checked on ${esc(checked)} and can be sold or changed at any time.</li><li>"Exporter FOB" is the vehicle itself. Freight, insurance, taxes, clearing, transport and registration are <b>not</b> included in the list prices.</li><li>"Proposed Spear Line price" is FOB plus the proposed markup, before import costs. The website still shows 8% until the owner confirms.</li><li>Everything marked <span class="tag">TO CONFIRM</span> or <span class="tag">PLACEHOLDER</span> is a draft figure that must be confirmed before it is shown to a customer.</li></ul></div></div>
 <div class="note"><b>To be updated.</b> This list will be refreshed when exporter prices are rechecked, when tax rates are confirmed for each destination, and when the vehicles that sell are decided. Do not quote these totals to a customer.</div></section>
 
 <section class="sec"><div class="listhead"><img src="${logoGold}" alt="Spear Line"><b>Vehicle price list · ${n(cars.length)} vehicles · DRAFT, to be updated · USD</b></div>
-<p class="listnote">All vehicles are right-hand drive. Option B raises the price of ${cheapCount} of ${cars.length} vehicles (those where 8% is under USD ${MIN_MARGIN}). References are BE FORWARD listing references.</p><table class="list"><thead><tr><th>#</th><th>Exporter ref</th><th>Year</th><th>Make and model</th><th>Type</th><th class="r">Mileage km</th><th class="r">Engine cc</th><th>Gearbox</th><th>Fuel</th><th>Origin</th><th class="r">Exporter FOB</th><th class="r">Markup 8%</th><th class="r">Spear Line price (A)</th><th class="r">Option B: min. margin USD ${MIN_MARGIN}</th></tr></thead><tbody>${rows}</tbody></table>
+<p class="listnote">All vehicles are right-hand drive. The proposed markup is the greater of ${RATE * 100}% or USD ${MIN_MARGIN}; ${cheapCount} of ${cars.length} vehicles (exporter price under USD ${n(MIN_MARGIN / RATE)}) are at the minimum. References are BE FORWARD listing references.</p><table class="list"><thead><tr><th>#</th><th>Exporter ref</th><th>Year</th><th>Make and model</th><th>Type</th><th class="r">Mileage km</th><th class="r">Engine cc</th><th>Gearbox</th><th>Fuel</th><th>Origin</th><th class="r">Exporter FOB</th><th class="r">Website now (8%)</th><th class="r">Proposed markup</th><th class="r">Proposed Spear Line price</th></tr></thead><tbody>${rows}</tbody></table>
 </section>
 
-<section class="sec">${head({ k: 'Markup', h: 'Is 8% enough? Two options to choose from.' })}
-<p>The website adds a flat 8% to the exporter's price. That is under USD 120 on a USD 1,500 car, which may not cover time, risk and the cost of a deal that falls through. Option B keeps 8% but never less than USD ${MIN_MARGIN}. Neither is confirmed: <b>the owner sets the final markup.</b></p>
+<section class="sec">${head({ k: 'Markup', h: `Proposed: the greater of ${RATE * 100}% or USD ${MIN_MARGIN}.` })}
+<p>The website adds a flat 8% to the exporter's price. That is under USD 120 on a USD 1,500 car, which does not cover time, transfer costs or a deal that falls through. This draft proposes <b>10%, never less than USD ${MIN_MARGIN}</b>: a modest rise that keeps Spear Line's fee small beside the cost of the car, and sits at the low end of what a Nairobi importer-dealer reports (below). Average markup per car moves from USD ${n(avgNow)} to USD ${n(avgNew)}. <b>The owner sets the final markup.</b></p>
 ${markupTable}
-<div class="two"><div><h3>Things the markup has to cover</h3><ul><li>Sourcing, inspection requests and follow-up with the exporter.</li><li>Money transfer and exchange-rate movement between order and payment.</li><li>A buyer who cancels after the exporter has reserved the car.</li><li>Claims about condition, mileage or paperwork found after arrival.</li></ul></div><div><h3>Questions for the owner</h3><ul><li>One rate for every car, or a higher rate on cheaper cars?</li><li>Is the markup the same for Uganda, Kenya, South Sudan and Congo buyers?</li><li>Is Spear Line paid in USD, and who carries exchange-rate risk?</li></ul></div></div></section>
+<div class="two"><div><h3>Things the markup has to cover</h3><ul><li>Sourcing, inspection requests and exporter follow-up; money transfer and exchange-rate movement.</li><li>A buyer who cancels after the exporter has reserved the car, or a condition dispute after arrival.</li></ul></div><div><h3>Questions for the owner</h3><ul><li>One rate for every car, or a higher rate on cheaper cars?</li><li>Is Spear Line paid in USD, and who carries exchange-rate risk?</li></ul></div></div>
+<div class="two" style="margin-top:3mm"><div><h3>What this means for our price</h3><ul><li><b>Buyers can go direct.</b> BE FORWARD, SBI Motor and others sell the same kind of car at the plain FOB price. Our markup has to be paid for by something they do not give: delivery to the buyer's city, clearing, registration and one written all-in price.</li><li><b>Nobody publishes an all-in price.</b> Exporters show FOB and "ask" for the total; MHH offers cleared and registered but not on a price list. A clear landed price per destination is where Spear Line can stand out, so long as it is correct.</li><li><b>Do not go far above 10% to 15%</b> until local benchmarks exist.</li></ul></div>
+<div><h3>Margin and market evidence (low confidence)</h3><ul><li>A Nairobi importer-dealer reports a 10% to 15% profit margin before tax (one dealer's own account). A Kenyan business blog claims 15% to 30% on imports; it is promotional and unsourced.</li><li>No Uganda or South Sudan dealer margin found.</li><li>Local anchors, all undated or secondary: 2015 Harrier UGX 60 to 70 million (Carkibanda review); 2010 Harrier UGX 65 million (Autochek); 2019 RAV4 and 2020 Harrier about UGX 155 million (Autochek); 2024 RAV4 hybrid UGX 180 to 203 million, duty not paid (usedcars.co.ug).</li><li>SBI Motor, 2016 RAV4: FOB USD 14,248 (4WD, 104,600 km, sold) and USD 16,500 (G Z package), total price "ASK".</li></ul></div></div>
+</section>
+
+<section class="sec">${head({ k: 'Competitors', h: 'Who a buyer compares us with, and what they publish.' })}
+<table class="tax"><thead><tr><th style="width:17%">Competitor</th><th style="width:12%">Type</th><th style="width:36%">What they offer</th><th>What is public on price</th></tr></thead><tbody>${competitors.map(([a, b, c, d]) => `<tr><td><b>${esc(a)}</b></td><td>${esc(b)}</td><td>${esc(c)}</td><td>${esc(d)}</td></tr>`).join('')}</tbody></table>
+<p class="note"><b>Next step.</b> Ask two importers (MHH, SBI or EVERY) for written cleared-in-Kampala quotes on the same three cars as the worked example, and collect Juba dealer prices. Then compare with our landed price before any markup is final.</p></section>
 
 <section class="sec">${head({ k: 'Tax and landing costs', h: 'What a buyer pays on top, by country (draft).' })}
 <table class="tax"><thead><tr><th style="width:15%">Country</th><th style="width:45%">Rates and rules found</th><th>What is uncertain</th><th style="width:9%">Status</th></tr></thead><tbody>${taxCountries.map(([c, r, u]) => `<tr><td><b>${esc(c)}</b></td><td>${esc(r)}</td><td>${esc(u)}</td><td><span class="tag">TO CONFIRM</span></td></tr>`).join('')}</tbody></table>
@@ -162,7 +182,7 @@ ${exampleTable}
 <p style="font-size:8.5pt;color:#4B6270">On these draft rates, duty, VAT, withholding tax and infrastructure levy add up to about 55% of the CIF value before the environmental levy. Uganda's route is by sea to Mombasa or Dar es Salaam, then by road. Freight and insurance are placeholders, and the real tax base is URA's valuation, not the invoice. For Kenya, South Sudan and Congo the same layout applies with their own rates, once those are confirmed.</p></section>
 
 <section class="sec">${head({ k: 'Confirmation sheet', h: 'Decisions needed before this goes on the website.' })}
-<div class="two"><div><h3>Prices and markup</h3><ul class="check"><li>Markup: 8% flat / greater of 8% or USD ${MIN_MARGIN} / other: ______________</li><li>Same markup for every destination: yes / no</li><li>Vehicles to remove from the list (European, Lexus, kei cars): yes / no / some: ______</li><li>Models to add (Land Cruiser VX, 70 Series, Patrol, more Prado, Hilux, RAV4, Harrier): ______</li></ul><h3 style="margin-top:4mm">Destinations to offer first</h3><ul class="check"><li>Uganda</li><li>Kenya (cars 2018 or newer only)</li><li>South Sudan (needs the drive-side rule settled)</li><li>DR Congo (needs left-hand-drive cars)</li></ul></div>
+<div class="two"><div><h3>Prices and markup</h3><ul class="check"><li>Markup: 8% (now) / greater of ${RATE * 100}% or USD ${MIN_MARGIN} (proposed) / other: ______________</li><li>Same markup for every destination: yes / no</li><li>Vehicles to remove from the list (European, Lexus, kei cars): yes / no / some: ______</li><li>Models to add (Land Cruiser VX, 70 Series, Patrol, more Prado, Hilux, RAV4, Harrier): ______</li></ul><h3 style="margin-top:4mm">Destinations to offer first</h3><ul class="check"><li>Uganda</li><li>Kenya (cars 2018 or newer only)</li><li>South Sudan (needs the drive-side rule settled)</li><li>DR Congo (needs left-hand-drive cars)</li></ul></div>
 <div><h3>Rates and costs to confirm</h3><ul class="check"><li>Uganda duty, VAT, withholding tax, infrastructure levy and environmental levy for 2026/27</li><li>Sea freight Japan to Mombasa by vehicle size (placeholder USD ${n(FREIGHT_PLACEHOLDER)})</li><li>Insurance rate (placeholder ${INSURANCE_RATE * 100}%)</li><li>Clearing agent fees, port charges and transit costs</li><li>Inland transport: Mombasa to Kampala, and onward to Juba or Goma</li><li>Registration and plate fees</li><li>Juba and Kampala dealer prices for the same models, to compare</li></ul>
 <h3 style="margin-top:4mm">Who confirms</h3><ul class="check"><li>Owner: markup and which cars to show</li><li>Clearing agent in Kampala, Juba and Goma: taxes and fees in writing</li></ul></div></div>
 <div class="sign"><div>Confirmed by (name)</div><div>Signature</div><div>Date</div></div>
