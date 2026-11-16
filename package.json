@@ -25,7 +25,8 @@
     "qa:shots": "node scripts/qa/capture.mjs",
     "profile": "node profile/build-profile.mjs",
     "brand": "node scripts/render-brand-assets.mjs && npm run build",
-    "vendor": "node scripts/vendor-motion.mjs"
+    "vendor": "node scripts/vendor-motion.mjs",
+    "pricelist": "node scripts/vehicle-price-pdf.mjs"
   },
   "devDependencies": {
     "axe-core": "^4.10.2",
