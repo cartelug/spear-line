@@ -1,5 +1,5 @@
-// Builds the internal vehicle price list for owner review (kept short on purpose):
-//   docs/price-list/Spear-Line-Vehicle-Price-List-DRAFT.pdf (A4 landscape, printed by Chromium)
+// Builds the internal vehicle price list for owner review (portrait, readable):
+//   docs/price-list/Spear-Line-Vehicle-Price-List-DRAFT.pdf (A4 portrait, printed by Chromium)
 //   docs/price-list/price-list.html (the editable source; opens in any browser)
 // Data comes from content/vehicle-prices.mjs, so the PDF and the website cannot disagree.
 // Run: npm run pricelist
@@ -27,11 +27,12 @@ const n = v => new Intl.NumberFormat('en-US').format(Math.round(v));
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const priceNow = fob => Math.round(fob * (1 + CURRENT));
 const priceNew = fob => Math.round(fob + Math.max(fob * RATE, MIN_MARGIN));
-const trans = v => ({ AT: 'Auto', MT: 'Manual', CVT: 'CVT' }[v] || v);
 const fuel = v => ({ 'Hybrid(Petrol)': 'Hybrid', 'Hybrid(Diesel)': 'Hybrid diesel' }[v] || v);
+const gear = v => ({ AT: 'Auto', MT: 'Manual', CVT: 'Auto' }[v] || v);
 
 const cars = [...vehiclePriceGuide.vehicles].sort((a, b) => a.make.localeCompare(b.make) || a.model.localeCompare(b.model) || a.year - b.year || a.priceUsd - b.priceUsd);
-const makes = new Set(cars.map(c => c.make)), models = new Set(cars.map(c => c.make + c.model));
+const byMake = [...new Set(cars.map(c => c.make))].map(make => [make, cars.filter(c => c.make === make)]);
+const models = new Set(cars.map(c => c.make + c.model));
 const prices = cars.map(c => c.priceUsd).sort((a, b) => a - b);
 const fmtDate = d => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(d);
 const checked = fmtDate(new Date(vehiclePriceGuide.checkedOn + 'T00:00:00Z')), prepared = fmtDate(new Date());
@@ -42,95 +43,129 @@ const avg = f => cars.reduce((t, c) => t + f(c.priceUsd) - c.priceUsd, 0) / cars
 function example(car) {
   const fob = car.priceUsd, margin = priceNew(fob) - fob, freight = FREIGHT_PLACEHOLDER;
   const insurance = Math.round((fob + freight) * INSURANCE_RATE), cif = fob + freight + insurance;
-  const taxes = cif * UG.duty + (cif * (1 + UG.duty)) * UG.vat + cif * UG.wht + cif * UG.infra;
-  return { car, fob, margin, freight, insurance, cif, taxes, total: fob + margin + freight + insurance + taxes };
+  const duty = cif * UG.duty, vat = (cif + duty) * UG.vat, other = cif * (UG.wht + UG.infra);
+  return { car, fob, margin, freightIns: freight + insurance, cif, duty, vat, other, total: fob + margin + freight + insurance + duty + vat + other };
 }
 const pick = (make, model) => cars.filter(c => c.make === make && c.model === model).sort((a, b) => a.priceUsd - b.priceUsd)[0];
 const ex = [pick('Toyota', 'Vitz'), pick('Toyota', 'RAV4'), pick('Toyota', 'Land Cruiser Prado')].map(example);
 const exRow = (label, f, cls = '') => `<tr class="${cls}"><td>${label}</td>${ex.map(e => `<td class="r">${f(e)}</td>`).join('')}</tr>`;
-const exampleTable = `<table class="calc"><thead><tr><th>Uganda example, USD</th>${ex.map(e => `<th class="r">${e.car.year} ${esc(e.car.model)}</th>`).join('')}</tr></thead><tbody>
-${exRow('Exporter price (FOB)', e => n(e.fob))}
-${exRow('Spear Line markup, proposed', e => n(e.margin))}
-${exRow('Freight to Mombasa + insurance (placeholders)', e => n(e.freight + e.insurance), 'plc')}
-${exRow('Duty, VAT, withholding tax, infrastructure levy (draft rates)', e => n(e.taxes))}
-${exRow('Total so far', e => n(e.total), 'total')}</tbody></table>
-<p class="small">Not included, to confirm: environmental levy (a URA document gives 50% for vehicles over 8 to 9 years old, which covers most cars here), clearing, transport to Kampala, registration. Tax is worked on FOB + freight + insurance; URA actually values used cars from its own database.</p>`;
+const exHead = label => `<thead><tr><th>${label}</th>${ex.map(e => `<th class="r">${e.car.year} ${esc(e.car.model)}</th>`).join('')}</tr></thead>`;
 
-// ---- List -------------------------------------------------------------------------------------
-const rows = cars.map((c, i) => {
-  const first = i === 0 || cars[i - 1].make !== c.make;
-  return `<tr${first ? ' class="nm"' : ''}><td class="g">${esc(c.sourceRef)}</td><td>${c.year}</td><td class="nw"><b>${esc(c.make)}</b> ${esc(c.model)}${c.country === 'Thailand' ? ' <i>(TH)</i>' : ''}</td><td>${esc(vehicleCategories[c.id] || '')}</td><td class="r">${n(c.mileageKm)}</td><td class="r">${n(c.engineCc)}</td><td>${esc(trans(c.transmission))}</td><td>${esc(fuel(c.fuel))}</td><td class="r">${n(c.priceUsd)}</td><td class="r g">${n(priceNow(c.priceUsd))}</td><td class="r">${n(priceNew(c.priceUsd) - c.priceUsd)}</td><td class="r s">${n(priceNew(c.priceUsd))}</td></tr>`;
-}).join('');
+// ---- Vehicle list, grouped by make ------------------------------------------------------------
+const listBody = byMake.map(([make, list]) => `<tbody class="grp"><tr class="mk"><td colspan="9"><b>${esc(make)}</b><span>${list.length} vehicle${list.length > 1 ? 's' : ''}</span></td></tr>${list.map(c => `<tr><td><b>${esc(c.model)}</b>${c.country === 'Thailand' ? ' <i>Thailand</i>' : ''}<small>${esc(c.sourceRef)}</small></td><td>${c.year}</td><td>${esc(vehicleCategories[c.id] || '')}</td><td class="r">${n(c.mileageKm)}</td><td class="r">${n(c.engineCc)}</td><td>${esc(fuel(c.fuel))}${c.transmission === 'MT' ? ', manual' : ''}</td><td class="r">${n(c.priceUsd)}</td><td class="r g">${n(priceNow(c.priceUsd))}</td><td class="r p">${n(priceNew(c.priceUsd))}</td></tr>`).join('')}</tbody>`).join('');
 
 const taxCountries = [
-  ['Uganda', 'Duty 25%, VAT 18%, withholding tax 6%, infrastructure levy 1.5%; environmental levy on older cars', 'Rates from a 2023/24 URA document; 2026/27 changes (13-year age limit, levy) only proposals in sources found; URA values from its own database'],
-  ['Kenya', 'Duty 25% or 35%, excise 20% to 35%, VAT 16%, IDF and RDL; cars up to 8 years old, right-hand drive', 'Sources disagree. Only about 60 of 233 cars are 2018 or newer'],
-  ['South Sudan', 'Duty quoted 0% to 45% by type and value; VAT 18%', 'Dealer sources only. Right-hand-drive ban announced March 2026, then reported suspended: unclear'],
-  ['DR Congo', 'Duty about 8% to 46%; VAT 8% to 13%; left-hand drive only per exporter guides', 'Exporter sources only. All cars here are right-hand drive, so none can be offered as listed']
+  ['Uganda', 'Duty 25%, VAT 18%, withholding tax 6%, infrastructure levy 1.5%, environmental levy on older cars.', 'Rates from a 2023/24 URA document. 2026/27 changes (13-year age limit, levy) were only proposals in the sources found. URA values used cars from its own database, not the invoice.'],
+  ['Kenya', 'Duty 25% or 35%, excise 20% to 35%, VAT 16%, IDF and RDL. Cars up to 8 years old, right-hand drive.', 'Sources disagree. Only about 60 of the 233 cars are 2018 or newer.'],
+  ['South Sudan', 'Duty quoted from 0% to 45% by type and value; VAT 18%.', 'Dealer sources only. A right-hand-drive ban was announced in March 2026, then reported suspended.'],
+  ['DR Congo', 'Duty about 8% to 46%; VAT 8% to 13%. Left-hand drive only, per exporter guides.', 'Exporter sources only. Every car here is right-hand drive, so none can be offered as listed.']
 ];
 
 const logo = A('logo-wordmark-gold.png');
-const head = (k, h) => `<header class="ph"><img src="${logo}" alt="Spear Line"><span class="draft">DRAFT · TO BE UPDATED</span></header><h2><span>${esc(k)}</span> ${esc(h)}</h2>`;
+const band = `<header class="band"><img src="${logo}" alt="Spear Line"><span class="draft">Draft · to be updated</span></header>`;
 
-const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Spear Line vehicle price list: DRAFT, to be updated</title><style>
+const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Spear Line vehicle price list: draft, to be updated</title><style>
 @font-face{font-family:D;src:url(${A('fonts/mtn-brighter-sans-bold.woff2')})}
 @font-face{font-family:T;src:url(${A('fonts/sky-text-regular.woff2')})}
-@page{size:A4 landscape;margin:8mm 11mm 12mm;
-  @bottom-left{content:"Spear Line Global Limited · Vehicle price list · DRAFT, to be updated · ${prepared}";font:700 6.5pt D,Arial;color:#6C808C}
-  @bottom-right{content:counter(page) " / " counter(pages);font:700 6.5pt D,Arial;color:#6C808C}}
+@page{size:A4 portrait;margin:14mm 14mm 16mm;
+  @bottom-left{content:"Spear Line · Vehicle price list · Draft, to be updated · ${prepared}";font:700 7pt D,Arial;color:#7C8E98}
+  @bottom-right{content:counter(page) " of " counter(pages);font:700 7pt D,Arial;color:#7C8E98}}
+:root{--navy:#061F30;--navy2:#0B3550;--gold:#F6AD46;--ink:#162C39;--muted:#5A6F7B;--line:#E2E9ED;--soft:#F5F8FA}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font:400 8.6pt/1.42 T,Arial,sans-serif;color:#162C39;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font:400 9.6pt/1.5 T,Arial,sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
 h1,h2,h3,b,strong,th{font-family:D,Arial,sans-serif;font-weight:700}
-.hero{background:linear-gradient(160deg,#061F30,#082F47 50%,#0F4766);color:#fff;border-radius:4mm;padding:6mm 10mm;position:relative;overflow:hidden;margin-bottom:3mm}
-.hero:before{content:"";position:absolute;inset:0;background:url(${A('line-field.svg')}) center/cover;opacity:.8}
-.hero>*{position:relative}.hero img{height:9mm;display:block;margin-bottom:4mm}
-.hero h1{font-size:25pt;line-height:1.05;letter-spacing:-.02em}.hero h1 span{color:#F6AD46}
-.hero p{color:#D5E4EC;font-size:9.5pt;margin-top:2.5mm;max-width:190mm}
-.stamp{position:absolute;right:10mm;top:8mm;font:700 9pt D,Arial;color:#061F30;background:#F6AD46;padding:2mm 5mm;border-radius:9mm}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-bottom:4mm}
-.grid div{background:#fff;border:.5pt solid #D9E3E8;border-radius:2.5mm;padding:2.2mm 3.5mm}.grid strong{display:block;font-size:12pt}.grid span{font-size:7.5pt;color:#4B6270}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
-h3{font-size:9.5pt;margin-bottom:1mm}ul{margin-left:4.5mm}li{margin-bottom:.9mm}
-.note{background:#FFF3DD;border-left:1mm solid #F6AD46;padding:2mm 3.5mm;border-radius:0 2mm 2mm 0;margin:3mm 0;font-size:8.3pt}
-.tag{display:inline-block;font:700 6pt D,Arial;background:#FFEFD6;color:#85470A;padding:.4mm 1.6mm;border-radius:5mm;white-space:nowrap}
-.sec{break-before:page}.lst{margin-top:1mm}
-.ph{display:flex;justify-content:space-between;align-items:center;background:#061F30;padding:2mm 4mm;border-radius:2.5mm;margin-bottom:3mm}
-.ph img{height:6.5mm;display:block}.draft{font:700 7pt D,Arial;color:#061F30;background:#F6AD46;padding:1mm 3mm;border-radius:8mm}
-h2{font-size:14pt;line-height:1.15;letter-spacing:-.01em;margin-bottom:2.5mm}h2 span{color:#A45B0C;font-size:9pt;display:block;letter-spacing:0}
+h2{font-size:17pt;line-height:1.15;letter-spacing:-.01em;margin:0 0 1.5mm}h3{font-size:10.5pt;margin:0 0 1.5mm}
+.kick{font:700 8.5pt D,Arial;color:#A45B0C;margin-bottom:1mm}
+.lede{color:var(--muted);margin-bottom:5mm;max-width:165mm}
+.page{break-before:page}
+.band{display:flex;justify-content:space-between;align-items:center;margin-bottom:7mm;padding-bottom:3mm;border-bottom:.8pt solid var(--line)}
+.band img{height:8mm;display:block}
+.draft{font:700 7.5pt D,Arial;color:var(--navy);background:var(--gold);padding:1.2mm 3.5mm;border-radius:8mm}
+/* Cover */
+.hero{background:linear-gradient(155deg,var(--navy),var(--navy2) 60%,#0F4766);color:#fff;border-radius:5mm;padding:11mm 11mm 12mm;position:relative;overflow:hidden;margin-bottom:6mm}
+.hero:before{content:"";position:absolute;inset:0;background:url(${A('line-field.svg')}) center/cover;opacity:.75}
+.hero>*{position:relative}.hero img{height:11mm;display:block;margin-bottom:14mm}
+.hero .draft{position:absolute;right:11mm;top:12mm}
+.hero h1{font-size:30pt;line-height:1.04;letter-spacing:-.02em}.hero h1 span{color:var(--gold);display:block}
+.hero p{color:#D5E4EC;font-size:10.5pt;margin-top:4mm;max-width:150mm}
+.goal{margin-top:7mm;padding-top:5mm;border-top:.6pt solid rgba(255,255,255,.25);font:700 11pt D,Arial;color:#fff}.goal span{color:var(--gold)}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-bottom:6mm}
+.facts div{border:.6pt solid var(--line);border-radius:3mm;padding:3mm 3.5mm}.facts strong{display:block;font-size:12pt;line-height:1.2;white-space:nowrap}.facts span{font-size:8pt;color:var(--muted)}
+.markup{display:grid;grid-template-columns:62mm 1fr;gap:6mm;background:var(--soft);border-radius:4mm;padding:6mm;margin-bottom:6mm;align-items:center}
+.markup .big{font:700 26pt/1 D,Arial;color:var(--navy)}.markup .big small{display:block;font-size:10pt;color:var(--muted);margin-top:2mm;font-weight:700}
+.markup p{font-size:8.6pt;color:var(--muted);margin-top:2mm}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:7mm}
+ul{margin-left:4.5mm}li{margin-bottom:1.4mm}
+.note{background:#FFF4E0;border-left:1.2mm solid var(--gold);padding:3mm 4mm;border-radius:0 2.5mm 2.5mm 0;margin-top:5mm;font-size:9pt}
+/* Tables */
 table{border-collapse:collapse;width:100%}
-.list{font-size:6.2pt;line-height:1.1}.list thead{display:table-header-group}
-.list th{background:#082F47;color:#fff;text-align:left;padding:1mm 1.3mm;font-size:6pt;vertical-align:bottom}
-.list th.logo{background:#061F30;padding:1.6mm 2mm}.list th.logo img{height:5.5mm;vertical-align:middle}.list th.logo span{float:right;font-size:7pt;line-height:5.5mm}
-.list td{padding:.12mm 1.3mm;border-bottom:.25pt solid #E1E8EC;white-space:nowrap}
-.list tr:nth-child(even) td{background:#F6F9FA}.list tr.nm td{border-top:.7pt solid #082F47}
-.list .r{text-align:right}.list th.r{text-align:right}.list .g{color:#7C8E98}.list .s{font-family:D,Arial;color:#061F30}.list i{font-style:normal;color:#7C8E98}
-.list tr{break-inside:avoid}
-.calc{font-size:7.8pt;margin:1.5mm 0 1.5mm}.calc th{background:#082F47;color:#fff;text-align:left;padding:1.4mm 2mm}.calc th.r,.calc td.r{text-align:right}
-.calc td{padding:1mm 2mm;border-bottom:.3pt solid #D9E3E8}.calc tr.plc td{background:#FFF8EC}.calc tr.total td{font-family:D,Arial;font-weight:700;background:#082F47;color:#fff}
-.small{font-size:7.2pt;color:#4B6270}
-.tax{font-size:7.6pt}.tax th{background:#082F47;color:#fff;text-align:left;padding:1.4mm 2mm}.tax td{padding:1.2mm 2mm;border-bottom:.3pt solid #D9E3E8;vertical-align:top}
-.check li{list-style:none;margin-left:0;padding-left:5.5mm;position:relative}.check li:before{content:"";position:absolute;left:0;top:.7mm;width:3mm;height:3mm;border:.7pt solid #082F47;border-radius:.7mm}
-.sign{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8mm;margin-top:4mm}.sign div{border-top:.6pt solid #162C39;padding-top:1mm;font-size:7.5pt;color:#4B6270}
+.t th{background:var(--navy);color:#fff;text-align:left;font-size:8pt;padding:2mm 2.5mm}.t th:first-child{border-radius:2mm 0 0 0}.t th:last-child{border-radius:0 2mm 0 0}
+.t td{padding:1.8mm 2.5mm;border-bottom:.5pt solid var(--line);vertical-align:top}
+.r{text-align:right;white-space:nowrap}th.r{text-align:right}
+.t tr.hl td{background:#FFF8EC}.t tr.tot td{background:var(--navy);color:#fff;font-family:D,Arial;font-weight:700}
+.small{font-size:8.2pt;color:var(--muted)}
+/* Vehicle list */
+.list{font-size:8pt;line-height:1.3}
+.list thead{display:table-header-group}
+.list thead th{background:var(--navy);color:#fff;text-align:left;font-size:7.2pt;padding:2mm 2mm;vertical-align:bottom}
+.list thead th.r{text-align:right}
+.list td{padding:1.15mm 2mm;border-bottom:.4pt solid var(--line);white-space:nowrap}
+.list td small{display:block;font-size:6.5pt;color:#8A9AA4;line-height:1.1}
+.list td i{font-style:normal;font-size:6.8pt;color:#85470A;background:#FFF1DA;padding:0 1.2mm;border-radius:2mm}
+.list .g{color:#8A9AA4}.list .p{font-family:D,Arial;font-weight:700;color:var(--navy);background:#FFF8EC}
+.list tr.mk td{background:var(--soft);padding:2.2mm 2mm 1.6mm;border-bottom:.8pt solid var(--navy);font-size:9.5pt}
+.list tr.mk span{float:right;font-size:7.5pt;color:var(--muted);padding-top:.6mm}
+.list tbody.grp tr.mk{break-after:avoid}.list tr{break-inside:avoid}
+.legend{display:flex;gap:6mm;font-size:8pt;color:var(--muted);margin:1mm 0 4mm}
+.check{list-style:none;margin:0}.check li{padding-left:7mm;position:relative;margin-bottom:2.6mm}.check li:before{content:"";position:absolute;left:0;top:.6mm;width:3.6mm;height:3.6mm;border:.8pt solid var(--navy);border-radius:.8mm}
+.sign{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8mm;margin-top:14mm}.sign div{border-top:.7pt solid var(--ink);padding-top:1.5mm;font-size:8pt;color:var(--muted)}
+.box{border:.6pt solid var(--line);border-radius:3mm;padding:5mm;margin-bottom:5mm}
 </style></head><body>
 
-<section class="hero"><span class="stamp">DRAFT · TO BE UPDATED</span><img src="${logo}" alt="Spear Line"><h1>All Spear Line <span>vehicles listed currently.</span></h1><p>Exporter prices, current website price and a proposed higher markup for each vehicle, with a draft tax and landing-cost note, for the owner to review and confirm. Internal document: not for customers.</p></section>
-<div class="grid"><div><strong>${n(cars.length)}</strong><span>vehicles listed</span></div><div><strong>${makes.size} makes · ${models.size} models</strong><span>Japan ${cars.filter(c => c.country === 'Japan').length}, Thailand ${cars.filter(c => c.country === 'Thailand').length} (TH)</span></div><div><strong>USD ${n(prices[0])} to ${n(prices.at(-1))}</strong><span>exporter prices (FOB)</span></div><div><strong>${esc(checked)}</strong><span>prices researched</span></div></div>
-<div class="two"><div><h3>How to read the list</h3><ul><li>Prices are USD and are <b>exporter listings (BE FORWARD), not Spear Line stock</b>. They can sell or change at any time.</li><li>"Exporter price" is the vehicle only. Freight, insurance, taxes, clearing, transport and registration are <b>not</b> included.</li><li>"Website now" is FOB + 8%, as shown today. "Proposed" is FOB + the greater of ${RATE * 100}% or USD ${MIN_MARGIN}; ${atMin} of ${cars.length} cars (FOB under USD ${n(MIN_MARGIN / RATE)}) are at the minimum.</li></ul></div>
-<div><h3>Status</h3><ul><li>Everything marked <span class="tag">TO CONFIRM</span> or <span class="tag">PLACEHOLDER</span> is a draft figure.</li><li>Average markup per car: USD ${n(avg(priceNow))} now, USD ${n(avg(priceNew))} proposed.</li><li>The website still shows 8% until the owner confirms. Markup, tax rates and which cars to keep are decided on the last page.</li></ul></div></div>
-<div class="note"><b>To be updated</b> when exporter prices are rechecked, tax rates are confirmed per destination, and the cars that sell are decided. Do not quote these totals to a customer.</div>
+<!-- Page 1: summary -->
+<section class="hero"><span class="draft">Draft · to be updated</span><img src="${logo}" alt="Spear Line"><h1>Vehicle price list<span>All vehicles listed currently.</span></h1><p>Exporter prices, today's website price and a proposed higher markup for every vehicle, with a draft tax note, for the owner to review and confirm.</p><p class="goal">Our goal: <span>the best online, and in time physical, car dealership in East Africa.</span></p></section>
+<div class="facts"><div><strong>${n(cars.length)}</strong><span>vehicles listed</span></div><div><strong>${byMake.length} makes</strong><span>${models.size} models</span></div><div><strong>USD ${n(prices[0])}+</strong><span>up to USD ${n(prices.at(-1))}</span></div><div><strong>${esc(checked.replace(/ (\w{3})\w* /, ' $1 '))}</strong><span>prices researched</span></div></div>
+<div class="markup"><div><div class="big">${RATE * 100}%<small>minimum USD ${MIN_MARGIN} per car</small></div><p>Proposed markup, up from a flat 8% today. Average per car: USD ${n(avg(priceNow))} now, USD ${n(avg(priceNew))} proposed.</p></div>
+<table class="t"><thead><tr><th>Example (USD)</th><th class="r">Exporter</th><th class="r">Now, 8%</th><th class="r">Proposed</th></tr></thead><tbody>${ex.map(e => `<tr><td>${e.car.year} ${esc(e.car.model)}</td><td class="r">${n(e.fob)}</td><td class="r">${n(priceNow(e.fob))}</td><td class="r"><b>${n(priceNew(e.fob))}</b></td></tr>`).join('')}</tbody></table></div>
+<div class="cols"><div><h3>How to read the prices</h3><ul><li>All prices are <b>USD</b>, from <b>exporter listings (BE FORWARD)</b>. They are not Spear Line stock and can sell or change.</li><li>The <b>exporter price</b> is the car only. Freight, tax, clearing, transport and registration are extra.</li><li><b>${atMin} of ${cars.length}</b> cars (exporter price under USD ${n(MIN_MARGIN / RATE)}) are at the USD ${MIN_MARGIN} minimum.</li></ul></div>
+<div><h3>Decisions needed</h3><ul><li>Confirm the markup.</li><li>Choose which cars to remove and which to add.</li><li>Choose the countries to offer first.</li><li>Get written tax and clearing quotes.</li></ul><p class="small" style="margin-top:1mm">Sign-off sheet on the last page.</p></div></div>
+<p class="note"><b>Draft.</b> This list will be updated when prices are rechecked and taxes are confirmed. The website still shows 8%. Please do not quote these prices to customers yet.</p>
 
-<section class="lst"><table class="list"><thead><tr><th class="logo" colspan="12"><img src="${logo}" alt="Spear Line"><span style="color:#fff">Vehicle price list · ${n(cars.length)} vehicles · DRAFT, to be updated · USD</span></th></tr><tr><th>Exporter ref</th><th>Year</th><th>Make and model</th><th>Type</th><th class="r">Mileage km</th><th class="r">Engine cc</th><th>Gearbox</th><th>Fuel</th><th class="r">Exporter price</th><th class="r">Website now (8%)</th><th class="r">Proposed markup</th><th class="r">Proposed price</th></tr></thead><tbody>${rows}</tbody></table></section>
+<!-- Vehicle list -->
+<section class="page">${band}<p class="kick">Vehicle list</p><h2>All ${n(cars.length)} vehicles, by make.</h2><div class="legend"><span>USD · exporter price is the car only</span><span>Grey: website today (8%)</span><span><b style="color:#061F30">Bold: proposed price</b></span></div>
+<table class="list"><thead><tr><th>Model · exporter ref</th><th>Year</th><th>Type</th><th class="r">Mileage km</th><th class="r">Engine cc</th><th>Fuel</th><th class="r">Exporter</th><th class="r">Now 8%</th><th class="r">Proposed</th></tr></thead>${listBody}</table></section>
 
-<section class="sec">${head('Markup, tax and confirmation', `Proposed markup: the greater of ${RATE * 100}% or USD ${MIN_MARGIN}, up from a flat 8%.`)}
-<div class="two"><div><p>8% is under USD 120 on a USD 1,500 car: too little for sourcing time, transfer costs and deals that fall through. <b>The owner sets the final markup.</b></p>
-<table class="calc"><thead><tr><th>Example, USD</th><th class="r">Exporter</th><th class="r">Now (8%)</th><th class="r">Proposed</th></tr></thead><tbody>${ex.map(e => `<tr><td>${e.car.year} ${esc(e.car.model)}</td><td class="r">${n(e.fob)}</td><td class="r">${n(priceNow(e.fob))}</td><td class="r"><b>${n(priceNew(e.fob))}</b></td></tr>`).join('')}</tbody></table>
-<h3 style="margin-top:3mm">Competitors</h3><ul><li><b>Exporters</b> (BE FORWARD, SBI Motor, SAT Japan, EVERY, Tokyo Carz, JGLOGI) sell the same cars at plain FOB. SBI delivers to Kampala and Nimule; SAT lists Juba.</li><li><b>Importers:</b> MHH Japanese Cars (CIF or cleared and registered in Uganda, about 65 days); carimports.co.ke (shows a delivered price per car, for Kenya).</li><li><b>Local:</b> Autochek Uganda, usedcars.co.ug, Kampala dealers; in Juba, Light Heart General Trading and LTA-Juba. No prices found.</li><li><b>None publishes an all-in price</b> for Kampala or Juba. Buyers can go direct, so our fee must be earned by delivery, clearing, registration and one written price.</li></ul>
-<p class="small">Margin evidence (low confidence): one Nairobi importer-dealer reports 10% to 15% before tax; a Kenyan blog's 15% to 30% is promotional. No Uganda or South Sudan figure found. Local asking prices found were undated or secondary. Next step: written cleared-in-Kampala quotes from two importers on these three cars, and Juba dealer prices.</p><p class="note" style="margin-top:4mm">Prices are indicative and change without notice. Vehicles are external exporter listings, not confirmed Spear Line stock. Availability, final price and delivery are confirmed in writing for each enquiry.</p></div>
-<div><h3>Worked example: Uganda (Kampala), draft</h3>${exampleTable}<h3 style="margin-top:3mm">Tax by country (all <span class="tag">TO CONFIRM</span>)</h3><table class="tax"><tbody>${taxCountries.map(([c, r, u]) => `<tr><td style="width:17%"><b>${esc(c)}</b></td><td>${esc(r)}. <span class="small">${esc(u)}.</span></td></tr>`).join('')}</tbody></table></div></div>
-<div class="two" style="margin-top:3mm"><div><h3>Decisions</h3><ul class="check"><li>Markup: 8% (now) / greater of ${RATE * 100}% or USD ${MIN_MARGIN} (proposed) / other: ____________</li><li>Same markup for every destination: yes / no</li><li>Remove European, Lexus and kei cars: yes / no / some: ____</li><li>Add models (Land Cruiser VX, 70 Series, Patrol, more Prado, Hilux, RAV4, Harrier): ____</li><li>Offer first: Uganda / Kenya (2018 or newer) / South Sudan / DR Congo</li></ul></div>
-<div><h3>To confirm in writing</h3><ul class="check"><li>Uganda duty, VAT, withholding and environmental levy, 2026/27</li><li>Sea freight Japan to Mombasa by size (placeholder USD ${n(FREIGHT_PLACEHOLDER)}) and insurance (placeholder ${INSURANCE_RATE * 100}%)</li><li>Clearing, port, transit, inland transport and registration costs</li><li>Juba and Kampala dealer prices for the same models</li></ul></div></div>
-<div class="sign"><div>Confirmed by (name)</div><div>Signature</div><div>Date</div></div>
-</section>
+<!-- Markup and competitors -->
+<section class="page">${band}<p class="kick">Markup and competitors</p><h2>Why ${RATE * 100}% with a USD ${MIN_MARGIN} minimum.</h2><p class="lede">A flat 8% earns under USD 120 on a USD 1,500 car. That does not cover sourcing time, money transfer, exchange-rate movement or a deal that falls through. The owner sets the final markup.</p>
+<div class="box"><h3>Competitors</h3><table class="t"><thead><tr><th style="width:32%">Who</th><th>What they offer</th></tr></thead><tbody>
+<tr><td><b>Exporters</b><br><span class="small">BE FORWARD, SBI Motor, SAT Japan, EVERY, Tokyo Carz, JGLOGI</span></td><td>Sell the same cars to buyers directly at the plain FOB price. SBI delivers to Kampala and Nimule; SAT lists Juba.</td></tr>
+<tr><td><b>Importers</b><br><span class="small">MHH Japanese Cars; carimports.co.ke</span></td><td>MHH: CIF or cleared and registered in Uganda, about 65 days. carimports.co.ke shows a delivered price per car, for Kenya.</td></tr>
+<tr><td><b>Local sellers</b><br><span class="small">Autochek Uganda, usedcars.co.ug, Kampala dealers; Light Heart General Trading and LTA-Juba</span></td><td>Cars already in the country. No Juba price lists found.</td></tr></tbody></table></div>
+<div class="cols"><div><h3>What it means for us</h3><ul><li><b>Buyers can go direct</b> to exporters, so our fee has to be earned by delivery, clearing, registration and one written price.</li><li><b>No competitor publishes an all-in price</b> for Kampala or Juba. A clear, correct landed price is how Spear Line can stand out.</li></ul></div>
+<div><h3>Margin evidence</h3><ul><li>One Nairobi importer-dealer reports <b>10% to 15%</b> before tax. A Kenyan blog's 15% to 30% is promotional.</li><li>No Uganda or South Sudan figure found. Local asking prices found were undated or secondary.</li></ul></div></div>
+<p class="note"><b>Next step.</b> Ask two importers for written cleared-in-Kampala quotes on the three example cars, and collect Juba dealer prices, before the markup is final.</p></section>
+
+<!-- Tax -->
+<section class="page">${band}<p class="kick">Tax and landing costs</p><h2>What a buyer pays on top (draft).</h2><p class="lede">A worked Kampala example on stated assumptions. Freight and insurance are placeholders and every tax rate is still to be confirmed.</p>
+<table class="t" style="margin-bottom:2mm">${exHead('Uganda example, USD')}<tbody>
+${exRow('Exporter price', e => n(e.fob))}
+${exRow('Spear Line markup (proposed)', e => n(e.margin))}
+${exRow('Freight to Mombasa + insurance (placeholder)', e => n(e.freightIns), 'hl')}
+${exRow('Import duty, 25%', e => n(e.duty))}
+${exRow('VAT, 18%', e => n(e.vat))}
+${exRow('Withholding tax and infrastructure levy, 7.5%', e => n(e.other))}
+${exRow('Total so far', e => n(e.total), 'tot')}</tbody></table>
+<p class="small" style="margin-bottom:7mm">Not yet included: environmental levy (a URA document gives 50% for cars over 8 to 9 years old, which covers most cars here), clearing, transport to Kampala and registration. Tax is worked on exporter price + freight + insurance; URA actually values used cars from its own database.</p>
+<h3>Rates found by country (all to be confirmed)</h3><table class="t"><thead><tr><th style="width:17%">Country</th><th style="width:40%">Rates and rules</th><th>What is uncertain</th></tr></thead><tbody>${taxCountries.map(([c, r, u]) => `<tr><td><b>${esc(c)}</b></td><td>${esc(r)}</td><td class="small">${esc(u)}</td></tr>`).join('')}</tbody></table>
+<p class="small" style="margin-top:3mm">Rules change each budget (July in Uganda and Kenya). Each country needs written confirmation from the revenue authority or a clearing agent before a total is shown to a customer.</p></section>
+
+<!-- Sign-off -->
+<section class="page">${band}<p class="kick">Confirmation</p><h2>Decisions before this goes live.</h2><p class="lede">Tick or write in, then sign. Prices go on the website only after this is confirmed.</p>
+<div class="cols"><div class="box"><h3>Prices and cars</h3><ul class="check"><li>Markup: 8% (now) / ${RATE * 100}%, minimum USD ${MIN_MARGIN} (proposed) / other: ________</li><li>Same markup for every country: yes / no</li><li>Remove European, Lexus and kei cars: yes / no / some</li><li>Add Land Cruiser, Patrol, more Prado, Hilux, RAV4, Harrier: yes / no</li></ul></div>
+<div class="box"><h3>Countries to offer first</h3><ul class="check"><li>Uganda</li><li>Kenya (cars 2018 or newer only)</li><li>South Sudan (drive-side rule to settle)</li><li>DR Congo (needs left-hand-drive cars)</li></ul></div></div>
+<div class="box"><h3>To confirm in writing</h3><ul class="check"><li>Uganda duty, VAT, withholding tax and environmental levy for 2026/27</li><li>Sea freight Japan to Mombasa by car size (placeholder USD ${n(FREIGHT_PLACEHOLDER)}) and insurance (placeholder ${INSURANCE_RATE * 100}%)</li><li>Clearing, port, transit, inland transport and registration costs</li><li>Juba and Kampala dealer prices for the same models</li></ul></div>
+<div class="sign"><div>Name</div><div>Signature</div><div>Date</div></div>
+<p class="small" style="margin-top:10mm">Prices are indicative and change without notice. Vehicles are external exporter listings, not confirmed Spear Line stock. Availability, final price and delivery are confirmed in writing for each enquiry.</p></section>
 </body></html>`;
 
 await writeFile(resolve(out, 'price-list.html'), html);
