@@ -52,6 +52,46 @@ Exporter watermarks and reference text stay as they are. The repo rule is that v
 
 Nothing is deleted silently. A listing moves to `content/vehicle-archive.mjs` with a reason code, so it can come back after a refresh.
 
+### B0. What sells here: demand evidence (added 16 November 2026)
+
+The catalogue was researched for spread, not demand: 99 models at 1 to 5 cars each (mostly 3). Real demand is concentrated in a few models. Evidence found, all from dealer, exporter or newspaper sources; I found **no registration or sales data for used cars** (URA does not publish it in anything I could reach), so treat this as a starting view to test against your own enquiries:
+
+| Market | Models named as popular | Source type |
+| --- | --- | --- |
+| Uganda, used | RAV4, Premio, Harrier (2020 report: top three at 7%, 6%, 5%); Allion, Vitz, Noah, Probox, Corolla Fielder (high resale), Mark X, Hiace, Prado, Hilux | [Carkibanda 2020 report](https://www.carkibanda.com/en/blog/uganda-2020-used-car-market-report), [Monitor, cars under Shs15m](https://monitor.co.ug/uganda/business/auto/cars-you-can-get-at-shs15m-and-below-1559964), [BE FORWARD](https://blog.beforward.jp/regional-topics/top-10-most-popular-cars-in-uganda-for-2021.html) |
+| Uganda, new (full year 2025) | Hilux 29%, Land Cruiser 70 20.7%, Prado 11.6% of 2,466 new light vehicles | [Best Selling Cars Blog](https://bestsellingcarsblog.com/2026/03/uganda-full-year-2025-toyota-hilux-and-land-cruiser-70-hold-49-7-combined/) |
+| Juba | Land Cruiser Prado, Land Cruiser VX, Suzuki Escudo, Nissan Patrol or Safari, RAV4, Pajero; Land Cruisers and Hilux dominate NGO fleets (aid-agency demand is a large driver) | [A Juba import dealer's blog](https://japanese-used-car-in-south-sudan.blogspot.com), an old [Mail & Guardian piece](https://mg.co.za/?p=121763) |
+
+Gaps in our catalogue against this: **no Land Cruiser VX or 70 Series and no Patrol or Safari**, the models Juba names first. The only Land Cruiser family model is Prado (3 cars). Lexus LX (3 cars, USD 34,220 to 47,730 before tax) is a Land Cruiser 200 sibling and may suit Juba, but is expensive.
+
+**Proposed shortlist, by evidence (a proposal for you to approve, not applied):**
+
+| Tier | Rule | Cars | Models |
+| --- | --- | --- | --- |
+| A. Core, named in demand evidence | Keep and promote | 37 | Toyota RAV4, Harrier, Premio, Allion, Vitz, Noah, Probox, Succeed, Corolla Fielder, Mark X, Hiace Van, Land Cruiser Prado, Hilux; Suzuki Escudo; Mitsubishi Pajero |
+| B. Mainstream Japanese, no direct evidence found | Keep for now; judge on landed price against local market (B1) | 124 | Other Toyota, Honda, Nissan, Mazda, Subaru, Mitsubishi, Suzuki, Daihatsu, Isuzu, Ford |
+| C. Review for removal | Archive unless enquiries or benchmarks show demand | 72 | European marques (49: Audi 9, BMW 10, Mercedes-Benz 14, Volkswagen 8, Land Rover 8); Lexus (14); kei cars of 660 cc or less (Mira, Alto, Wagon R, Jimny: 9) |
+
+Why tier C: European and luxury cars carry the highest duty and valuation, and parts and servicing cost more, so landed prices tend to sit well above local asking prices. This is reasoning, not data; Part B1's market benchmark test decides each one. Suzuki Jimny (3) is a kei-size 4x4 and may sell despite the engine size, so review it separately. Sorting by the shortlist alone would cut the catalogue from 233 to about 161 (tiers A and B); adding the landed-price test will cut further.
+
+**Better than removing:** replace tier C with more of tier A. The best use of the freed space is more Prado, Land Cruiser (Series 200 and Lexus LX for Juba), Hilux, RAV4, Harrier and Noah examples across years and price points, so a buyer sees a real choice in the cars most asked for.
+
+### B0b. Local price benchmarks (Juba and Kampala)
+
+What I could and could not find on 16 November 2026:
+
+- **No Juba classifieds site found.** I searched for a Juba marketplace, a Jiji South Sudan site and named Juba dealers. Juba used-car trade appears to run through showrooms, Facebook groups and WhatsApp, which cannot be read without logging in. I could not confirm that a Jiji site for South Sudan exists (Jiji results were Tanzania only).
+- **Juba-linked sellers found:** Light Heart General Trading Co. Ltd. (Juba; imports and exports used and new vehicles, motorbikes and spares; listed on Japanese Car Trade), and LTA-Juba (a Toyota vehicle and parts supplier). Exporters serving Juba: SBI Motor Japan, EVERY Co Ltd and SAT Japan. These are import channels, not price lists for Juba buyers.
+- **I could not read any of those sites' listings.** The automated page reader failed on every site because they are outside this environment's allowed network hosts, so no listings or prices from them are in this plan. Search snippets gave only these Uganda figures, which are old or secondary and must not be published: RAV4 2024 at UGX 180 to 200 million and 2025 at UGX 147 to 223 million (usedcars.co.ug, duty not paid); a 2022 dealer quote of about Shs65 million for a Harrier from 2004 to 2006 and Shs55 to 60 million for a 2008 RAV4; Afrotools planning estimates for a Prado (2016: UGX 93 to 160 million, 2020: UGX 141 to 231 million), which that site labels as estimates.
+
+**How to get prices we can stand behind:**
+
+1. **Juba (primary): written price lists from dealers.** Ask 6 to 10 Juba dealers (Light Heart, LTA-Juba and showrooms you know) by WhatsApp for the delivered-in-Juba price, with duty paid, of 15 named models in set years. Record in `content/market-benchmarks.mjs`: dealer, date, model, year, mileage, price, currency, duty paid or not, a screenshot kept privately. Re-ask every month; Juba prices move with the exchange rate and supply.
+2. **Juba (cross-check): customs and agent quotes** for three sample cars, which also verify the tax rules in C3.
+3. **Kampala:** record asking prices from the Ugandan marketplaces (Cheki, Autochek Uganda, usedcars.co.ug, Jiji Uganda, dealer pages) for the tier A models, split into duty paid and duty not paid. Check each site's terms before collecting at scale; a person copying 50 prices by hand is fine, a bulk scraper may not be.
+4. **Exporter and importer calculators as a sanity check only:** for example carimports.co.ke shows CIF Mombasa and an estimated landed price for the same exporter cars. Useful to spot an outlier; not a source for our rates.
+5. **Compute our price band per model:** landed estimate (Part C) against the median of at least 3 local asking prices. If our landed price is more than your allowed premium over local market (suggest 0 to 5%), the car is archived or its margin is cut. This is the "price it perfectly" test.
+
 ### B1. Rules (a listing is archived if it fails any "hard" rule, or two "soft" rules)
 
 | Rule | Type | Check |
@@ -184,6 +224,9 @@ For a buyer who already has, or has found, a car in Juba, Nairobi or elsewhere a
 5. **LHD stock.** Should we start sourcing left-hand-drive cars for South Sudan and DRC, and from where?
 6. **Photos.** Fetch extra photos from the exporter pages (more bandwidth and storage, about 3 times what is stored now), or choose only from the 2,245 already stored?
 7. **Your last message ended mid-sentence ("we se…").** If there was another requirement, please send it and I will add it here.
+8. **Tier C.** Archive the 72 European, Lexus and kei listings now, or wait until Juba and Kampala benchmarks show whether any of them sell? (Recommended: archive the kei cars and European cars now, keep Lexus LX for Juba until benchmarked.)
+9. **Juba price sources.** Can you or a Juba contact collect dealer price lists (step 1 in B0b)? That is the only route I found to real Juba prices. Or allow this session's network to reach the dealer and marketplace sites so I can read their public listings (Light Heart, LTA-Juba, usedcars.co.ug, Autochek Uganda); that is a network-settings change only you can approve.
+10. **Premium over local market.** How far above the local asking price may our landed price be before a car is archived or its margin cut (suggested 0 to 5%)?
 
 ## Risks
 
