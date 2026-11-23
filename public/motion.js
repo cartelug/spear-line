@@ -194,7 +194,7 @@ export function createMotion({ root = document.documentElement, preference = mat
     if (!wantsScenes || scenes || starting || disposed || reduced()) return;
     starting = true;
     const idle = callback => ("requestIdleCallback" in window ? requestIdleCallback(callback, { timeout: 2500 }) : setTimeout(callback, 300));
-    const start = () => import("./scenes.js?v=eab9c4b1c6").then(module => {
+    const start = () => import("./scenes.js?v=33faf98ec5").then(module => {
       if (disposed) return;
       scenes = module.createScenes({ root, reduced });
       return scenes.start();

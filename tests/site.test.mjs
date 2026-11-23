@@ -9,7 +9,7 @@ import { vehicleGalleries } from "../content/vehicle-galleries.mjs";
 import { vehiclePriceGuide } from "../content/vehicle-prices.mjs";
 
 const pub = resolve(dirname(fileURLToPath(import.meta.url)), "..", "public");
-const pages = ["divisions.html", "digital.html", "materials.html", "fitness.html", "real-estate.html", "finance.html", "founder.html", "index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "terms.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
+const pages = ["divisions.html", "digital.html", "materials.html", "fitness.html", "real-estate.html", "finance.html", "loan-application.html", "founder.html", "index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "terms.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
 const read = name => readFile(resolve(pub, name), "utf8");
 const exists = async name => access(resolve(pub, name)).then(() => true, () => false);
 const visibleText = html => html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "").replace(/<[^>]+>/g, " ");

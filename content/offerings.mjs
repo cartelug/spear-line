@@ -376,9 +376,9 @@ export const offerings = {
   },
   "finance": {
     "title": "Understand the money behind the business.",
-    "lede": "A finance guide in two parts: the economy that shapes trade, and the savings, credit and payments that keep small businesses moving.",
+    "lede": "Spear Line Finance: clear terms, honest assessment and a simple way to apply. Plus a plain guide to the economy behind trade and the everyday money of small businesses.",
     "image": "records-desk",
-    "intro": "Finance touches every Spear Line division. Vehicles are priced in foreign currency, freight follows fuel, and a supply order is only as useful as the cash flow behind it. This guide explains the big picture (macro) and the everyday tools (micro) in plain language. The guide is general information and not personal advice, and it includes a licensed Kampala lender whose terms are set out in full below.",
+    "intro": "Finance touches every Spear Line division. Vehicles are priced in foreign currency, freight follows fuel, and a supply order is only as useful as the cash flow behind it. This division applies a short list of principles to every finance conversation: terms in writing before you commit, an honest look at what you can repay, and no hidden charges. Below you can read how it works, check the true cost of any loan, and prepare an application.",
     "compare": {
       "macro": {
         "label": "Macro finance",
@@ -517,97 +517,160 @@ export const offerings = {
     ],
     "faqs": [
       {
-        "q": "Is Spear Line a bank or a lender?",
-        "a": "No. This page offers general information and planning conversations. Spear Line does not advertise deposit-taking, lending, currency dealing or investment services here. Any loan, savings product or payment service would come from a provider licensed for that activity."
+        "q": "Is Spear Line a bank?",
+        "a": "No. Spear Line does not take deposits. This division handles finance enquiries and applications and explains the money side of trade in plain language."
       },
       {
-        "q": "Who is Biashara Trading Company Limited?",
-        "a": "A licensed Kampala money lending company incorporated in 2014, offering short-term bridge financing in four products: school fees, salary, asset financing and business loans. Its terms are summarised on this page, and the lender assesses and approves every application itself."
+        "q": "Are the terms the same for everyone?",
+        "a": "No. Amount, term, interest, charges and security depend on the purpose and on what you can comfortably repay. What stays the same is how we work: the same standards for every file, and every term in writing before you commit."
       },
       {
-        "q": "What does a Biashara loan cost?",
-        "a": "The published rate is 2.8% per month on the approved principal, for facilities of UGX 1,000,000 to 50,000,000 and a maximum of 6 months. Applying and assessment are free. Any processing fee or other charge is shown on a written schedule that you accept before signing. Individual terms are confirmed in writing at approval."
+        "q": "Does it cost anything to apply?",
+        "a": "No. Enquiries, applications and credit assessment are free. If any fee applies to a facility, it is shown on a written schedule and only applies after you accept it."
+      },
+      {
+        "q": "Who licenses and regulates lending?",
+        "a": "Banks and deposit-taking microfinance institutions in Uganda are supervised by the Bank of Uganda. Non-deposit-taking microfinance institutions and savings and credit cooperatives fall under the Uganda Microfinance Regulatory Authority. Before you accept any facility, ask for the provider’s name and licence details in writing and confirm them with the licensing authority."
+      },
+      {
+        "q": "Does an application guarantee a loan?",
+        "a": "No. Every application is assessed. Final approval and release of funds depend on verification and on you accepting the written terms."
+      },
+      {
+        "q": "Can I get financial advice here?",
+        "a": "No. The guidance on this page is general and is not personal financial, investment, tax or legal advice. For a decision about borrowing, saving or investing, speak with a qualified and licensed adviser."
+      },
+      {
+        "q": "What should I include in a finance enquiry?",
+        "a": "The purpose, the amount and currency, the term you have in mind, and how the need connects to a vehicle, supply, logistics or property requirement. Please leave out bank details, card numbers, PINs and identity documents."
       },
       {
         "q": "What is the difference between macro and micro finance?",
         "a": "Macro finance is about the whole economy: exchange rates, inflation, interest rates, budgets and trade between countries. Micro finance is about small-scale services for individuals and small businesses, such as savings groups, small loans and mobile money. Trade decisions are shaped by both."
-      },
-      {
-        "q": "Who regulates microfinance in Uganda?",
-        "a": "Banks and deposit-taking microfinance institutions are supervised by the Bank of Uganda. Non-deposit-taking microfinance institutions and savings and credit cooperatives fall under the Uganda Microfinance Regulatory Authority. Ask any lender for its licence, check the dates, and confirm it with the licensing authority before you share money or documents."
-      },
-      {
-        "q": "Can I get financial advice here?",
-        "a": "No. The information on this page is general and is not personal financial, investment, tax or legal advice. For a decision about borrowing, saving or investing, speak with a qualified and licensed adviser."
-      },
-      {
-        "q": "What should I include in a finance enquiry?",
-        "a": "Say what you want to achieve, the amount and currency, the timing, and how the matter connects to a vehicle, supply, logistics or property requirement. Please leave out bank details, card numbers, PINs and identity documents."
       }
     ],
-    "lender": {
-      "label": "Micro finance in practice",
-      "title": "Biashara Trading Company Limited",
-      "text": "Biashara is a licensed money lending company in Kampala, incorporated in 2014 to provide accessible, short-term bridge financing. It began as a small business focused on faster access to credit in a client-friendly setting, and its stated ambition is to grow into a microfinance institution serving a fast-growing mass market. Spear Line does not make loans on this page. Biashara assesses, approves and disburses its own facilities.",
-      "mission": "Its mission is to provide reliable, transparent and sustainable financial solutions that help entrepreneurs turn viable ideas into profitable success.",
+    "service": {
+      "label": "Spear Line Finance",
+      "title": "Finance that starts with what you can repay.",
+      "text": "Spear Line Finance helps customers and trading partners fund a purchase, an order or a growing business. Every application is read the same way: the purpose first, repayment capacity second, security where the facility needs it, and every term set out in writing before you commit.",
+      "mission": "The aim is simple: reliable, transparent and sustainable finance that helps people turn a sound plan into a working business, without taking on more than they can comfortably service.",
+      "principlesTitle": "Five principles behind every file",
+      "principles": [
+        {
+          "title": "Clients first",
+          "text": "We listen carefully, reply promptly and build long relationships through useful service."
+        },
+        {
+          "title": "Transparency",
+          "text": "Terms, charges and expectations are explained clearly and in writing before any commitment is made."
+        },
+        {
+          "title": "Responsible lending",
+          "text": "We size a facility to a real need and to your ability to repay, never to the largest amount you could technically borrow."
+        },
+        {
+          "title": "Professional service",
+          "text": "We work with discipline, accountability and respect, and hold ourselves to the standard we ask of applicants."
+        },
+        {
+          "title": "Sustainable growth",
+          "text": "We back practical decisions that make both the customer and the business stronger over time."
+        }
+      ],
       "terms": [
         {
-          "label": "Facility range",
-          "value": "UGX 1,000,000 to 50,000,000"
-        },
-        {
-          "label": "Interest",
-          "value": "2.8% per month on the approved principal, across all four products"
-        },
-        {
-          "label": "Maximum term",
-          "value": "6 months"
-        },
-        {
-          "label": "Cost to apply",
+          "label": "Cost to enquire",
           "value": "None. Enquiries, applications and credit assessment are free"
         },
         {
-          "label": "Other charges",
-          "value": "Any processing fee or loan charge is listed on a written schedule and applies only after you accept it"
+          "label": "Amount and term",
+          "value": "Set for each application after assessment, sized to what you can comfortably repay"
         },
         {
-          "label": "Review target",
-          "value": "4 working hours for complete files, during office hours"
+          "label": "Interest and charges",
+          "value": "Quoted in writing before you accept. Every fee sits on a written schedule and none is hidden"
+        },
+        {
+          "label": "Security",
+          "value": "Asked for only where the facility needs it, and agreed in writing"
+        },
+        {
+          "label": "Decision",
+          "value": "An application does not guarantee a facility. Approval follows checks and terms you have accepted"
+        },
+        {
+          "label": "Enquiry hours",
+          "value": "Monday to Saturday, 9 am to 6 pm EAT"
         }
       ],
-      "termsNote": "These are the standard published terms. Approved amount, tenure, security and repayment arrangements depend on credit assessment and approval, an application does not guarantee a facility, and individual terms are confirmed in writing and may differ. The rate is per month, not per year.",
-      "productsTitle": "Four short-term products",
+      "termsNote": "Spear Line does not publish a standard rate or amount, because the right figures depend on the purpose, the term and the security. You always see the full cost in writing first, and you can compare it with the cost checker below.",
+      "facts": [
+        {
+          "value": "Free",
+          "label": "To enquire, apply and be assessed"
+        },
+        {
+          "value": "In writing",
+          "label": "Every term before you commit"
+        },
+        {
+          "value": "Capacity first",
+          "label": "Never the largest amount you could borrow"
+        },
+        {
+          "value": "5 standards",
+          "label": "Applied to every file"
+        },
+        {
+          "value": "Mon to Sat",
+          "label": "Enquiry hours, 9 am to 6 pm EAT"
+        }
+      ],
+      "checker": {
+        "title": "Check the true cost before you borrow.",
+        "text": "Headline rates mislead. Enter an amount, a term and the monthly interest rate you have been quoted, by anyone, and see what it adds up to. Use it on any offer you are weighing, including ours.",
+        "note": "This is a planning estimate, not a quote from Spear Line. It assumes the full amount stays outstanding for the whole term, which is the highest the interest can be. Processing fees and other charges are not included. Ask every lender for the total repayable in writing."
+      },
+      "productsTitle": "What you can apply for",
+      "productsIntro": "Four starting points, each tied to how Spear Line trades. Amount, term, rate and security are agreed for each application and confirmed in writing.",
       "products": [
         {
-          "title": "School fees loans",
-          "text": "Short-term finance for eligible clients to meet school-fee obligations and manage education cash flow across a term.",
-          "note": "Purpose: termly school-fee obligations. Security as required by the facility."
+          "slug": "business",
+          "icon": "i-commerce",
+          "title": "Business working capital",
+          "text": "Smooth out cash-flow gaps, cover operating costs and bridge the time between paying suppliers and being paid.",
+          "note": "Security as agreed in writing."
         },
         {
-          "title": "Salary loans",
-          "text": "Short-term facilities for eligible salaried clients with approved personal or household needs, repaid against verified income.",
-          "note": "Purpose: approved personal or household needs. Verified income, with security if required."
+          "slug": "stock",
+          "icon": "i-supplies",
+          "title": "Stock and supply finance",
+          "text": "Fund a purchase of goods, materials or inventory for resale or a project, matched to your order and delivery timing.",
+          "note": "Security as agreed in writing."
         },
         {
-          "title": "Asset financing",
-          "text": "Finance for approved vehicle, land and other productive asset purchases, structured within a maximum six-month term.",
-          "note": "Security: the financed asset and/or other approved security."
+          "slug": "asset",
+          "icon": "i-vehicle",
+          "title": "Vehicle and asset finance",
+          "text": "Finance a vehicle, equipment or another productive asset that will earn the repayments.",
+          "note": "Security: the financed asset and any other approved security."
         },
         {
-          "title": "Business loans",
-          "text": "Working-capital finance for stock purchases, cash-flow gaps and other approved business needs.",
-          "note": "Security as required by the facility."
+          "slug": "personal",
+          "icon": "i-brief",
+          "title": "Education and personal needs",
+          "text": "Short-term help with school fees or an approved personal or household need, repaid against verified income.",
+          "note": "Verified income, with security if required."
         }
       ],
-      "eligibleTitle": "Who is eligible",
+      "eligibleTitle": "Who can apply",
       "eligible": [
-        "Individuals and enterprises operating in Uganda",
-        "Salaried clients with verifiable income",
+        "Individuals and enterprises operating in the regions Spear Line serves",
+        "Salaried people with verifiable income",
         "Micro and small business owners with a productive need",
         "Sole proprietors, companies and registered organisations",
-        "Clients able to show capacity to repay",
-        "Clients who can provide security where the facility requires it"
+        "Applicants able to show capacity to repay",
+        "Applicants who can provide security where the facility requires it"
       ],
       "documentsTitle": "Documents usually requested",
       "documents": [
@@ -619,20 +682,29 @@ export const offerings = {
         "Security documentation, where the facility requires it",
         "Contact and referee details"
       ],
-      "documentsNote": "These lists are the usual starting point. More may be requested depending on the product and amount. Eligibility is judged on repayment capacity, purpose and security where required, not on the category a client falls into. Biashara serves urban, semi-urban and rural Uganda from a single Kampala office, subject to its operating capacity.",
-      "stepsTitle": "How a Biashara loan moves forward",
+      "documentsNote": "These lists are the usual starting point. More may be requested depending on the purpose and amount. Eligibility is judged on repayment capacity, purpose and security where required, not on the category an applicant falls into. If a document is missing, apply anyway and we will tell you exactly what is outstanding.",
+      "documentChoices": [
+        "Valid national identification",
+        "Proof of income (payslips or business records)",
+        "Bank or mobile money statements",
+        "Business registration documents",
+        "Invoice, fee structure or quotation",
+        "Security documentation",
+        "Contact and referee details"
+      ],
+      "stepsTitle": "From enquiry to funds: four steps",
       "steps": [
         {
           "title": "Enquire and apply",
-          "text": "Begin by email. Biashara guides the application and the documents needed."
+          "text": "Prepare your application here, or call or message us. We guide you on the documents you need."
         },
         {
           "title": "Assess",
-          "text": "A complete file is reviewed within a target of 4 working hours, checking purpose, affordability and required security."
+          "text": "We check the purpose, affordability and any security needed, and we keep you informed while we do."
         },
         {
           "title": "Approve and accept",
-          "text": "Approved terms, interest and any loan charges are scheduled in writing, and you accept them before signing."
+          "text": "Approved terms, interest and every charge are set out in writing. You accept them before you sign."
         },
         {
           "title": "Disburse",
@@ -647,33 +719,32 @@ export const offerings = {
         },
         {
           "title": "Capacity",
-          "text": "Cash flow and ability to repay within the approved term."
+          "text": "Cash flow and ability to repay within the agreed term."
         },
         {
           "title": "Capital",
-          "text": "The client’s own financial position and commitment to the purpose."
+          "text": "Your own financial position and commitment to the purpose."
         },
         {
           "title": "Collateral",
-          "text": "Acceptable security where the approved facility requires it."
+          "text": "Acceptable security where the facility requires it."
         },
         {
           "title": "Conditions",
           "text": "Purpose, term, sector and the wider context of the request."
         }
       ],
-      "licence": "Biashara holds Money Lending Licence 1451/ML, issued 11 March 2026 and expiring 31 December 2026. The licence is renewed every year. To verify the current licence, contact Biashara’s Board of Directors.",
-      "contactTitle": "Contact Biashara directly",
-      "contact": [
-        "Conrad Plaza, Plot 24/25 Entebbe Road, 2nd floor, Suite 2, Kampala",
-        "Phone +256 702 634 848 or +256 392 960 002",
-        "Email inquiries@biasharafinance.com",
-        "Monday to Friday, 8:00 AM to 4:00 PM"
-      ],
-      "contactNote": "Please do not send identity documents, card details, PINs or bank details through this website. Share them only with the lender, through its own channels.",
-      "source": {
-        "name": "Biashara Trading Company Limited",
-        "url": "https://www.biasharafinance.com/"
+      "cta": {
+        "title": "Ready to apply?",
+        "text": "Prepare a complete application in five short steps. Your email or WhatsApp opens with everything written out, ready to send to Spear Line. Nothing is sent until you press send."
+      },
+      "contactTitle": "Talk to Spear Line Finance",
+      "contactNote": "Please do not send identity documents, card details, PINs or bank details through this website or in a first message. Share documents only when we ask, through the channel we agree with you.",
+      "application": {
+        "title": "Apply for a loan",
+        "lede": "Five short steps. Tell us what you need, a few details about you and what the money is for. Then send the finished application to Spear Line by email or WhatsApp.",
+        "safety": "Please do not type identity numbers, card details, PINs or bank account numbers. Tick the documents you can provide and share them only when Spear Line asks.",
+        "how": "This page prepares your application. It does not send anything by itself. When you finish, your email app or WhatsApp opens with the application written out, and you press send there. Your details are not stored by this website."
       }
     }
   },

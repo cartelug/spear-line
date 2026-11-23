@@ -162,7 +162,7 @@ export const divisions = [
     "status": "Enquiry-led",
     "image": "records-desk",
     "href": "finance.html",
-    "text": "Plain-language guidance on the economy behind trade and on savings, credit and payments for small businesses. Information and planning, not a lending product."
+    "text": "Finance enquiries and loan applications on clear terms, plus plain-language guidance on the economy behind trade and the everyday money of small businesses."
   }
 ];
 
