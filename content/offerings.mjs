@@ -378,7 +378,7 @@ export const offerings = {
     "title": "Understand the money behind the business.",
     "lede": "A finance guide in two parts: the economy that shapes trade, and the savings, credit and payments that keep small businesses moving.",
     "image": "records-desk",
-    "intro": "Finance touches every Spear Line division. Vehicles are priced in foreign currency, freight follows fuel, and a supply order is only as useful as the cash flow behind it. This guide explains the big picture (macro) and the everyday tools (micro) in plain language. It is general information, not a lending product or personal advice.",
+    "intro": "Finance touches every Spear Line division. Vehicles are priced in foreign currency, freight follows fuel, and a supply order is only as useful as the cash flow behind it. This guide explains the big picture (macro) and the everyday tools (micro) in plain language. The guide is general information and not personal advice, and it includes a licensed Kampala lender whose terms are set out in full below.",
     "compare": {
       "macro": {
         "label": "Macro finance",
@@ -521,12 +521,20 @@ export const offerings = {
         "a": "No. This page offers general information and planning conversations. Spear Line does not advertise deposit-taking, lending, currency dealing or investment services here. Any loan, savings product or payment service would come from a provider licensed for that activity."
       },
       {
+        "q": "Who is Biashara Trading Company Limited?",
+        "a": "A licensed Kampala money lending company incorporated in 2014, offering short-term bridge financing in four products: school fees, salary, asset financing and business loans. Its terms are summarised on this page, and the lender assesses and approves every application itself."
+      },
+      {
+        "q": "What does a Biashara loan cost?",
+        "a": "The published rate is 2.8% per month on the approved principal, for facilities of UGX 1,000,000 to 50,000,000 and a maximum of 6 months. Applying and assessment are free. Any processing fee or other charge is shown on a written schedule that you accept before signing. Individual terms are confirmed in writing at approval."
+      },
+      {
         "q": "What is the difference between macro and micro finance?",
         "a": "Macro finance is about the whole economy: exchange rates, inflation, interest rates, budgets and trade between countries. Micro finance is about small-scale services for individuals and small businesses, such as savings groups, small loans and mobile money. Trade decisions are shaped by both."
       },
       {
         "q": "Who regulates microfinance in Uganda?",
-        "a": "Banks and deposit-taking microfinance institutions are supervised by the Bank of Uganda. Smaller non-deposit-taking lenders, savings and credit cooperatives and money lenders fall under the Uganda Microfinance Regulatory Authority. Ask any provider for its licence and confirm it with the regulator before you share money or documents."
+        "a": "Banks and deposit-taking microfinance institutions are supervised by the Bank of Uganda. Non-deposit-taking microfinance institutions and savings and credit cooperatives fall under the Uganda Microfinance Regulatory Authority. Ask any lender for its licence, check the dates, and confirm it with the licensing authority before you share money or documents."
       },
       {
         "q": "Can I get financial advice here?",
@@ -536,7 +544,138 @@ export const offerings = {
         "q": "What should I include in a finance enquiry?",
         "a": "Say what you want to achieve, the amount and currency, the timing, and how the matter connects to a vehicle, supply, logistics or property requirement. Please leave out bank details, card numbers, PINs and identity documents."
       }
-    ]
+    ],
+    "lender": {
+      "label": "Micro finance in practice",
+      "title": "Biashara Trading Company Limited",
+      "text": "Biashara is a licensed money lending company in Kampala, incorporated in 2014 to provide accessible, short-term bridge financing. It began as a small business focused on faster access to credit in a client-friendly setting, and its stated ambition is to grow into a microfinance institution serving a fast-growing mass market. Spear Line does not make loans on this page. Biashara assesses, approves and disburses its own facilities.",
+      "mission": "Its mission is to provide reliable, transparent and sustainable financial solutions that help entrepreneurs turn viable ideas into profitable success.",
+      "terms": [
+        {
+          "label": "Facility range",
+          "value": "UGX 1,000,000 to 50,000,000"
+        },
+        {
+          "label": "Interest",
+          "value": "2.8% per month on the approved principal, across all four products"
+        },
+        {
+          "label": "Maximum term",
+          "value": "6 months"
+        },
+        {
+          "label": "Cost to apply",
+          "value": "None. Enquiries, applications and credit assessment are free"
+        },
+        {
+          "label": "Other charges",
+          "value": "Any processing fee or loan charge is listed on a written schedule and applies only after you accept it"
+        },
+        {
+          "label": "Review target",
+          "value": "4 working hours for complete files, during office hours"
+        }
+      ],
+      "termsNote": "These are the standard published terms. Approved amount, tenure, security and repayment arrangements depend on credit assessment and approval, an application does not guarantee a facility, and individual terms are confirmed in writing and may differ. The rate is per month, not per year.",
+      "productsTitle": "Four short-term products",
+      "products": [
+        {
+          "title": "School fees loans",
+          "text": "Short-term finance for eligible clients to meet school-fee obligations and manage education cash flow across a term.",
+          "note": "Purpose: termly school-fee obligations. Security as required by the facility."
+        },
+        {
+          "title": "Salary loans",
+          "text": "Short-term facilities for eligible salaried clients with approved personal or household needs, repaid against verified income.",
+          "note": "Purpose: approved personal or household needs. Verified income, with security if required."
+        },
+        {
+          "title": "Asset financing",
+          "text": "Finance for approved vehicle, land and other productive asset purchases, structured within a maximum six-month term.",
+          "note": "Security: the financed asset and/or other approved security."
+        },
+        {
+          "title": "Business loans",
+          "text": "Working-capital finance for stock purchases, cash-flow gaps and other approved business needs.",
+          "note": "Security as required by the facility."
+        }
+      ],
+      "eligibleTitle": "Who is eligible",
+      "eligible": [
+        "Individuals and enterprises operating in Uganda",
+        "Salaried clients with verifiable income",
+        "Micro and small business owners with a productive need",
+        "Sole proprietors, companies and registered organisations",
+        "Clients able to show capacity to repay",
+        "Clients who can provide security where the facility requires it"
+      ],
+      "documentsTitle": "Documents usually requested",
+      "documents": [
+        "Valid national identification",
+        "Proof of income, such as payslips or business records",
+        "Bank or mobile money statements for recent months",
+        "Business registration documents, where applicable",
+        "Evidence of the purpose: an invoice, fee structure or quotation",
+        "Security documentation, where the facility requires it",
+        "Contact and referee details"
+      ],
+      "documentsNote": "These lists are the usual starting point. More may be requested depending on the product and amount. Eligibility is judged on repayment capacity, purpose and security where required, not on the category a client falls into. Biashara serves urban, semi-urban and rural Uganda from a single Kampala office, subject to its operating capacity.",
+      "stepsTitle": "How a Biashara loan moves forward",
+      "steps": [
+        {
+          "title": "Enquire and apply",
+          "text": "Begin by email. Biashara guides the application and the documents needed."
+        },
+        {
+          "title": "Assess",
+          "text": "A complete file is reviewed within a target of 4 working hours, checking purpose, affordability and required security."
+        },
+        {
+          "title": "Approve and accept",
+          "text": "Approved terms, interest and any loan charges are scheduled in writing, and you accept them before signing."
+        },
+        {
+          "title": "Disburse",
+          "text": "Funds are released once verification, accepted terms and all conditions are complete."
+        }
+      ],
+      "standardsTitle": "The five standards applied to every file",
+      "standards": [
+        {
+          "title": "Character",
+          "text": "Credit history, conduct and willingness to meet obligations."
+        },
+        {
+          "title": "Capacity",
+          "text": "Cash flow and ability to repay within the approved term."
+        },
+        {
+          "title": "Capital",
+          "text": "The client’s own financial position and commitment to the purpose."
+        },
+        {
+          "title": "Collateral",
+          "text": "Acceptable security where the approved facility requires it."
+        },
+        {
+          "title": "Conditions",
+          "text": "Purpose, term, sector and the wider context of the request."
+        }
+      ],
+      "licence": "Biashara holds Money Lending Licence 1451/ML, issued 11 March 2026 and expiring 31 December 2026. The licence is renewed every year. To verify the current licence, contact Biashara’s Board of Directors.",
+      "contactTitle": "Contact Biashara directly",
+      "contact": [
+        "Conrad Plaza, Plot 24/25 Entebbe Road, 2nd floor, Suite 2, Kampala",
+        "Phone +256 702 634 848 or +256 392 960 002",
+        "Email inquiries@biasharafinance.com",
+        "Monday to Friday, 8:00 AM to 4:00 PM"
+      ],
+      "contactNote": "Please do not send identity documents, card details, PINs or bank details through this website. Share them only with the lender, through its own channels.",
+      "source": {
+        "name": "Biashara Trading Company Limited",
+        "url": "https://www.biasharafinance.com/"
+      }
+    }
   },
   "supplies": {
     "title": "A supply list that stands up to delivery.",

@@ -394,6 +394,20 @@ function offeringSections(key) {
 }
 // Divisions with a generated concept scene in assets/branded/ use it for the hero; the rest use their catalogue photograph.
 const BRANDED_HEROES = new Set(['materials', 'fitness', 'realestate']);
+// Optional lender profile (finance): a licensed lender's published terms, products, eligibility and process.
+function lenderSections(o) {
+  const l = o.lender;
+  if (!l) return [];
+  const list = items => `<ul class="check-list">${items.map(i => `<li>${icon('i-check')}<span>${esc(i)}</span></li>`).join('')}</ul>`;
+  return [
+    { tone: 'navy', cls: 'lender-overview', label: 'lender-title', field: true, inner: `<div class="wrap"><div class="section-head"><p class="card-label">${esc(l.label)}</p><h2 id="lender-title">${esc(l.title)}</h2><p>${esc(l.text)}</p><p>${esc(l.mission)}</p></div><div class="market-guide-grid">${l.terms.map(t => `<article class="market-guide-card"><p class="card-label">${esc(t.label)}</p><p class="market-guide-price">${esc(t.value)}</p></article>`).join('')}</div><p class="fine">${esc(l.termsNote)}</p></div>` },
+    { tone: 'paper', cls: 'lender-products', label: 'lender-products-title', inner: `<div class="wrap"><div class="section-head"><h2 id="lender-products-title">${esc(l.productsTitle)}</h2><p>Every product uses the same range, rate and maximum term. What differs is the purpose and the security.</p></div><div class="market-guide-grid">${l.products.map(p => `<article class="market-guide-card"><h3>${esc(p.title)}</h3><p>${esc(p.text)}</p><p class="market-guide-price">${esc(p.note)}</p></article>`).join('')}</div></div>` },
+    { tone: 'sand', cls: 'lender-eligibility', label: 'lender-eligible-title', inner: `<div class="wrap"><div class="market-guide-grid"><article class="market-guide-card"><h2 id="lender-eligible-title">${esc(l.eligibleTitle)}</h2>${list(l.eligible)}</article><article class="market-guide-card"><h2>${esc(l.documentsTitle)}</h2>${list(l.documents)}</article></div><p class="fine">${esc(l.documentsNote)}</p></div>` },
+    { tone: 'navy', cls: 'offering-process lender-process', inner: `<div class="wrap"><h2>${esc(l.stepsTitle)}</h2><div class="offer-steps">${l.steps.map((s, i) => `<article><span class="offer-step-number">${String(i + 1).padStart(2, '0')}</span><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></article>`).join('')}</div></div>` },
+    { tone: 'paper', cls: 'lender-standards', label: 'lender-standards-title', inner: `<div class="wrap"><div class="section-head"><h2 id="lender-standards-title">${esc(l.standardsTitle)}</h2></div><div class="market-guide-grid">${l.standards.map(s => `<article class="market-guide-card"><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></article>`).join('')}</div></div>` },
+    { tone: 'sand', cls: 'lender-contact', label: 'lender-contact-title', inner: `<div class="wrap"><div class="market-guide-grid"><article class="market-guide-card"><h2 id="lender-contact-title">Licence</h2><p>${esc(l.licence)}</p></article><article class="market-guide-card"><h2>${esc(l.contactTitle)}</h2>${list(l.contact)}<p class="fine">${esc(l.contactNote)}</p></article></div><p class="fine">Information summarised from the lender\u2019s own website, ${esc(l.source.name)} (www.biasharafinance.com). Spear Line summarises it for convenience and is not the lender.</p></div>` }
+  ];
+}
 // Optional two-column overview (finance: macro and micro) shown between the hero and the guide.
 function compareSection(o) {
   if (!o.compare) return [];
@@ -403,7 +417,7 @@ function compareSection(o) {
 function divisionPage(key) {
  const o=offerings[key];
  const photoHtml = BRANDED_HEROES.has(key) ? `<img src="assets/branded/${key}.webp" alt="AI-generated Spear Line ${key} concept scene" width="1536" height="1024" fetchpriority="high">` : undefined;
- return layout(key,o.title,o.lede,[{tone:'navy',cls:'hero page-hero',field:true,inner:pageHero({image:o.image,photoHtml,crumb:o.title,kickerText:'Explore Spear Line',title:o.title,lede:o.lede,actions:btn('Explore the guide','#'+key+'-offers')})},...compareSection(o),...offeringSections(key),closing()]);
+ return layout(key,o.title,o.lede,[{tone:'navy',cls:'hero page-hero',field:true,inner:pageHero({image:o.image,photoHtml,crumb:o.title,kickerText:'Explore Spear Line',title:o.title,lede:o.lede,actions:btn('Explore the guide','#'+key+'-offers')})},...compareSection(o),...lenderSections(o),...offeringSections(key),closing()]);
 }
 /* ---------- Output ---------- */
 const output = {
