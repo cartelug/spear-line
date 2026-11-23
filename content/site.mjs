@@ -153,6 +153,16 @@ export const divisions = [
     "image": "rooftop-social",
     "href": "bar.html",
     "text": "Explore the ideas taking shape around hospitality, leisure and the upcoming Spear Line Bar."
+  },
+  {
+    "number": "07",
+    "icon": "i-analytics",
+    "name": "Macro & Micro Finance",
+    "category": "Economy & everyday money",
+    "status": "Enquiry-led",
+    "image": "records-desk",
+    "href": "finance.html",
+    "text": "Plain-language guidance on the economy behind trade and on savings, credit and payments for small businesses. Information and planning, not a lending product."
   }
 ];
 
@@ -533,5 +543,5 @@ export const strips = {
   logistics: { k: 'On the line', title: 'Ports, rivers and the roads between.', text: 'Routes are planned around the real ground the cargo will cross.', keys: ['port-sunset', 'river-sunset', 'mud-tracks'] },
   digital: { k: 'Behind the screen', title: 'Digital work that starts with real people.', text: 'Websites, content and systems built around how the business actually works.', keys: ['design-table', 'office-review', 'phone-street', 'studio-setup', 'planning-wall', 'city-call'] },
   about: { k: 'How we work', title: 'Plain conversations, careful paperwork.', text: 'Clear requirements, clear records and a clear next step.', keys: ['office-dusk', 'yard-paperwork', 'team-meeting'] },
-  divisions: { k: 'Across the portfolio', title: 'Building, trading and the people between.', text: 'Six directions, one habit: start where the work happens.', keys: ['scaffold-build', 'market-laugh'] }
+  divisions: { k: 'Across the portfolio', title: 'Building, trading and the people between.', text: 'Seven directions, one habit: start where the work happens.', keys: ['scaffold-build', 'market-laugh'] }
 };

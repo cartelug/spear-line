@@ -14,7 +14,7 @@ import { vehiclePriceGuide } from "../../content/vehicle-prices.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const axeSource = await readFile(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
-const pages = ["materials", "fitness", "real-estate", "divisions", "digital", "founder", "index", "vehicles", "supplies", "logistics", "how-it-works", "faq", "contact", "about", "bar", "enquire", "privacy", "404"];
+const pages = ["materials", "fitness", "real-estate", "finance", "divisions", "digital", "founder", "index", "vehicles", "supplies", "logistics", "how-it-works", "faq", "contact", "about", "bar", "enquire", "privacy", "404"];
 
 async function freePort() {
   const probe = net.createServer(); probe.listen(0, "127.0.0.1"); await once(probe, "listening");

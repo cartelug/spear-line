@@ -374,6 +374,170 @@ export const offerings = {
       }
     ]
   },
+  "finance": {
+    "title": "Understand the money behind the business.",
+    "lede": "A finance guide in two parts: the economy that shapes trade, and the savings, credit and payments that keep small businesses moving.",
+    "image": "records-desk",
+    "intro": "Finance touches every Spear Line division. Vehicles are priced in foreign currency, freight follows fuel, and a supply order is only as useful as the cash flow behind it. This guide explains the big picture (macro) and the everyday tools (micro) in plain language. It is general information, not a lending product or personal advice.",
+    "compare": {
+      "macro": {
+        "label": "Macro finance",
+        "title": "The big picture",
+        "text": "Macro finance looks at the economy as a whole: exchange rates, inflation, interest rates, government budgets and the flow of trade between countries. These forces change what goods cost and how expensive it is to borrow, whatever one business does.",
+        "points": [
+          "Exchange rates and the cost of imports",
+          "Inflation, fuel and freight costs",
+          "Interest rates and the cost of borrowing",
+          "Duties, taxes and trade rules",
+          "Trade finance and cross-border payment terms"
+        ]
+      },
+      "micro": {
+        "label": "Micro finance",
+        "title": "Close to the customer",
+        "text": "Micro finance is the small-scale side: savings groups, small loans, mobile money and simple record keeping for households, traders and growing businesses. The amounts are small, but good choices here decide whether a business can restock, pay staff and keep growing.",
+        "points": [
+          "Savings groups and savings and credit cooperatives",
+          "Small business and working capital loans",
+          "Mobile money and everyday payments",
+          "Vehicle and equipment finance",
+          "Records that lenders and partners trust"
+        ]
+      }
+    },
+    "cards": [
+      {
+        "title": "Macro view: exchange rates and import costs",
+        "description": "Many vehicle, equipment and supply quotes are in US dollars, while customers budget in Uganda shillings or South Sudanese pounds. A move in the rate between the order and the payment can change the real cost of the same goods.",
+        "specs": [
+          "Currency of the quote and of the budget",
+          "The date the rate is fixed",
+          "Who carries the exchange rate risk"
+        ],
+        "image": "container-port"
+      },
+      {
+        "title": "Macro view: inflation, fuel and the cost of waiting",
+        "description": "Rising prices raise the cost of goods, fuel and freight, and they change when it makes sense to buy or hold stock. Compare how fast the prices that matter to you are moving before deciding the size and timing of an order.",
+        "specs": [
+          "Price trends for the goods concerned",
+          "Freight and fuel as a share of landed cost",
+          "Stock levels against sales speed"
+        ],
+        "image": "planning-wall"
+      },
+      {
+        "title": "Macro view: interest rates and borrowing cost",
+        "description": "Central bank policy and market conditions shape what lenders charge. Before borrowing to buy stock or equipment, compare the cost of the loan with the margin the purchase can realistically earn, including a slower sales period.",
+        "specs": [
+          "Borrowing cost against expected margin",
+          "Fixed or variable rate terms",
+          "A cushion for delayed sales or payments"
+        ],
+        "image": "office-review"
+      },
+      {
+        "title": "Macro view: duties, taxes and trade finance",
+        "description": "Crossing a border adds duties, taxes and paperwork, and it raises a question for every shipment: when is the seller paid? Advance payment, payment on delivery, documentary collection and letters of credit share risk between buyer and seller in different ways.",
+        "specs": [
+          "Duties and taxes published by the revenue authorities",
+          "Payment terms, timing and required documents",
+          "Bank charges and who pays them"
+        ],
+        "image": "packing-slip"
+      },
+      {
+        "title": "Micro view: savings groups and cooperatives",
+        "description": "Community savings groups and savings and credit cooperatives let members save regularly and borrow from pooled funds. Terms differ widely, so read the written rules and confirm how interest, fees and profit shares are worked out.",
+        "specs": [
+          "Written constitution and loan rules",
+          "Contribution, interest and fee schedule",
+          "Registration with the proper regulator and yearly accounts"
+        ],
+        "image": "team-meeting"
+      },
+      {
+        "title": "Micro view: small business loans",
+        "description": "A small loan can fund stock, tools or working capital. Compare the total amount repayable, not just the headline rate, and set repayment dates around when the business actually receives money.",
+        "specs": [
+          "Total amount repayable over the full term",
+          "Fees, insurance and security required",
+          "Penalties and what happens after a missed payment"
+        ],
+        "image": "hardware-shop"
+      },
+      {
+        "title": "Micro view: mobile money and everyday payments",
+        "description": "A mobile money wallet lets a small trader receive customer payments, pay suppliers and keep a basic transaction record. Learn the charges, daily limits and agent fees, and keep business money apart from personal spending.",
+        "specs": [
+          "Transaction charges and limits",
+          "Separate business and personal wallets",
+          "Daily matching of the wallet with sales records"
+        ],
+        "image": "phone-street"
+      },
+      {
+        "title": "Micro view: vehicle and equipment finance",
+        "description": "A pickup, van or machine that earns income can sometimes be financed by a licensed lender, with the asset as part of the security. Compare the deposit, term, insurance duty and what happens if repayments fall behind.",
+        "specs": [
+          "Deposit, term and total cost of the finance",
+          "Insurance, servicing and ownership terms",
+          "Income the asset is expected to earn"
+        ],
+        "image": "vehicles-pickup"
+      },
+      {
+        "title": "Micro view: records and credit readiness",
+        "description": "Lenders, suppliers and partners trust a business that can show its numbers. A simple cash book, dated receipts and a clear split between owner and business money make every finance conversation easier.",
+        "specs": [
+          "Cash book and dated receipts",
+          "Monthly sales, costs and stock summary",
+          "Clear separation of business and personal money"
+        ],
+        "image": "records-desk"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Describe the decision",
+        "text": "State what you want to do, such as place an import order, buy equipment or smooth out cash flow, and the amount, currency and timing involved."
+      },
+      {
+        "title": "Gather the figures",
+        "text": "Collect quotes, expected sales, existing commitments and any exchange rate or fee that applies, so the discussion rests on numbers rather than guesses."
+      },
+      {
+        "title": "Compare total cost and risk",
+        "text": "Look at the full cost over the whole term, what could go wrong, and how much of the risk sits with you, the seller and the provider."
+      },
+      {
+        "title": "Confirm with a licensed provider",
+        "text": "Any loan, savings product or payment service should come from a provider licensed for it, with terms agreed in writing before you commit."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Is Spear Line a bank or a lender?",
+        "a": "No. This page offers general information and planning conversations. Spear Line does not advertise deposit-taking, lending, currency dealing or investment services here. Any loan, savings product or payment service would come from a provider licensed for that activity."
+      },
+      {
+        "q": "What is the difference between macro and micro finance?",
+        "a": "Macro finance is about the whole economy: exchange rates, inflation, interest rates, budgets and trade between countries. Micro finance is about small-scale services for individuals and small businesses, such as savings groups, small loans and mobile money. Trade decisions are shaped by both."
+      },
+      {
+        "q": "Who regulates microfinance in Uganda?",
+        "a": "Banks and deposit-taking microfinance institutions are supervised by the Bank of Uganda. Smaller non-deposit-taking lenders, savings and credit cooperatives and money lenders fall under the Uganda Microfinance Regulatory Authority. Ask any provider for its licence and confirm it with the regulator before you share money or documents."
+      },
+      {
+        "q": "Can I get financial advice here?",
+        "a": "No. The information on this page is general and is not personal financial, investment, tax or legal advice. For a decision about borrowing, saving or investing, speak with a qualified and licensed adviser."
+      },
+      {
+        "q": "What should I include in a finance enquiry?",
+        "a": "Say what you want to achieve, the amount and currency, the timing, and how the matter connects to a vehicle, supply, logistics or property requirement. Please leave out bank details, card numbers, PINs and identity documents."
+      }
+    ]
+  },
   "supplies": {
     "title": "A supply list that stands up to delivery.",
     "lede": "Compare product specifications, packing options and the details that matter to a trade order.",

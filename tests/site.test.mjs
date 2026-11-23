@@ -9,7 +9,7 @@ import { vehicleGalleries } from "../content/vehicle-galleries.mjs";
 import { vehiclePriceGuide } from "../content/vehicle-prices.mjs";
 
 const pub = resolve(dirname(fileURLToPath(import.meta.url)), "..", "public");
-const pages = ["divisions.html", "digital.html", "materials.html", "fitness.html", "real-estate.html", "founder.html", "index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "terms.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
+const pages = ["divisions.html", "digital.html", "materials.html", "fitness.html", "real-estate.html", "finance.html", "founder.html", "index.html", "bar.html", "vehicles.html", "supplies.html", "logistics.html", "timber-logistics.html", "about.html", "enquire.html", "privacy.html", "terms.html", "404.html", "how-it-works.html", "faq.html", "contact.html"];
 const read = name => readFile(resolve(pub, name), "utf8");
 const exists = async name => access(resolve(pub, name)).then(() => true, () => false);
 const visibleText = html => html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "").replace(/<[^>]+>/g, " ");
@@ -320,12 +320,12 @@ test("the homepage enquiry note starts an enquiry with the chosen service and de
 });
 
 
-test("V12 six-division model, digital offer and Joh Ayom profile remain grounded", async () => {
+test("V12 seven-division model, digital offer and Joh Ayom profile remain grounded", async () => {
   const homePage = await read("index.html");
   const divisionPage = await read("divisions.html");
   const digitalPage = await read("digital.html");
   const founderPage = await read("founder.html");
-  assert.equal(content.divisions.length, 6, "six business divisions");
+  assert.equal(content.divisions.length, 7, "seven business divisions");
   for (const division of content.divisions) {
     assert.ok(homePage.includes(division.name.replace(/&/g, "&amp;")), division.name + " on home");
     assert.ok(divisionPage.includes(division.name.replace(/&/g, "&amp;")), division.name + " on divisions");
