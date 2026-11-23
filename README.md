@@ -1,6 +1,6 @@
 # Spear Line website
 
-A responsive company site for Spear Line's trading, supply and logistics enquiries, six business divisions, digital services and founder profile, built around one idea: a single route line that connects opportunities. See [DESIGN.md](DESIGN.md) and [docs/MOTION.md](docs/MOTION.md). The site uses the approved complete horizontal gold wordmark. Its photography is illustrative and labelled accordingly.
+A responsive company site for Spear Line's trading, supply and logistics enquiries, seven business divisions, digital services and founder profile, built around one idea: a single route line that connects opportunities. See [DESIGN.md](DESIGN.md) and [docs/MOTION.md](docs/MOTION.md). The site uses the approved complete horizontal gold wordmark. Its photography is illustrative and labelled accordingly.
 
 ## Run locally
 
@@ -43,6 +43,10 @@ The public phone contacts and `enquiries@spearline.africa` are published; the ma
 ## Brand assets and link previews
 
 `npm run brand` regenerates SVG/PNG/WebP production exports and rebuilds the site (run `npm ci` first; ImageMagick is required). See [ASSETS.md](ASSETS.md) for masters and font-outline regeneration. Every page includes the current preview card even before the enquiry/search launch switches are enabled. `SITE_PREVIEW_URL` optionally sets a preview base URL; otherwise `SITE_ORIGIN` or the existing GitHub Pages preview is used. Keep any deployment subdirectory, such as `/spear-line`, in that URL.
+
+## Finance division and loan application
+
+The finance page (`finance.html`) and the five-step loan application (`loan-application.html`) are generated from `content/offerings.mjs` (`finance.service`) and `scripts/build.mjs`; behaviour lives in `public/loan.js`. The application never submits anything itself: it writes the application out as an email, a WhatsApp message or a call, using the email, phone and WhatsApp numbers in `site-config.js`, and it stores nothing. The page publishes no interest rate, amount range or licence number; add those to `finance.service` only once they are confirmed. Mailbox and licensing status are launch checks for the owner.
 
 ## Market references and service status
 

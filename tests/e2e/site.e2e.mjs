@@ -202,7 +202,7 @@ test("menu, tabs, FAQ and timeline behave, and Reduce motion is honoured", { tim
   assert.ok(counts[0] < counts[2], "timeline lights steps as you scroll: " + counts); await how.context.close();
 
   const home = await open("/index.html");
-  assert.equal(await home.page.locator(".div-card").count(), 6, "six visible company divisions");
+  assert.equal(await home.page.locator(".div-card").count(), 7, "seven visible company divisions");
   assert.ok(await home.page.locator('a[href="digital.html"]').count(), "digital offering is reachable");
   assert.ok(await home.page.locator('a[href="founder.html"]').count(), "founder profile is reachable");
   assert.deepEqual(home.problems, []);

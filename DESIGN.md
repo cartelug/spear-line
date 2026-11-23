@@ -1,6 +1,6 @@
 # Spear Line design system (V15): one line connecting opportunities
 
-Spear Line trades vehicles, supplies and freight across East and Central Africa, and is growing into six divisions. The site is a premium trade-and-logistics front door: deep navy and warm paper, gold for action, photography that is plainly labelled illustrative, and one idea carried through every motion, graphic and icon: **a single route line that connects opportunities.**
+Spear Line trades vehicles, supplies and freight across East and Central Africa, and is growing into seven divisions. The site is a premium trade-and-logistics front door: deep navy and warm paper, gold for action, photography that is plainly labelled illustrative, and one idea carried through every motion, graphic and icon: **a single route line that connects opportunities.**
 
 The stack is `src/styles/*.css`, bundled into `public/site.css` by `npm run build`. This file replaces the V10 "golden hour" description; the V12 documents in `docs/` are history.
 
@@ -45,7 +45,7 @@ See `docs/MOTION.md`: four patterns (route trace, directional rise, photo reveal
 
 ## Icons
 
-`assets/icons.svg`: 35 symbols on a 48 px grid, 2 px round strokes. New in V15: materials, wellness, property, web, brand, booking, video, megaphone, automation, commerce, analytics and AI (the six divisions and the nine digital capabilities). Icons answer hover, focus and touch (`:active`) with a small scale and tilt; nothing depends on hover alone. No handshake or other symbol that implies a confirmed partnership.
+`assets/icons.svg`: 35 symbols on a 48 px grid, 2 px round strokes. New in V15: materials, wellness, property, web, brand, booking, video, megaphone, automation, commerce, analytics and AI (the seven divisions and the nine digital capabilities). Icons answer hover, focus and touch (`:active`) with a small scale and tilt; nothing depends on hover alone. No handshake or other symbol that implies a confirmed partnership.
 
 ## Responsive
 
